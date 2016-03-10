@@ -3,6 +3,7 @@ Save Format v3.0(19990112)
  "dwgui.pbl" "";
 @end;
 @begin Objects
+ "d_toolbar.srd" "dwgui.pbl";
  "u_cst_toolbar_items.sru" "dwgui.pbl";
  "a_dwgui.sra" "dwgui.pbl";
 @end;
