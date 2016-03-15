@@ -2,6 +2,10 @@ HA$PBExportHeader$w_dwgui.srw
 forward
 global type w_dwgui from window
 end type
+type cbx_check_text_2 from checkbox within w_dwgui
+end type
+type cbx_check_text_1 from checkbox within w_dwgui
+end type
 type cbx_show_text_only from checkbox within w_dwgui
 end type
 type cbx_show_exit from checkbox within w_dwgui
@@ -29,9 +33,10 @@ boolean controlmenu = true
 boolean minbox = true
 boolean maxbox = true
 boolean resizable = true
-long backcolor = 67108864
 string icon = "AppIcon!"
 boolean center = true
+cbx_check_text_2 cbx_check_text_2
+cbx_check_text_1 cbx_check_text_1
 cbx_show_text_only cbx_show_text_only
 cbx_show_exit cbx_show_exit
 cbx_show_open cbx_show_open
@@ -50,6 +55,8 @@ Private:
 end variables
 
 on w_dwgui.create
+this.cbx_check_text_2=create cbx_check_text_2
+this.cbx_check_text_1=create cbx_check_text_1
 this.cbx_show_text_only=create cbx_show_text_only
 this.cbx_show_exit=create cbx_show_exit
 this.cbx_show_open=create cbx_show_open
@@ -58,7 +65,9 @@ this.cbx_show_preview=create cbx_show_preview
 this.cbx_show_print=create cbx_show_print
 this.uo_1=create uo_1
 this.r_1=create r_1
-this.Control[]={this.cbx_show_text_only,&
+this.Control[]={this.cbx_check_text_2,&
+this.cbx_check_text_1,&
+this.cbx_show_text_only,&
 this.cbx_show_exit,&
 this.cbx_show_open,&
 this.cbx_show_save,&
@@ -69,6 +78,8 @@ this.r_1}
 end on
 
 on w_dwgui.destroy
+destroy(this.cbx_check_text_2)
+destroy(this.cbx_check_text_1)
 destroy(this.cbx_show_text_only)
 destroy(this.cbx_show_exit)
 destroy(this.cbx_show_open)
@@ -93,7 +104,6 @@ Long									ll_width,	ll_height
 ll_width								= PixelsToUnits(ll_right - ll_left, XPixelsToUnits!)
 ll_height							= PixelsToUnits(ll_bottom - ll_top, YPixelsToUnits!)
 
-//	This example does not correct for caption height, nor border width
 invo_resize.of_setOrigSize(ll_width, ll_height)
 
 invo_resize.of_register(uo_1, invo_resize.SCALERIGHT)
@@ -144,9 +154,47 @@ end event
 event resize;invo_resize.EVENT pfc_resize(sizeType, newWidth, newHeight)
 end event
 
+type cbx_check_text_2 from checkbox within w_dwgui
+integer x = 731
+integer y = 212
+integer width = 402
+integer height = 80
+integer textsize = -8
+integer weight = 400
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Tahoma"
+long textcolor = 33554432
+long backcolor = 553648127
+string text = "Check Text 2"
+end type
+
+event clicked;uo_1.of_setChecked('Text 2',	Checked)
+end event
+
+type cbx_check_text_1 from checkbox within w_dwgui
+integer x = 731
+integer y = 128
+integer width = 402
+integer height = 80
+integer textsize = -8
+integer weight = 400
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Tahoma"
+long textcolor = 33554432
+long backcolor = 553648127
+string text = "Check Text 1"
+end type
+
+event clicked;uo_1.of_setChecked('Text 1',	Checked)
+end event
+
 type cbx_show_text_only from checkbox within w_dwgui
 integer x = 32
-integer y = 732
+integer y = 380
 integer width = 416
 integer height = 80
 integer textsize = -8
@@ -156,7 +204,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Tahoma"
 long textcolor = 33554432
-long backcolor = 67108864
+long backcolor = 553648127
 string text = "Show Text Only"
 boolean checked = true
 end type
@@ -166,7 +214,7 @@ end event
 
 type cbx_show_exit from checkbox within w_dwgui
 integer x = 32
-integer y = 648
+integer y = 296
 integer width = 402
 integer height = 80
 integer textsize = -8
@@ -176,7 +224,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Tahoma"
 long textcolor = 33554432
-long backcolor = 67108864
+long backcolor = 553648127
 string text = "Show Exit"
 boolean checked = true
 end type
@@ -186,7 +234,7 @@ end event
 
 type cbx_show_open from checkbox within w_dwgui
 integer x = 32
-integer y = 900
+integer y = 548
 integer width = 402
 integer height = 80
 integer textsize = -8
@@ -196,7 +244,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Tahoma"
 long textcolor = 33554432
-long backcolor = 67108864
+long backcolor = 553648127
 string text = "Show Open"
 boolean checked = true
 end type
@@ -206,7 +254,7 @@ end event
 
 type cbx_show_save from checkbox within w_dwgui
 integer x = 32
-integer y = 816
+integer y = 464
 integer width = 402
 integer height = 80
 integer textsize = -8
@@ -216,7 +264,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Tahoma"
 long textcolor = 33554432
-long backcolor = 67108864
+long backcolor = 553648127
 string text = "Show Save"
 boolean checked = true
 end type
@@ -226,7 +274,7 @@ end event
 
 type cbx_show_preview from checkbox within w_dwgui
 integer x = 32
-integer y = 564
+integer y = 212
 integer width = 402
 integer height = 80
 integer textsize = -8
@@ -236,7 +284,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Tahoma"
 long textcolor = 33554432
-long backcolor = 67108864
+long backcolor = 553648127
 string text = "Show Preview"
 boolean checked = true
 end type
@@ -246,7 +294,7 @@ end event
 
 type cbx_show_print from checkbox within w_dwgui
 integer x = 32
-integer y = 480
+integer y = 128
 integer width = 402
 integer height = 80
 integer textsize = -8
@@ -256,7 +304,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Tahoma"
 long textcolor = 33554432
-long backcolor = 67108864
+long backcolor = 553648127
 string text = "Show Print"
 boolean checked = true
 end type
