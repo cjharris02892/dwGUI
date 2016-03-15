@@ -1,0 +1,8 @@
+Save Format v3.0(19990112)
+@begin Libraries
+ "dwgui_test.pbl" "";
+@end;
+@begin Objects
+ "w_dwgui.srw" "dwgui_test.pbl";
+ "a_dwgui.sra" "dwgui_test.pbl";
+@end;
