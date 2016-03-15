@@ -1,0 +1,391 @@
+HA$PBExportHeader$m_toolbar_context.srm
+$PBExportComments$Menu class
+forward
+global type m_toolbar_context from m_toolbar
+end type
+type m_size from menu within m_toolbar_context
+end type
+type m_small from menu within m_size
+end type
+type m_medium from menu within m_size
+end type
+type m_large from menu within m_size
+end type
+type m_xlarge from menu within m_size
+end type
+type m_size from menu within m_toolbar_context
+m_small m_small
+m_medium m_medium
+m_large m_large
+m_xlarge m_xlarge
+end type
+type m_0 from menu within m_toolbar_context
+end type
+type m_showtoolbartips from menu within m_toolbar_context
+end type
+type m_showtoolbartext from menu within m_toolbar_context
+end type
+global type m_toolbar_context from m_toolbar
+m_size m_size
+m_0 m_0
+m_showtoolbartips m_showtoolbartips
+m_showtoolbartext m_showtoolbartext
+end type
+end forward
+
+global type m_toolbar_context from m_toolbar
+m_size m_size
+m_0 m_0
+m_showtoolbartips m_showtoolbartips
+m_showtoolbartext m_showtoolbartext
+end type
+global m_toolbar_context m_toolbar_context
+
+type variables
+
+end variables
+
+event clicked;call super::clicked;IF isValid(mf_getParent()) THEN
+	
+	u_cst_toolBar						luo_parent
+	luo_parent							= mf_getParent()
+	
+	luo_parent.of_buttonClicked(Text)
+	
+END IF
+end event
+
+on m_toolbar_context.create
+m_toolbar_context=this
+call super::create
+this.text = "m_toolbar_context"
+this.menutitles = false
+this.m_size=create m_size
+this.m_0=create m_0
+this.m_showtoolbartips=create m_showtoolbartips
+this.m_showtoolbartext=create m_showtoolbartext
+this.Item[UpperBound(this.Item)+1]=this.m_size
+this.Item[UpperBound(this.Item)+1]=this.m_0
+this.Item[UpperBound(this.Item)+1]=this.m_showtoolbartips
+this.Item[UpperBound(this.Item)+1]=this.m_showtoolbartext
+end on
+
+on m_toolbar_context.destroy
+call super::destroy
+destroy(this.m_size)
+destroy(this.m_0)
+destroy(this.m_showtoolbartips)
+destroy(this.m_showtoolbartext)
+end on
+
+type m_size from menu within m_toolbar_context
+m_small m_small
+m_medium m_medium
+m_large m_large
+m_xlarge m_xlarge
+end type
+
+on m_size.create
+call super::create
+this.text = "Size"
+this.menustyle = contemporarymenu!
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbarstyle = contemporarytoolbar!
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+this.m_small=create m_small
+this.m_medium=create m_medium
+this.m_large=create m_large
+this.m_xlarge=create m_xlarge
+this.Item[UpperBound(this.Item)+1]=this.m_small
+this.Item[UpperBound(this.Item)+1]=this.m_medium
+this.Item[UpperBound(this.Item)+1]=this.m_large
+this.Item[UpperBound(this.Item)+1]=this.m_xlarge
+end on
+
+on m_size.destroy
+call super::destroy
+destroy(this.m_small)
+destroy(this.m_medium)
+destroy(this.m_large)
+destroy(this.m_xlarge)
+end on
+
+type m_small from menu within m_size
+end type
+
+event clicked;IF isValid(mf_getParent()) THEN
+	
+	u_cst_toolBar						luo_parent
+	luo_parent							= mf_getParent()
+	
+	luo_parent.EVENT ue_context_size(Text)
+	
+END IF
+end event
+
+on m_small.create
+call super::create
+this.text = "Small"
+this.menustyle = contemporarymenu!
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbarstyle = contemporarytoolbar!
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_small.destroy
+call super::destroy
+end on
+
+type m_medium from menu within m_size
+end type
+
+on m_medium.create
+call super::create
+this.text = "Medium"
+this.menustyle = contemporarymenu!
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbarstyle = contemporarytoolbar!
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_medium.destroy
+call super::destroy
+end on
+
+event clicked;IF isValid(mf_getParent()) THEN
+	
+	u_cst_toolBar						luo_parent
+	luo_parent							= mf_getParent()
+	
+	luo_parent.EVENT ue_context_size(Text)
+	
+END IF
+end event
+
+type m_large from menu within m_size
+end type
+
+on m_large.create
+call super::create
+this.text = "Large"
+this.menustyle = contemporarymenu!
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbarstyle = contemporarytoolbar!
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_large.destroy
+call super::destroy
+end on
+
+event clicked;IF isValid(mf_getParent()) THEN
+	
+	u_cst_toolBar						luo_parent
+	luo_parent							= mf_getParent()
+	
+	luo_parent.EVENT ue_context_size(Text)
+	
+END IF
+end event
+
+type m_xlarge from menu within m_size
+end type
+
+on m_xlarge.create
+call super::create
+this.text = "XLarge"
+this.menustyle = contemporarymenu!
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbarstyle = contemporarytoolbar!
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_xlarge.destroy
+call super::destroy
+end on
+
+event clicked;IF isValid(mf_getParent()) THEN
+	
+	u_cst_toolBar						luo_parent
+	luo_parent							= mf_getParent()
+	
+	luo_parent.EVENT ue_context_size(Text)
+	
+END IF
+end event
+
+type m_0 from menu within m_toolbar_context
+end type
+
+on m_0.create
+call super::create
+this.text = "-"
+this.menustyle = contemporarymenu!
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbarstyle = contemporarytoolbar!
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_0.destroy
+call super::destroy
+end on
+
+type m_showtoolbartips from menu within m_toolbar_context
+end type
+
+event clicked;IF isValid(mf_getParent()) THEN
+	
+	u_cst_toolBar						luo_parent
+	luo_parent							= mf_getParent()
+	
+	luo_parent.EVENT ue_context_showToolBarTips(NOT Checked)
+	
+END IF
+end event
+
+on m_showtoolbartips.create
+call super::create
+this.text = "Show ToolBar Tips"
+this.toolbaritemname = "comment!"
+this.toolbaritemtext = "Show ToolBar Tips"
+this.menuimage = "Comment!"
+this.menustyle = contemporarymenu!
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbarstyle = contemporarytoolbar!
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_showtoolbartips.destroy
+call super::destroy
+end on
+
+type m_showtoolbartext from menu within m_toolbar_context
+end type
+
+event clicked;IF isValid(mf_getParent()) THEN
+	
+	u_cst_toolBar						luo_parent
+	luo_parent							= mf_getParent()
+	
+	luo_parent.EVENT ue_context_showToolBarText(NOT Checked)
+	
+END IF
+end event
+
+on m_showtoolbartext.create
+call super::create
+this.text = "Show ToolBar Text"
+this.menustyle = contemporarymenu!
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbarstyle = contemporarytoolbar!
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_showtoolbartext.destroy
+call super::destroy
+end on
+

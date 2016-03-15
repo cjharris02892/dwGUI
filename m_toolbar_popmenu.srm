@@ -1,0 +1,40 @@
+HA$PBExportHeader$m_toolbar_popmenu.srm
+$PBExportComments$Menu class
+forward
+global type m_toolbar_popmenu from m_toolbar
+end type
+end forward
+
+global type m_toolbar_popmenu from m_toolbar
+end type
+global m_toolbar_popmenu m_toolbar_popmenu
+
+type variables
+
+end variables
+
+event clicked;call super::clicked;IF isValid(mf_getParent()) THEN
+	
+	u_cst_toolBar						luo_parent
+	luo_parent							= mf_getParent()
+
+	IF isNull(Text) OR Trim(Text) = '' THEN
+		luo_parent.of_buttonClicked(className())
+	ELSE
+		luo_parent.of_buttonClicked(Text)
+	END IF
+	
+END IF
+
+RETURN
+end event
+
+on m_toolbar_popmenu.create
+m_toolbar_popmenu=this
+call super::create
+end on
+
+on m_toolbar_popmenu.destroy
+call super::destroy
+end on
+

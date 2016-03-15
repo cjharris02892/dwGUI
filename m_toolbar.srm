@@ -1,0 +1,192 @@
+HA$PBExportHeader$m_toolbar.srm
+$PBExportComments$Menu class
+forward
+global type m_toolbar from menu
+end type
+end forward
+
+global type m_toolbar from menu
+end type
+global m_toolbar m_toolbar
+
+type variables
+Private:
+
+	DragObject						idrg_parent
+end variables
+
+forward prototypes
+public function menu mf_locate (menu vm_locate, string vs_classname)
+public function menu mf_locate (string vs_classname)
+public function string mf_shortcut (menu vm_item)
+public subroutine mf_visible (menu vm_item, boolean vb_visible)
+public subroutine mf_enabled (menu vm_item, boolean vb_enabled)
+public subroutine mf_visible (string vs_classname, boolean vb_visible)
+public function integer mf_popmenu (dragobject vdrg_parent, menu vm_popmenu, integer vi_xpos, integer vi_ypos)
+public function integer mf_popmenu (dragobject vdrg_parent, integer vi_xpos, integer vi_ypos)
+public subroutine mf_enabled (string vs_classname, boolean vb_enabled)
+public subroutine mf_register (dragobject vdrg_parent)
+public function dragobject mf_getparent ()
+public subroutine mf_setparent (dragobject vdrg_parent)
+end prototypes
+
+public function menu mf_locate (menu vm_locate, string vs_classname);n_cst_Menu_Service			lnvo_Service
+
+Return(lnvo_Service.of_Locate(vm_Locate, vs_ClassName))
+end function
+
+public function menu mf_locate (string vs_classname);n_cst_Menu_Service			lnvo_Service
+
+lnvo_Service.of_Register(this)
+
+Return(lnvo_Service.of_Locate(vs_ClassName))
+end function
+
+public function string mf_shortcut (menu vm_item);n_cst_Menu_Service			lnvo_Service
+
+Return(lnvo_Service.of_ShortCut(vm_Item))
+end function
+
+public subroutine mf_visible (menu vm_item, boolean vb_visible);vm_Item.Visible						= vb_Visible
+vm_Item.ToolBarItemVisible			= vb_Visible
+
+RETURN
+end subroutine
+
+public subroutine mf_enabled (menu vm_item, boolean vb_enabled);vm_Item.Enabled						= vb_Enabled
+
+RETURN
+end subroutine
+
+public subroutine mf_visible (string vs_classname, boolean vb_visible);Menu										lm_Item
+lm_Item									= mf_Locate(vs_ClassName)
+
+IF IsValid(lm_Item) THEN mf_Visible(lm_Item, vb_Visible)
+
+RETURN
+end subroutine
+
+public function integer mf_popmenu (dragobject vdrg_parent, menu vm_popmenu, integer vi_xpos, integer vi_ypos);n_cst_window_service					lnvo_windowService
+
+Window									lw_parent,	lw_frame,	lw_childParent
+GraphicObject							lgo
+	
+lw_parent								= lnvo_windowService.of_getParentWindow(vdrg_parent)
+	
+IF IsValid(lw_parent) THEN
+	
+	lw_frame								= lnvo_windowService.of_getFrame(vdrg_parent)
+
+	IF IsValid(lw_frame) THEN
+
+		IF lw_parent.windowType = Child! THEN
+			lw_parent					= lw_frame
+		ELSE
+
+			IF lw_parent.windowType = Main! AND lnvo_windowService.of_IsMDIChild(lw_parent) THEN
+				lw_parent				= lw_frame
+			ELSE
+					
+				IF lw_parent.windowType = Main! AND lnvo_windowService.of_IsChild(lw_parent) THEN
+					
+					lgo 					= lw_parent
+						
+					DO WHILE IsValid(lgo)
+						
+						IF lgo.TypeOf() = Window! THEN
+							
+							lw_parent	= lgo
+							lgo 			= lw_parent.ParentWindow()
+							
+						ELSE
+							lgo 			= lgo.GetParent()
+						END IF
+							
+						IF lgo.TypeOf() = Window! THEN
+							
+							lw_parent	= lgo
+							EXIT
+							
+						END IF
+					
+					LOOP
+			
+					IF lw_parent.TypeOf() = Window! THEN
+						IF lw_parent.windowType = Main! AND lnvo_windowService.of_IsMDIChild(lw_parent) THEN
+							lw_parent	= lw_frame
+						END IF
+					END IF
+						
+				END IF
+			END IF
+		END IF
+
+	ELSE
+		IF lw_parent.windowType = Child! THEN
+			
+			lw_childparent				= lw_parent.ParentWindow()
+			
+			IF IsValid(lw_childParent) THEN
+				lw_parent				= lw_childParent
+			END IF
+			
+		END IF
+	END IF
+ELSE
+	Return(-1)
+END IF
+
+Return(vm_popMenu.PopMenu(lw_parent.PointerX(), lw_parent.PointerY()))
+end function
+
+public function integer mf_popmenu (dragobject vdrg_parent, integer vi_xpos, integer vi_ypos);Return(mf_popMenu(vdrg_parent, this, vi_xPos, vi_yPos))
+end function
+
+public subroutine mf_enabled (string vs_classname, boolean vb_enabled);Menu										lm_Item
+lm_Item									= mf_Locate(vs_ClassName)
+
+IF IsValid(lm_Item) THEN mf_enabled(lm_Item, vb_enabled)
+
+RETURN
+end subroutine
+
+public subroutine mf_register (dragobject vdrg_parent);idrg_parent							= vdrg_parent
+
+RETURN
+end subroutine
+
+public function dragobject mf_getparent ();Return(idrg_parent)
+end function
+
+public subroutine mf_setparent (dragobject vdrg_parent);idrg_parent						= vdrg_parent
+
+RETURN
+end subroutine
+
+on m_toolbar.create
+m_toolbar=this
+call super::create
+this.menustyle = contemporarymenu!
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menutitles = true
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbarstyle = contemporarytoolbar!
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_toolbar.destroy
+call super::destroy
+end on
+
