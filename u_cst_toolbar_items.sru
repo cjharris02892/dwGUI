@@ -20,6 +20,7 @@ Public:
 	//	Reserved object types
 	CONSTANT String						SEPARATOR						= 'separator'
 	CONSTANT String						TOOLBARDROPMENU				= 'toolbardropmenu'
+	CONSTANT String						TOOLBARITEM						= 'toolbaritem'
 end variables
 
 forward prototypes
@@ -74,6 +75,8 @@ public function long of_locateitem_previous (long vl_itemcurrent)
 public function long of_additem ()
 public function boolean of_getitem_checked (long vl_item)
 public subroutine of_setitem_checked (long vl_item, boolean vb_checked)
+public function long of_getitem_order (long vl_item)
+public subroutine of_setitem_order (long vl_item)
 end prototypes
 
 public function boolean of_getitem_displayinmenu (long vl_item);IF vl_item < 1 OR vl_item > RowCount() THEN Return(FALSE)
@@ -606,6 +609,8 @@ end function
 public function long of_additem ();Long									ll_item
 ll_item								= InsertRow(0)
 
+of_setItem_order(ll_item)
+
 ResetUpdate()
 
 Return(ll_item)
@@ -624,6 +629,19 @@ ELSE
 	SetItem(vl_item, 'checked', 'N')
 END IF
 
+ResetUpdate()
+
+RETURN
+end subroutine
+
+public function long of_getitem_order (long vl_item);IF vl_item < 1 OR vl_item > RowCount() THEN Return(0)
+
+Return(GetItemNumber(vl_item, 'order'))
+end function
+
+public subroutine of_setitem_order (long vl_item);IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
+
+SetItem(vl_item, 'order', vl_item)
 ResetUpdate()
 
 RETURN
