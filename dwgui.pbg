@@ -4,5 +4,10 @@ Save Format v3.0(19990112)
 @end;
 @begin Objects
  "u_cst_toolbar_items.sru" "dwgui.pbl";
+ "m_toolbar_popmenu.srm" "dwgui.pbl";
+ "m_toolbar_context.srm" "dwgui.pbl";
+ "u_cst_toolbar.sru" "dwgui.pbl";
  "d_toolbar.srd" "dwgui.pbl";
+ "u_cst_menubar.sru" "dwgui.pbl";
+ "m_toolbar.srm" "dwgui.pbl";
 @end;
