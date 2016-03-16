@@ -2,6 +2,12 @@ HA$PBExportHeader$w_dwgui.srw
 forward
 global type w_dwgui from window
 end type
+type cbx_enable_text_1 from checkbox within w_dwgui
+end type
+type cbx_enable_paste from checkbox within w_dwgui
+end type
+type cbx_enabled_exit from checkbox within w_dwgui
+end type
 type cbx_check_text_2 from checkbox within w_dwgui
 end type
 type cbx_check_text_1 from checkbox within w_dwgui
@@ -35,6 +41,9 @@ boolean maxbox = true
 boolean resizable = true
 string icon = "AppIcon!"
 boolean center = true
+cbx_enable_text_1 cbx_enable_text_1
+cbx_enable_paste cbx_enable_paste
+cbx_enabled_exit cbx_enabled_exit
 cbx_check_text_2 cbx_check_text_2
 cbx_check_text_1 cbx_check_text_1
 cbx_show_text_only cbx_show_text_only
@@ -51,10 +60,13 @@ global w_dwgui w_dwgui
 type variables
 Private:
 
-	n_cst_resize					invo_resize
+	Long								il_oldWidth				= -1
+	Long								il_oldHeight			= -1
 end variables
-
 on w_dwgui.create
+this.cbx_enable_text_1=create cbx_enable_text_1
+this.cbx_enable_paste=create cbx_enable_paste
+this.cbx_enabled_exit=create cbx_enabled_exit
 this.cbx_check_text_2=create cbx_check_text_2
 this.cbx_check_text_1=create cbx_check_text_1
 this.cbx_show_text_only=create cbx_show_text_only
@@ -65,7 +77,10 @@ this.cbx_show_preview=create cbx_show_preview
 this.cbx_show_print=create cbx_show_print
 this.uo_1=create uo_1
 this.r_1=create r_1
-this.Control[]={this.cbx_check_text_2,&
+this.Control[]={this.cbx_enable_text_1,&
+this.cbx_enable_paste,&
+this.cbx_enabled_exit,&
+this.cbx_check_text_2,&
 this.cbx_check_text_1,&
 this.cbx_show_text_only,&
 this.cbx_show_exit,&
@@ -78,6 +93,9 @@ this.r_1}
 end on
 
 on w_dwgui.destroy
+destroy(this.cbx_enable_text_1)
+destroy(this.cbx_enable_paste)
+destroy(this.cbx_enabled_exit)
 destroy(this.cbx_check_text_2)
 destroy(this.cbx_check_text_1)
 destroy(this.cbx_show_text_only)
@@ -90,26 +108,7 @@ destroy(this.uo_1)
 destroy(this.r_1)
 end on
 
-event open;invo_resize							= CREATE n_cst_resize
-
-n_cst_api_user32					lnvo_user32
-
-Long									ll_left,		ll_top
-Long									ll_right,	ll_bottom
-
-lnvo_user32.of_API_getClientRect(Handle(this), ll_left, ll_top, ll_right, ll_bottom)
-
-Long									ll_width,	ll_height
-
-ll_width								= PixelsToUnits(ll_right - ll_left, XPixelsToUnits!)
-ll_height							= PixelsToUnits(ll_bottom - ll_top, YPixelsToUnits!)
-
-invo_resize.of_setOrigSize(ll_width, ll_height)
-
-invo_resize.of_register(uo_1, invo_resize.SCALERIGHT)
-invo_resize.of_register(r_1, invo_resize.SCALERIGHTBOTTOM)
-
-//	Left side items are added Left to Right
+event open;//	Left side items are added Left to Right
 
 uo_1.of_addItem('Open', 		'Open.bmp',			uo_1.LEFT)
 uo_1.of_addItem('Save', 		'Save.bmp',			uo_1.LEFT)
@@ -148,10 +147,83 @@ uo_1.of_addItem('Text 1',	'',						uo_1.RIGHT)
 uo_1.of_addSeparator(uo_1.RIGHT)
 end event
 
-event close;IF isValid(invo_resize) THEN DESTROY invo_resize
+event resize;IF il_oldWidth <> -1 AND il_oldHeight <> -1 THEN
+
+	Long								ll_diffWidth,	ll_diffHeight
+	
+	ll_diffWidth					= newWidth - il_oldWidth
+	ll_diffHeight					= newHeight - il_oldHeight
+	
+	uo_1.Resize(uo_1.Width + ll_diffWidth, uo_1.Height)
+	r_1.Resize(r_1.Width + ll_diffWidth, r_1.Height + ll_diffHeight)
+	
+END IF
+
+il_oldWidth							= newWidth
+il_oldHeight						= newHeight
 end event
 
-event resize;invo_resize.EVENT pfc_resize(sizeType, newWidth, newHeight)
+type cbx_enable_text_1 from checkbox within w_dwgui
+integer x = 1431
+integer y = 296
+integer width = 402
+integer height = 80
+integer taborder = 120
+integer textsize = -8
+integer weight = 400
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Tahoma"
+long textcolor = 33554432
+long backcolor = 553648127
+string text = "Enable Text 1"
+boolean checked = true
+end type
+
+event clicked;uo_1.of_setEnabled('Text 1',	Checked)
+end event
+
+type cbx_enable_paste from checkbox within w_dwgui
+integer x = 1431
+integer y = 128
+integer width = 402
+integer height = 80
+integer taborder = 100
+integer textsize = -8
+integer weight = 400
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Tahoma"
+long textcolor = 33554432
+long backcolor = 553648127
+string text = "Enable Paste"
+boolean checked = true
+end type
+
+event clicked;uo_1.of_setEnabled('Paste',	Checked)
+end event
+
+type cbx_enabled_exit from checkbox within w_dwgui
+integer x = 1431
+integer y = 212
+integer width = 402
+integer height = 80
+integer taborder = 110
+integer textsize = -8
+integer weight = 400
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Tahoma"
+long textcolor = 33554432
+long backcolor = 553648127
+string text = "Enable Exist"
+boolean checked = true
+end type
+
+event clicked;uo_1.of_setEnabled('Exit',	Checked)
 end event
 
 type cbx_check_text_2 from checkbox within w_dwgui
@@ -159,6 +231,7 @@ integer x = 731
 integer y = 212
 integer width = 402
 integer height = 80
+integer taborder = 90
 integer textsize = -8
 integer weight = 400
 fontcharset fontcharset = ansi!
@@ -178,6 +251,7 @@ integer x = 731
 integer y = 128
 integer width = 402
 integer height = 80
+integer taborder = 80
 integer textsize = -8
 integer weight = 400
 fontcharset fontcharset = ansi!
@@ -197,6 +271,7 @@ integer x = 32
 integer y = 380
 integer width = 416
 integer height = 80
+integer taborder = 50
 integer textsize = -8
 integer weight = 400
 fontcharset fontcharset = ansi!
@@ -217,6 +292,7 @@ integer x = 32
 integer y = 296
 integer width = 402
 integer height = 80
+integer taborder = 40
 integer textsize = -8
 integer weight = 400
 fontcharset fontcharset = ansi!
@@ -237,6 +313,7 @@ integer x = 32
 integer y = 548
 integer width = 402
 integer height = 80
+integer taborder = 70
 integer textsize = -8
 integer weight = 400
 fontcharset fontcharset = ansi!
@@ -257,6 +334,7 @@ integer x = 32
 integer y = 464
 integer width = 402
 integer height = 80
+integer taborder = 60
 integer textsize = -8
 integer weight = 400
 fontcharset fontcharset = ansi!
@@ -277,6 +355,7 @@ integer x = 32
 integer y = 212
 integer width = 402
 integer height = 80
+integer taborder = 30
 integer textsize = -8
 integer weight = 400
 fontcharset fontcharset = ansi!
@@ -297,6 +376,7 @@ integer x = 32
 integer y = 128
 integer width = 402
 integer height = 80
+integer taborder = 20
 integer textsize = -8
 integer weight = 400
 fontcharset fontcharset = ansi!
