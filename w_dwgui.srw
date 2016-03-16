@@ -63,6 +63,7 @@ Private:
 	Long								il_oldWidth				= -1
 	Long								il_oldHeight			= -1
 end variables
+
 on w_dwgui.create
 this.cbx_enable_text_1=create cbx_enable_text_1
 this.cbx_enable_paste=create cbx_enable_paste
@@ -219,7 +220,7 @@ fontfamily fontfamily = swiss!
 string facename = "Tahoma"
 long textcolor = 33554432
 long backcolor = 553648127
-string text = "Enable Exist"
+string text = "Enable Exit"
 boolean checked = true
 end type
 
