@@ -32,12 +32,14 @@ end type
 global u_cst_toolbar u_cst_toolbar
 
 type prototypes
-Private:
 
-	FUNCTION Long	 SendMessage_ToolTip(unsignedLong vul_hWnd, Long vl_Msg, Long vl_wParam, REF TOOLINFO rstr_ToolInfo) LIBRARY "user32.dll" ALIAS FOR "SendMessageW"
 end prototypes
 
 type variables
+Private:
+
+	n_cst_toolBar							invo_toolBar
+
 Public:
 
 	//	Color constants
@@ -101,13 +103,9 @@ Public:
 	CONSTANT Long							LARGE								= 32
 	CONSTANT Long							XLARGE							= 48
 
-	CONSTANT UnsignedLong				WM_USER							= 1024
-	CONSTANT UnsignedLong				TTM_POP							= WM_USER + 28
-
 Protected:
 
 	n_cst_string							invo_string
-	n_cst_API_user32						invo_user32
 
 Private:
 
@@ -126,10 +124,7 @@ Private:
 	CONSTANT Long							TAB								= 1
 	CONSTANT Long							BACKTAB							= 2
 	
-	Double									idbl_PBVersion					= 0.0
-	
 	n_cst_color								invo_color
-	n_cst_API_GDI32						invo_GDI32
 
 	String									is_lbuttonDown
 
@@ -183,7 +178,6 @@ private subroutine of_constructor ()
 private subroutine of_destructor ()
 private subroutine of_broadcast_showtoolbartext (boolean vb_showtext)
 private subroutine of_broadcast_showtoolbartips (boolean vb_showtips)
-private function integer of_locatetooltips (unsignedlong vul_hwnd)
 protected function boolean of_debug ()
 protected subroutine of_debug (boolean vb_debug)
 public function integer of_keydown (keycode vkc_key, unsignedinteger vui_keyflags)
@@ -616,7 +610,7 @@ IF NOT (isNull(dw_toolBar.of_getItem_image(vl_item)) OR Trim(dw_toolBar.of_getIt
 //
 //	END IF
 	
-	IF idbl_PBVersion >= 11.5 THEN
+	IF invo_toolBar.of_PBVersion() >= 11.5 THEN
 		
 		ls_modify						= ls_modify																					&
 											+ 'tooltip.backcolor="' + String(of_getColor(INFOBACKGROUND)) + '" '		&
@@ -668,7 +662,7 @@ IF NOT (isNull(dw_toolBar.of_getItem_name(vl_item)) OR Trim(dw_toolBar.of_getIte
 											+ 'font.family="2" font.pitch="2" font.charset="0" '							&
 											+ 'background.mode="1" '
 												
-//		IF idbl_PBVersion >= 12.5 THEN
+//		IF invo_toolBar.of_PBVersion >= 12.5 THEN
 //			
 //			IF dw_toolBar.of_getItem_enabled(vl_item) THEN
 //				ls_modify				= ls_modify + 'enabled="1" '
@@ -678,7 +672,7 @@ IF NOT (isNull(dw_toolBar.of_getItem_name(vl_item)) OR Trim(dw_toolBar.of_getIte
 //
 //		END IF
 
-		IF idbl_PBVersion >= 11.5 THEN
+		IF invo_toolBar.of_PBVersion() >= 11.5 THEN
 
 			ls_modify					= ls_modify + 'color="' + String(of_getColor(MENUTEXT)) + '" '
 
@@ -731,7 +725,7 @@ IF NOT (isNull(dw_toolBar.of_getItem_name(vl_item)) OR Trim(dw_toolBar.of_getIte
 											+ 'font.family="2" font.pitch="2" font.charset="0" '							&
 											+ 'background.mode="1" '
 												
-//			IF idbl_PBVersion >= 12.5 THEN
+//			IF invo_toolBar.of_PBVersion >= 12.5 THEN
 //				
 //				IF dw_toolBar.of_getItem_enabled(vl_item) THEN
 //					ls_modify			= ls_modify + 'enabled="1" '
@@ -741,7 +735,7 @@ IF NOT (isNull(dw_toolBar.of_getItem_name(vl_item)) OR Trim(dw_toolBar.of_getIte
 //	
 //			END IF
 	
-			IF idbl_PBVersion >= 11.5 THEN
+			IF invo_toolBar.of_PBVersion() >= 11.5 THEN
 	
 				ls_modify				= ls_modify + 'color="' + String(of_getColor(MENUTEXT)) + '" '
 	
@@ -784,7 +778,7 @@ of_DrawEnabled(vl_item)
 of_DrawChecked(vl_item)
 
 //	Originally, was going to use the focusRectangle during keyboard interface
-IF idbl_PBVersion >= 12.5 THEN
+IF invo_toolBar.of_PBVersion() >= 12.5 THEN
 	
 	IF NOT (isNull(dw_toolBar.of_getItem_name(vl_item)) OR Trim(dw_toolBar.of_getItem_name(vl_item)) = '') THEN
 		IF dw_toolBar.of_getItem_displayText(vl_item) THEN
@@ -819,26 +813,14 @@ IF lb_createdText THEN
 END IF
 
 //	Set tabSequence for keyboard interface
-//IF idbl_PBVersion >= 12.5 THEN
-
-	IF lb_createdImage OR lb_createdText THEN
-		IF dw_toolBar.of_getItem_position(vl_item) = LEFT THEN 
-			dw_toolBar.of_setItem_tabSequence(vl_item, vl_item * 10)
-		ELSE
-			dw_toolBar.of_setItem_tabSequence(vl_item, 1000 - (vl_item * 10))
-		END IF
+IF lb_createdImage OR lb_createdText THEN
+	IF dw_toolBar.of_getItem_position(vl_item) = LEFT THEN 
+		dw_toolBar.of_setItem_tabSequence(vl_item, vl_item * 10)
+	ELSE
+		dw_toolBar.of_setItem_tabSequence(vl_item, 1000 - (vl_item * 10))
 	END IF
+END IF
 	
-//	IF lb_createImage THEN
-//		dw_toolBar.Modify('p_' + dw_toolBar.of_getItem_objectName(vl_item) + '.TabSequence=' + String(dw_toolBar.of_getItem_tabSequence(vl_item)))
-//	ELSE
-//		IF lb_createdText THEN
-//			dw_toolBar.Modify('t_' + dw_toolBar.of_getItem_objectName(vl_item) + '.TabSequence=' + String(dw_toolBar.of_getItem_tabSequence(vl_item)))
-//		END IF
-//	END IF
-
-//END IF
-
 Return(dw_toolBar.of_getItem_rectWidth(vl_item))
 end function
 
@@ -1217,7 +1199,7 @@ CHOOSE CASE vs_color
 		IF #SolidBackGround THEN
 			ll_color						= invo_color.of_menuBar()
 		ELSE
-			IF idbl_PBVersion >= 11.5 THEN
+			IF invo_toolBar.of_PBVersion() >= 11.5 THEN
 				ll_color					= invo_color.of_activeCaption()
 			ELSE
 				ll_color					= invo_color.of_menuBar()
@@ -1227,7 +1209,7 @@ CHOOSE CASE vs_color
 		IF #SolidBackGround THEN
 			ll_color						= invo_color.of_menuBar()
 		ELSE
-			IF idbl_PBVersion >= 11.5 THEN
+			IF invo_toolBar.of_PBVersion() >= 11.5 THEN
 				ll_color					= invo_color.of_inactiveCaption()
 			ELSE
 				ll_color					= invo_color.of_menuBar()
@@ -1237,7 +1219,7 @@ CHOOSE CASE vs_color
 		IF #SolidBackGround THEN
 			ll_color						= invo_color.of_menuBar()
 		ELSE
-			IF idbl_PBVersion >= 11.5 THEN
+			IF invo_toolBar.of_PBVersion() >= 11.5 THEN
 				IF ib_trackMouseEvent THEN
 					ll_color				= invo_color.of_activeCaption()
 				ELSE
@@ -1545,7 +1527,7 @@ END IF
 Return(of_highLight(VISIBLEMODE))
 end function
 
-private subroutine of_broadcast_invisible (userobject vuo_broadcaster);//	This routine notifies the other n_cst_toolBar objects that a "new"
+private subroutine of_broadcast_invisible (userobject vuo_broadcaster);//	This routine notifies the other u_cst_toolBar objects that a "new"
 //	n_cst_toolBar has the highLight box and to hide theirs.  This way only
 //	one toolBar has a highLight box.
 
@@ -1572,7 +1554,7 @@ protected function integer of_highlight (string vs_mode);CHOOSE CASE vs_mode
 								'r_button.pen.color="' + String(of_GetColor(HIGHLIGHTBORDER)) + '" ' +		&
 								'r_button.background.color="' + String(of_GetColor(SELECTED2)) + '" ')
 								
-		IF idbl_PBVersion >= 11.5 THEN
+		IF invo_toolBar.of_PBVersion() >= 11.5 THEN
 			dw_toolBar.Modify('r_button.background.gradient.color="' + String(of_GetColor(SELECTED1)) + '"')
 		END IF
 		
@@ -1582,7 +1564,7 @@ protected function integer of_highlight (string vs_mode);CHOOSE CASE vs_mode
 								'r_button.pen.color="' + String(of_GetColor(HIGHLIGHTBORDER)) + '" ' +		&
 								'r_button.background.color="' + String(of_GetColor(HIGHLIGHT2)) + '" ')
 								
-		IF idbl_PBVersion >= 11.5 THEN
+		IF invo_toolBar.of_PBVersion() >= 11.5 THEN
 			dw_toolBar.Modify('r_button.background.gradient.color="' + String(of_GetColor(HIGHLIGHT1)) + '"')
 		END IF
 		
@@ -1679,38 +1661,6 @@ NEXT
 RETURN
 end subroutine
 
-private function integer of_locatetooltips (unsignedlong vul_hwnd);String									ls_className
-UnsignedLong							lul_hWnd,	lul_hWndParent
-UnsignedLong							lul_ID
-	
-lul_hWnd									= invo_user32.of_API_getWindow(vul_hWnd, invo_user32.GW_CHILD)
-
-DO WHILE lul_hWnd > 0
-	
-	invo_user32.of_API_getClassName(lul_hWnd, ls_className)
-
-	IF Lower(ls_className) = 'tooltips_class32' THEN
-
-		lul_hWndParent					= invo_user32.of_API_GetParent(lul_hWnd)
-//		lul_ID							= invo_user32.of_API_GetDlgCtrlID(lul_hWnd)
-//		
-//		invo_user32.of_API_getClassName(lul_hWndParent, ls_className)
-//	
-//		ls_className					= ls_className
-		
-		Return(Send(lul_hWnd, TTM_POP, 0, 0))
-		
-	END IF
-	
-	of_locateToolTips(lul_hWnd)
-	
-	lul_hWnd								= invo_user32.of_API_getWindow(lul_hWnd, invo_user32.GW_HWNDNEXT)
-
-LOOP
-
-Return(FAILURE)
-end function
-
 protected function boolean of_debug ();Return(ib_debug)
 end function
 
@@ -1723,12 +1673,12 @@ public function integer of_keydown (keycode vkc_key, unsignedinteger vui_keyflag
 	EVENT ue_debug(dw_toolBar.Describe('DataWindow.Syntax'))
 END IF
 
-//of_locateToolTips(invo_user32.of_API_getDesktopWindow())
+//invo_toolBar.of_locateToolTips(invo_toolBar.of_getDesktopWindow())
 //
-//IF idbl_PBVersion >= 11.5 THEN
+//IF invo_toolBar.of_PBVersion() >= 11.5 THEN
 //	
 //	Boolean								lb_enabled
-//	lb_enabled							= Long	(dw_toolbar.Describe('p_save_2.ToolTip.Enabled')) = 1
+//	lb_enabled							= Long(dw_toolbar.Describe('p_save_2.ToolTip.Enabled')) = 1
 //
 //	IF lb_enabled THEN
 //		dw_toolbar.Modify('p_save_2.ToolTip.Enabled="0"')
@@ -1759,7 +1709,7 @@ ELSEIF vkc_key = keyLeftArrow! THEN
 				ll_pointerX				= dw_toolBar.PointerX()
 				ll_startX				= Long(dw_toolBar.Describe('r_button.X'))
 
-				invo_user32.of_API_getCursorPos(ll_cursorX, ll_cursorY)
+				invo_toolBar.of_getCursorPos(ll_cursorX, ll_cursorY)
 				
 			END IF
 
@@ -1770,7 +1720,7 @@ ELSEIF vkc_key = keyLeftArrow! THEN
 				ll_endX					= Long(dw_toolBar.Describe('r_button.X'))
 				ll_offSetX				= (ll_pointerX - ll_startX) + (ll_startX - ll_endX) - PixelsToUnits(4, XPixelsToUnits!)
 				
-				invo_user32.of_API_setCursorPos(ll_cursorX - UnitsToPixels(ll_offSetX, XUnitsToPixels!), ll_cursorY)
+				invo_toolBar.of_setCursorPos(ll_cursorX - UnitsToPixels(ll_offSetX, XUnitsToPixels!), ll_cursorY)
 	
 			END IF
 			
@@ -1789,7 +1739,7 @@ ELSEIF vkc_key = keyRightArrow! THEN
 				ll_pointerX				= dw_toolBar.PointerX()
 				ll_startX				= Long(dw_toolBar.Describe('r_button.X'))
 
-				invo_user32.of_API_getCursorPos(ll_cursorX, ll_cursorY)
+				invo_toolBar.of_getCursorPos(ll_cursorX, ll_cursorY)
 				
 			END IF
 
@@ -1800,7 +1750,7 @@ ELSEIF vkc_key = keyRightArrow! THEN
 				ll_endX					= Long(dw_toolBar.Describe('r_button.X'))
 				ll_offSetX				= (ll_startX - ll_pointerX) + (ll_endX - ll_startX) + PixelsToUnits(4, XPixelsToUnits!)
 				
-				invo_user32.of_API_setCursorPos(ll_cursorX + UnitsToPixels(ll_offSetX, XUnitsToPixels!), ll_cursorY)
+				invo_toolBar.of_setCursorPos(ll_cursorX + UnitsToPixels(ll_offSetX, XUnitsToPixels!), ll_cursorY)
 	
 			END IF
 			
@@ -1997,7 +1947,7 @@ IF isNull(vs_fontFace) OR Trim(vs_fontFace) = '' THEN Return(ll_width)
 st_toolBar.FaceName					= vs_fontFace
 st_toolBar.TextSize					= vi_fontSize * -1
 	
-ll_width									= PixelsToUnits(invo_GDI32.of_GetFontWidth(st_toolBar, vs_text) + 4, XPixelsToUnits!)
+ll_width									= PixelsToUnits(invo_toolBar.of_GetFontWidth(st_toolBar, vs_text) + 4, XPixelsToUnits!)
 	
 Return(ll_width)
 end function
@@ -2074,7 +2024,7 @@ ls_describe								= Trim(dw_toolBar.Describe(ls_object + '.X'))
 	
 IF ls_describe <> '!' AND ls_describe <> '?' AND ls_describe <> '' THEN
 		
-	IF idbl_PBVersion >= 11.5 THEN
+	IF invo_toolBar.of_PBVersion() >= 11.5 THEN
 		IF dw_toolBar.of_getItem_enabled(vl_item) THEN
 			dw_toolBar.Modify(ls_object + '.Transparency="0"')
 		ELSE
@@ -2084,7 +2034,7 @@ IF ls_describe <> '!' AND ls_describe <> '?' AND ls_describe <> '' THEN
 		//	Need to come up with a way to show enabled/disabled for version prior to 11.5
 	END IF
 		
-	IF idbl_PBVersion >= 12.5 THEN
+	IF invo_toolBar.of_PBVersion() >= 12.5 THEN
 		IF dw_toolBar.of_getItem_enabled(vl_item) THEN
 			dw_toolBar.Modify(ls_object + '.Enabled="1"')
 		ELSE
@@ -2106,7 +2056,7 @@ IF ls_describe <> '!' AND ls_describe <> '?' AND ls_describe <> '' THEN
 		dw_toolBar.Modify(ls_object + '.Color="' + String(of_getColor(DISABLEDTEXT)) + '"')
 	END IF
 		
-	IF idbl_PBVersion >= 12.5 THEN
+	IF invo_toolBar.of_PBVersion() >= 12.5 THEN
 		IF dw_toolBar.of_getItem_enabled(vl_item) THEN
 			dw_toolBar.Modify(ls_object + '.Enabled="1"')
 		ELSE
@@ -2158,7 +2108,7 @@ IF dw_toolBar.of_getItem_checked(vl_item) AND (NOT dw_toolBar.of_getItem_display
 
 		ls_modify						= dw_toolbar.Modify(ls_modify)
 		
-		IF idbl_PBVersion >= 11.5 THEN
+		IF invo_toolBar.of_PBVersion() >= 11.5 THEN
 		
 			dw_toolBar.Modify(ls_object + '.brush.hatch="8"')
 		
@@ -2331,12 +2281,7 @@ destroy(this.dw_toolbar)
 destroy(this.r_border)
 end on
 
-event constructor;Environment									lenv_temp
-GetEnvironment(lenv_temp)
-
-idbl_PBVersion								= lenv_temp.PBMajorRevision + (lenv_temp.PBMinorRevision / 10)
-
-of_DisplayText(GetApplication().ToolbarText)
+event constructor;of_DisplayText(GetApplication().ToolbarText)
 //of_DisplayTextUnderImage(GetApplication().ToolbarText AND textUnderImage)
 
 IF GetApplication().ToolBarTips THEN
@@ -2360,7 +2305,7 @@ IF #SolidBackGround THEN
 	
 	dw_toolBar.Modify('DataWindow.' + #band + '.Color="' + String(of_getColor(TOOLBAR)) + '" ')
 							
-	IF idbl_PBVersion >= 11.5 THEN
+	IF invo_toolBar.of_PBVersion() >= 11.5 THEN
 		
 		dw_toolBar.Modify('DataWindow.' + #band + '.BrushMode="0" ' +																		&
 								'DataWindow.' + #band + '.Gradient.Color="' + String(of_getColor(TOOLBAR)) + '" ' +					&
@@ -2376,7 +2321,7 @@ IF #SolidBackGround THEN
 							
 ELSE
 	
-	IF idbl_PBVersion >= 11.5 THEN
+	IF invo_toolBar.of_PBVersion() >= 11.5 THEN
 		
 		dw_toolBar.Modify('DataWindow.' + #band + '.Color="' + String(of_getColor(TOOLBAR)) + '" ')
 	
@@ -2404,7 +2349,7 @@ dw_toolBar.Modify('CREATE rectangle(band=' + #band + ' ' +																					&
 						'pen.style="0" pen.width="5" pen.color="' +  String(of_getColor(WINDOWTEXT)) + '" ' +						&
 						'background.mode="2" background.color="' +  String(of_getColor(INFOBACKGROUND)) + '") ')
 
-IF idbl_PBVersion >= 11.5 THEN
+IF invo_toolBar.of_PBVersion() >= 11.5 THEN
 
 	dw_toolBar.Modify('r_button.brush.hatch="8"')
 
@@ -2564,7 +2509,7 @@ END IF
 
 IF NOT ib_trackMouseEvent THEN
 	
-	ib_trackMouseEvent				= invo_user32.of_API_trackMouseEvent(handle(this), invo_user32.TME_LEAVE)
+	ib_trackMouseEvent				= invo_toolBar.of_trackMouseEvent(handle(this), invo_toolBar.TME_LEAVE)
 
 	Modify('DataWindow.' + #band + '.Color="' + String(of_getColor(TOOLBAR)) + '" ')
 		
@@ -2628,7 +2573,7 @@ ib_trackMouseEvent					= FALSE
 end event
 
 event other;call super::other;CHOOSE CASE message.Number
-	CASE invo_user32.WM_MOUSELEAVE
+	CASE invo_toolBar.WM_MOUSELEAVE
 		
 		ib_trackMouseEvent			= NOT (of_highLight(INVISIBLE) = SUCCESS)
 		

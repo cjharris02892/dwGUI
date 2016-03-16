@@ -16,66 +16,23 @@ Private:
 end variables
 
 forward prototypes
-public function menu mf_locate (menu vm_locate, string vs_classname)
-public function menu mf_locate (string vs_classname)
-public function string mf_shortcut (menu vm_item)
-public subroutine mf_visible (menu vm_item, boolean vb_visible)
-public subroutine mf_enabled (menu vm_item, boolean vb_enabled)
-public subroutine mf_visible (string vs_classname, boolean vb_visible)
 public function integer mf_popmenu (dragobject vdrg_parent, menu vm_popmenu, integer vi_xpos, integer vi_ypos)
 public function integer mf_popmenu (dragobject vdrg_parent, integer vi_xpos, integer vi_ypos)
-public subroutine mf_enabled (string vs_classname, boolean vb_enabled)
 public subroutine mf_register (dragobject vdrg_parent)
 public function dragobject mf_getparent ()
 public subroutine mf_setparent (dragobject vdrg_parent)
 end prototypes
 
-public function menu mf_locate (menu vm_locate, string vs_classname);n_cst_Menu_Service			lnvo_Service
-
-Return(lnvo_Service.of_Locate(vm_Locate, vs_ClassName))
-end function
-
-public function menu mf_locate (string vs_classname);n_cst_Menu_Service			lnvo_Service
-
-lnvo_Service.of_Register(this)
-
-Return(lnvo_Service.of_Locate(vs_ClassName))
-end function
-
-public function string mf_shortcut (menu vm_item);n_cst_Menu_Service			lnvo_Service
-
-Return(lnvo_Service.of_ShortCut(vm_Item))
-end function
-
-public subroutine mf_visible (menu vm_item, boolean vb_visible);vm_Item.Visible						= vb_Visible
-vm_Item.ToolBarItemVisible			= vb_Visible
-
-RETURN
-end subroutine
-
-public subroutine mf_enabled (menu vm_item, boolean vb_enabled);vm_Item.Enabled						= vb_Enabled
-
-RETURN
-end subroutine
-
-public subroutine mf_visible (string vs_classname, boolean vb_visible);Menu										lm_Item
-lm_Item									= mf_Locate(vs_ClassName)
-
-IF IsValid(lm_Item) THEN mf_Visible(lm_Item, vb_Visible)
-
-RETURN
-end subroutine
-
-public function integer mf_popmenu (dragobject vdrg_parent, menu vm_popmenu, integer vi_xpos, integer vi_ypos);n_cst_window_service					lnvo_windowService
+public function integer mf_popmenu (dragobject vdrg_parent, menu vm_popmenu, integer vi_xpos, integer vi_ypos);n_cst_toolBar							lnvo_toolBar
 
 Window									lw_parent,	lw_frame,	lw_childParent
 GraphicObject							lgo
 	
-lw_parent								= lnvo_windowService.of_getParentWindow(vdrg_parent)
+lw_parent								= lnvo_toolBar.of_getParentWindow(vdrg_parent)
 	
 IF IsValid(lw_parent) THEN
 	
-	lw_frame								= lnvo_windowService.of_getFrame(vdrg_parent)
+	lw_frame								= lnvo_toolBar.of_getFrame(vdrg_parent)
 
 	IF IsValid(lw_frame) THEN
 
@@ -83,11 +40,11 @@ IF IsValid(lw_parent) THEN
 			lw_parent					= lw_frame
 		ELSE
 
-			IF lw_parent.windowType = Main! AND lnvo_windowService.of_IsMDIChild(lw_parent) THEN
+			IF lw_parent.windowType = Main! AND lnvo_toolBar.of_IsMDIChild(lw_parent) THEN
 				lw_parent				= lw_frame
 			ELSE
 					
-				IF lw_parent.windowType = Main! AND lnvo_windowService.of_IsChild(lw_parent) THEN
+				IF lw_parent.windowType = Main! AND lnvo_toolBar.of_IsChild(lw_parent) THEN
 					
 					lgo 					= lw_parent
 						
@@ -112,7 +69,7 @@ IF IsValid(lw_parent) THEN
 					LOOP
 			
 					IF lw_parent.TypeOf() = Window! THEN
-						IF lw_parent.windowType = Main! AND lnvo_windowService.of_IsMDIChild(lw_parent) THEN
+						IF lw_parent.windowType = Main! AND lnvo_toolBar.of_IsMDIChild(lw_parent) THEN
 							lw_parent	= lw_frame
 						END IF
 					END IF
@@ -142,15 +99,7 @@ end function
 public function integer mf_popmenu (dragobject vdrg_parent, integer vi_xpos, integer vi_ypos);Return(mf_popMenu(vdrg_parent, this, vi_xPos, vi_yPos))
 end function
 
-public subroutine mf_enabled (string vs_classname, boolean vb_enabled);Menu										lm_Item
-lm_Item									= mf_Locate(vs_ClassName)
-
-IF IsValid(lm_Item) THEN mf_enabled(lm_Item, vb_enabled)
-
-RETURN
-end subroutine
-
-public subroutine mf_register (dragobject vdrg_parent);idrg_parent							= vdrg_parent
+public subroutine mf_register (dragobject vdrg_parent);idrg_parent								= vdrg_parent
 
 RETURN
 end subroutine
@@ -158,7 +107,7 @@ end subroutine
 public function dragobject mf_getparent ();Return(idrg_parent)
 end function
 
-public subroutine mf_setparent (dragobject vdrg_parent);idrg_parent						= vdrg_parent
+public subroutine mf_setparent (dragobject vdrg_parent);idrg_parent								= vdrg_parent
 
 RETURN
 end subroutine

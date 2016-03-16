@@ -452,13 +452,13 @@ FOR ll_item = 1 TO ll_items
 	
 	IF isNull(ll_tabFirst) THEN
 			
-		ll_itemFirst					= ll_item
+		ll_itemFirst					= of_getItem_order(ll_item)
 		ll_tabFirst						= ll_tabSequence
 			
 	ELSE
 		IF ll_tabSequence < ll_tabFirst THEN
 				
-			ll_itemFirst				= ll_item
+			ll_itemFirst				= of_getItem_order(ll_item)
 			ll_tabFirst					= ll_tabSequence
 				
 		END IF
@@ -492,13 +492,13 @@ FOR ll_item = 1 TO ll_items
 	
 	IF isNull(ll_tabLast) THEN
 			
-		ll_itemLast						= ll_item
+		ll_itemLast						= of_getItem_order(ll_item)
 		ll_tabLast						= ll_tabSequence
 			
 	ELSE
 		IF ll_tabSequence > ll_tabLast THEN
 				
-			ll_itemLast					= ll_item
+			ll_itemLast					= of_getItem_order(ll_item)
 			ll_tabLast					= ll_tabSequence
 				
 		END IF
@@ -538,13 +538,13 @@ FOR ll_item = 1 TO ll_items
 	IF ll_tabSequence > ll_tabCurrent THEN
 		IF isNull(ll_tabNext) THEN
 			
-			ll_itemNext					= ll_item
+			ll_itemNext					= of_getItem_order(ll_item)
 			ll_tabNext					= ll_tabSequence
 			
 		ELSE
 			IF ll_tabSequence < ll_tabNext THEN
 				
-				ll_itemNext				= ll_item
+				ll_itemNext				= of_getItem_order(ll_item)
 				ll_tabNext				= ll_tabSequence
 				
 			END IF
@@ -585,13 +585,13 @@ FOR ll_item = 1 TO ll_items
 	IF ll_tabSequence < ll_tabCurrent THEN
 		IF isNull(ll_tabPrevious) THEN
 			
-			ll_itemPrevious			= ll_item
+			ll_itemPrevious			= of_getItem_order(ll_item)
 			ll_tabPrevious				= ll_tabSequence
 			
 		ELSE
 			IF ll_tabSequence > ll_tabPrevious THEN
 				
-				ll_itemPrevious		= ll_item
+				ll_itemPrevious		= of_getItem_order(ll_item)
 				ll_tabPrevious			= ll_tabSequence
 				
 			END IF
