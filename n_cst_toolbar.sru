@@ -175,16 +175,13 @@ Private:
 	n_cst_string							invo_string
 
 	Boolean									ib_isUnicode					= TRUE
-	Double									idbl_PBVersion					= 0.0
 end variables
 
 forward prototypes
-public function double of_pbversion ()
 public function boolean of_isunicode ()
 public function long of_getfontwidth (ref statictext rst_font, string vs_text)
 public function long of_getfontheight (ref statictext rst_font, string vs_text)
 private function point of_getfontsize (ref statictext rst_font, string vs_text)
-public function integer of_locatetooltips (unsignedlong vul_hwnd)
 public function string of_getclassname (unsignedlong vul_hwnd)
 private function long of_getclassname (unsignedlong vul_hwnd, ref string rs_classname, long vl_maxpath)
 public function long of_getclassname (unsignedlong vul_hwnd, ref string rs_classname)
@@ -204,10 +201,8 @@ private function window of_getparentwindow (graphicobject vgo_getparent, ref str
 public function window of_getparentwindow (graphicobject vgo_getparent, ref string rs_qualifyobject)
 public function boolean of_getclientrect (unsignedlong vul_hwnd, ref rect rstr_rectangle)
 public function boolean of_getclientrect (unsignedlong vul_hwnd, ref long rl_left, ref long rl_top, ref long rl_right, ref long rl_bottom)
+public function integer of_poptooltips (unsignedlong vul_hwnd)
 end prototypes
-
-public function double of_pbversion ();Return(idbl_PBVersion)
-end function
 
 public function boolean of_isunicode ();Return(ib_isUnicode)
 end function
@@ -252,38 +247,6 @@ END IF
 ReleaseDC(lul_Handle, lul_hDC)
 
 Return(lstr_size)
-end function
-
-public function integer of_locatetooltips (unsignedlong vul_hwnd);String									ls_className
-UnsignedLong							lul_hWnd,	lul_hWndParent
-UnsignedLong							lul_ID
-	
-lul_hWnd									= getWindow(vul_hWnd, GW_CHILD)
-
-DO WHILE lul_hWnd > 0
-	
-	of_getClassName(lul_hWnd, ls_className)
-
-	IF Lower(ls_className) = 'tooltips_class32' THEN
-
-		lul_hWndParent					= GetParent(lul_hWnd)
-//		lul_ID							= GetDlgCtrlID(lul_hWnd)
-//		
-//		of_getClassName(lul_hWndParent, ls_className)
-//	
-//		ls_className					= ls_className
-		
-		Return(Send(lul_hWnd, TTM_POP, 0, 0))
-		
-	END IF
-	
-	of_locateToolTips(lul_hWnd)
-	
-	lul_hWnd								= getWindow(lul_hWnd, GW_HWNDNEXT)
-
-LOOP
-
-Return(1)
 end function
 
 public function string of_getclassname (unsignedlong vul_hwnd);Long										ll_TextLength
@@ -559,6 +522,38 @@ rl_Bottom								= lstr_Rectangle.Bottom
 Return(lb_RC)
 end function
 
+public function integer of_poptooltips (unsignedlong vul_hwnd);String									ls_className
+UnsignedLong							lul_hWnd,	lul_hWndParent
+UnsignedLong							lul_ID
+	
+lul_hWnd									= getWindow(vul_hWnd, GW_CHILD)
+
+DO WHILE lul_hWnd > 0
+	
+	of_getClassName(lul_hWnd, ls_className)
+
+	IF Lower(ls_className) = 'tooltips_class32' THEN
+
+		lul_hWndParent					= GetParent(lul_hWnd)
+//		lul_ID							= GetDlgCtrlID(lul_hWnd)
+//		
+//		of_getClassName(lul_hWndParent, ls_className)
+//	
+//		ls_className					= ls_className
+		
+		Return(Send(lul_hWnd, TTM_POP, 0, 0))
+		
+	END IF
+	
+	of_popToolTips(lul_hWnd)
+	
+	lul_hWnd								= getWindow(lul_hWnd, GW_HWNDNEXT)
+
+LOOP
+
+Return(1)
+end function
+
 on n_cst_toolbar.create
 call super::create
 TriggerEvent( this, "constructor" )
@@ -572,7 +567,6 @@ end on
 event constructor;Environment									lenv_temp
 GetEnvironment(lenv_temp)
 
-idbl_PBVersion								= lenv_temp.PBMajorRevision + (lenv_temp.PBMinorRevision / 10)
 ib_isUnicode								= lenv_temp.CharSet = charSetUnicode!
 end event
 
