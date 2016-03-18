@@ -19,7 +19,7 @@ Public:
 
 	//	Reserved object types
 	CONSTANT String						SEPARATOR						= 'separator'
-	CONSTANT String						TOOLBARDROPMENU				= 'toolbardropmenu'
+	CONSTANT String						POPMENU							= 'popmenu'
 	CONSTANT String						TOOLBARITEM						= 'toolbaritem'
 
 Private:
@@ -84,6 +84,7 @@ public subroutine of_deleteitem (long vl_item)
 public function long of_locateitem_name (string vs_name)
 public function long of_locateitem_objectname (string vs_objectname)
 public function double of_pbversion ()
+public function boolean of_getitem_displayinmenu (string vs_item)
 end prototypes
 
 public function boolean of_getitem_displayinmenu (long vl_item);IF vl_item < 1 OR vl_item > RowCount() THEN Return(FALSE)
@@ -720,6 +721,20 @@ Return(ll_item)
 end function
 
 public function double of_pbversion ();Return(idbl_PBVersion)
+end function
+
+public function boolean of_getitem_displayinmenu (string vs_item);IF isNull(vs_item) THEN Return(FALSE)
+
+Boolean									lb_displayInMenu	= FALSE
+
+Long										ll_item
+ll_item									= of_locateItem_name(vs_item)
+
+IF NOT isNull(ll_item) THEN
+	lb_displayInMenu					= of_getItem_displayInMenu(ll_item)
+END IF
+
+Return(lb_displayInMenu)
 end function
 
 on u_cst_toolbar_items.create

@@ -310,10 +310,6 @@ end type
 
 event timer;Stop()
 
-IF of_debug() THEN
-	EVENT ue_debug('checkMouse - timers off')
-END IF
-
 IF of_isMenuPopped() THEN
 	
 	Boolean							lb_processed	= FALSE
@@ -349,7 +345,7 @@ IF of_isMenuPopped() THEN
 					
 				IF isValid(im_popMenu[ll_item]) THEN of_SetMicroHelp(im_PopMenu[ll_item].MicroHelp)
 					
-				IF of_IsEnabled(ls_button) AND of_isVisible(ls_button) AND (NOT of_displayInMenu(ls_button)) THEN
+				IF of_IsEnabled(ls_button) AND of_isVisible(ls_button) AND (NOT dw_toolBar.of_getItem_displayInMenu(ls_button)) THEN
 					POST FUNCTION of_popMenu_moved(ll_item)
 				END IF
 					
@@ -361,10 +357,6 @@ IF of_isMenuPopped() THEN
 		
 	END IF
 		
-END IF
-
-IF of_debug() THEN
-	EVENT ue_debug('checkMouse - timers on')
 END IF
 
 Start(of_IntervalForMouse())

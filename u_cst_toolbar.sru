@@ -19,7 +19,6 @@ integer width = 562
 integer height = 104
 event type integer ue_itemclicking ( string as_button )
 event ue_itemclicked ( string as_button )
-event ue_debug ( string vs_debug )
 event ue_context_size ( string vs_size )
 event ue_context_showtoolbartext ( boolean vb_showtext )
 event ue_context_showtoolbartips ( boolean vb_showtips )
@@ -164,16 +163,11 @@ public function long of_buttonclicked (string vs_button)
 public function long of_buttonclicked (long vl_item)
 public function long of_getcolor (string vs_color)
 public function integer of_update ()
-public function boolean of_displayinmenu (string vs_item)
-public function boolean of_displayinmenu (long vl_item)
 protected function string of_getbuttonclicked ()
 private subroutine of_broadcast_invisible (userobject vuo_broadcaster)
 protected function integer of_highlight (string vs_mode)
 private subroutine of_broadcast_showtoolbartext (boolean vb_showtext)
 private subroutine of_broadcast_showtoolbartips (boolean vb_showtips)
-protected function boolean of_debug ()
-protected subroutine of_debug (boolean vb_debug)
-public function integer of_keydown (keycode vkc_key, unsignedinteger vui_keyflags)
 private function long of_adddropmenu ()
 public function long of_additem (string vs_name, string vs_image)
 public function long of_additem (string vs_name, string vs_image, string vs_tooltip)
@@ -203,6 +197,7 @@ public function integer of_setvisible (long vl_item, boolean vb_switch)
 private function long of_createitem_separator (long vl_item)
 protected function integer of_drawbutton (long vl_item)
 private subroutine of_popmenu_dropdown ()
+protected function integer of_keydown (keycode vkc_key, unsignedinteger vui_keyflags)
 end prototypes
 
 event type integer ue_itemclicking(string as_button);Return(ALLOW)
@@ -293,7 +288,7 @@ end event
 event ue_resized(long vl_oldheight, long vl_newheight);RETURN
 end event
 
-event ue_post_constructor();IF dw_toolBar.of_locateItem_objectName('DropMenu_1') <> 1 THEN
+event ue_post_constructor();IF dw_toolBar.of_locateItem_objectName(dw_toolBar.POPMENU + '_' + String(1)) <> 1 THEN
 	messageBox('Programmer Error', 'You have improperly initialized your toolBar.')
 END IF
 end event
@@ -1186,27 +1181,6 @@ dw_toolBar.SetRedraw(TRUE)
 Return(SUCCESS)
 end function
 
-public function boolean of_displayinmenu (string vs_item);Boolean									lb_displayInMenu = FALSE
-
-Long										ll_item
-ll_item									= dw_toolbar.of_locateItem_name(vs_item)
-
-IF NOT IsNull(ll_item) THEN
-	lb_displayInMenu					= dw_toolbar.of_getItem_displayInMenu(ll_item)
-END IF
-
-Return(lb_displayInMenu)
-end function
-
-public function boolean of_displayinmenu (long vl_item);Boolean									lb_displayInMenu = FALSE
-
-IF vl_Item > 0 AND vl_Item <= dw_toolBar.RowCount() THEN
-	lb_displayInMenu					= dw_toolBar.of_getItem_displayInMenu(vl_item)
-END IF
-
-Return(lb_displayInMenu)
-end function
-
 protected function string of_getbuttonclicked ();Return(is_lButtonDown)
 end function
 
@@ -1254,14 +1228,8 @@ protected function integer of_highlight (string vs_mode);CHOOSE CASE vs_mode
 	CASE VISIBLEMODE
 		dw_toolBar.Object.r_button.Visible	= 1
 	CASE INVISIBLE
-		IF of_debug() THEN
-			EVENT ue_debug('CASE Invisible')
-		END IF
 		dw_toolBar.Object.r_button.Visible	= 0
 	CASE ELSE
-		IF of_debug() THEN
-			EVENT ue_debug('CASE ELSE Invisible')
-		END IF
 		dw_toolBar.Object.r_button.Visible	= 0
 END CHOOSE
 
@@ -1304,116 +1272,11 @@ NEXT
 RETURN
 end subroutine
 
-protected function boolean of_debug ();Return(ib_debug)
-end function
-
-protected subroutine of_debug (boolean vb_debug);ib_debug									= vb_debug
-
-RETURN
-end subroutine
-
-public function integer of_keydown (keycode vkc_key, unsignedinteger vui_keyflags);IF keyDown(KeyAlt!) AND keyDown(keyControl!) AND keyDown(KeyD!) THEN
-	EVENT ue_debug(dw_toolBar.Describe('DataWindow.Syntax'))
-END IF
-
-//invo_toolBar.of_locateToolTips(invo_toolBar.of_getDesktopWindow())
-//
-//IF dw_toolbar.of_PBVersion() >= 11.5 THEN
-//	
-//	Boolean								lb_enabled
-//	lb_enabled							= Long(dw_toolbar.Describe('p_save_2.ToolTip.Enabled')) = 1
-//
-//	IF lb_enabled THEN
-//		dw_toolbar.Modify('p_save_2.ToolTip.Enabled="0"')
-//		dw_toolbar.Modify('p_save_2.ToolTip.Enabled="1"')
-//	END IF
-//
-//END IF
-
-Long										ll_startX,		ll_endX
-Long										ll_cursorX,		ll_pointerX,	ll_offSetX
-Long										ll_cursorY
-Long										ll_itemMove
-
-Long										ll_item
-ll_item									= dw_toolBar.of_locateItem()
-	
-IF vkc_key = keySpaceBar! THEN
-	IF NOT IsNull(ll_item) THEN of_buttonClicked(ll_item)
-ELSEIF vkc_key = keyLeftArrow! THEN
-	IF NOT isNull(ll_item) THEN
-		
-		ll_itemMove						= dw_toolBar.of_locateItem_previous(ll_item)
-		
-		IF NOT isNull(ll_itemMove) THEN
-			
-			IF ib_trackMouseEvent THEN
-				
-				ll_pointerX				= dw_toolBar.PointerX()
-				ll_startX				= Long(dw_toolBar.Describe('r_button.X'))
-
-				invo_toolBar.of_getCursorPos(ll_cursorX, ll_cursorY)
-				
-			END IF
-
-			of_drawButton(ll_itemMove)
-
-			IF ib_trackMouseEvent THEN
-				
-				ll_endX					= Long(dw_toolBar.Describe('r_button.X'))
-				ll_offSetX				= (ll_pointerX - ll_startX) + (ll_startX - ll_endX) - PixelsToUnits(4, XPixelsToUnits!)
-				
-				invo_toolBar.of_setCursorPos(ll_cursorX - UnitsToPixels(ll_offSetX, XUnitsToPixels!), ll_cursorY)
-	
-			END IF
-			
-		END IF
-		
-	END IF
-ELSEIF vkc_key = keyRightArrow! THEN
-	IF NOT isNull(ll_item) THEN
-		
-		ll_itemMove						= dw_toolbar.of_locateItem_next(ll_item)
-		
-		IF NOT isNull(ll_itemMove) THEN
-			
-			IF ib_trackMouseEvent THEN
-				
-				ll_pointerX				= dw_toolBar.PointerX()
-				ll_startX				= Long(dw_toolBar.Describe('r_button.X'))
-
-				invo_toolBar.of_getCursorPos(ll_cursorX, ll_cursorY)
-				
-			END IF
-
-			of_drawButton(ll_itemMove)
-
-			IF ib_trackMouseEvent THEN
-				
-				ll_endX					= Long(dw_toolBar.Describe('r_button.X'))
-				ll_offSetX				= (ll_startX - ll_pointerX) + (ll_endX - ll_startX) + PixelsToUnits(4, XPixelsToUnits!)
-				
-				invo_toolBar.of_setCursorPos(ll_cursorX + UnitsToPixels(ll_offSetX, XUnitsToPixels!), ll_cursorY)
-	
-			END IF
-			
-		END IF
-		
-	END IF
-ELSEIF vkc_key = keyTab! THEN
-	IF vui_keyFlags = 1 THEN
-	ELSE
-	END IF
-END IF
-
-Return(SUCCESS)
-end function
-
 private function long of_adddropmenu ();//	The 1st item is always the DropDownMenu item that is displayed when
-//	not all menu items can be displayed in the toolBar.  The display
-//	logic will show/hide this item as necessary.  It is always the 
-//	rightMost item in the toolBar when displayed and will display a
-//	popMenu of the items that are not shown to the user when clicked.
+//	not all menu items can be displayed in the toolBar.  The display logic
+//	will show/hide this item as necessary.  It is always the rightMost
+//	item in the toolBar when displayed and will display a popMenu of the
+//	items that are not shown to the user when clicked.
 
 dw_toolBar.Reset()
 
@@ -1422,12 +1285,12 @@ ll_item									= dw_toolBar.of_addItem()
 
 dw_toolBar.of_setItem_name(ll_item, is_dropMenuChar)
 dw_toolBar.of_setItem_image(ll_item, '')
-dw_toolBar.of_setItem_toolTip(ll_item, 'ToolBar Drop Menu')
+dw_toolBar.of_setItem_toolTip(ll_item, 'ToolBar Items Menu')
 dw_toolBar.of_setItem_position(ll_item, RIGHT)
 dw_toolBar.of_setItem_visible(ll_item, FALSE)
 dw_toolBar.of_setItem_enabled(ll_item, TRUE)
-dw_toolBar.of_setItem_objectName(ll_item, 'DropMenu_1')
-dw_toolBar.of_setItem_objectType(ll_item, dw_toolbar.TOOLBARDROPMENU)
+dw_toolBar.of_setItem_objectName(ll_item, dw_toolBar.POPMENU + '_' + String(ll_item))
+dw_toolBar.of_setItem_objectType(ll_item, dw_toolbar.POPMENU)
 dw_toolBar.of_setItem_imageTransparency(ll_item, of_getColor(DEFAULTIMAGETRANSPARENCY))
 dw_toolBar.of_setItem_displayText(ll_item, TRUE)
 dw_toolBar.of_setItem_displayInMenu(ll_item, FALSE)
@@ -1651,11 +1514,7 @@ END IF
 Return(lb_checked)
 end function
 
-private function integer of_drawenabled (long vl_item);IF of_debug() THEN
-	EVENT ue_debug('DrawEnabled ' + String(vl_item))
-END IF
-
-IF isNull(vl_item) THEN Return(PREVENT)
+private function integer of_drawenabled (long vl_item);IF isNull(vl_item) THEN Return(PREVENT)
 
 IF vl_item <= 0 OR vl_item > dw_toolBar.RowCount() THEN Return(PREVENT)
 
@@ -1712,11 +1571,7 @@ END IF
 Return(ALLOW)
 end function
 
-private function integer of_drawchecked (long vl_item);IF of_debug() THEN
-	EVENT ue_debug('DrawChecked ' + String(vl_item))
-END IF
-
-IF isNull(vl_item) THEN Return(PREVENT)
+private function integer of_drawchecked (long vl_item);IF isNull(vl_item) THEN Return(PREVENT)
 
 IF vl_item <= 0 OR vl_item > dw_toolBar.RowCount() THEN Return(PREVENT)
 
@@ -1733,8 +1588,7 @@ IF dw_toolBar.of_getItem_checked(vl_item) AND (NOT dw_toolBar.of_getItem_display
 	ll_X									= dw_toolBar.of_getItem_rectLeft(vl_item)		- PixelsToUnits(3, XPixelsToUnits!)
 	ll_Y									= dw_toolBar.of_getItem_rectTop(vl_item)		- PixelsToUnits(3, YPixelsToUnits!)
 	ll_Width								= dw_toolBar.of_getItem_rectWidth(vl_item)	+ PixelsToUnits(7, XPixelsToUnits!)
-	ll_height													&
-											= dw_toolBar.of_getItem_rectHeight(vl_item)	+ PixelsToUnits(2, YPixelsToUnits!)
+	ll_height							= dw_toolBar.of_getItem_rectHeight(vl_item)	+ PixelsToUnits(2, YPixelsToUnits!)
 											
 	String								ls_modify
 	
@@ -1980,11 +1834,7 @@ Return(dw_toolBar.of_getItem_rectWidth(vl_item))
 
 end function
 
-protected function integer of_drawbutton (long vl_item);IF of_debug() THEN
-	EVENT ue_debug('DrawButton ' + String(vl_item))
-END IF
-
-String									ls_describe
+protected function integer of_drawbutton (long vl_item);String									ls_describe
 ls_describe								= dw_toolBar.Describe('r_button.X')
 
 IF ls_describe = '?' OR ls_describe = '!' OR ls_describe = '' THEN Return(FAILURE)
@@ -2005,15 +1855,6 @@ dw_toolBar.Object.r_button.Y		= dw_toolBar.of_getItem_rectTop(vl_item)		- Pixels
 dw_toolBar.Object.r_button.Width	= dw_toolBar.of_getItem_rectWidth(vl_item)	+ PixelsToUnits(7, XPixelsToUnits!)
 dw_toolBar.Object.r_button.Height													&
 											= dw_toolBar.of_getItem_rectHeight(vl_item)	+ PixelsToUnits(2, YPixelsToUnits!)
-
-IF of_debug() THEN
-	EVENT ue_debug(String(vl_item) + '-' +											&
-						String(dw_toolBar.Object.r_button.X) + ',' +				&
-						String(dw_toolBar.Object.r_button.Y) + ',' +				&
-						String(dw_toolBar.Object.r_button.Width) + ',' +		&
-						String(dw_toolBar.Object.r_button.Height))
-END IF
-					
 Return(of_highLight(VISIBLEMODE))
 end function
 
@@ -2147,6 +1988,99 @@ DESTROY lm_dropDown
 
 RETURN
 end subroutine
+
+protected function integer of_keydown (keycode vkc_key, unsignedinteger vui_keyflags);//invo_toolBar.of_locateToolTips(invo_toolBar.of_getDesktopWindow())
+//
+//IF dw_toolbar.of_PBVersion() >= 11.5 THEN
+//	
+//	Boolean								lb_enabled
+//	lb_enabled							= Long(dw_toolbar.Describe('p_save_2.ToolTip.Enabled')) = 1
+//
+//	IF lb_enabled THEN
+//		dw_toolbar.Modify('p_save_2.ToolTip.Enabled="0"')
+//		dw_toolbar.Modify('p_save_2.ToolTip.Enabled="1"')
+//	END IF
+//
+//END IF
+
+Long										ll_startX,		ll_endX
+Long										ll_cursorX,		ll_pointerX,	ll_offSetX
+Long										ll_cursorY
+Long										ll_itemMove
+
+Long										ll_item
+ll_item									= dw_toolBar.of_locateItem()
+	
+IF vkc_key = keySpaceBar! THEN
+	IF NOT IsNull(ll_item) THEN of_buttonClicked(ll_item)
+ELSEIF vkc_key = keyLeftArrow! THEN
+	IF NOT isNull(ll_item) THEN
+		
+		ll_itemMove						= dw_toolBar.of_locateItem_previous(ll_item)
+		
+		IF NOT isNull(ll_itemMove) THEN
+			
+			IF ib_trackMouseEvent THEN
+				
+				ll_pointerX				= dw_toolBar.PointerX()
+				ll_startX				= Long(dw_toolBar.Describe('r_button.X'))
+
+				invo_toolBar.of_getCursorPos(ll_cursorX, ll_cursorY)
+				
+			END IF
+
+			of_drawButton(ll_itemMove)
+
+			IF ib_trackMouseEvent THEN
+				
+				ll_endX					= Long(dw_toolBar.Describe('r_button.X'))
+				ll_offSetX				= (ll_pointerX - ll_startX) + (ll_startX - ll_endX) - PixelsToUnits(4, XPixelsToUnits!)
+				
+				invo_toolBar.of_setCursorPos(ll_cursorX - UnitsToPixels(ll_offSetX, XUnitsToPixels!), ll_cursorY)
+	
+			END IF
+			
+		END IF
+		
+	END IF
+ELSEIF vkc_key = keyRightArrow! THEN
+	IF NOT isNull(ll_item) THEN
+		
+		ll_itemMove						= dw_toolbar.of_locateItem_next(ll_item)
+		
+		IF NOT isNull(ll_itemMove) THEN
+			
+			IF ib_trackMouseEvent THEN
+				
+				ll_pointerX				= dw_toolBar.PointerX()
+				ll_startX				= Long(dw_toolBar.Describe('r_button.X'))
+
+				invo_toolBar.of_getCursorPos(ll_cursorX, ll_cursorY)
+				
+			END IF
+
+			of_drawButton(ll_itemMove)
+
+			IF ib_trackMouseEvent THEN
+				
+				ll_endX					= Long(dw_toolBar.Describe('r_button.X'))
+				ll_offSetX				= (ll_startX - ll_pointerX) + (ll_endX - ll_startX) + PixelsToUnits(4, XPixelsToUnits!)
+				
+				invo_toolBar.of_setCursorPos(ll_cursorX + UnitsToPixels(ll_offSetX, XUnitsToPixels!), ll_cursorY)
+	
+			END IF
+			
+		END IF
+		
+	END IF
+ELSEIF vkc_key = keyTab! THEN
+	IF vui_keyFlags = 1 THEN
+	ELSE
+	END IF
+END IF
+
+Return(SUCCESS)
+end function
 
 on u_cst_toolbar.create
 this.st_toolbar=create st_toolbar
@@ -2390,15 +2324,9 @@ IF isNull(is_lButtonDown) THEN
 			ll_item						= of_locateItem_objectName(Mid(dwo.Name, 3))
 			
 			IF isNull(ll_item) THEN
-				IF of_debug() THEN
-					EVENT ue_debug('Could not locateObject ' + Mid(dwo.Name, 3))
-				END IF
 				of_highLight(INVISIBLE)
 			ELSE
 				IF NOT of_isEnabled(ll_item) THEN
-					IF of_debug() THEN
-						EVENT ue_debug('Object is not enabled ' + Mid(dwo.Name, 3))
-					END IF
 					of_highLight(INVISIBLE)
 				ELSE
 					of_drawButton(ll_item)
@@ -2406,9 +2334,6 @@ IF isNull(is_lButtonDown) THEN
 			END IF
 		
 		CASE ELSE
-			IF of_debug() THEN
-				EVENT ue_debug('Type not valid ' + String(dwo.Type))
-			END IF
 			of_highLight(INVISIBLE)
 	END CHOOSE
 ELSE
@@ -2445,11 +2370,6 @@ END IF
 end event
 
 event ue_dwnkey;of_keyDown(key, keyFlags)
-end event
-
-event ue_syscommand;IF of_debug() THEN
-	EVENT ue_debug('CommandType - ' + String(commandType))
-END IF
 end event
 
 event ue_dwnhscoll;Object.DataWindow.HorizontalScrollPosition	= 0
@@ -2492,10 +2412,6 @@ event other;call super::other;CHOOSE CASE message.Number
 		Modify('DataWindow.' + #band + '.Color="' + String(of_getColor(LOSEFOCUS)) + '" ')
 
 END CHOOSE
-
-IF of_debug() THEN
-	EVENT ue_debug('wParam - ' + String(wParam) + ' and lParam - ' + String(lParam))
-END IF
 end event
 
 event getfocus;call super::getfocus;Modify('DataWindow.' + #band + '.Color="' + String(of_getColor(GETFOCUS)) + '" ')
