@@ -1,11 +1,11 @@
 HA$PBExportHeader$n_cst_color.sru
 $PBExportComments$Extension Color service
 forward
-global type n_cst_color from pfc_n_cst_color
+global type n_cst_color from n_base
 end type
 end forward
 
-global type n_cst_color from pfc_n_cst_color
+global type n_cst_color from n_base autoinstantiate
 end type
 
 type prototypes
@@ -127,8 +127,6 @@ public function long of_windowframe ()
 public function long of_windowtext ()
 public function long of_red ()
 public function long of_blue ()
-public function long of_white ()
-public function long of_black ()
 public function long of_link ()
 public function long of_linkhover ()
 public function long of_linkactive ()
@@ -145,90 +143,74 @@ public function long of_activecaption ()
 public function long of_gradientactivecaption ()
 public function long of_gradientinactivecaption ()
 private function unsignedlong of_api_getsyscolor (integer vi_index)
-public function long of_cyan ()
 public function long of_yellowsticky ()
-public function long of_yellow ()
-public function long of_gray ()
-public function long of_brown ()
-public function long of_silver ()
-public function long of_teal ()
-public function long of_sky ()
-public function long of_cream ()
-public function long of_mint ()
-public function long of_navy ()
-public function long of_mediumgray ()
-public function long of_olive ()
-public function long of_lime ()
-public function long of_green ()
-public function long of_aqua ()
-public function long of_fushia ()
-public function long of_maroon ()
 public function long of_purple ()
 public function long of_hotlight ()
 public function string of_stringrgb (long vl_color, string vs_delimiter)
 public function long of_unstringrgb (string vs_color, string vs_delimiter)
+public function long of_silver ()
 end prototypes
 
 public function long of_activeborder ();IF il_ActiveBorder = -1 THEN
-	il_ActiveBorder				= of_API_GetSysColor(COLOR_ACTIVEBORDER)
+	il_ActiveBorder					= of_API_GetSysColor(COLOR_ACTIVEBORDER)
 END IF
 
 Return(il_ActiveBorder)
 end function
 
 public function long of_appworkspace ();IF il_AppWorkSpace = -1 THEN
-	il_AppWorkSpace				= of_API_GetSysColor(COLOR_APPWORKSPACE)
+	il_AppWorkSpace					= of_API_GetSysColor(COLOR_APPWORKSPACE)
 END IF
 
 Return(il_AppWorkSpace)
 end function
 
 public function long of_background ();IF il_BackGround = -1 THEN
-	il_BackGround					= of_API_GetSysColor(COLOR_BACKGROUND)
+	il_BackGround						= of_API_GetSysColor(COLOR_BACKGROUND)
 END IF
 
 Return(il_BackGround)
 end function
 
 public function long of_buttonalternateface ();IF il_ButtonAlternateFace = -1 THEN
-	il_ButtonAlternateFace		= of_API_GetSysColor(COLOR_ALTERNATEBTNFACE)
+	il_ButtonAlternateFace			= of_API_GetSysColor(COLOR_ALTERNATEBTNFACE)
 END IF
 
 Return(il_ButtonAlternateFace)
 end function
 
 public function long of_buttonface ();IF il_ButtonFace = -1 THEN
-	il_ButtonFace					= of_API_GetSysColor(COLOR_BTNFACE)
+	il_ButtonFace						= of_API_GetSysColor(COLOR_BTNFACE)
 END IF
 
 Return(il_ButtonFace)
 end function
 
 public function long of_buttonhilight ();IF il_ButtonHiLight = -1 THEN
-	il_ButtonHiLight				= of_API_GetSysColor(COLOR_BTNHIGHLIGHT)
+	il_ButtonHiLight					= of_API_GetSysColor(COLOR_BTNHIGHLIGHT)
 END IF
 
 Return(il_ButtonHiLight)
 end function
 
 public function long of_buttonshadow ();IF il_ButtonShadow = -1 THEN
-	il_ButtonShadow				= of_API_GetSysColor(COLOR_BTNSHADOW)
+	il_ButtonShadow					= of_API_GetSysColor(COLOR_BTNSHADOW)
 END IF
 
 Return(il_ButtonShadow)
 end function
 
 public function long of_buttontext ();IF il_ButtonText = -1 THEN
-	il_ButtonText					= of_API_GetSysColor(COLOR_BTNTEXT)
+	il_ButtonText						= of_API_GetSysColor(COLOR_BTNTEXT)
 END IF
 
 Return(il_ButtonText)
 end function
 
 public function long of_graytext ();IF il_GrayText = -1 THEN
-	il_grayText						= of_getColor('GrayText')
+	il_grayText							= of_getColor('GrayText')
 	IF il_grayText = -1 THEN
-		il_GrayText					= of_API_GetSysColor(COLOR_GRAYTEXT)
+		il_GrayText						= of_API_GetSysColor(COLOR_GRAYTEXT)
 	END IF
 END IF
 
@@ -236,14 +218,14 @@ Return(il_GrayText)
 end function
 
 public function long of_hilight ();IF il_HiLight = -1 THEN
-	il_HiLight						= of_API_GetSysColor(COLOR_HIGHLIGHT)
+	il_HiLight							= of_API_GetSysColor(COLOR_HIGHLIGHT)
 END IF
 
 Return(il_HiLight)
 end function
 
 public function long of_hilighttext ();IF il_HiLightText = -1 THEN
-	il_HiLightText					= of_API_GetSysColor(COLOR_HIGHLIGHTTEXT)
+	il_HiLightText						= of_API_GetSysColor(COLOR_HIGHLIGHTTEXT)
 END IF
 
 Return(il_HiLightText)
@@ -253,70 +235,70 @@ public function long of_hottracking ();Return(of_hotLight())
 end function
 
 public function long of_inactiveborder ();IF il_InactiveBorder = -1 THEN
-	il_InactiveBorder				= of_API_GetSysColor(COLOR_INACTIVEBORDER)
+	il_InactiveBorder					= of_API_GetSysColor(COLOR_INACTIVEBORDER)
 END IF
 
 Return(il_InactiveBorder)
 end function
 
 public function long of_infotext ();IF il_InfoText = -1 THEN
-	il_InfoText						= of_API_GetSysColor(COLOR_INFOTEXT)
+	il_InfoText							= of_API_GetSysColor(COLOR_INFOTEXT)
 END IF
 
 Return(il_InfoText)
 end function
 
 public function long of_menu ();IF il_Menu = -1 THEN
-	il_Menu							= of_API_GetSysColor(COLOR_MENU)
+	il_Menu								= of_API_GetSysColor(COLOR_MENU)
 END IF
 
 Return(il_Menu)
 end function
 
 public function long of_menubar ();IF il_MenuBar = -1 THEN
-	il_MenuBar						= of_API_GetSysColor(COLOR_MENUBAR)
+	il_MenuBar							= of_API_GetSysColor(COLOR_MENUBAR)
 END IF
 
 Return(il_MenuBar)
 end function
 
 public function long of_menuhilight ();IF il_MenuHiLight = -1 THEN
-	il_MenuHiLight					= of_API_GetSysColor(COLOR_MENUHILIGHT)
+	il_MenuHiLight						= of_API_GetSysColor(COLOR_MENUHILIGHT)
 END IF
 
 Return(il_MenuHiLight)
 end function
 
 public function long of_menutext ();IF il_MenuText = -1 THEN
-	il_MenuText						= of_API_GetSysColor(COLOR_MENUTEXT)
+	il_MenuText							= of_API_GetSysColor(COLOR_MENUTEXT)
 END IF
 
 Return(il_MenuText)
 end function
 
 public function long of_scrollbar ();IF il_ScrollBar = -1 THEN
-	il_ScrollBar					= of_API_GetSysColor(COLOR_SCROLLBAR)
+	il_ScrollBar						= of_API_GetSysColor(COLOR_SCROLLBAR)
 END IF
 
 Return(il_ScrollBar)
 end function
 
 public function long of_window ();IF il_Window = -1 THEN
-	il_Window						= of_API_GetSysColor(COLOR_WINDOW)
+	il_Window							= of_API_GetSysColor(COLOR_WINDOW)
 END IF
 
 Return(il_Window)
 end function
 
 public function long of_windowframe ();IF il_WindowFrame = -1 THEN
-	il_WindowFrame					= of_API_GetSysColor(COLOR_WINDOWFRAME)
+	il_WindowFrame						= of_API_GetSysColor(COLOR_WINDOWFRAME)
 END IF
 
 Return(il_WindowFrame)
 end function
 
 public function long of_windowtext ();IF il_WindowText = -1 THEN
-	il_WindowText					= of_API_GetSysColor(COLOR_WINDOWTEXT)
+	il_WindowText						= of_API_GetSysColor(COLOR_WINDOWTEXT)
 END IF
 
 Return(il_WindowText)
@@ -326,12 +308,6 @@ public function long of_red ();Return(RGB(255, 0, 0))
 end function
 
 public function long of_blue ();Return(RGB(0, 0, 255))
-end function
-
-public function long of_white ();Return(RGB(255, 255, 255))
-end function
-
-public function long of_black ();Return(RGB(0, 0, 0))
 end function
 
 public function long of_link ();IF il_link = -1 THEN
@@ -398,55 +374,55 @@ public function long of_linkvisited ();IF il_LinkVisited = -1 THEN of_Link()
 Return(il_LinkVisited)
 end function
 
-public subroutine of_unrgb (long vl_color, ref integer ri_red, ref integer ri_green, ref integer ri_blue);ri_Blue				= Int(vl_Color / 65536)
-ri_Green				= Int((vl_Color - (ri_Blue * 65536)) / 256)
-ri_Red				= Int(vl_Color - (ri_Blue * 65536) - (ri_Green * 256))
+public subroutine of_unrgb (long vl_color, ref integer ri_red, ref integer ri_green, ref integer ri_blue);ri_Blue									= Int(vl_Color / 65536)
+ri_Green									= Int((vl_Color - (ri_Blue * 65536)) / 256)
+ri_Red									= Int(vl_Color - (ri_Blue * 65536) - (ri_Green * 256))
 
 RETURN
 end subroutine
 
 public function long of_3ddkshadow ();IF il_3DDkShadow = -1 THEN
-	il_3DDkShadow					= of_API_GetSysColor(COLOR_3DDKSHADOW)
+	il_3DDkShadow						= of_API_GetSysColor(COLOR_3DDKSHADOW)
 END IF
 
 Return(il_3DDkShadow)
 end function
 
 public function long of_infobackground ();IF il_InfoBackGround = -1 THEN
-	il_InfoBackGround				= of_API_GetSysColor(COLOR_INFOBK)
+	il_InfoBackGround					= of_API_GetSysColor(COLOR_INFOBK)
 END IF
 
 Return(il_InfoBackGround)
 end function
 
 public function long of_3dlight ();IF il_3DLight = -1 THEN
-	il_3DLight						= of_API_GetSysColor(COLOR_3DLIGHT)
+	il_3DLight							= of_API_GetSysColor(COLOR_3DLIGHT)
 END IF
 
 Return(il_3DLight)
 end function
 
-private function long of_getcolor (string vs_getcolor);Long							ll_Color	= -1
-String						ls_Color	= ''
+private function long of_getcolor (string vs_getcolor);Long										ll_Color	= -1
+String									ls_Color	= ''
 
 IF RegistryGet("HKEY_CURRENT_USER\Control Panel\Colors", vs_GetColor, RegString!, ls_Color) = 1 THEN
 		
 	TRY
 		IF ls_color = '' THEN
-			ll_color			= -1
+			ll_color						= -1
 		ELSE
 			
-			String			ls_RGB[]
+			String						ls_RGB[]
 			
-			n_cst_String	lnvo_string
+			n_cst_String				lnvo_string
 			lnvo_string.of_ParseToArray(Trim(ls_Color), ' ', ls_RGB[])
 				
-			ll_Color			= RGB(Integer(ls_RGB[1]), Integer(ls_RGB[2]), Integer(ls_RGB[3]))
+			ll_Color						= RGB(Integer(ls_RGB[1]), Integer(ls_RGB[2]), Integer(ls_RGB[3]))
 			
 		END IF
 		
 	CATCH (RunTimeError	RunError)
-		ll_color				= -1
+		ll_color							= -1
 	END TRY
 		
 END IF
@@ -455,7 +431,7 @@ Return(ll_Color)
 end function
 
 public function long of_inactivecaption ();IF il_InactiveCaption = -1 THEN
-	il_InactiveCaption			= of_API_GetSysColor(COLOR_INACTIVECAPTION)
+	il_InactiveCaption				= of_API_GetSysColor(COLOR_INACTIVECAPTION)
 END IF
 
 Return(il_InactiveCaption)
@@ -469,28 +445,28 @@ Return(il_CaptionText)
 end function
 
 public function long of_inactivecaptiontext ();IF il_InactiveCaptionText = -1 THEN
-	il_InactiveCaptionText		= of_API_GetSysColor(COLOR_INACTIVECAPTIONTEXT)
+	il_InactiveCaptionText			= of_API_GetSysColor(COLOR_INACTIVECAPTIONTEXT)
 END IF
 
 Return(il_InactiveCaptionText)
 end function
 
 public function long of_activecaption ();IF il_ActiveCaption = -1 THEN
-	il_ActiveCaption				= of_API_GetSysColor(COLOR_ACTIVECAPTION)
+	il_ActiveCaption					= of_API_GetSysColor(COLOR_ACTIVECAPTION)
 END IF
 
 Return(il_ActiveCaption)
 end function
 
 public function long of_gradientactivecaption ();IF il_GradientActiveCaption = -1 THEN
-	il_GradientActiveCaption	= of_API_GetSysColor(COLOR_GRADIENTACTIVECAPTION)
+	il_GradientActiveCaption		= of_API_GetSysColor(COLOR_GRADIENTACTIVECAPTION)
 END IF
 
 Return(il_GradientActiveCaption)
 end function
 
 public function long of_gradientinactivecaption ();IF il_GradientInactiveCaption = -1 THEN
-	il_GradientInactiveCaption	= of_API_GetSysColor(COLOR_GRADIENTINACTIVECAPTION)
+	il_GradientInactiveCaption		= of_API_GetSysColor(COLOR_GRADIENTINACTIVECAPTION)
 END IF
 
 Return(il_GradientInactiveCaption)
@@ -499,84 +475,36 @@ end function
 private function unsignedlong of_api_getsyscolor (integer vi_index);Return(GetSysColor(vi_Index))
 end function
 
-public function long of_cyan ();Return(RGB(0, 255, 255))
-end function
-
 public function long of_yellowsticky ();Return(of_infoBackGround())	//	Changed YellowSticky to ToolTip Back to get rid of hardcoded colors when possible
 //Return(RGB(250, 250, 167))
-end function
-
-public function long of_yellow ();Return(RGB(255, 255, 0))
-end function
-
-public function long of_gray ();Return(RGB(128, 128, 128))
-end function
-
-public function long of_brown ();Return(RGB(128, 128, 0))
-end function
-
-public function long of_silver ();Return(RGB(192, 192, 192))
-end function
-
-public function long of_teal ();Return(RGB(0, 128, 128))
-end function
-
-public function long of_sky ();Return(RGB(166, 202, 240))
-end function
-
-public function long of_cream ();Return(RGB(255, 251, 240))
-end function
-
-public function long of_mint ();Return(RGB(192, 220, 192))
-end function
-
-public function long of_navy ();Return(RGB(0, 0, 128))
-end function
-
-public function long of_mediumgray ();Return(RGB(160, 160, 164))
-end function
-
-public function long of_olive ();Return(RGB(128, 128, 0))
-end function
-
-public function long of_lime ();Return(RGB(0, 255, 0))
-end function
-
-public function long of_green ();Return(RGB(0, 128, 0))
-end function
-
-public function long of_aqua ();Return(RGB(0, 255, 255))
-end function
-
-public function long of_fushia ();Return(RGB(255, 0, 255))
-end function
-
-public function long of_maroon ();Return(RGB(128, 0, 0))
 end function
 
 public function long of_purple ();Return(RGB(128, 0, 128))
 end function
 
 public function long of_hotlight ();IF il_HotTracking = -1 THEN
-	il_HotTracking					= of_API_GetSysColor(COLOR_HOTLIGHT)
+	il_HotTracking						= of_API_GetSysColor(COLOR_HOTLIGHT)
 END IF
 
 Return(il_HotTracking)
 end function
 
-public function string of_stringrgb (long vl_color, string vs_delimiter);Integer							li_red	= 0,	li_green	= 0,	li_blue	= 0
+public function string of_stringrgb (long vl_color, string vs_delimiter);Integer									li_red	= 0,	li_green	= 0,	li_blue	= 0
 
 of_unRGB(vl_color, li_red, li_green, li_blue)
 
 Return(String(li_red) + vs_delimiter + String(li_green) + vs_delimiter + String(li_blue))
 end function
 
-public function long of_unstringrgb (string vs_color, string vs_delimiter);String					ls_RGB[]
+public function long of_unstringrgb (string vs_color, string vs_delimiter);String									ls_RGB[]
 
-n_cst_String			lnvo_string
+n_cst_String							lnvo_string
 lnvo_string.of_ParseToArray(Trim(vs_Color), vs_delimiter, ls_RGB[])
 		
 Return(RGB(Integer(ls_RGB[1]), Integer(ls_RGB[2]), Integer(ls_RGB[3])))
+end function
+
+public function long of_silver ();Return(RGB(192, 192, 192))
 end function
 
 on n_cst_color.create
