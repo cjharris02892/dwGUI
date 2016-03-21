@@ -17,8 +17,8 @@ end variables
 global type u_cst_toolbar from userobject
 integer width = 562
 integer height = 104
-event type integer ue_itemclicking ( string as_button )
-event ue_itemclicked ( string as_button )
+event type integer ue_itemclicking ( string vs_button )
+event ue_itemclicked ( string vs_button )
 event ue_context_size ( string vs_size )
 event ue_context_showtoolbartext ( boolean vb_showtext )
 event ue_context_showtoolbartips ( boolean vb_showtips )
@@ -200,10 +200,10 @@ private subroutine of_popmenu_dropdown ()
 protected function integer of_keydown (keycode vkc_key, unsignedinteger vui_keyflags)
 end prototypes
 
-event type integer ue_itemclicking(string as_button);Return(ALLOW)
+event type integer ue_itemclicking(string vs_button);Return(ALLOW)
 end event
 
-event ue_itemclicked(string as_button);CHOOSE CASE Lower(as_button)
+event ue_itemclicked(string vs_button);CHOOSE CASE Lower(vs_button)
 	CASE is_dropMenuChar
 		of_popMenu_dropDown()
 END CHOOSE

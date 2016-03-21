@@ -2,6 +2,8 @@ HA$PBExportHeader$w_dwgui.srw
 forward
 global type w_dwgui from window
 end type
+type r_1 from rectangle within w_dwgui
+end type
 type cbx_show_text_4 from checkbox within w_dwgui
 end type
 type cbx_show_text_3 from checkbox within w_dwgui
@@ -9,8 +11,6 @@ end type
 type cbx_show_text_2 from checkbox within w_dwgui
 end type
 type cbx_show_text_1 from checkbox within w_dwgui
-end type
-type cbx_enable_text_1 from checkbox within w_dwgui
 end type
 type cbx_enable_paste from checkbox within w_dwgui
 end type
@@ -34,7 +34,7 @@ type cbx_show_print from checkbox within w_dwgui
 end type
 type uo_1 from u_cst_toolbar within w_dwgui
 end type
-type r_1 from rectangle within w_dwgui
+type cbx_enable_text_1 from checkbox within w_dwgui
 end type
 end forward
 
@@ -49,11 +49,11 @@ boolean maxbox = true
 boolean resizable = true
 string icon = "AppIcon!"
 boolean center = true
+r_1 r_1
 cbx_show_text_4 cbx_show_text_4
 cbx_show_text_3 cbx_show_text_3
 cbx_show_text_2 cbx_show_text_2
 cbx_show_text_1 cbx_show_text_1
-cbx_enable_text_1 cbx_enable_text_1
 cbx_enable_paste cbx_enable_paste
 cbx_enabled_exit cbx_enabled_exit
 cbx_check_text_2 cbx_check_text_2
@@ -65,7 +65,7 @@ cbx_show_save cbx_show_save
 cbx_show_preview cbx_show_preview
 cbx_show_print cbx_show_print
 uo_1 uo_1
-r_1 r_1
+cbx_enable_text_1 cbx_enable_text_1
 end type
 global w_dwgui w_dwgui
 
@@ -77,11 +77,11 @@ Private:
 end variables
 
 on w_dwgui.create
+this.r_1=create r_1
 this.cbx_show_text_4=create cbx_show_text_4
 this.cbx_show_text_3=create cbx_show_text_3
 this.cbx_show_text_2=create cbx_show_text_2
 this.cbx_show_text_1=create cbx_show_text_1
-this.cbx_enable_text_1=create cbx_enable_text_1
 this.cbx_enable_paste=create cbx_enable_paste
 this.cbx_enabled_exit=create cbx_enabled_exit
 this.cbx_check_text_2=create cbx_check_text_2
@@ -93,12 +93,12 @@ this.cbx_show_save=create cbx_show_save
 this.cbx_show_preview=create cbx_show_preview
 this.cbx_show_print=create cbx_show_print
 this.uo_1=create uo_1
-this.r_1=create r_1
-this.Control[]={this.cbx_show_text_4,&
+this.cbx_enable_text_1=create cbx_enable_text_1
+this.Control[]={this.r_1,&
+this.cbx_show_text_4,&
 this.cbx_show_text_3,&
 this.cbx_show_text_2,&
 this.cbx_show_text_1,&
-this.cbx_enable_text_1,&
 this.cbx_enable_paste,&
 this.cbx_enabled_exit,&
 this.cbx_check_text_2,&
@@ -110,15 +110,15 @@ this.cbx_show_save,&
 this.cbx_show_preview,&
 this.cbx_show_print,&
 this.uo_1,&
-this.r_1}
+this.cbx_enable_text_1}
 end on
 
 on w_dwgui.destroy
+destroy(this.r_1)
 destroy(this.cbx_show_text_4)
 destroy(this.cbx_show_text_3)
 destroy(this.cbx_show_text_2)
 destroy(this.cbx_show_text_1)
-destroy(this.cbx_enable_text_1)
 destroy(this.cbx_enable_paste)
 destroy(this.cbx_enabled_exit)
 destroy(this.cbx_check_text_2)
@@ -130,7 +130,7 @@ destroy(this.cbx_show_save)
 destroy(this.cbx_show_preview)
 destroy(this.cbx_show_print)
 destroy(this.uo_1)
-destroy(this.r_1)
+destroy(this.cbx_enable_text_1)
 end on
 
 event open;//	Left side items are added Left to Right
@@ -187,6 +187,16 @@ END IF
 il_oldWidth							= newWidth
 il_oldHeight						= newHeight
 end event
+
+type r_1 from rectangle within w_dwgui
+long linecolor = 33554432
+integer linethickness = 4
+long fillcolor = 1073741824
+integer x = 5
+integer y = 4
+integer width = 2729
+integer height = 1536
+end type
 
 type cbx_show_text_4 from checkbox within w_dwgui
 integer x = 32
@@ -270,27 +280,6 @@ boolean checked = true
 end type
 
 event clicked;uo_1.of_setVisible('Text 1',	Checked)
-end event
-
-type cbx_enable_text_1 from checkbox within w_dwgui
-integer x = 1431
-integer y = 296
-integer width = 402
-integer height = 80
-integer taborder = 160
-integer textsize = -8
-integer weight = 400
-fontcharset fontcharset = ansi!
-fontpitch fontpitch = variable!
-fontfamily fontfamily = swiss!
-string facename = "Tahoma"
-long textcolor = 33554432
-long backcolor = 553648127
-string text = "Enable Text 1"
-boolean checked = true
-end type
-
-event clicked;uo_1.of_setEnabled('Text 1',	Checked)
 end event
 
 type cbx_enable_paste from checkbox within w_dwgui
@@ -512,7 +501,7 @@ on uo_1.destroy
 call u_cst_toolbar::destroy
 end on
 
-event ue_itemclicked;call super::ue_itemclicked;CHOOSE CASE Lower(as_button)
+event ue_itemclicked;call super::ue_itemclicked;CHOOSE CASE Lower(vs_button)
 		
 	CASE 'exit'
 		
@@ -521,13 +510,24 @@ event ue_itemclicked;call super::ue_itemclicked;CHOOSE CASE Lower(as_button)
 END CHOOSE
 end event
 
-type r_1 from rectangle within w_dwgui
-long linecolor = 33554432
-integer linethickness = 4
-long fillcolor = 1073741824
-integer x = 5
-integer y = 4
-integer width = 2729
-integer height = 1536
+type cbx_enable_text_1 from checkbox within w_dwgui
+integer x = 1431
+integer y = 296
+integer width = 402
+integer height = 80
+integer taborder = 160
+integer textsize = -8
+integer weight = 400
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Tahoma"
+long textcolor = 33554432
+long backcolor = 553648127
+string text = "Enable Text 1"
+boolean checked = true
 end type
+
+event clicked;uo_1.of_setEnabled('Text 1',	Checked)
+end event
 

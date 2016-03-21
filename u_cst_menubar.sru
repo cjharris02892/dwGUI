@@ -254,7 +254,7 @@ FOR ll_Item = 1 TO ll_Items
 
 	IF NOT isValid(im_popMenu[ll_item]) THEN CONTINUE
 	
-	IF Lower(as_button) = Lower(invo_String.of_globalReplace(im_popMenu[ll_item].Text, '&', '')) THEN
+	IF Lower(vs_button) = Lower(invo_String.of_globalReplace(im_popMenu[ll_item].Text, '&', '')) THEN
 		
 		IF isNull(of_isMenuPopped()) THEN
 			of_menuPopped(FALSE)
