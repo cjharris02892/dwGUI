@@ -168,18 +168,18 @@ uo_1.of_addSeparator()
 
 uo_1.of_addSeparator(uo_1.RIGHT)
 
-uo_1.of_addItem('Exit', 		'PowerOff.bmp',	uo_1.RIGHT)
+uo_1.of_addItem('Exit', 		'PowerOff.bmp',		uo_1.RIGHT)
 
 uo_1.of_addSeparator(uo_1.RIGHT)
 
-uo_1.of_addItem('Text Only',	'',					uo_1.RIGHT)
+uo_1.of_addItem('Text Only',	'',						uo_1.RIGHT)
 
 uo_1.of_addSeparator(uo_1.RIGHT)
 
-uo_1.of_addItem('Text 4',	'',						uo_1.RIGHT)
-uo_1.of_addItem('Text 3',	'',						uo_1.RIGHT)
-uo_1.of_addItem('Text 2',	'',						uo_1.RIGHT)
-uo_1.of_addItem('Text 1',	'',						uo_1.RIGHT)
+uo_1.of_addItem('Text 4',	'', 'Text 4 ToolTip',	uo_1.RIGHT)
+uo_1.of_addItem('Text 3',	'',							uo_1.RIGHT)
+uo_1.of_addItem('Text 2',	'',							uo_1.RIGHT)
+uo_1.of_addItem('Text 1',	'',							uo_1.RIGHT)
 
 uo_1.of_addSeparator(uo_1.RIGHT)
 end event
