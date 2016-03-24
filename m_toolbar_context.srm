@@ -50,7 +50,7 @@ event clicked;call super::clicked;IF isValid(mf_getParent()) THEN
 	u_cst_toolBar						luo_parent
 	luo_parent							= mf_getParent()
 	
-	luo_parent.of_buttonClicked(Text)
+	luo_parent.of_clickButton(Text)
 	
 END IF
 end event

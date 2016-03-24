@@ -2,6 +2,10 @@ HA$PBExportHeader$w_dwgui.srw
 forward
 global type w_dwgui from window
 end type
+type cbx_check_displaytooltips from checkbox within w_dwgui
+end type
+type cbx_check_displaytext from checkbox within w_dwgui
+end type
 type r_1 from rectangle within w_dwgui
 end type
 type cbx_show_text_4 from checkbox within w_dwgui
@@ -49,6 +53,8 @@ boolean maxbox = true
 boolean resizable = true
 string icon = "AppIcon!"
 boolean center = true
+cbx_check_displaytooltips cbx_check_displaytooltips
+cbx_check_displaytext cbx_check_displaytext
 r_1 r_1
 cbx_show_text_4 cbx_show_text_4
 cbx_show_text_3 cbx_show_text_3
@@ -77,6 +83,8 @@ Private:
 end variables
 
 on w_dwgui.create
+this.cbx_check_displaytooltips=create cbx_check_displaytooltips
+this.cbx_check_displaytext=create cbx_check_displaytext
 this.r_1=create r_1
 this.cbx_show_text_4=create cbx_show_text_4
 this.cbx_show_text_3=create cbx_show_text_3
@@ -94,7 +102,9 @@ this.cbx_show_preview=create cbx_show_preview
 this.cbx_show_print=create cbx_show_print
 this.uo_1=create uo_1
 this.cbx_enable_text_1=create cbx_enable_text_1
-this.Control[]={this.r_1,&
+this.Control[]={this.cbx_check_displaytooltips,&
+this.cbx_check_displaytext,&
+this.r_1,&
 this.cbx_show_text_4,&
 this.cbx_show_text_3,&
 this.cbx_show_text_2,&
@@ -114,6 +124,8 @@ this.cbx_enable_text_1}
 end on
 
 on w_dwgui.destroy
+destroy(this.cbx_check_displaytooltips)
+destroy(this.cbx_check_displaytext)
 destroy(this.r_1)
 destroy(this.cbx_show_text_4)
 destroy(this.cbx_show_text_3)
@@ -186,6 +198,55 @@ END IF
 
 il_oldWidth							= newWidth
 il_oldHeight						= newHeight
+end event
+
+type cbx_check_displaytooltips from checkbox within w_dwgui
+integer x = 731
+integer y = 884
+integer width = 416
+integer height = 80
+integer taborder = 130
+integer textsize = -8
+integer weight = 400
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Tahoma"
+long textcolor = 33554432
+long backcolor = 553648127
+string text = "Display ToolTips"
+boolean checked = true
+end type
+
+event clicked;IF Checked THEN
+	uo_1.of_EnableToolTips()
+ELSE
+	uo_1.of_DisableToolTips()
+END IF
+end event
+
+type cbx_check_displaytext from checkbox within w_dwgui
+integer x = 731
+integer y = 800
+integer width = 402
+integer height = 80
+integer taborder = 130
+integer textsize = -8
+integer weight = 400
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Tahoma"
+long textcolor = 33554432
+long backcolor = 553648127
+string text = "Display Text"
+end type
+
+event clicked;IF Checked THEN
+	uo_1.of_EnableText()
+ELSE
+	uo_1.of_DisableText()
+END IF
 end event
 
 type r_1 from rectangle within w_dwgui

@@ -82,9 +82,12 @@ Protected:
 	
 	String									#Band								= 'detail'
 
+	Long										#ToolTipDelayInitial			= 1000
+	Long										#ToolTipDelayVisible			= 32000
+	
 Public:
 
-	CONSTANT	Long							ALLOW								= 0
+	CONSTANT	Long							ALLOW								= 1
 	CONSTANT Long							PREVENT							= -1
 
 	CONSTANT	Long							SUCCESS							= 1
@@ -135,7 +138,6 @@ end variables
 
 forward prototypes
 public function boolean of_displaytext ()
-public function integer of_displaytext (boolean vb_displaytext)
 public subroutine of_enabletooltips ()
 public subroutine of_disabletooltips ()
 public function integer of_setenabled (string vs_item, boolean vb_switch)
@@ -156,14 +158,10 @@ private function long of_createitem (long vl_item)
 private function boolean of_updatepositions (boolean vb_dropdownmenu)
 public subroutine of_disableupdate ()
 public subroutine of_enableupdate ()
-public function integer of_itemclicked (string vs_button)
-public function integer of_itemclicked (long vl_item)
 private subroutine of_size ()
-public function long of_buttonclicked (string vs_button)
-public function long of_buttonclicked (long vl_item)
 public function long of_getcolor (string vs_color)
 public function integer of_update ()
-protected function string of_getbuttonclicked ()
+protected function string of_getClickedButton ()
 private subroutine of_broadcast_invisible (userobject vuo_broadcaster)
 protected function integer of_highlight (string vs_mode)
 private subroutine of_broadcast_showtoolbartext (boolean vb_showtext)
@@ -198,6 +196,12 @@ private function long of_createitem_separator (long vl_item)
 protected function integer of_drawbutton (long vl_item)
 private subroutine of_popmenu_dropdown ()
 protected function integer of_keydown (keycode vkc_key, unsignedinteger vui_keyflags)
+public function integer of_disabletext ()
+public function integer of_enabletext ()
+public function integer of_clickitem (string vs_button)
+public function integer of_clickitem (long vl_item)
+public function long of_clickbutton (string vs_button)
+public function long of_clickbutton (long vl_item)
 end prototypes
 
 event type integer ue_itemclicking(string vs_button);Return(ALLOW)
@@ -294,31 +298,6 @@ END IF
 end event
 
 public function boolean of_displaytext ();Return(#DisplayText)
-end function
-
-public function integer of_displaytext (boolean vb_displaytext);Long										ll_itemCurrent
-ll_itemCurrent							= dw_toolBar.of_locateItem()
-
-Long										ll_item
-
-FOR ll_item = 2 TO dw_toolBar.RowCount()
-	
-	IF isNull(dw_toolBar.of_getItem_image(ll_item)) OR Trim(dw_toolBar.of_getItem_image(ll_item)) = '' THEN
-		dw_toolBar.of_setItem_displayText(ll_item, TRUE)
-	ELSE
-		dw_toolBar.of_setItem_displayText(ll_item, vb_displayText)
-	END IF
-	
-	of_initializeItemSize(ll_item)
-	
-NEXT
-
-#DisplayText							= vb_displayText
-
-of_update()
-of_drawButton(ll_itemCurrent)
-
-Return(SUCCESS)
 end function
 
 public subroutine of_enabletooltips ();#DisplayToolTips						= TRUE
@@ -605,7 +584,8 @@ IF NOT (isNull(dw_toolBar.of_getItem_image(vl_item)) OR Trim(dw_toolBar.of_getIt
 		
 		ls_modify						= ls_modify																					&
 											+ 'tooltip.backcolor="' + String(of_getColor(INFOBACKGROUND)) + '" '		&
-											+ 'tooltip.delay.initial="1000" tooltip.delay.visible="32000" '			&
+											+ 'tooltip.delay.initial="' + String(#ToolTipDelayInitial) + '" ' +		&
+											+ 'tooltip.delay.visible="' + String(#ToolTipDelayVisible) + '" ' +		&
 											+ 'tooltip.enabled="' + String(li_displayToolTips) + '" '					&
 											+ 'tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="1" '	&
 											+ 'tooltip.maxwidth="0" '																&
@@ -674,7 +654,8 @@ IF NOT (isNull(dw_toolBar.of_getItem_name(vl_item)) OR Trim(dw_toolBar.of_getIte
 											+ 'background.gradient.repetition.length="100" '								&
 											+ 'background.gradient.focus="0" background.gradient.scale="100" '		&
 											+ 'background.gradient.spread="100" '												&
-											+ 'tooltip.delay.initial="1000" tooltip.delay.visible="32000" '			&
+											+ 'tooltip.delay.initial="' + String(#ToolTipDelayInitial) + '" ' +		&
+											+ 'tooltip.delay.visible="' + String(#ToolTipDelayVisible) + '" ' +		&
 											+ 'tooltip.enabled="' + String(li_displayToolTips) + '" '					&
 											+ 'tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="1" '	&
 											+ 'tooltip.maxwidth="0" '																&
@@ -737,7 +718,8 @@ IF NOT (isNull(dw_toolBar.of_getItem_name(vl_item)) OR Trim(dw_toolBar.of_getIte
 											+ 'background.gradient.repetition.length="100" '								&
 											+ 'background.gradient.focus="0" background.gradient.scale="100" '		&
 											+ 'background.gradient.spread="100" '												&
-											+ 'tooltip.delay.initial="1000" tooltip.delay.visible="32000" '			&
+											+ 'tooltip.delay.initial="' + String(#ToolTipDelayInitial) + '" ' +		&
+											+ 'tooltip.delay.visible="' + String(#ToolTipDelayVisible) + '" ' +		&
 											+ 'tooltip.enabled="' + String(li_displayToolTips) + '" '					&
 											+ 'tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="1" '	&
 											+ 'tooltip.maxwidth="0" '																&
@@ -1042,42 +1024,10 @@ public subroutine of_enableupdate ();ib_update								= TRUE
 RETURN
 end subroutine
 
-public function integer of_itemclicked (string vs_button);Long										ll_Return	= PREVENT
-
-IF of_isVisible(vs_button) AND of_isEnabled(vs_button) THEN
-	
-	ll_Return							= TRIGGER EVENT ue_itemClicking(vs_Button)
-		
-	IF IsNull(ll_Return) THEN ll_Return = ALLOW
-			
-	IF ll_Return = ALLOW THEN 
-		EVENT ue_itemClicked(vs_Button)
-	END IF
-
-ELSE
-	MessageBox('ToolBar Error', 'Menu option (' + vs_button + ') is not currently available.')
-END IF
-
-Return(ll_Return)
-end function
-
-public function integer of_itemclicked (long vl_item);IF isNull(vl_item) THEN Return(PREVENT)
-
-IF vl_item <= 0 OR vl_item > dw_toolBar.RowCount() THEN Return(PREVENT)
-
-Return(of_itemClicked(dw_toolBar.of_getItem_name(vl_item)))
-end function
-
 private subroutine of_size ();of_size(#BitMapSize)
 
 RETURN
 end subroutine
-
-public function long of_buttonclicked (string vs_button);Return(of_itemClicked(vs_button))
-end function
-
-public function long of_buttonclicked (long vl_item);Return(of_itemClicked(vl_item))
-end function
 
 public function long of_getcolor (string vs_color);Long										ll_color = -1
 
@@ -1181,7 +1131,7 @@ dw_toolBar.SetRedraw(TRUE)
 Return(SUCCESS)
 end function
 
-protected function string of_getbuttonclicked ();Return(is_lButtonDown)
+protected function string of_getClickedButton ();Return(is_lButtonDown)
 end function
 
 private subroutine of_broadcast_invisible (userobject vuo_broadcaster);//	This routine notifies the other u_cst_toolBar objects that a "new"
@@ -1245,7 +1195,11 @@ FOR ll_toolBar = 1 TO ll_toolBars
 	
 	IF NOT IsValid(suo_toolBar[ll_toolBar]) THEN CONTINUE
 
-	suo_toolBar[ll_toolBar].of_displayText(vb_showText)
+	IF vb_showText THEN
+		suo_toolBar[ll_toolBar].of_enableText()
+	ELSE
+		suo_toolBar[ll_toolBar].of_disableText()
+	END IF
 	
 NEXT
 
@@ -1514,9 +1468,9 @@ END IF
 Return(lb_checked)
 end function
 
-private function integer of_drawenabled (long vl_item);IF isNull(vl_item) THEN Return(PREVENT)
+private function integer of_drawenabled (long vl_item);IF isNull(vl_item) THEN Return(FAILURE)
 
-IF vl_item <= 0 OR vl_item > dw_toolBar.RowCount() THEN Return(PREVENT)
+IF vl_item <= 0 OR vl_item > dw_toolBar.RowCount() THEN Return(FAILURE)
 
 String									ls_object
 ls_object								= 'p_' + dw_toolBar.of_getItem_objectName(vl_item)
@@ -1568,12 +1522,12 @@ IF ls_describe <> '!' AND ls_describe <> '?' AND ls_describe <> '' THEN
 
 END IF
 
-Return(ALLOW)
+Return(SUCCESS)
 end function
 
-private function integer of_drawchecked (long vl_item);IF isNull(vl_item) THEN Return(PREVENT)
+private function integer of_drawchecked (long vl_item);IF isNull(vl_item) THEN Return(FAILURE)
 
-IF vl_item <= 0 OR vl_item > dw_toolBar.RowCount() THEN Return(PREVENT)
+IF vl_item <= 0 OR vl_item > dw_toolBar.RowCount() THEN Return(FAILURE)
 
 String									ls_object
 ls_object								= 'r_' + dw_toolBar.of_getItem_objectName(vl_item)
@@ -1621,8 +1575,8 @@ IF dw_toolBar.of_getItem_checked(vl_item) AND (NOT dw_toolBar.of_getItem_display
 									ls_object + '.background.gradient.scale="100" ' +																	&
 									ls_object + '.background.gradient.spread="100" ' +																	&
 									ls_object + '.tooltip.backcolor="' +  String(of_getColor(INFOBACKGROUND)) + '" ' +						&
-									ls_object + '.tooltip.delay.initial="1000" ' +																		&
-									ls_object + '.tooltip.delay.visible="32000" ' +																		&
+									ls_object + '.tooltip.delay.initial="' + String(#ToolTipDelayInitial) + '" ' +							&
+									ls_object + '.tooltip.delay.visible="' + String(#ToolTipDelayVisible) + '" ' +							&
 									ls_object + '.tooltip.enabled="1" ' +																					&
 									ls_object + '.tooltip.hasclosebutton="0" ' +																			&
 									ls_object + '.tooltip.icon="0" ' +																						&
@@ -1650,9 +1604,9 @@ END IF
 Return(SUCCESS)
 end function
 
-public function integer of_setchecked (long vl_item, boolean vb_switch);IF isNull(vl_item) THEN Return(PREVENT)
+public function integer of_setchecked (long vl_item, boolean vb_switch);IF isNull(vl_item) THEN Return(FAILURE)
 
-IF vl_item <= 0 OR vl_item > dw_toolBar.RowCount() THEN Return(PREVENT)
+IF vl_item <= 0 OR vl_item > dw_toolBar.RowCount() THEN Return(FAILURE)
 
 String									ls_describe
 
@@ -1664,12 +1618,12 @@ IF dw_toolBar.of_getItem_checked(vl_item) = (NOT vb_switch) THEN
 
 END IF
 
-Return(ALLOW)
+Return(SUCCESS)
 end function
 
-public function integer of_setenabled (long vl_item, boolean vb_switch);IF isNull(vl_item) THEN Return(PREVENT)
+public function integer of_setenabled (long vl_item, boolean vb_switch);IF isNull(vl_item) THEN Return(FAILURE)
 
-IF vl_item <= 0 OR vl_item > dw_toolBar.RowCount() THEN Return(PREVENT)
+IF vl_item <= 0 OR vl_item > dw_toolBar.RowCount() THEN Return(FAILURE)
 
 String									ls_describe
 
@@ -1681,12 +1635,12 @@ IF dw_toolBar.of_getItem_enabled(vl_item) = (NOT vb_switch) THEN
 
 END IF
 
-Return(ALLOW)
+Return(SUCCESS)
 end function
 
-public function integer of_setimage (long vl_item, string vs_image);IF isNull(vl_item) THEN Return(PREVENT)
+public function integer of_setimage (long vl_item, string vs_image);IF isNull(vl_item) THEN Return(FAILURE)
 
-IF vl_item <= 1 OR vl_item > dw_toolBar.RowCount() THEN Return(PREVENT)
+IF vl_item <= 1 OR vl_item > dw_toolBar.RowCount() THEN Return(FAILURE)
 
 dw_toolBar.of_setItem_image(vl_item, vs_image)
 
@@ -1705,12 +1659,12 @@ END IF
 of_initializeItemSize(vl_item)
 of_update()
 
-Return(ALLOW)
+Return(SUCCESS)
 end function
 
-public function integer of_settext (long vl_item, string vs_text);IF isNull(vl_item) THEN Return(PREVENT)
+public function integer of_settext (long vl_item, string vs_text);IF isNull(vl_item) THEN Return(FAILURE)
 
-IF vl_item <= 1 OR vl_item > dw_toolBar.RowCount() THEN Return(PREVENT)
+IF vl_item <= 1 OR vl_item > dw_toolBar.RowCount() THEN Return(FAILURE)
 
 Long										ll_itemCurrent
 ll_itemCurrent							= dw_toolBar.of_locateItem()
@@ -1721,12 +1675,12 @@ of_initializeItemSize(vl_item)
 of_update()
 of_drawButton(ll_itemCurrent)
 
-Return(ALLOW)
+Return(SUCCESS)
 end function
 
-public function integer of_settiptext (long vl_item, string vs_tooltip);IF isNull(vl_item) THEN Return(PREVENT)
+public function integer of_settiptext (long vl_item, string vs_tooltip);IF isNull(vl_item) THEN Return(FAILURE)
 
-IF vl_item <= 0 OR vl_item > dw_toolbar.RowCount() THEN Return(PREVENT)
+IF vl_item <= 0 OR vl_item > dw_toolbar.RowCount() THEN Return(FAILURE)
 
 String									ls_describe
 
@@ -1744,12 +1698,12 @@ IF ls_describe <> '!' AND ls_describe <> '?' AND ls_describe <> '' THEN
 	dw_toolBar.Modify('t_' + dw_toolBar.of_getItem_objectName(vl_item) + '.ToolTip.Tip="' + vs_toolTip + '"')
 END IF
 
-Return(ALLOW)
+Return(SUCCESS)
 end function
 
-public function integer of_setvisible (long vl_item, boolean vb_switch);IF isNull(vl_item) THEN Return(PREVENT)
+public function integer of_setvisible (long vl_item, boolean vb_switch);IF isNull(vl_item) THEN Return(FAILURE)
 
-IF vl_item <= 0 OR vl_item > dw_toolBar.RowCount() THEN Return(PREVENT)
+IF vl_item <= 0 OR vl_item > dw_toolBar.RowCount() THEN Return(FAILURE)
 
 IF dw_toolBar.of_getItem_visible(vl_item) = (NOT vb_switch) THEN
 	
@@ -1760,7 +1714,7 @@ IF dw_toolBar.of_getItem_visible(vl_item) = (NOT vb_switch) THEN
 	
 END IF
 
-Return(ALLOW)
+Return(SUCCESS)
 end function
 
 private function long of_createitem_separator (long vl_item);Long										ll_pos
@@ -2012,7 +1966,7 @@ Long										ll_item
 ll_item									= dw_toolBar.of_locateItem()
 	
 IF vkc_key = keySpaceBar! THEN
-	IF NOT IsNull(ll_item) THEN of_buttonClicked(ll_item)
+	IF NOT IsNull(ll_item) THEN of_clickButton(ll_item)
 ELSEIF vkc_key = keyLeftArrow! THEN
 	IF NOT isNull(ll_item) THEN
 		
@@ -2082,6 +2036,84 @@ END IF
 Return(SUCCESS)
 end function
 
+public function integer of_disabletext ();Long										ll_itemCurrent
+ll_itemCurrent							= dw_toolBar.of_locateItem()
+
+Long										ll_item
+
+FOR ll_item = 2 TO dw_toolBar.RowCount()
+	
+	IF isNull(dw_toolBar.of_getItem_image(ll_item)) OR Trim(dw_toolBar.of_getItem_image(ll_item)) = '' THEN
+		dw_toolBar.of_setItem_displayText(ll_item, TRUE)
+	ELSE
+		dw_toolBar.of_setItem_displayText(ll_item, FALSE)
+	END IF
+	
+	of_initializeItemSize(ll_item)
+	
+NEXT
+
+#DisplayText							= FALSE
+
+of_update()
+of_drawButton(ll_itemCurrent)
+
+Return(SUCCESS)
+end function
+
+public function integer of_enabletext ();Long										ll_itemCurrent
+ll_itemCurrent							= dw_toolBar.of_locateItem()
+
+Long										ll_item
+
+FOR ll_item = 2 TO dw_toolBar.RowCount()
+	
+	dw_toolBar.of_setItem_displayText(ll_item, TRUE)
+	
+	of_initializeItemSize(ll_item)
+	
+NEXT
+
+#DisplayText							= TRUE
+
+of_update()
+of_drawButton(ll_itemCurrent)
+
+Return(SUCCESS)
+end function
+
+public function integer of_clickitem (string vs_button);Long										ll_Return	= PREVENT
+
+IF of_isVisible(vs_button) AND of_isEnabled(vs_button) THEN
+	
+	ll_Return							= TRIGGER EVENT ue_itemClicking(vs_Button)
+		
+	IF IsNull(ll_Return) THEN ll_Return = ALLOW
+			
+	IF ll_Return = ALLOW THEN 
+		EVENT ue_itemClicked(vs_Button)
+	END IF
+
+ELSE
+	MessageBox('ToolBar Error', 'Menu option (' + vs_button + ') is not currently available.')
+END IF
+
+Return(ll_Return)
+end function
+
+public function integer of_clickitem (long vl_item);IF isNull(vl_item) THEN Return(PREVENT)
+
+IF vl_item <= 0 OR vl_item > dw_toolBar.RowCount() THEN Return(PREVENT)
+
+Return(of_clickItem(dw_toolBar.of_getItem_name(vl_item)))
+end function
+
+public function long of_clickbutton (string vs_button);Return(of_clickItem(vs_button))
+end function
+
+public function long of_clickbutton (long vl_item);Return(of_clickItem(vl_item))
+end function
+
 on u_cst_toolbar.create
 this.st_toolbar=create st_toolbar
 this.dw_toolbar=create dw_toolbar
@@ -2097,7 +2129,12 @@ destroy(this.dw_toolbar)
 destroy(this.r_border)
 end on
 
-event constructor;of_DisplayText(GetApplication().ToolbarText)
+event constructor;IF GetApplication().ToolBarText THEN
+	of_enableText()
+ELSE
+	of_disableText()
+END IF
+
 //of_DisplayTextUnderImage(GetApplication().ToolbarText AND textUnderImage)
 
 IF GetApplication().ToolBarTips THEN
@@ -2287,7 +2324,7 @@ IF dwo.Name = is_lButtonDown THEN
 	ll_item								= of_LocateItem_objectName(Mid(dwo.Name, 3))
 		
 	IF NOT isnull(ll_item) THEN
-		IF of_isEnabled(ll_item) THEN
+		IF of_isVisible(ll_item) AND of_isEnabled(ll_item) THEN
 			
 			String						ls_name
 			

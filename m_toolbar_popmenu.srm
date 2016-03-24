@@ -19,9 +19,9 @@ event clicked;call super::clicked;IF isValid(mf_getParent()) THEN
 	luo_parent							= mf_getParent()
 
 	IF isNull(Text) OR Trim(Text) = '' THEN
-		luo_parent.of_buttonClicked(className())
+		luo_parent.of_clickButton(className())
 	ELSE
-		luo_parent.of_buttonClicked(Text)
+		luo_parent.of_clickButton(Text)
 	END IF
 	
 END IF
