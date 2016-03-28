@@ -20,13 +20,14 @@ Public:
 	//	Reserved object types
 	CONSTANT String						SEPARATOR						= 'separator'
 	CONSTANT String						POPMENU							= 'popmenu'
+	CONSTANT String						DROPDOWN							= 'dropdown'
 	CONSTANT String						TOOLBARITEM						= 'toolbaritem'
+	CONSTANT String						COLUMN							= 'column'
 
 Private:
 
 	Double									idbl_PBVersion					= 0.0
 end variables
-
 forward prototypes
 public function boolean of_getitem_displayinmenu (long vl_item)
 public function boolean of_getitem_displaytext (long vl_item)

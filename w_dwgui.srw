@@ -145,7 +145,22 @@ destroy(this.uo_1)
 destroy(this.cbx_enable_text_1)
 end on
 
-event open;//	Left side items are added Left to Right
+event open;r_1.visible = FALSE
+
+////	Documentation example 1
+//
+//uo_1.of_addItem('Exit', 'powerOff.bmp', 'Close the window', uo_1.RIGHT)
+//uo_1.of_addItem('', 'open.bmp', uo_1.LEFT)
+//uo_1.of_addItem('Save', 'save.bmp', uo_1.LEFT)
+//
+//// Documentation example 2
+//
+//uo_1.of_addItem('Exit', 'powerOff.bmp', 'Close the window', uo_1.RIGHT)
+//uo_1.of_addSeparator(uo_1.RIGHT)
+//uo_1.of_addItem('Save', 'save.bmp', uo_1.RIGHT)
+//uo_1.of_addItem('', 'open.bmp', uo_1.RIGHT)
+//
+//	Left side items are added Left to Right
 
 uo_1.of_addItem('Open', 		'Open.bmp',			uo_1.LEFT)
 uo_1.of_addItem('Save', 		'Save.bmp',			uo_1.LEFT)
@@ -168,7 +183,7 @@ uo_1.of_addSeparator()
 
 uo_1.of_addSeparator(uo_1.RIGHT)
 
-uo_1.of_addItem('Exit', 		'PowerOff.bmp',		uo_1.RIGHT)
+uo_1.of_addItem('Exit', 		'powerOff.bmp',		uo_1.RIGHT)
 
 uo_1.of_addSeparator(uo_1.RIGHT)
 
@@ -177,7 +192,7 @@ uo_1.of_addItem('Text Only',	'',						uo_1.RIGHT)
 uo_1.of_addSeparator(uo_1.RIGHT)
 
 uo_1.of_addItem('Text 4',	'', 'Text 4 ToolTip',	uo_1.RIGHT)
-uo_1.of_addItem('Text 3',	'',							uo_1.RIGHT)
+uo_1.of_addItem('Text 3',	uo_1.RIGHT)
 uo_1.of_addItem('Text 2',	'',							uo_1.RIGHT)
 uo_1.of_addItem('Text 1',	'',							uo_1.RIGHT)
 

@@ -202,6 +202,8 @@ public function integer of_clickitem (string vs_button)
 public function integer of_clickitem (long vl_item)
 public function long of_clickbutton (string vs_button)
 public function long of_clickbutton (long vl_item)
+public function long of_additem (string vs_name)
+public function long of_additem (string vs_name, integer vi_position)
 end prototypes
 
 event type integer ue_itemclicking(string vs_button);Return(ALLOW)
@@ -421,7 +423,7 @@ Long										li_RC
 li_RC										= Super::Resize(W, H)
 
 r_border.Resize(W, H)
-dw_toolBar.Resize(r_border.Width - PixelsToUnits(2, XPixelsToUnits!), r_border.Width - PixelsToUnits(2, YPixelsToUnits!))
+dw_toolBar.Resize(r_border.Width - PixelsToUnits(2, XPixelsToUnits!), r_border.Height - PixelsToUnits(2, YPixelsToUnits!))
 
 of_update()
 of_drawButton(ll_itemCurrent)
@@ -1289,6 +1291,12 @@ IF isNull(vs_toolTip) OR Trim(vs_toolTip) = '' THEN
 ELSE
 	dw_toolBar.of_setItem_toolTip(ll_item, Trim(vs_toolTip))
 END IF
+
+//	Make sure position is a valid value
+IF vi_position <> LEFT AND vi_position <> RIGHT THEN
+	vi_position							= LEFT
+END IF
+
 dw_toolBar.of_setItem_position(ll_item, vi_Position)
 dw_toolBar.of_setItem_visible(ll_item, TRUE)
 dw_toolBar.of_setItem_enabled(ll_item, TRUE)
@@ -2112,6 +2120,12 @@ public function long of_clickbutton (string vs_button);Return(of_clickItem(vs_bu
 end function
 
 public function long of_clickbutton (long vl_item);Return(of_clickItem(vl_item))
+end function
+
+public function long of_additem (string vs_name);Return(of_addItem(vs_name, '', vs_name, LEFT))
+end function
+
+public function long of_additem (string vs_name, integer vi_position);Return(of_addItem(vs_name, '', vs_name, vi_position))
 end function
 
 on u_cst_toolbar.create
