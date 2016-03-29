@@ -45,7 +45,16 @@ type variables
 
 end variables
 
-event clicked;call super::clicked;IF isValid(mf_getParent()) THEN
+event clicked;call super::clicked;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF isValid(mf_getParent()) THEN
 	
 	u_cst_toolBar						luo_parent
 	luo_parent							= mf_getParent()
@@ -126,7 +135,16 @@ end on
 type m_small from menu within m_size
 end type
 
-event clicked;IF isValid(mf_getParent()) THEN
+event clicked;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF isValid(mf_getParent()) THEN
 	
 	u_cst_toolBar						luo_parent
 	luo_parent							= mf_getParent()
@@ -191,7 +209,16 @@ on m_medium.destroy
 call super::destroy
 end on
 
-event clicked;IF isValid(mf_getParent()) THEN
+event clicked;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF isValid(mf_getParent()) THEN
 	
 	u_cst_toolBar						luo_parent
 	luo_parent							= mf_getParent()
@@ -230,7 +257,16 @@ on m_large.destroy
 call super::destroy
 end on
 
-event clicked;IF isValid(mf_getParent()) THEN
+event clicked;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF isValid(mf_getParent()) THEN
 	
 	u_cst_toolBar						luo_parent
 	luo_parent							= mf_getParent()
@@ -269,7 +305,16 @@ on m_xlarge.destroy
 call super::destroy
 end on
 
-event clicked;IF isValid(mf_getParent()) THEN
+event clicked;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF isValid(mf_getParent()) THEN
 	
 	u_cst_toolBar						luo_parent
 	luo_parent							= mf_getParent()
@@ -311,7 +356,16 @@ end on
 type m_showtoolbartips from menu within m_toolbar_context
 end type
 
-event clicked;IF isValid(mf_getParent()) THEN
+event clicked;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF isValid(mf_getParent()) THEN
 	
 	u_cst_toolBar						luo_parent
 	luo_parent							= mf_getParent()
@@ -353,7 +407,16 @@ end on
 type m_showtoolbartext from menu within m_toolbar_context
 end type
 
-event clicked;IF isValid(mf_getParent()) THEN
+event clicked;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF isValid(mf_getParent()) THEN
 	
 	u_cst_toolBar						luo_parent
 	luo_parent							= mf_getParent()

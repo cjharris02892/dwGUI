@@ -23,7 +23,16 @@ public function dragobject mf_getparent ()
 public subroutine mf_setparent (dragobject vdrg_parent)
 end prototypes
 
-public function integer mf_popmenu (dragobject vdrg_parent, menu vm_popmenu, integer vi_xpos, integer vi_ypos);n_cst_toolBar							lnvo_toolBar
+public function integer mf_popmenu (dragobject vdrg_parent, menu vm_popmenu, integer vi_xpos, integer vi_ypos);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+n_cst_toolBar							lnvo_toolBar
 
 Window									lw_parent,	lw_frame,	lw_childParent
 GraphicObject							lgo
@@ -96,18 +105,54 @@ END IF
 Return(vm_popMenu.PopMenu(lw_parent.PointerX(), lw_parent.PointerY()))
 end function
 
-public function integer mf_popmenu (dragobject vdrg_parent, integer vi_xpos, integer vi_ypos);Return(mf_popMenu(vdrg_parent, this, vi_xPos, vi_yPos))
+public function integer mf_popmenu (dragobject vdrg_parent, integer vi_xpos, integer vi_ypos);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Return(mf_popMenu(vdrg_parent, this, vi_xPos, vi_yPos))
 end function
 
-public subroutine mf_register (dragobject vdrg_parent);idrg_parent								= vdrg_parent
+public subroutine mf_register (dragobject vdrg_parent);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+idrg_parent								= vdrg_parent
 
 RETURN
 end subroutine
 
-public function dragobject mf_getparent ();Return(idrg_parent)
+public function dragobject mf_getparent ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Return(idrg_parent)
 end function
 
-public subroutine mf_setparent (dragobject vdrg_parent);idrg_parent								= vdrg_parent
+public subroutine mf_setparent (dragobject vdrg_parent);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+idrg_parent								= vdrg_parent
 
 RETURN
 end subroutine

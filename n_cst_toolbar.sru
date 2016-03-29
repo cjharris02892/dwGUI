@@ -204,16 +204,52 @@ public function boolean of_getclientrect (unsignedlong vul_hwnd, ref long rl_lef
 public function integer of_poptooltips (unsignedlong vul_hwnd)
 end prototypes
 
-public function boolean of_isunicode ();Return(ib_isUnicode)
+public function boolean of_isunicode ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Return(ib_isUnicode)
 end function
 
-public function long of_getfontwidth (ref statictext rst_font, string vs_text);Return(of_getFontSize(rst_font, vs_text).cX)
+public function long of_getfontwidth (ref statictext rst_font, string vs_text);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Return(of_getFontSize(rst_font, vs_text).cX)
 end function
 
-public function long of_getfontheight (ref statictext rst_font, string vs_text);Return(of_getFontSize(rst_font, vs_text).cY)
+public function long of_getfontheight (ref statictext rst_font, string vs_text);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Return(of_getFontSize(rst_font, vs_text).cY)
 end function
 
-private function point of_getfontsize (ref statictext rst_font, string vs_text);UnsignedLong							lul_hDC,	lul_Handle,	lul_hFont
+private function point of_getfontsize (ref statictext rst_font, string vs_text);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+UnsignedLong							lul_hDC,	lul_Handle,	lul_hFont
 Point								 		lstr_Size
 
 lstr_size.cX							= -1
@@ -249,7 +285,16 @@ ReleaseDC(lul_Handle, lul_hDC)
 Return(lstr_size)
 end function
 
-public function string of_getclassname (unsignedlong vul_hwnd);Long										ll_TextLength
+public function string of_getclassname (unsignedlong vul_hwnd);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Long										ll_TextLength
 String									ls_ClassName
 
 IF of_isUnicode() THEN
@@ -275,7 +320,16 @@ END IF
 Return("")
 end function
 
-private function long of_getclassname (unsignedlong vul_hwnd, ref string rs_classname, long vl_maxpath);rs_ClassName							= Space(vl_MaxPath)
+private function long of_getclassname (unsignedlong vul_hwnd, ref string rs_classname, long vl_maxpath);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+rs_ClassName							= Space(vl_MaxPath)
 
 Long										ll_RC
 
@@ -290,13 +344,40 @@ rs_ClassName							= Trim(rs_ClassName)
 Return(ll_RC)
 end function
 
-public function long of_getclassname (unsignedlong vul_hwnd, ref string rs_classname);Return(of_getClassName(vul_HWnd, rs_ClassName, MAX_PATH))
+public function long of_getclassname (unsignedlong vul_hwnd, ref string rs_classname);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Return(of_getClassName(vul_HWnd, rs_ClassName, MAX_PATH))
 end function
 
-public function unsignedlong of_getdesktopwindow ();Return(GetDeskTopWindow())
+public function unsignedlong of_getdesktopwindow ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Return(GetDeskTopWindow())
 end function
 
-public function boolean of_getcursorpos (ref long rl_x, ref long rl_y);POINT								lstr_Point
+public function boolean of_getcursorpos (ref long rl_x, ref long rl_y);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+POINT								lstr_Point
 
 Boolean							lb_RC
 lb_RC								= GetCursorPos(lstr_Point)
@@ -312,13 +393,40 @@ END IF
 Return(lb_RC)
 end function
 
-public function boolean of_setcursorpos (integer vi_x, integer vi_y);Return(setCursorPos(vi_x, vi_y))
+public function boolean of_setcursorpos (integer vi_x, integer vi_y);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Return(setCursorPos(vi_x, vi_y))
 end function
 
-private function boolean of_getcursorpos (ref point rstr_point);Return(GetCursorPos(rstr_Point))
+private function boolean of_getcursorpos (ref point rstr_point);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Return(GetCursorPos(rstr_Point))
 end function
 
-public function boolean of_trackmouseevent (unsignedlong vul_hwndtrack, unsignedlong vul_flags, unsignedlong vul_hovertime);TrackMouseEvent						lstr_TrackMouseEvent
+public function boolean of_trackmouseevent (unsignedlong vul_hwndtrack, unsignedlong vul_flags, unsignedlong vul_hovertime);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+TrackMouseEvent						lstr_TrackMouseEvent
 
 lstr_TrackMouseEvent.cbSize		= 16
 lstr_TrackMouseEvent.hWndTrack	= vul_hWndTrack
@@ -328,17 +436,44 @@ lstr_TrackMouseEvent.dwHoverTime = vul_hoverTime
 Return(TrackMouseEvent(lstr_trackMouseEvent))
 end function
 
-public function boolean of_trackmouseevent (unsignedlong vul_hwndtrack, unsignedlong vul_flags);Return(of_TrackMouseEvent(vul_hWndTrack, vul_flags, 0))
+public function boolean of_trackmouseevent (unsignedlong vul_hwndtrack, unsignedlong vul_flags);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Return(of_TrackMouseEvent(vul_hWndTrack, vul_flags, 0))
 end function
 
-public function unsignedlong of_getwindowlong (unsignedlong vul_hwnd, long vl_index);IF of_isUnicode() THEN
+public function unsignedlong of_getwindowlong (unsignedlong vul_hwnd, long vl_index);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF of_isUnicode() THEN
 	Return(GetWindowLong(vul_HWnd, vl_Index))
 ELSE
 	Return(GetWindowLongA(vul_HWnd, vl_Index))
 END IF
 end function
 
-public function boolean of_ischild (window vw_ischild);n_cst_numerical			lnvo_numerical
+public function boolean of_ischild (window vw_ischild);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+n_cst_numerical			lnvo_numerical
 
 Boolean						lb_isChild	= FALSE
 
@@ -357,7 +492,16 @@ END IF
 Return(lb_isChild)
 end function
 
-public function boolean of_ismdichild (window vw_ismdichild);n_cst_numerical			lnvo_numerical
+public function boolean of_ismdichild (window vw_ismdichild);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+n_cst_numerical			lnvo_numerical
 
 Boolean						lb_isMDIChild	= FALSE
 
@@ -376,7 +520,16 @@ END IF
 Return(lb_isMDIChild)
 end function
 
-public function window of_getframe (graphicobject vgo_getframe);Window							lw_GetFrame
+public function window of_getframe (graphicobject vgo_getframe);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Window							lw_GetFrame
 
 CHOOSE CASE TypeOf(vgo_GetFrame)
 	CASE Window!
@@ -405,7 +558,16 @@ END CHOOSE
 Return(lw_GetFrame)
 end function
 
-public function menu of_locatemenuitem (menu vm_locate, string vs_classname);String									ls_ClassName
+public function menu of_locatemenuitem (menu vm_locate, string vs_classname);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+String									ls_ClassName
 ls_ClassName							= vm_Locate.ClassName()
 
 IF ls_ClassName = Lower(vs_ClassName) THEN Return(vm_Locate)
@@ -428,13 +590,31 @@ SetNull(lm_Return)
 Return(lm_Return)
 end function
 
-public function window of_getparentwindow (graphicobject vgo_getparent);String									ls_Parent
+public function window of_getparentwindow (graphicobject vgo_getparent);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+String									ls_Parent
 ls_Parent								= vgo_GetParent.ClassName()
 
 Return(of_GetParentWindow(vgo_GetParent, ls_Parent))
 end function
 
-private function window of_getparentwindow (graphicobject vgo_getparent, ref string rs_qualifyobject, integer li_level);GraphicObject							lgo_Parent
+private function window of_getparentwindow (graphicobject vgo_getparent, ref string rs_qualifyobject, integer li_level);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+GraphicObject							lgo_Parent
 lgo_Parent								= vgo_GetParent.GetParent()
 
 IF (NOT IsValid(lgo_Parent)) OR IsNull(lgo_Parent) THEN
@@ -471,7 +651,16 @@ END CHOOSE
 Return(of_GetParentWindow(lgo_Parent, rs_QualifyObject, li_level))
 end function
 
-public function window of_getparentwindow (graphicobject vgo_getparent, ref string rs_qualifyobject);//	This method not only finds an object's parentwindow regardless of how many
+public function window of_getparentwindow (graphicobject vgo_getparent, ref string rs_qualifyobject);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+//	This method not only finds an object's parentwindow regardless of how many
 //	parents it has, it also returns the fully qualified object name in rs_QualifyObject.
 
 String									ls_QualifyObject
@@ -506,10 +695,28 @@ END IF
 Return(of_GetParentWindow(vgo_GetParent, rs_QualifyObject, 0))
 end function
 
-public function boolean of_getclientrect (unsignedlong vul_hwnd, ref rect rstr_rectangle);Return(GetClientRect(vul_hWnd, rstr_Rectangle))
+public function boolean of_getclientrect (unsignedlong vul_hwnd, ref rect rstr_rectangle);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Return(GetClientRect(vul_hWnd, rstr_Rectangle))
 end function
 
-public function boolean of_getclientrect (unsignedlong vul_hwnd, ref long rl_left, ref long rl_top, ref long rl_right, ref long rl_bottom);Rect										lstr_Rectangle
+public function boolean of_getclientrect (unsignedlong vul_hwnd, ref long rl_left, ref long rl_top, ref long rl_right, ref long rl_bottom);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Rect										lstr_Rectangle
 
 Boolean									lb_RC
 lb_RC										= of_getClientRect(vul_hWnd, lstr_Rectangle)
@@ -522,7 +729,16 @@ rl_Bottom								= lstr_Rectangle.Bottom
 Return(lb_RC)
 end function
 
-public function integer of_poptooltips (unsignedlong vul_hwnd);String									ls_className
+public function integer of_poptooltips (unsignedlong vul_hwnd);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+String									ls_className
 UnsignedLong							lul_hWnd,	lul_hWndParent
 UnsignedLong							lul_ID
 	
@@ -564,7 +780,16 @@ TriggerEvent( this, "destructor" )
 call super::destroy
 end on
 
-event constructor;Environment									lenv_temp
+event constructor;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Environment									lenv_temp
 GetEnvironment(lenv_temp)
 
 ib_isUnicode								= lenv_temp.CharSet = charSetUnicode!

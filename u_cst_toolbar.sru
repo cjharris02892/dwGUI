@@ -206,16 +206,43 @@ public function long of_additem (string vs_name)
 public function long of_additem (string vs_name, integer vi_position)
 end prototypes
 
-event type integer ue_itemclicking(string vs_button);Return(ALLOW)
+event type integer ue_itemclicking(string vs_button);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Return(ALLOW)
 end event
 
-event ue_itemclicked(string vs_button);CHOOSE CASE Lower(vs_button)
+event ue_itemclicked(string vs_button);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+CHOOSE CASE Lower(vs_button)
 	CASE is_dropMenuChar
 		of_popMenu_dropDown()
 END CHOOSE
 end event
 
-event ue_context_size(string vs_size);Long										ll_item
+event ue_context_size(string vs_size);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Long										ll_item
 
 CHOOSE CASE Lower(vs_size)
 	CASE 'small'
@@ -277,32 +304,86 @@ CHOOSE CASE Lower(vs_size)
 END CHOOSE
 end event
 
-event ue_context_showtoolbartext(boolean vb_showtext);of_broadCast_showToolBarText(vb_showText)
+event ue_context_showtoolbartext(boolean vb_showtext);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+of_broadCast_showToolBarText(vb_showText)
 
 //GetApplication().ToolBarText	= vb_showText
 
 RETURN
 end event
 
-event ue_context_showtoolbartips(boolean vb_showtips);of_broadCast_showToolBarTips(vb_showTips)
+event ue_context_showtoolbartips(boolean vb_showtips);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+of_broadCast_showToolBarTips(vb_showTips)
 
 //GetApplication().ToolBarTips	= vb_showTips
 
 RETURN
 end event
 
-event ue_resized(long vl_oldheight, long vl_newheight);RETURN
+event ue_resized(long vl_oldheight, long vl_newheight);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+RETURN
 end event
 
-event ue_post_constructor();IF dw_toolBar.of_locateItem_objectName(dw_toolBar.POPMENU + '_' + String(1)) <> 1 THEN
+event ue_post_constructor();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF dw_toolBar.of_locateItem_objectName(dw_toolBar.POPMENU + '_' + String(1)) <> 1 THEN
 	messageBox('Programmer Error', 'You have improperly initialized your toolBar.')
 END IF
 end event
 
-public function boolean of_displaytext ();Return(#DisplayText)
+public function boolean of_displaytext ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Return(#DisplayText)
 end function
 
-public subroutine of_enabletooltips ();#DisplayToolTips						= TRUE
+public subroutine of_enabletooltips ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+#DisplayToolTips						= TRUE
 
 String									ls_describe
 Long										ll_item
@@ -326,7 +407,16 @@ NEXT
 RETURN
 end subroutine
 
-public subroutine of_disabletooltips ();#DisplayToolTips						= FALSE
+public subroutine of_disabletooltips ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+#DisplayToolTips						= FALSE
 
 String									ls_describe
 Long										ll_item
@@ -350,16 +440,52 @@ NEXT
 RETURN
 end subroutine
 
-public function integer of_setenabled (string vs_item, boolean vb_switch);Return(of_setEnabled(dw_toolBar.of_locateItem_name(vs_item), vb_switch))
+public function integer of_setenabled (string vs_item, boolean vb_switch);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Return(of_setEnabled(dw_toolBar.of_locateItem_name(vs_item), vb_switch))
 end function
 
-public function integer of_setvisible (string vs_item, boolean vb_switch);Return(of_setVisible(dw_toolbar.of_locateItem_name(vs_item), vb_switch))
+public function integer of_setvisible (string vs_item, boolean vb_switch);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Return(of_setVisible(dw_toolbar.of_locateItem_name(vs_item), vb_switch))
 end function
 
-public function boolean of_displaytooltips ();Return(#DisplayToolTips)
+public function boolean of_displaytooltips ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Return(#DisplayToolTips)
 end function
 
-public function string of_gettext (long vl_item);String									ls_Text = ''
+public function string of_gettext (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+String									ls_Text = ''
 
 IF vl_Item > 0 AND vl_Item <= dw_toolBar.RowCount() THEN
 	ls_Text								= dw_toolBar.of_getItem_name(vl_item)
@@ -368,7 +494,16 @@ END IF
 Return(ls_Text)
 end function
 
-public function boolean of_isvisible (long vl_item);Boolean									lb_Visible = FALSE
+public function boolean of_isvisible (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Boolean									lb_Visible = FALSE
 
 IF vl_Item > 0 AND vl_Item <= dw_toolBar.RowCount() THEN
 	lb_Visible							= dw_toolbar.of_getItem_visible(vl_item)
@@ -377,7 +512,16 @@ END IF
 Return(lb_Visible)
 end function
 
-public function boolean of_isenabled (long vl_item);Boolean									lb_Enabled = FALSE
+public function boolean of_isenabled (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Boolean									lb_Enabled = FALSE
 
 IF vl_Item > 0 AND vl_Item <= dw_toolBar.RowCount() THEN
 	lb_Enabled							= dw_toolBar.of_getItem_enabled(vl_item)
@@ -386,7 +530,16 @@ END IF
 Return(lb_Enabled)
 end function
 
-public function boolean of_isvisible (string vs_item);Boolean									lb_Visible = FALSE
+public function boolean of_isvisible (string vs_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Boolean									lb_Visible = FALSE
 
 Long										ll_item
 ll_item									= dw_toolbar.of_locateItem_name(vs_item)
@@ -398,7 +551,16 @@ END IF
 Return(lb_Visible)
 end function
 
-public function boolean of_isenabled (string vs_item);Boolean									lb_Enabled = FALSE
+public function boolean of_isenabled (string vs_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Boolean									lb_Enabled = FALSE
 
 Long										ll_item
 ll_item									= dw_toolbar.of_locateItem_name(vs_item)
@@ -410,13 +572,40 @@ END IF
 Return(lb_Enabled)
 end function
 
-public function integer of_settext (string vs_item, string vs_text);Return(of_setText(dw_toolBar.of_locateItem_name(vs_item), vs_text))
+public function integer of_settext (string vs_item, string vs_text);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Return(of_setText(dw_toolBar.of_locateItem_name(vs_item), vs_text))
 end function
 
-public function integer of_settiptext (string vs_item, string vs_tooltip);Return(of_setTipText(dw_toolBar.of_locateItem_name(vs_item), vs_toolTip))
+public function integer of_settiptext (string vs_item, string vs_tooltip);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Return(of_setTipText(dw_toolBar.of_locateItem_name(vs_item), vs_toolTip))
 end function
 
-public function integer resize (integer w, integer h);Long										ll_itemCurrent
+public function integer resize (integer w, integer h);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Long										ll_itemCurrent
 ll_itemCurrent							= dw_toolBar.of_locateItem()
 
 Long										li_RC
@@ -431,7 +620,16 @@ of_drawButton(ll_itemCurrent)
 Return(li_RC)
 end function
 
-private subroutine of_initializeitemsize (long vl_item);dw_toolBar.of_setItem_rectTop(vl_item, 0)
+private subroutine of_initializeitemsize (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+dw_toolBar.of_setItem_rectTop(vl_item, 0)
 dw_toolBar.of_setItem_rectHeight(vl_item, 0)
 dw_toolBar.of_setItem_rectLeft(vl_item, 0)
 dw_toolBar.of_setItem_rectWidth(vl_item, 0)
@@ -460,10 +658,28 @@ END IF
 RETURN
 end subroutine
 
-public function integer of_setimage (string vs_item, string vs_image);Return(of_setImage(dw_toolBar.of_locateItem_name(vs_item), vs_image))
+public function integer of_setimage (string vs_item, string vs_image);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Return(of_setImage(dw_toolBar.of_locateItem_name(vs_item), vs_image))
 end function
 
-private subroutine of_size (integer vi_size);#BitMapSize								= vi_size
+private subroutine of_size (integer vi_size);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+#BitMapSize								= vi_size
 
 CHOOSE CASE #BitMapSize
 	CASE IS < MEDIUM
@@ -519,7 +735,16 @@ EVENT ue_resized(ll_oldHeight, ll_newHeight)
 RETURN
 end subroutine
 
-private function long of_createitem (long vl_item);Long										ll_pos
+private function long of_createitem (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Long										ll_pos
 ll_pos									= dw_toolBar.of_getItem_rectLeft(vl_item)
 
 Long										li_textYOffset
@@ -799,7 +1024,16 @@ END IF
 Return(dw_toolBar.of_getItem_rectWidth(vl_item))
 end function
 
-private function boolean of_updatepositions (boolean vb_dropdownmenu);Long										ll_width
+private function boolean of_updatepositions (boolean vb_dropdownmenu);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Long										ll_width
 ll_width									= dw_toolBar.Width
 
 dw_toolBar.of_setItem_visible(1, vb_dropDownMenu)
@@ -1016,22 +1250,58 @@ END IF
 Return(FALSE)
 end function
 
-public subroutine of_disableupdate ();ib_update								= FALSE
+public subroutine of_disableupdate ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+ib_update								= FALSE
 
 RETURN
 end subroutine
 
-public subroutine of_enableupdate ();ib_update								= TRUE
+public subroutine of_enableupdate ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+ib_update								= TRUE
 
 RETURN
 end subroutine
 
-private subroutine of_size ();of_size(#BitMapSize)
+private subroutine of_size ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+of_size(#BitMapSize)
 
 RETURN
 end subroutine
 
-public function long of_getcolor (string vs_color);Long										ll_color = -1
+public function long of_getcolor (string vs_color);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Long										ll_color = -1
 
 CHOOSE CASE vs_color
 	CASE HIGHLIGHTBORDER,	BORDERCOLOR
@@ -1101,7 +1371,16 @@ END IF
 Return(ll_color)
 end function
 
-public function integer of_update ();IF NOT ib_update THEN Return(SUCCESS)
+public function integer of_update ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF NOT ib_update THEN Return(SUCCESS)
 
 dw_toolBar.SetRedraw(FALSE)
 
@@ -1133,10 +1412,28 @@ dw_toolBar.SetRedraw(TRUE)
 Return(SUCCESS)
 end function
 
-protected function string of_getClickedButton ();Return(is_lButtonDown)
+protected function string of_getClickedButton ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Return(is_lButtonDown)
 end function
 
-private subroutine of_broadcast_invisible (userobject vuo_broadcaster);//	This routine notifies the other u_cst_toolBar objects that a "new"
+private subroutine of_broadcast_invisible (userobject vuo_broadcaster);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+//	This routine notifies the other u_cst_toolBar objects that a "new"
 //	u_cst_toolBar has the highLight box and to hide theirs.  This way only
 //	one toolBar has a highLight box.
 
@@ -1156,7 +1453,16 @@ NEXT
 RETURN
 end subroutine
 
-protected function integer of_highlight (string vs_mode);CHOOSE CASE vs_mode
+protected function integer of_highlight (string vs_mode);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+CHOOSE CASE vs_mode
 	CASE SELECTMODE
 		
 		dw_toolBar.Modify('r_button.brush.color="' + String(of_GetColor(SELECTED2)) + '" ' +			&
@@ -1188,7 +1494,16 @@ END CHOOSE
 Return(SUCCESS)
 end function
 
-private subroutine of_broadcast_showtoolbartext (boolean vb_showtext);//	This routine notifies all u_cst_toolBar objects to turn on/off their text
+private subroutine of_broadcast_showtoolbartext (boolean vb_showtext);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+//	This routine notifies all u_cst_toolBar objects to turn on/off their text
 
 Long										ll_toolbar,	ll_toolBars
 ll_toolBars								= upperBound(suo_toolBar[])
@@ -1208,7 +1523,16 @@ NEXT
 RETURN
 end subroutine
 
-private subroutine of_broadcast_showtoolbartips (boolean vb_showtips);//	This routine notifies all u_cst_toolBar objects to turn on/off their toolTips
+private subroutine of_broadcast_showtoolbartips (boolean vb_showtips);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+//	This routine notifies all u_cst_toolBar objects to turn on/off their toolTips
 
 Long										ll_toolbar,	ll_toolBars
 ll_toolBars								= upperBound(suo_toolBar[])
@@ -1228,7 +1552,16 @@ NEXT
 RETURN
 end subroutine
 
-private function long of_adddropmenu ();//	The 1st item is always the DropDownMenu item that is displayed when
+private function long of_adddropmenu ();//	CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+//	The 1st item is always the DropDownMenu item that is displayed when
 //	not all menu items can be displayed in the toolBar.  The display logic
 //	will show/hide this item as necessary.  It is always the rightMost
 //	item in the toolBar when displayed and will display a popMenu of the
@@ -1265,16 +1598,52 @@ dw_toolBar.of_setItem_rectWidth(ll_item, dw_toolBar.of_getItem_textWidth(ll_item
 Return(1)
 end function
 
-public function long of_additem (string vs_name, string vs_image);Return(of_addItem(vs_name, vs_image, vs_name, LEFT))
+public function long of_additem (string vs_name, string vs_image);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Return(of_addItem(vs_name, vs_image, vs_name, LEFT))
 end function
 
-public function long of_additem (string vs_name, string vs_image, string vs_tooltip);Return(of_addItem(vs_name, vs_image, vs_toolTip, LEFT))
+public function long of_additem (string vs_name, string vs_image, string vs_tooltip);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Return(of_addItem(vs_name, vs_image, vs_toolTip, LEFT))
 end function
 
-public function long of_additem (string vs_name, string vs_image, integer vi_position);Return(of_addItem(vs_name, vs_image, vs_name, vi_position))
+public function long of_additem (string vs_name, string vs_image, integer vi_position);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Return(of_addItem(vs_name, vs_image, vs_name, vi_position))
 end function
 
-public function long of_additem (string vs_name, string vs_image, string vs_tooltip, integer vi_position);IF Trim(vs_name) = is_DropMenuChar THEN
+public function long of_additem (string vs_name, string vs_image, string vs_tooltip, integer vi_position);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF Trim(vs_name) = is_DropMenuChar THEN
 	Return(MessageBox('AddItem Error', 'The character ' + is_DropMenuChar + ' is reserved and can not be used as an item name.'))
 END IF
 
@@ -1331,7 +1700,16 @@ of_update()
 Return(ll_item)
 end function
 
-public function long of_additems (string vs_name[], string vs_image[]);Long										ll_item
+public function long of_additems (string vs_name[], string vs_image[]);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Long										ll_item
 
 Long										li_position[]
 String									ls_toolTip[]
@@ -1344,7 +1722,16 @@ NEXT
 Return(of_addItems(vs_name[], vs_image[], ls_toolTip[], li_position[]))
 end function
 
-public function long of_additems (string vs_name[], string vs_image[], string vs_tooltip[]);Long										ll_item
+public function long of_additems (string vs_name[], string vs_image[], string vs_tooltip[]);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Long										ll_item
 Long										li_position[]
 
 FOR ll_item = 1 TO UpperBound(vs_name[])
@@ -1354,7 +1741,16 @@ NEXT
 Return(of_addItems(vs_name[], vs_image[], vs_toolTip[], li_position[]))
 end function
 
-public function long of_additems (string vs_name[], string vs_image[], string vs_tooltip[], integer vi_position[]);Long										ll_loop
+public function long of_additems (string vs_name[], string vs_image[], string vs_tooltip[], integer vi_position[]);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Long										ll_loop
 
 Boolean									lb_update
 lb_update								= ib_update
@@ -1376,10 +1772,28 @@ of_update()
 Return(dw_toolBar.RowCount())
 end function
 
-public function long of_addseparator ();Return(of_addSeparator(LEFT))
+public function long of_addseparator ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Return(of_addSeparator(LEFT))
 end function
 
-public function long of_addseparator (integer vi_position);Long										ll_item
+public function long of_addseparator (integer vi_position);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Long										ll_item
 ll_item									= dw_toolBar.of_addItem()
 
 dw_toolBar.of_setItem_name(ll_item, dw_toolBar.SEPARATOR + '_' + String(ll_item))
@@ -1406,7 +1820,16 @@ of_update()
 Return(ll_item)
 end function
 
-private function long of_size_text (string vs_text, string vs_fontface, integer vi_fontsize);Long										ll_width	= 0
+private function long of_size_text (string vs_text, string vs_fontface, integer vi_fontsize);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Long										ll_width	= 0
 
 IF isNull(vs_text) OR Trim(vs_text) = '' THEN Return(ll_width)
 
@@ -1420,7 +1843,16 @@ ll_width									= PixelsToUnits(invo_toolBar.of_GetFontWidth(st_toolBar, vs_tex
 Return(ll_width)
 end function
 
-private function long of_size_line ();Long											ll_width
+private function long of_size_line ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Long											ll_width
 
 IF il_currentOrientation = HORIZONTAL THEN
 	ll_width									= PixelsToUnits(4, XPixelsToUnits!)
@@ -1432,16 +1864,43 @@ Return(ll_width)
 
 end function
 
-private function integer of_size_text (string vs_text);Return(of_size_text(vs_text, #FontFace, #FontSize))
+private function integer of_size_text (string vs_text);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Return(of_size_text(vs_text, #FontFace, #FontSize))
 end function
 
-private function long of_size_imageheight ();Long										ll_height
+private function long of_size_imageheight ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Long										ll_height
 ll_height								= PixelsToUnits(#BitMapSize, YPixelsToUnits!)
 
 Return(ll_height)
 end function
 
-private function long of_size_imagewidth (string vs_image);Long										ll_width
+private function long of_size_imagewidth (string vs_image);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Long										ll_width
 
 IF isNull(vs_image) OR Trim(vs_image) = '' THEN
 	ll_width								= 0
@@ -1452,10 +1911,28 @@ END IF
 Return(ll_width)
 end function
 
-public function integer of_setchecked (string vs_item, boolean vb_switch);Return(of_setChecked(dw_toolBar.of_locateItem_name(vs_item), vb_switch))
+public function integer of_setchecked (string vs_item, boolean vb_switch);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Return(of_setChecked(dw_toolBar.of_locateItem_name(vs_item), vb_switch))
 end function
 
-public function boolean of_ischecked (long vl_item);Boolean									lb_checked = FALSE
+public function boolean of_ischecked (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Boolean									lb_checked = FALSE
 
 IF vl_Item > 0 AND vl_Item <= dw_toolBar.RowCount() THEN
 	lb_checked							= dw_toolbar.of_getItem_checked(vl_item)
@@ -1464,7 +1941,16 @@ END IF
 Return(lb_checked)
 end function
 
-public function boolean of_ischecked (string vs_item);Boolean									lb_checked = FALSE
+public function boolean of_ischecked (string vs_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Boolean									lb_checked = FALSE
 
 Long										ll_item
 ll_item									= dw_toolbar.of_locateItem_name(vs_item)
@@ -1476,7 +1962,16 @@ END IF
 Return(lb_checked)
 end function
 
-private function integer of_drawenabled (long vl_item);IF isNull(vl_item) THEN Return(FAILURE)
+private function integer of_drawenabled (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF isNull(vl_item) THEN Return(FAILURE)
 
 IF vl_item <= 0 OR vl_item > dw_toolBar.RowCount() THEN Return(FAILURE)
 
@@ -1533,7 +2028,16 @@ END IF
 Return(SUCCESS)
 end function
 
-private function integer of_drawchecked (long vl_item);IF isNull(vl_item) THEN Return(FAILURE)
+private function integer of_drawchecked (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF isNull(vl_item) THEN Return(FAILURE)
 
 IF vl_item <= 0 OR vl_item > dw_toolBar.RowCount() THEN Return(FAILURE)
 
@@ -1612,7 +2116,16 @@ END IF
 Return(SUCCESS)
 end function
 
-public function integer of_setchecked (long vl_item, boolean vb_switch);IF isNull(vl_item) THEN Return(FAILURE)
+public function integer of_setchecked (long vl_item, boolean vb_switch);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF isNull(vl_item) THEN Return(FAILURE)
 
 IF vl_item <= 0 OR vl_item > dw_toolBar.RowCount() THEN Return(FAILURE)
 
@@ -1629,7 +2142,16 @@ END IF
 Return(SUCCESS)
 end function
 
-public function integer of_setenabled (long vl_item, boolean vb_switch);IF isNull(vl_item) THEN Return(FAILURE)
+public function integer of_setenabled (long vl_item, boolean vb_switch);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF isNull(vl_item) THEN Return(FAILURE)
 
 IF vl_item <= 0 OR vl_item > dw_toolBar.RowCount() THEN Return(FAILURE)
 
@@ -1646,7 +2168,16 @@ END IF
 Return(SUCCESS)
 end function
 
-public function integer of_setimage (long vl_item, string vs_image);IF isNull(vl_item) THEN Return(FAILURE)
+public function integer of_setimage (long vl_item, string vs_image);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF isNull(vl_item) THEN Return(FAILURE)
 
 IF vl_item <= 1 OR vl_item > dw_toolBar.RowCount() THEN Return(FAILURE)
 
@@ -1670,7 +2201,16 @@ of_update()
 Return(SUCCESS)
 end function
 
-public function integer of_settext (long vl_item, string vs_text);IF isNull(vl_item) THEN Return(FAILURE)
+public function integer of_settext (long vl_item, string vs_text);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF isNull(vl_item) THEN Return(FAILURE)
 
 IF vl_item <= 1 OR vl_item > dw_toolBar.RowCount() THEN Return(FAILURE)
 
@@ -1686,7 +2226,16 @@ of_drawButton(ll_itemCurrent)
 Return(SUCCESS)
 end function
 
-public function integer of_settiptext (long vl_item, string vs_tooltip);IF isNull(vl_item) THEN Return(FAILURE)
+public function integer of_settiptext (long vl_item, string vs_tooltip);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF isNull(vl_item) THEN Return(FAILURE)
 
 IF vl_item <= 0 OR vl_item > dw_toolbar.RowCount() THEN Return(FAILURE)
 
@@ -1709,7 +2258,16 @@ END IF
 Return(SUCCESS)
 end function
 
-public function integer of_setvisible (long vl_item, boolean vb_switch);IF isNull(vl_item) THEN Return(FAILURE)
+public function integer of_setvisible (long vl_item, boolean vb_switch);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF isNull(vl_item) THEN Return(FAILURE)
 
 IF vl_item <= 0 OR vl_item > dw_toolBar.RowCount() THEN Return(FAILURE)
 
@@ -1725,7 +2283,16 @@ END IF
 Return(SUCCESS)
 end function
 
-private function long of_createitem_separator (long vl_item);Long										ll_pos
+private function long of_createitem_separator (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Long										ll_pos
 ll_pos									= dw_toolBar.of_getItem_rectLeft(vl_item)
 
 Integer									li_offset[]
@@ -1796,7 +2363,16 @@ Return(dw_toolBar.of_getItem_rectWidth(vl_item))
 
 end function
 
-protected function integer of_drawbutton (long vl_item);String									ls_describe
+protected function integer of_drawbutton (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+String									ls_describe
 ls_describe								= dw_toolBar.Describe('r_button.X')
 
 IF ls_describe = '?' OR ls_describe = '!' OR ls_describe = '' THEN Return(FAILURE)
@@ -1820,7 +2396,16 @@ dw_toolBar.Object.r_button.Height													&
 Return(of_highLight(VISIBLEMODE))
 end function
 
-private subroutine of_popmenu_dropdown ();Boolean									lb_showMenu			= FALSE
+private subroutine of_popmenu_dropdown ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Boolean									lb_showMenu			= FALSE
 
 m_toolBar_popMenu						lm_dropDown
 lm_dropDown								= CREATE m_toolBar_popMenu
@@ -1951,7 +2536,16 @@ DESTROY lm_dropDown
 RETURN
 end subroutine
 
-protected function integer of_keydown (keycode vkc_key, unsignedinteger vui_keyflags);//invo_toolBar.of_locateToolTips(invo_toolBar.of_getDesktopWindow())
+protected function integer of_keydown (keycode vkc_key, unsignedinteger vui_keyflags);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+//invo_toolBar.of_locateToolTips(invo_toolBar.of_getDesktopWindow())
 //
 //IF dw_toolbar.of_PBVersion() >= 11.5 THEN
 //	
@@ -2044,7 +2638,16 @@ END IF
 Return(SUCCESS)
 end function
 
-public function integer of_disabletext ();Long										ll_itemCurrent
+public function integer of_disabletext ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Long										ll_itemCurrent
 ll_itemCurrent							= dw_toolBar.of_locateItem()
 
 Long										ll_item
@@ -2069,7 +2672,16 @@ of_drawButton(ll_itemCurrent)
 Return(SUCCESS)
 end function
 
-public function integer of_enabletext ();Long										ll_itemCurrent
+public function integer of_enabletext ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Long										ll_itemCurrent
 ll_itemCurrent							= dw_toolBar.of_locateItem()
 
 Long										ll_item
@@ -2090,7 +2702,16 @@ of_drawButton(ll_itemCurrent)
 Return(SUCCESS)
 end function
 
-public function integer of_clickitem (string vs_button);Long										ll_Return	= PREVENT
+public function integer of_clickitem (string vs_button);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Long										ll_Return	= PREVENT
 
 IF of_isVisible(vs_button) AND of_isEnabled(vs_button) THEN
 	
@@ -2109,23 +2730,68 @@ END IF
 Return(ll_Return)
 end function
 
-public function integer of_clickitem (long vl_item);IF isNull(vl_item) THEN Return(PREVENT)
+public function integer of_clickitem (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF isNull(vl_item) THEN Return(PREVENT)
 
 IF vl_item <= 0 OR vl_item > dw_toolBar.RowCount() THEN Return(PREVENT)
 
 Return(of_clickItem(dw_toolBar.of_getItem_name(vl_item)))
 end function
 
-public function long of_clickbutton (string vs_button);Return(of_clickItem(vs_button))
+public function long of_clickbutton (string vs_button);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Return(of_clickItem(vs_button))
 end function
 
-public function long of_clickbutton (long vl_item);Return(of_clickItem(vl_item))
+public function long of_clickbutton (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Return(of_clickItem(vl_item))
 end function
 
-public function long of_additem (string vs_name);Return(of_addItem(vs_name, '', vs_name, LEFT))
+public function long of_additem (string vs_name);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Return(of_addItem(vs_name, '', vs_name, LEFT))
 end function
 
-public function long of_additem (string vs_name, integer vi_position);Return(of_addItem(vs_name, '', vs_name, vi_position))
+public function long of_additem (string vs_name, integer vi_position);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Return(of_addItem(vs_name, '', vs_name, vi_position))
 end function
 
 on u_cst_toolbar.create
@@ -2143,7 +2809,16 @@ destroy(this.dw_toolbar)
 destroy(this.r_border)
 end on
 
-event constructor;IF GetApplication().ToolBarText THEN
+event constructor;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF GetApplication().ToolBarText THEN
 	of_enableText()
 ELSE
 	of_disableText()
@@ -2278,7 +2953,16 @@ POST EVENT ue_post_constructor()
 RETURN
 end event
 
-event destructor;Long										ll_index
+event destructor;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Long										ll_index
 
 Long										ll_last
 ll_last									= UpperBound(suo_toolBar[])
@@ -2314,7 +2998,16 @@ string text = "ToolBar"
 boolean focusrectangle = false
 end type
 
-event constructor;Hide()
+event constructor;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Hide()
 end event
 
 type dw_toolbar from u_cst_toolbar_items within u_cst_toolbar
@@ -2330,7 +3023,16 @@ integer y = 4
 integer taborder = 10
 end type
 
-event ue_dwnlbuttonup;of_highLight(HIGHLIGHT)
+event ue_dwnlbuttonup;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+of_highLight(HIGHLIGHT)
 
 IF dwo.Name = is_lButtonDown THEN
 
@@ -2365,7 +3067,16 @@ END IF
 setNull(is_lButtonDown)
 end event
 
-event ue_dwnmousemove;Long										ll_item
+event ue_dwnmousemove;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Long										ll_item
 
 IF isNull(is_lButtonDown) THEN
 	CHOOSE CASE String(dwo.Type)
@@ -2404,7 +3115,16 @@ IF NOT ib_trackMouseEvent THEN
 END IF
 end event
 
-event ue_post_getfocus(long vl_tabbed);IF ib_trackMouseEvent THEN
+event ue_post_getfocus(long vl_tabbed);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF ib_trackMouseEvent THEN
 ELSE
 	CHOOSE CASE vl_tabbed
 		CASE TAB, 0
@@ -2420,13 +3140,40 @@ ELSE
 END IF
 end event
 
-event ue_dwnkey;of_keyDown(key, keyFlags)
+event ue_dwnkey;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+of_keyDown(key, keyFlags)
 end event
 
-event ue_dwnhscoll;Object.DataWindow.HorizontalScrollPosition	= 0
+event ue_dwnhscoll;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Object.DataWindow.HorizontalScrollPosition	= 0
 end event
 
-event constructor;call super::constructor;BringToTop								= TRUE
+event constructor;call super::constructor;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+BringToTop								= TRUE
 end event
 
 event clicked;call super::clicked;CHOOSE CASE dwo.Type
@@ -2448,7 +3195,16 @@ event clicked;call super::clicked;CHOOSE CASE dwo.Type
 END CHOOSE
 end event
 
-event losefocus;call super::losefocus;of_highLight(INVISIBLE)
+event losefocus;call super::losefocus;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+of_highLight(INVISIBLE)
 
 Modify('DataWindow.' + #band + '.Color="' + String(of_getColor(LOSEFOCUS)) + '" ')
 
@@ -2465,7 +3221,16 @@ event other;call super::other;CHOOSE CASE message.Number
 END CHOOSE
 end event
 
-event getfocus;call super::getfocus;Modify('DataWindow.' + #band + '.Color="' + String(of_getColor(GETFOCUS)) + '" ')
+event getfocus;call super::getfocus;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Modify('DataWindow.' + #band + '.Color="' + String(of_getColor(GETFOCUS)) + '" ')
 
 Long										ll_tab	= NOTAB
 
@@ -2480,7 +3245,16 @@ END IF
 POST EVENT ue_post_getFocus(ll_tab)
 end event
 
-event rbuttondown;call super::rbuttondown;m_toolBar_context						lm_context
+event rbuttondown;call super::rbuttondown;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+m_toolBar_context						lm_context
 lm_context								= CREATE m_toolbar_context
 
 lm_context.mf_setParent(parent)

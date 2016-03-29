@@ -28,6 +28,7 @@ Private:
 
 	Double									idbl_PBVersion					= 0.0
 end variables
+
 forward prototypes
 public function boolean of_getitem_displayinmenu (long vl_item)
 public function boolean of_getitem_displaytext (long vl_item)
@@ -88,32 +89,86 @@ public function double of_pbversion ()
 public function boolean of_getitem_displayinmenu (string vs_item)
 end prototypes
 
-public function boolean of_getitem_displayinmenu (long vl_item);IF vl_item < 1 OR vl_item > RowCount() THEN Return(FALSE)
+public function boolean of_getitem_displayinmenu (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF vl_item < 1 OR vl_item > RowCount() THEN Return(FALSE)
 
 Return(GetItemString(vl_item, 'displayInMenu') = 'Y')
 end function
 
-public function boolean of_getitem_displaytext (long vl_item);IF vl_item < 1 OR vl_item > RowCount() THEN Return(FALSE)
+public function boolean of_getitem_displaytext (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF vl_item < 1 OR vl_item > RowCount() THEN Return(FALSE)
 
 Return(GetItemString(vl_item, 'displayText') = 'Y')
 end function
 
-public function boolean of_getitem_enabled (long vl_item);IF vl_item < 1 OR vl_item > RowCount() THEN Return(FALSE)
+public function boolean of_getitem_enabled (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF vl_item < 1 OR vl_item > RowCount() THEN Return(FALSE)
 
 Return(GetItemString(vl_item, 'enabled') = 'Y')
 end function
 
-public function string of_getitem_fontface (long vl_item);IF vl_item < 1 OR vl_item > RowCount() THEN Return('')
+public function string of_getitem_fontface (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF vl_item < 1 OR vl_item > RowCount() THEN Return('')
 
 Return(GetItemString(vl_item, 'fontFace'))
 end function
 
-public function long of_getitem_fontsize (long vl_item);IF vl_item < 1 OR vl_item > RowCount() THEN Return(0)
+public function long of_getitem_fontsize (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF vl_item < 1 OR vl_item > RowCount() THEN Return(0)
 
 Return(GetItemNumber(vl_item, 'fontSize'))
 end function
 
-public subroutine of_setitem_fontface (long vl_item, string vs_fontface);IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
+public subroutine of_setitem_fontface (long vl_item, string vs_fontface);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
 
 SetItem(vl_item, 'fontFace', vs_fontFace)
 ResetUpdate()
@@ -121,7 +176,16 @@ ResetUpdate()
 RETURN
 end subroutine
 
-public subroutine of_setitem_position (long vl_item, long vl_position);IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
+public subroutine of_setitem_position (long vl_item, long vl_position);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
 
 SetItem(vl_item, 'position', vl_position)
 ResetUpdate()
@@ -129,87 +193,240 @@ ResetUpdate()
 RETURN
 end subroutine
 
-public function string of_getitem_image (long vl_item);IF vl_item < 1 OR vl_item > RowCount() THEN Return('')
+public function string of_getitem_image (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF vl_item < 1 OR vl_item > RowCount() THEN Return('')
 
 Return(GetItemString(vl_item, 'image'))
 end function
 
-public function long of_getitem_imagetransparency (long vl_item);IF vl_item < 1 OR vl_item > RowCount() THEN Return(0)
+public function long of_getitem_imagetransparency (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF vl_item < 1 OR vl_item > RowCount() THEN Return(0)
 
 Return(GetItemNumber(vl_item, 'imageTransparency'))
 end function
 
-public function long of_getitem_imagewidth (long vl_item);IF vl_item < 1 OR vl_item > RowCount() THEN Return(0)
+public function long of_getitem_imagewidth (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF vl_item < 1 OR vl_item > RowCount() THEN Return(0)
 
 Return(GetItemNumber(vl_item, 'imageWidth'))
 end function
 
-public function string of_getitem_name (long vl_item);IF vl_item < 1 OR vl_item > RowCount() THEN Return('')
+public function string of_getitem_name (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF vl_item < 1 OR vl_item > RowCount() THEN Return('')
 
 Return(GetItemString(vl_item, 'name'))
 end function
 
-public function string of_getitem_objectname (long vl_item);IF vl_item < 1 OR vl_item > RowCount() THEN Return('')
+public function string of_getitem_objectname (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF vl_item < 1 OR vl_item > RowCount() THEN Return('')
 
 Return(GetItemString(vl_item, 'objectName'))
 end function
 
-public function string of_getitem_objecttype (long vl_item);IF vl_item < 1 OR vl_item > RowCount() THEN Return('')
+public function string of_getitem_objecttype (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF vl_item < 1 OR vl_item > RowCount() THEN Return('')
 
 Return(GetItemString(vl_item, 'objectType'))
 end function
 
-public function long of_getitem_position (long vl_item);IF vl_item < 1 OR vl_item > RowCount() THEN Return(0)
+public function long of_getitem_position (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF vl_item < 1 OR vl_item > RowCount() THEN Return(0)
 
 Return(GetItemNumber(vl_item, 'position'))
 end function
 
-public function long of_getitem_rectheight (long vl_item);IF vl_item < 1 OR vl_item > RowCount() THEN Return(0)
+public function long of_getitem_rectheight (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF vl_item < 1 OR vl_item > RowCount() THEN Return(0)
 
 Return(GetItemNumber(vl_item, 'rectHeight'))
 end function
 
-public function long of_getitem_rectleft (long vl_item);IF vl_item < 1 OR vl_item > RowCount() THEN Return(0)
+public function long of_getitem_rectleft (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF vl_item < 1 OR vl_item > RowCount() THEN Return(0)
 
 Return(GetItemNumber(vl_item, 'rectLeft'))
 end function
 
-public function long of_getitem_recttop (long vl_item);IF vl_item < 1 OR vl_item > RowCount() THEN Return(0)
+public function long of_getitem_recttop (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF vl_item < 1 OR vl_item > RowCount() THEN Return(0)
 
 Return(GetItemNumber(vl_item, 'rectTop'))
 end function
 
-public function long of_getitem_rectwidth (long vl_item);IF vl_item < 1 OR vl_item > RowCount() THEN Return(0)
+public function long of_getitem_rectwidth (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF vl_item < 1 OR vl_item > RowCount() THEN Return(0)
 
 Return(GetItemNumber(vl_item, 'rectWidth'))
 end function
 
-public function boolean of_getitem_separator (long vl_item);IF vl_item < 1 OR vl_item > RowCount() THEN Return(FALSE)
+public function boolean of_getitem_separator (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF vl_item < 1 OR vl_item > RowCount() THEN Return(FALSE)
 
 Return(GetItemString(vl_item, 'objectType') = SEPARATOR)
 end function
 
-public function long of_getitem_tabsequence (long vl_item);IF vl_item < 1 OR vl_item > RowCount() THEN Return(0)
+public function long of_getitem_tabsequence (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF vl_item < 1 OR vl_item > RowCount() THEN Return(0)
 
 Return(GetItemNumber(vl_item, 'tabSequence'))
 end function
 
-public function long of_getitem_textwidth (long vl_item);IF vl_item < 1 OR vl_item > RowCount() THEN Return(0)
+public function long of_getitem_textwidth (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF vl_item < 1 OR vl_item > RowCount() THEN Return(0)
 
 Return(GetItemNumber(vl_item, 'textWidth'))
 end function
 
-public function string of_getitem_tooltip (long vl_item);IF vl_item < 1 OR vl_item > RowCount() THEN Return('')
+public function string of_getitem_tooltip (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF vl_item < 1 OR vl_item > RowCount() THEN Return('')
 
 Return(GetItemString(vl_item, 'toolTip'))
 end function
 
-public function boolean of_getitem_visible (long vl_item);IF vl_item < 1 OR vl_item > RowCount() THEN Return(FALSE)
+public function boolean of_getitem_visible (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF vl_item < 1 OR vl_item > RowCount() THEN Return(FALSE)
 
 Return(GetItemString(vl_item, 'visible') = 'Y')
 end function
 
-public subroutine of_setitem_visible (long vl_item, boolean vb_visible);IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
+public subroutine of_setitem_visible (long vl_item, boolean vb_visible);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
 
 IF vb_visible THEN
 	SetItem(vl_item, 'visible', 'Y')
@@ -222,7 +439,16 @@ ResetUpdate()
 RETURN
 end subroutine
 
-public subroutine of_setitem_displayinmenu (long vl_item, boolean vb_displayinmenu);IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
+public subroutine of_setitem_displayinmenu (long vl_item, boolean vb_displayinmenu);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
 
 IF vb_displayInMenu THEN
 	SetItem(vl_item, 'displayInMenu', 'Y')
@@ -235,7 +461,16 @@ ResetUpdate()
 RETURN
 end subroutine
 
-public subroutine of_setitem_displaytext (long vl_item, boolean vb_displaytext);IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
+public subroutine of_setitem_displaytext (long vl_item, boolean vb_displaytext);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
 
 IF vb_displayText THEN
 	SetItem(vl_item, 'displayText', 'Y')
@@ -248,7 +483,16 @@ ResetUpdate()
 RETURN
 end subroutine
 
-public subroutine of_setitem_enabled (long vl_item, boolean vb_enabled);IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
+public subroutine of_setitem_enabled (long vl_item, boolean vb_enabled);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
 
 IF vb_enabled THEN
 	SetItem(vl_item, 'enabled', 'Y')
@@ -261,7 +505,16 @@ ResetUpdate()
 RETURN
 end subroutine
 
-public subroutine of_setitem_tooltip (long vl_item, string vs_tooltip);IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
+public subroutine of_setitem_tooltip (long vl_item, string vs_tooltip);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
 
 SetItem(vl_item, 'toolTip', vs_toolTip)
 ResetUpdate()
@@ -269,7 +522,16 @@ ResetUpdate()
 RETURN
 end subroutine
 
-public subroutine of_setitem_textwidth (long vl_item, long vl_textwidth);IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
+public subroutine of_setitem_textwidth (long vl_item, long vl_textwidth);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
 
 SetItem(vl_item, 'textWidth', vl_textWidth)
 ResetUpdate()
@@ -277,7 +539,16 @@ ResetUpdate()
 RETURN
 end subroutine
 
-public subroutine of_setitem_tabsequence (long vl_item, long vl_tabsequence);IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
+public subroutine of_setitem_tabsequence (long vl_item, long vl_tabsequence);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
 
 SetItem(vl_item, 'tabSequence', vl_tabSequence)
 ResetUpdate()
@@ -285,7 +556,16 @@ ResetUpdate()
 RETURN
 end subroutine
 
-public subroutine of_setitem_rectwidth (long vl_item, long vl_rectwidth);IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
+public subroutine of_setitem_rectwidth (long vl_item, long vl_rectwidth);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
 
 SetItem(vl_item, 'rectWidth', vl_rectWidth)
 ResetUpdate()
@@ -293,7 +573,16 @@ ResetUpdate()
 RETURN
 end subroutine
 
-public subroutine of_setitem_recttop (long vl_item, long vl_recttop);IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
+public subroutine of_setitem_recttop (long vl_item, long vl_recttop);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
 
 SetItem(vl_item, 'rectTop', vl_rectTop)
 ResetUpdate()
@@ -301,7 +590,16 @@ ResetUpdate()
 RETURN
 end subroutine
 
-public subroutine of_setitem_rectleft (long vl_item, long vl_rectleft);IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
+public subroutine of_setitem_rectleft (long vl_item, long vl_rectleft);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
 
 SetItem(vl_item, 'rectleft', vl_rectLeft)
 ResetUpdate()
@@ -309,7 +607,16 @@ ResetUpdate()
 RETURN
 end subroutine
 
-public subroutine of_setitem_rectheight (long vl_item, long vl_rectheight);IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
+public subroutine of_setitem_rectheight (long vl_item, long vl_rectheight);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
 
 SetItem(vl_item, 'rectHeight', vl_rectHeight)
 ResetUpdate()
@@ -317,7 +624,16 @@ ResetUpdate()
 RETURN
 end subroutine
 
-public subroutine of_setitem_objecttype (long vl_item, string vs_objecttype);IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
+public subroutine of_setitem_objecttype (long vl_item, string vs_objecttype);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
 
 SetItem(vl_item, 'objectType', vs_objectType)
 ResetUpdate()
@@ -325,7 +641,16 @@ ResetUpdate()
 RETURN
 end subroutine
 
-public subroutine of_setitem_objectname (long vl_item, string vs_objectname);IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
+public subroutine of_setitem_objectname (long vl_item, string vs_objectname);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
 
 SetItem(vl_item, 'objectName', vs_objectName)
 ResetUpdate()
@@ -333,7 +658,16 @@ ResetUpdate()
 RETURN
 end subroutine
 
-public subroutine of_setitem_name (long vl_item, string vs_name);IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
+public subroutine of_setitem_name (long vl_item, string vs_name);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
 
 SetItem(vl_item, 'name', vs_name)
 ResetUpdate()
@@ -341,7 +675,16 @@ ResetUpdate()
 RETURN
 end subroutine
 
-public subroutine of_setitem_imagewidth (long vl_item, long vl_imagewidth);IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
+public subroutine of_setitem_imagewidth (long vl_item, long vl_imagewidth);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
 
 SetItem(vl_item, 'imageWidth', vl_imageWidth)
 ResetUpdate()
@@ -349,7 +692,16 @@ ResetUpdate()
 RETURN
 end subroutine
 
-public subroutine of_setitem_imagetransparency (long vl_item, long vl_imagetransparency);IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
+public subroutine of_setitem_imagetransparency (long vl_item, long vl_imagetransparency);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
 
 SetItem(vl_item, 'imageTransparency', vl_imageTransparency)
 ResetUpdate()
@@ -357,7 +709,16 @@ ResetUpdate()
 RETURN
 end subroutine
 
-public subroutine of_setitem_image (long vl_item, string vs_image);IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
+public subroutine of_setitem_image (long vl_item, string vs_image);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
 
 SetItem(vl_item, 'image', vs_image)
 ResetUpdate()
@@ -365,7 +726,16 @@ ResetUpdate()
 RETURN
 end subroutine
 
-public subroutine of_setitem_fontsize (long vl_item, long vl_fontsize);IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
+public subroutine of_setitem_fontsize (long vl_item, long vl_fontsize);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
 
 SetItem(vl_item, 'fontSize', vl_fontSize)
 ResetUpdate()
@@ -373,7 +743,16 @@ ResetUpdate()
 RETURN
 end subroutine
 
-public function long of_locateitem ();Long										ll_item
+public function long of_locateitem ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Long										ll_item
 setNull(ll_item)
 
 String									ls_describe
@@ -404,7 +783,16 @@ END CHOOSE
 Return(ll_item)
 end function
 
-public function long of_locateitem (long vl_x, long vl_y);String									ls_find
+public function long of_locateitem (long vl_x, long vl_y);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+String									ls_find
 ls_find									= String(vl_x) + '>=rectLeft AND '																		&
 											+ String(vl_x) + '<=(rectLeft + rectWidth) AND '													&
 											+ String(vl_y) + '>=rectTop AND '																		&
@@ -424,7 +812,16 @@ END CHOOSE
 Return(ll_item)
 end function
 
-public function long of_locateitem_first ();Long										ll_itemFirst
+public function long of_locateitem_first ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Long										ll_itemFirst
 setNull(ll_itemFirst)
 
 Long										ll_tabFirst
@@ -464,7 +861,16 @@ Filter()
 Return(ll_itemFirst)
 end function
 
-public function long of_locateitem_last ();Long										ll_itemLast
+public function long of_locateitem_last ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Long										ll_itemLast
 setNull(ll_itemLast)
 
 Long										ll_tabLast
@@ -504,7 +910,16 @@ Filter()
 Return(ll_itemLast)
 end function
 
-public function long of_locateitem_next (long vl_itemcurrent);IF isNull(vl_itemCurrent) THEN Return(vl_itemCurrent)
+public function long of_locateitem_next (long vl_itemcurrent);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF isNull(vl_itemCurrent) THEN Return(vl_itemCurrent)
 
 Long										ll_itemNext
 setNull(ll_itemNext)
@@ -551,7 +966,16 @@ Filter()
 Return(ll_itemNext)
 end function
 
-public function long of_locateitem_previous (long vl_itemcurrent);IF isNull(vl_itemCurrent) THEN Return(vl_itemCurrent)
+public function long of_locateitem_previous (long vl_itemcurrent);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF isNull(vl_itemCurrent) THEN Return(vl_itemCurrent)
 
 Long										ll_itemPrevious
 setNull(ll_itemPrevious)
@@ -598,7 +1022,16 @@ Filter()
 Return(ll_itemPrevious)
 end function
 
-public function long of_additem ();Long									ll_item
+public function long of_additem ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Long									ll_item
 ll_item								= InsertRow(0)
 
 of_setItem_order(ll_item)
@@ -608,7 +1041,16 @@ ResetUpdate()
 Return(ll_item)
 end function
 
-public function boolean of_getitem_checked (long vl_item);IF vl_item < 1 OR vl_item > RowCount() THEN Return(FALSE)
+public function boolean of_getitem_checked (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF vl_item < 1 OR vl_item > RowCount() THEN Return(FALSE)
 
 Return(GetItemString(vl_item, 'checked') = 'Y')
 end function
@@ -626,12 +1068,30 @@ ResetUpdate()
 RETURN
 end subroutine
 
-public function long of_getitem_order (long vl_item);IF vl_item < 1 OR vl_item > RowCount() THEN Return(0)
+public function long of_getitem_order (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF vl_item < 1 OR vl_item > RowCount() THEN Return(0)
 
 Return(GetItemNumber(vl_item, 'order'))
 end function
 
-public subroutine of_setitem_order (long vl_item);IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
+public subroutine of_setitem_order (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
 
 SetItem(vl_item, 'order', vl_item)
 ResetUpdate()
@@ -639,7 +1099,16 @@ ResetUpdate()
 RETURN
 end subroutine
 
-public subroutine of_deleteitem (long vl_item);String									ls_describe
+public subroutine of_deleteitem (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+String									ls_describe
 
 of_setItem_displayInMenu(vl_item, TRUE)
 	
@@ -687,7 +1156,16 @@ of_setItem_tabSequence(vl_item, 0)
 RETURN
 end subroutine
 
-public function long of_locateitem_name (string vs_name);String									ls_find
+public function long of_locateitem_name (string vs_name);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+String									ls_find
 ls_find									= 'Lower(name)=Lower("' + vs_name + '")'
 
 Long										ll_item
@@ -704,7 +1182,16 @@ END CHOOSE
 Return(ll_item)
 end function
 
-public function long of_locateitem_objectname (string vs_objectname);String									ls_find
+public function long of_locateitem_objectname (string vs_objectname);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+String									ls_find
 ls_find									= 'Lower(objectName)=Lower("' + vs_objectName + '")'
 
 Long										ll_item
@@ -721,10 +1208,28 @@ END CHOOSE
 Return(ll_item)
 end function
 
-public function double of_pbversion ();Return(idbl_PBVersion)
+public function double of_pbversion ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Return(idbl_PBVersion)
 end function
 
-public function boolean of_getitem_displayinmenu (string vs_item);IF isNull(vs_item) THEN Return(FALSE)
+public function boolean of_getitem_displayinmenu (string vs_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF isNull(vs_item) THEN Return(FALSE)
 
 Boolean									lb_displayInMenu	= FALSE
 
@@ -744,7 +1249,16 @@ end on
 on u_cst_toolbar_items.destroy
 end on
 
-event constructor;Environment									lenv_temp
+event constructor;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Environment									lenv_temp
 GetEnvironment(lenv_temp)
 
 idbl_PBVersion								= lenv_temp.PBMajorRevision + (lenv_temp.PBMinorRevision / 10)

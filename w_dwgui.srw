@@ -145,7 +145,16 @@ destroy(this.uo_1)
 destroy(this.cbx_enable_text_1)
 end on
 
-event open;r_1.visible = FALSE
+event open;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+r_1.visible = FALSE
 
 ////	Documentation example 1
 //
@@ -199,7 +208,16 @@ uo_1.of_addItem('Text 1',	'',							uo_1.RIGHT)
 uo_1.of_addSeparator(uo_1.RIGHT)
 end event
 
-event resize;IF il_oldWidth <> -1 AND il_oldHeight <> -1 THEN
+event resize;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF il_oldWidth <> -1 AND il_oldHeight <> -1 THEN
 
 	Long								ll_diffWidth,	ll_diffHeight
 	
@@ -233,7 +251,16 @@ string text = "Display ToolTips"
 boolean checked = true
 end type
 
-event clicked;IF Checked THEN
+event clicked;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF Checked THEN
 	uo_1.of_EnableToolTips()
 ELSE
 	uo_1.of_DisableToolTips()
@@ -257,7 +284,16 @@ long backcolor = 553648127
 string text = "Display Text"
 end type
 
-event clicked;IF Checked THEN
+event clicked;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+IF Checked THEN
 	uo_1.of_EnableText()
 ELSE
 	uo_1.of_DisableText()
@@ -292,7 +328,16 @@ string text = "Show Text 4"
 boolean checked = true
 end type
 
-event clicked;uo_1.of_setVisible('Text 4',	Checked)
+event clicked;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+uo_1.of_setVisible('Text 4',	Checked)
 end event
 
 type cbx_show_text_3 from checkbox within w_dwgui
@@ -313,7 +358,16 @@ string text = "Show Text 3"
 boolean checked = true
 end type
 
-event clicked;uo_1.of_setVisible('Text 3',	Checked)
+event clicked;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+uo_1.of_setVisible('Text 3',	Checked)
 end event
 
 type cbx_show_text_2 from checkbox within w_dwgui
@@ -334,7 +388,16 @@ string text = "Show Text 2"
 boolean checked = true
 end type
 
-event clicked;uo_1.of_setVisible('Text 2',	Checked)
+event clicked;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+uo_1.of_setVisible('Text 2',	Checked)
 end event
 
 type cbx_show_text_1 from checkbox within w_dwgui
@@ -355,7 +418,16 @@ string text = "Show Text 1"
 boolean checked = true
 end type
 
-event clicked;uo_1.of_setVisible('Text 1',	Checked)
+event clicked;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+uo_1.of_setVisible('Text 1',	Checked)
 end event
 
 type cbx_enable_paste from checkbox within w_dwgui
@@ -376,7 +448,16 @@ string text = "Enable Paste"
 boolean checked = true
 end type
 
-event clicked;uo_1.of_setEnabled('Paste',	Checked)
+event clicked;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+uo_1.of_setEnabled('Paste',	Checked)
 end event
 
 type cbx_enabled_exit from checkbox within w_dwgui
@@ -397,7 +478,16 @@ string text = "Enable Exit"
 boolean checked = true
 end type
 
-event clicked;uo_1.of_setEnabled('Exit',	Checked)
+event clicked;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+uo_1.of_setEnabled('Exit',	Checked)
 end event
 
 type cbx_check_text_2 from checkbox within w_dwgui
@@ -417,7 +507,16 @@ long backcolor = 553648127
 string text = "Check Text 2"
 end type
 
-event clicked;uo_1.of_setChecked('Text 2',	Checked)
+event clicked;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+uo_1.of_setChecked('Text 2',	Checked)
 end event
 
 type cbx_check_text_1 from checkbox within w_dwgui
@@ -437,7 +536,16 @@ long backcolor = 553648127
 string text = "Check Text 1"
 end type
 
-event clicked;uo_1.of_setChecked('Text 1',	Checked)
+event clicked;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+uo_1.of_setChecked('Text 1',	Checked)
 end event
 
 type cbx_show_text_only from checkbox within w_dwgui
@@ -458,7 +566,16 @@ string text = "Show Text Only"
 boolean checked = true
 end type
 
-event clicked;uo_1.of_setVisible('Text Only',	Checked)
+event clicked;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+uo_1.of_setVisible('Text Only',	Checked)
 end event
 
 type cbx_show_exit from checkbox within w_dwgui
@@ -479,7 +596,16 @@ string text = "Show Exit"
 boolean checked = true
 end type
 
-event clicked;uo_1.of_setVisible('Exit',	Checked)
+event clicked;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+uo_1.of_setVisible('Exit',	Checked)
 end event
 
 type cbx_show_open from checkbox within w_dwgui
@@ -500,7 +626,16 @@ string text = "Show Open"
 boolean checked = true
 end type
 
-event clicked;uo_1.of_setVisible('Open',	Checked)
+event clicked;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+uo_1.of_setVisible('Open',	Checked)
 end event
 
 type cbx_show_save from checkbox within w_dwgui
@@ -521,7 +656,16 @@ string text = "Show Save"
 boolean checked = true
 end type
 
-event clicked;uo_1.of_setVisible('Save',	Checked)
+event clicked;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+uo_1.of_setVisible('Save',	Checked)
 end event
 
 type cbx_show_preview from checkbox within w_dwgui
@@ -542,7 +686,16 @@ string text = "Show Preview"
 boolean checked = true
 end type
 
-event clicked;uo_1.of_setVisible('Preview',	Checked)
+event clicked;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+uo_1.of_setVisible('Preview',	Checked)
 end event
 
 type cbx_show_print from checkbox within w_dwgui
@@ -563,7 +716,16 @@ string text = "Show Print"
 boolean checked = true
 end type
 
-event clicked;uo_1.of_setVisible(uo_1.dw_toolBar.of_locateItem_objectName('ToolBarItem_5'),	Checked)
+event clicked;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+uo_1.of_setVisible(uo_1.dw_toolBar.of_locateItem_objectName('ToolBarItem_5'),	Checked)
 end event
 
 type uo_1 from u_cst_toolbar within w_dwgui
@@ -577,7 +739,16 @@ on uo_1.destroy
 call u_cst_toolbar::destroy
 end on
 
-event ue_itemclicked;call super::ue_itemclicked;CHOOSE CASE Lower(vs_button)
+event ue_itemclicked;call super::ue_itemclicked;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+CHOOSE CASE Lower(vs_button)
 		
 	CASE 'exit'
 		
@@ -604,6 +775,15 @@ string text = "Enable Text 1"
 boolean checked = true
 end type
 
-event clicked;uo_1.of_setEnabled('Text 1',	Checked)
+event clicked;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+uo_1.of_setEnabled('Text 1',	Checked)
 end event
 
