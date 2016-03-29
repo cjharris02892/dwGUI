@@ -1,0 +1,32 @@
+HA$PBExportHeader$p_dwgui.srj
+$PBExportComments$Generated Application Executable Project
+EXE:a_dwgui.exe,,0,1,1
+CMP:0,0,0,2,0,0,1
+COM:Christopher Harris
+DES:DataWindow Graphical User Interface
+CPY:Christopher Harris 2016
+PRD:DWGUI
+PVS:1.0.0.1
+PVN:1,0,0,1
+FVS:1.0.0.1
+FVN:1,0,0,1
+MAN:0,asInvoker,0
+PBD:dwgui_test.pbl,,0
+PBD:dwgui.pbl,,0
+PBD:dwgui_PFC.pbl,,0
+OBJ:c:\powerbuilder\dwgui\dwgui_pfc.pbl,pfc_n_cst_string,u
+OBJ:c:\powerbuilder\dwgui\dwgui.pbl,u_cst_toolbar_items,u
+OBJ:c:\powerbuilder\dwgui\dwgui_pfc.pbl,pfc_n_cst_numerical,u
+OBJ:c:\powerbuilder\dwgui\dwgui.pbl,u_cst_toolbar,u
+OBJ:c:\powerbuilder\dwgui\dwgui.pbl,d_toolbar,d
+OBJ:c:\powerbuilder\dwgui\dwgui.pbl,n_cst_toolbar,u
+OBJ:c:\powerbuilder\dwgui\dwgui_pfc.pbl,pfc_n_base,u
+OBJ:c:\powerbuilder\dwgui\dwgui_pfc.pbl,n_cst_color,u
+OBJ:c:\powerbuilder\dwgui\dwgui_test.pbl,w_dwgui,w
+OBJ:c:\powerbuilder\dwgui\dwgui_pfc.pbl,n_cst_string,u
+OBJ:c:\powerbuilder\dwgui\dwgui.pbl,m_toolbar_context,m
+OBJ:c:\powerbuilder\dwgui\dwgui.pbl,m_toolbar,m
+OBJ:c:\powerbuilder\dwgui\dwgui_pfc.pbl,n_cst_numerical,u
+OBJ:C:\PowerBuilder\DWGUI\dwgui_test.pbl,a_dwgui,a
+OBJ:c:\powerbuilder\dwgui\dwgui_pfc.pbl,n_base,u
+OBJ:c:\powerbuilder\dwgui\dwgui.pbl,m_toolbar_popmenu,m
