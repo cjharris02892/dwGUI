@@ -84,6 +84,7 @@ Protected:
 
 	Long										#ToolTipDelayInitial			= 1000
 	Long										#ToolTipDelayVisible			= 32000
+	Boolean									#ToolTipIsBubble				= TRUE
 	
 Public:
 
@@ -134,8 +135,9 @@ Private:
 	
 	Boolean									ib_update						= TRUE
 	Boolean									ib_trackMouseEvent			= FALSE
+	
+	Integer									ii_toolTipIsBubble			= 1
 end variables
-
 forward prototypes
 public function boolean of_displaytext ()
 public subroutine of_enabletooltips ()
@@ -814,7 +816,8 @@ IF NOT (isNull(dw_toolBar.of_getItem_image(vl_item)) OR Trim(dw_toolBar.of_getIt
 											+ 'tooltip.delay.initial="' + String(#ToolTipDelayInitial) + '" ' +		&
 											+ 'tooltip.delay.visible="' + String(#ToolTipDelayVisible) + '" ' +		&
 											+ 'tooltip.enabled="' + String(li_displayToolTips) + '" '					&
-											+ 'tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="1" '	&
+											+ 'tooltip.hasclosebutton="0" tooltip.icon="0" ' +								&
+											+ 'tooltip.isbubble="' + String(ii_toolTipIsBubble) + '" '					&
 											+ 'tooltip.maxwidth="0" '																&
 											+ 'tooltip.textcolor="' + String(of_getColor(INFOTEXT)) + '" '				&
 											+ 'tooltip.transparency="0" '															&
@@ -884,7 +887,8 @@ IF NOT (isNull(dw_toolBar.of_getItem_name(vl_item)) OR Trim(dw_toolBar.of_getIte
 											+ 'tooltip.delay.initial="' + String(#ToolTipDelayInitial) + '" ' +		&
 											+ 'tooltip.delay.visible="' + String(#ToolTipDelayVisible) + '" ' +		&
 											+ 'tooltip.enabled="' + String(li_displayToolTips) + '" '					&
-											+ 'tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="1" '	&
+											+ 'tooltip.hasclosebutton="0" tooltip.icon="0" ' +								&
+											+ 'tooltip.isbubble="' + String(ii_toolTipIsBubble) + '" '					&
 											+ 'tooltip.maxwidth="0" '																&
 											+ 'tooltip.textcolor="' + String(of_getColor(INFOTEXT)) + '" '				&
 											+ 'tooltip.transparency="0" '															&
@@ -948,7 +952,8 @@ IF NOT (isNull(dw_toolBar.of_getItem_name(vl_item)) OR Trim(dw_toolBar.of_getIte
 											+ 'tooltip.delay.initial="' + String(#ToolTipDelayInitial) + '" ' +		&
 											+ 'tooltip.delay.visible="' + String(#ToolTipDelayVisible) + '" ' +		&
 											+ 'tooltip.enabled="' + String(li_displayToolTips) + '" '					&
-											+ 'tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="1" '	&
+											+ 'tooltip.hasclosebutton="0" tooltip.icon="0" ' +								&
+											+ 'tooltip.isbubble="' + String(ii_toolTipIsBubble) + '" '					&
 											+ 'tooltip.maxwidth="0" '																&
 											+ 'tooltip.textcolor="' + String(of_getColor(INFOTEXT)) + '" '				&
 											+ 'tooltip.transparency="0" '															&
@@ -2092,7 +2097,7 @@ IF dw_toolBar.of_getItem_checked(vl_item) AND (NOT dw_toolBar.of_getItem_display
 									ls_object + '.tooltip.enabled="1" ' +																					&
 									ls_object + '.tooltip.hasclosebutton="0" ' +																			&
 									ls_object + '.tooltip.icon="0" ' +																						&
-									ls_object + '.tooltip.isbubble="1" ' +																					&
+									ls_object + '.tooltip.isbubble="' + String(ii_toolTipIsBubble) + '" ' +										&
 									ls_object + '.tooltip.maxwidth="0" ' +																					&
 									ls_object + '.tooltip.textcolor="' +  String(of_getColor(INFOTEXT)) + '" ' +								&
 									ls_object + '.tooltip.transparency="0"')
@@ -2832,6 +2837,12 @@ ELSE
 	of_DisableToolTips()
 END IF
 
+IF #toolTipIsBubble THEN
+	ii_toolTipIsBubble				= 1
+ELSE
+	ii_toolTipIsBubble				= 0
+END IF
+
 setNull(is_lButtonDown)
 
 r_border.Move(0, 0)
@@ -2912,7 +2923,7 @@ IF dw_toolbar.of_PBVersion() >= 11.5 THEN
 							'r_button.tooltip.enabled="1" ' +																						&
 							'r_button.tooltip.hasclosebutton="0" ' +																				&
 							'r_button.tooltip.icon="0" ' +																							&
-							'r_button.tooltip.isbubble="1" ' +																						&
+							'r_button.tooltip.isbubble="' + String(ii_toolTipIsBubble) + '" ' +											&
 							'r_button.tooltip.maxwidth="0" ' +																						&
 							'r_button.tooltip.textcolor="' +  String(of_getColor(INFOTEXT)) + '" ' +									&
 							'r_button.tooltip.transparency="0"')
