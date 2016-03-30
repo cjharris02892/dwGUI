@@ -242,7 +242,16 @@ CHOOSE CASE Lower(vs_button)
 END CHOOSE
 end event
 
-event ue_resized;call super::ue_resized;Long								ll_height
+event ue_resized;call super::ue_resized;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanys this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Long								ll_height
 ll_height						= dw_1.Height
 
 dw_1.Move(uo_1.X, uo_1.Height)
