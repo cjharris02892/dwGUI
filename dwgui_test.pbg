@@ -5,5 +5,6 @@ Save Format v3.0(19990112)
 @begin Objects
  "w_dwgui.srw" "dwgui_test.pbl";
  "a_dwgui.sra" "dwgui_test.pbl";
+ "d_dwgui.srd" "dwgui_test.pbl";
  "p_dwgui.srj" "dwgui_test.pbl";
 @end;
