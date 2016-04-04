@@ -130,7 +130,8 @@ Private:
 	n_cst_color								invo_color
 
 	String									is_lbuttonDown
-
+	Long										il_itemChecked					= -1
+	
 	Long										il_currentOrientation		= HORIZONTAL
 	
 	Boolean									ib_update						= TRUE
@@ -1491,9 +1492,35 @@ CHOOSE CASE vs_mode
 	CASE VISIBLEMODE
 		dw_toolBar.Object.r_button.Visible	= 1
 	CASE INVISIBLE
+		
+		//	If we are hiding the highlight and the item underneath is checked,
+		//	then make sure the checked indicator is visible
+		IF il_itemChecked <> -1 THEN
+			
+			dw_toolBar.Modify('r_' + dw_toolbar.of_getItem_objectName(il_itemChecked) + '.Visible="1"')
+			
+			il_itemChecked							= -1
+			
+		END IF
+		
+		//	Hide the highlight
 		dw_toolBar.Object.r_button.Visible	= 0
+		
 	CASE ELSE
+
+		//	If we are hiding the highlight and the item underneath is checked,
+		//	then make sure the checked indicator is visible
+		IF il_itemChecked <> -1 THEN
+			
+			dw_toolBar.Modify('r_' + dw_toolbar.of_getItem_objectName(il_itemChecked) + '.Visible="1"')
+			
+			il_itemChecked							= -1
+			
+		END IF
+		
+		//	Hide the highlight
 		dw_toolBar.Object.r_button.Visible	= 0
+		
 END CHOOSE
 
 Return(SUCCESS)
@@ -2393,11 +2420,34 @@ IF dw_toolBar.of_getItem_tabSequence(vl_item) = 0 THEN Return(of_highLight(INVIS
 
 of_broadCast_invisible(this)
 
+//	If the highlight has moved off of a checked item, then make sure
+//	checked indicator is visible
+IF il_itemChecked <> -1 THEN
+	IF vl_item <> il_itemChecked THEN
+
+		dw_toolBar.Modify('r_' + dw_toolbar.of_getItem_objectName(il_itemChecked) + '.Visible="1"')
+			
+		il_itemChecked					= -1
+	
+	END IF
+END IF
+
 dw_toolBar.Object.r_button.X		= dw_toolBar.of_getItem_rectLeft(vl_item)		- PixelsToUnits(3, XPixelsToUnits!)
 dw_toolBar.Object.r_button.Y		= dw_toolBar.of_getItem_rectTop(vl_item)		- PixelsToUnits(3, YPixelsToUnits!)
 dw_toolBar.Object.r_button.Width	= dw_toolBar.of_getItem_rectWidth(vl_item)	+ PixelsToUnits(7, XPixelsToUnits!)
 dw_toolBar.Object.r_button.Height													&
 											= dw_toolBar.of_getItem_rectHeight(vl_item)	+ PixelsToUnits(2, YPixelsToUnits!)
+											
+//	If we are showing the highlight over a checked item, then make sure
+//	the checked indicator is hidden
+IF of_isChecked(vl_item) THEN
+			
+	dw_toolBar.Modify('r_' + dw_toolbar.of_getItem_objectName(il_itemChecked) + '.Visible="0"')
+			
+	il_itemChecked						= vl_item
+			
+END IF
+
 Return(of_highLight(VISIBLEMODE))
 end function
 
@@ -2918,8 +2968,8 @@ IF dw_toolbar.of_PBVersion() >= 11.5 THEN
 							'r_button.background.gradient.scale="100" ' +																		&
 							'r_button.background.gradient.spread="100" ' +																		&
 							'r_button.tooltip.backcolor="' +  String(of_getColor(INFOBACKGROUND)) + '" ' +							&
-							'r_button.tooltip.delay.initial="1000" ' +																			&
-							'r_button.tooltip.delay.visible="32000" ' +																			&
+							'r_button.tooltip.delay.initial="' + String(#ToolTipDelayInitial) + '" ' +									&
+							'r_button.tooltip.delay.visible="' + String(#ToolTipDelayVisible) + '" ' +									&
 							'r_button.tooltip.enabled="1" ' +																						&
 							'r_button.tooltip.hasclosebutton="0" ' +																				&
 							'r_button.tooltip.icon="0" ' +																							&
