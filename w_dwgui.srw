@@ -67,6 +67,8 @@ event open;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 //	Left side items are added Left to Right
 
+uo_1.of_disableUpdate()
+
 uo_1.of_addItem('Open', 		'Open.bmp',			uo_1.LEFT)
 uo_1.of_addItem('Save', 		'Save.bmp',			uo_1.LEFT)
 
@@ -102,6 +104,8 @@ uo_1.of_addItem('Text 2',	'',							uo_1.RIGHT)
 uo_1.of_addItem('Text 1',	'',							uo_1.RIGHT)
 
 uo_1.of_addSeparator(uo_1.RIGHT)
+
+uo_1.of_enableUpdate()
 end event
 
 event resize;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.

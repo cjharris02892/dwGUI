@@ -139,6 +139,7 @@ Private:
 	
 	Integer									ii_toolTipIsBubble			= 1
 end variables
+
 forward prototypes
 public function boolean of_displaytext ()
 public subroutine of_enabletooltips ()
@@ -1279,7 +1280,13 @@ public subroutine of_enableupdate ();// CopyRight (c) 2016 by Christopher Harris
 //
 // Original Author: Christopher Harris
 
-ib_update								= TRUE
+IF NOT ib_update THEN
+	
+	ib_update							= TRUE
+
+	of_update()
+	
+END IF
 
 RETURN
 end subroutine
