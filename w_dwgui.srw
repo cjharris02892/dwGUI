@@ -65,6 +65,15 @@ event open;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //uo_1.of_addItem('Save', 'save.bmp', uo_1.RIGHT)
 //uo_1.of_addItem('', 'open.bmp', uo_1.RIGHT)
 //
+//// Documentation example 3
+//
+//uo_1.of_addItem('Open', 'open.bmp')
+//uo_1.of_addItem('Save', 'save.bmp')
+//uo_1.of_addSeparator()
+//uo_1.of_addItem('Print', 'print.bmp')
+//uo_1.of_addItem('Preview', 'preview.bmp')
+//uo_1.of_addItem('Exit', 'powerOff.bmp', 'Close the window', uo_1.RIGHT)
+
 //	Left side items are added Left to Right
 
 uo_1.of_disableUpdate()
