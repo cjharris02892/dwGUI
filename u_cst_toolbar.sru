@@ -253,7 +253,6 @@ CHOOSE CASE Lower(vs_size)
 		
 		of_disableUpdate()
 		of_size(SMALL)
-		of_enableUpdate()
 		
 		dw_toolBar.of_setItem_rectHeight(1, of_size_imageHeight() + 16)
 		
@@ -261,13 +260,12 @@ CHOOSE CASE Lower(vs_size)
 			of_initializeItemSize(ll_item)
 		NEXT
 
-		of_update()
+		of_enableUpdate()
 		
 	CASE 'medium'
 		
 		of_disableUpdate()
 		of_size(MEDIUM)
-		of_enableUpdate()
 				
 		dw_toolBar.of_setItem_rectHeight(1, of_size_imageHeight() + 16)
 		
@@ -275,13 +273,12 @@ CHOOSE CASE Lower(vs_size)
 			of_initializeItemSize(ll_item)
 		NEXT
 
-		of_update()
+		of_enableUpdate()
 		
 	CASE 'large'
 		
 		of_disableUpdate()
 		of_size(LARGE)	
-		of_enableUpdate()
 		
 		dw_toolBar.of_setItem_rectHeight(1, of_size_imageHeight() + 16)
 		
@@ -289,13 +286,12 @@ CHOOSE CASE Lower(vs_size)
 			of_initializeItemSize(ll_item)
 		NEXT
 
-		of_update()
+		of_enableUpdate()
 		
 	CASE 'xlarge'
 		
 		of_disableUpdate()
 		of_size(XLARGE)
-		of_enableUpdate()
 		
 		dw_toolBar.of_setItem_rectHeight(1, of_size_imageHeight() + 16)
 
@@ -303,7 +299,7 @@ CHOOSE CASE Lower(vs_size)
 			of_initializeItemSize(ll_item)
 		NEXT
 
-		of_update()
+		of_enableUpdate()
 		
 END CHOOSE
 end event
