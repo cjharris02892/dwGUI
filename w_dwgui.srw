@@ -4,7 +4,7 @@ global type w_dwgui from window
 end type
 type dw_options from datawindow within w_dwgui
 end type
-type uo_toolBar from u_cst_toolbar within w_dwgui
+type uo_toolbar from u_cst_toolbar within w_dwgui
 end type
 end forward
 
@@ -20,7 +20,7 @@ boolean resizable = true
 string icon = "AppIcon!"
 boolean center = true
 dw_options dw_options
-uo_toolBar uo_toolBar
+uo_toolbar uo_toolbar
 end type
 global w_dwgui w_dwgui
 
@@ -33,14 +33,14 @@ end variables
 
 on w_dwgui.create
 this.dw_options=create dw_options
-this.uo_toolBar=create uo_toolBar
+this.uo_toolbar=create uo_toolbar
 this.Control[]={this.dw_options,&
-this.uo_toolBar}
+this.uo_toolbar}
 end on
 
 on w_dwgui.destroy
 destroy(this.dw_options)
-destroy(this.uo_toolBar)
+destroy(this.uo_toolbar)
 end on
 
 event open;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -226,14 +226,14 @@ InsertRow(0)
 ResetUpdate()
 end event
 
-type uo_toolBar from u_cst_toolbar within w_dwgui
+type uo_toolbar from u_cst_toolbar within w_dwgui
 integer x = 5
 integer y = 4
 integer width = 2729
 integer taborder = 10
 end type
 
-on uo_toolBar.destroy
+on uo_toolbar.destroy
 call u_cst_toolbar::destroy
 end on
 
@@ -263,9 +263,6 @@ event ue_resized;call super::ue_resized;// CopyRight (c) 2016 by Christopher Har
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
 // Original Author: Christopher Harris
-
-Long								ll_height
-ll_height						= dw_options.Height
 
 dw_options.Move(uo_toolbar.X, uo_toolbar.Height)
 dw_options.Resize(uo_toolbar.Width, dw_options.Height - (vl_newHeight - vl_oldHeight))
