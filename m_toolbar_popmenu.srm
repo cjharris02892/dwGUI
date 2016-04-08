@@ -16,7 +16,7 @@ end variables
 event clicked;call super::clicked;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //

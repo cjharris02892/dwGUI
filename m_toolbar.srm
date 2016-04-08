@@ -26,7 +26,7 @@ end prototypes
 public function integer mf_popmenu (dragobject vdrg_parent, menu vm_popmenu, integer vi_xpos, integer vi_ypos);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -108,7 +108,7 @@ end function
 public function integer mf_popmenu (dragobject vdrg_parent, integer vi_xpos, integer vi_ypos);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -120,7 +120,7 @@ end function
 public subroutine mf_register (dragobject vdrg_parent);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -134,7 +134,7 @@ end subroutine
 public function dragobject mf_getparent ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -146,7 +146,7 @@ end function
 public subroutine mf_setparent (dragobject vdrg_parent);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //

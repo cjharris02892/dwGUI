@@ -207,7 +207,7 @@ end prototypes
 public function boolean of_isunicode ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -219,7 +219,7 @@ end function
 public function long of_getfontwidth (ref statictext rst_font, string vs_text);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -231,7 +231,7 @@ end function
 public function long of_getfontheight (ref statictext rst_font, string vs_text);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -243,7 +243,7 @@ end function
 private function point of_getfontsize (ref statictext rst_font, string vs_text);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -288,7 +288,7 @@ end function
 public function string of_getclassname (unsignedlong vul_hwnd);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -323,7 +323,7 @@ end function
 private function long of_getclassname (unsignedlong vul_hwnd, ref string rs_classname, long vl_maxpath);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -347,7 +347,7 @@ end function
 public function long of_getclassname (unsignedlong vul_hwnd, ref string rs_classname);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -359,7 +359,7 @@ end function
 public function unsignedlong of_getdesktopwindow ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -371,7 +371,7 @@ end function
 public function boolean of_getcursorpos (ref long rl_x, ref long rl_y);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -396,7 +396,7 @@ end function
 public function boolean of_setcursorpos (integer vi_x, integer vi_y);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -408,7 +408,7 @@ end function
 private function boolean of_getcursorpos (ref point rstr_point);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -420,7 +420,7 @@ end function
 public function boolean of_trackmouseevent (unsignedlong vul_hwndtrack, unsignedlong vul_flags, unsignedlong vul_hovertime);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -439,7 +439,7 @@ end function
 public function boolean of_trackmouseevent (unsignedlong vul_hwndtrack, unsignedlong vul_flags);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -451,7 +451,7 @@ end function
 public function unsignedlong of_getwindowlong (unsignedlong vul_hwnd, long vl_index);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -467,7 +467,7 @@ end function
 public function boolean of_ischild (window vw_ischild);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -495,7 +495,7 @@ end function
 public function boolean of_ismdichild (window vw_ismdichild);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -523,7 +523,7 @@ end function
 public function window of_getframe (graphicobject vgo_getframe);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -561,7 +561,7 @@ end function
 public function menu of_locatemenuitem (menu vm_locate, string vs_classname);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -593,7 +593,7 @@ end function
 public function window of_getparentwindow (graphicobject vgo_getparent);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -608,7 +608,7 @@ end function
 private function window of_getparentwindow (graphicobject vgo_getparent, ref string rs_qualifyobject, integer li_level);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -654,7 +654,7 @@ end function
 public function window of_getparentwindow (graphicobject vgo_getparent, ref string rs_qualifyobject);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -698,7 +698,7 @@ end function
 public function boolean of_getclientrect (unsignedlong vul_hwnd, ref rect rstr_rectangle);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -710,7 +710,7 @@ end function
 public function boolean of_getclientrect (unsignedlong vul_hwnd, ref long rl_left, ref long rl_top, ref long rl_right, ref long rl_bottom);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -732,7 +732,7 @@ end function
 public function integer of_poptooltips (unsignedlong vul_hwnd);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -783,7 +783,7 @@ end on
 event constructor;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //

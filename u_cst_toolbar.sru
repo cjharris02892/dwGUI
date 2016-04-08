@@ -213,7 +213,7 @@ end prototypes
 event type integer ue_itemclicking(string vs_button);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -225,7 +225,7 @@ end event
 event ue_itemclicked(string vs_button);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -240,7 +240,7 @@ end event
 event ue_context_size(string vs_size);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -307,7 +307,7 @@ end event
 event ue_context_showtoolbartext(boolean vb_showtext);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -323,7 +323,7 @@ end event
 event ue_context_showtoolbartips(boolean vb_showtips);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -339,7 +339,7 @@ end event
 event ue_resized(long vl_oldheight, long vl_newheight);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -351,7 +351,7 @@ end event
 event ue_post_constructor();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -365,7 +365,7 @@ end event
 public function boolean of_displaytext ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -377,7 +377,7 @@ end function
 public subroutine of_enabletooltips ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -410,7 +410,7 @@ end subroutine
 public subroutine of_disabletooltips ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -443,7 +443,7 @@ end subroutine
 public function integer of_setenabled (string vs_item, boolean vb_switch);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -455,7 +455,7 @@ end function
 public function integer of_setvisible (string vs_item, boolean vb_switch);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -467,7 +467,7 @@ end function
 public function boolean of_displaytooltips ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -479,7 +479,7 @@ end function
 public function string of_gettext (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -497,7 +497,7 @@ end function
 public function boolean of_isvisible (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -515,7 +515,7 @@ end function
 public function boolean of_isenabled (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -533,7 +533,7 @@ end function
 public function boolean of_isvisible (string vs_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -554,7 +554,7 @@ end function
 public function boolean of_isenabled (string vs_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -575,7 +575,7 @@ end function
 public function integer of_settext (string vs_item, string vs_text);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -587,7 +587,7 @@ end function
 public function integer of_settiptext (string vs_item, string vs_tooltip);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -599,7 +599,7 @@ end function
 public function integer resize (integer w, integer h);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -623,7 +623,7 @@ end function
 private subroutine of_initializeitemsize (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -661,7 +661,7 @@ end subroutine
 public function integer of_setimage (string vs_item, string vs_image);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -673,7 +673,7 @@ end function
 private subroutine of_size (integer vi_size);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -738,7 +738,7 @@ end subroutine
 private function long of_createitem (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -1030,7 +1030,7 @@ end function
 private function boolean of_updatepositions (boolean vb_dropdownmenu);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -1256,7 +1256,7 @@ end function
 public subroutine of_disableupdate ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -1270,7 +1270,7 @@ end subroutine
 public subroutine of_enableupdate ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -1290,7 +1290,7 @@ end subroutine
 private subroutine of_size ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -1304,7 +1304,7 @@ end subroutine
 public function long of_getcolor (string vs_color);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -1383,7 +1383,7 @@ end function
 public function integer of_update ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -1424,7 +1424,7 @@ end function
 protected function string of_getClickedButton ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -1436,7 +1436,7 @@ end function
 private subroutine of_broadcast_invisible (userobject vuo_broadcaster);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -1465,7 +1465,7 @@ end subroutine
 protected function integer of_highlight (string vs_mode);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -1532,7 +1532,7 @@ end function
 private subroutine of_broadcast_showtoolbartext (boolean vb_showtext);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -1561,7 +1561,7 @@ end subroutine
 private subroutine of_broadcast_showtoolbartips (boolean vb_showtips);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -1590,7 +1590,7 @@ end subroutine
 private function long of_adddropmenu ();//	CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -1636,7 +1636,7 @@ end function
 public function long of_additem (string vs_name, string vs_image);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -1648,7 +1648,7 @@ end function
 public function long of_additem (string vs_name, string vs_image, string vs_tooltip);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -1660,7 +1660,7 @@ end function
 public function long of_additem (string vs_name, string vs_image, integer vi_position);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -1672,7 +1672,7 @@ end function
 public function long of_additem (string vs_name, string vs_image, string vs_tooltip, integer vi_position);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -1738,7 +1738,7 @@ end function
 public function long of_additems (string vs_name[], string vs_image[]);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -1760,7 +1760,7 @@ end function
 public function long of_additems (string vs_name[], string vs_image[], string vs_tooltip[]);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -1779,7 +1779,7 @@ end function
 public function long of_additems (string vs_name[], string vs_image[], string vs_tooltip[], integer vi_position[]);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -1810,7 +1810,7 @@ end function
 public function long of_addseparator ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -1822,7 +1822,7 @@ end function
 public function long of_addseparator (integer vi_position);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -1858,7 +1858,7 @@ end function
 private function long of_size_text (string vs_text, string vs_fontface, integer vi_fontsize);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -1881,7 +1881,7 @@ end function
 private function long of_size_line ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -1902,7 +1902,7 @@ end function
 private function integer of_size_text (string vs_text);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -1914,7 +1914,7 @@ end function
 private function long of_size_imageheight ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -1929,7 +1929,7 @@ end function
 private function long of_size_imagewidth (string vs_image);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -1949,7 +1949,7 @@ end function
 public function integer of_setchecked (string vs_item, boolean vb_switch);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -1961,7 +1961,7 @@ end function
 public function boolean of_ischecked (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -1979,7 +1979,7 @@ end function
 public function boolean of_ischecked (string vs_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -2000,7 +2000,7 @@ end function
 private function integer of_drawenabled (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -2066,7 +2066,7 @@ end function
 private function integer of_drawchecked (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -2154,7 +2154,7 @@ end function
 public function integer of_setchecked (long vl_item, boolean vb_switch);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -2180,7 +2180,7 @@ end function
 public function integer of_setenabled (long vl_item, boolean vb_switch);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -2206,7 +2206,7 @@ end function
 public function integer of_setimage (long vl_item, string vs_image);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -2239,7 +2239,7 @@ end function
 public function integer of_settext (long vl_item, string vs_text);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -2264,7 +2264,7 @@ end function
 public function integer of_settiptext (long vl_item, string vs_tooltip);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -2296,7 +2296,7 @@ end function
 public function integer of_setvisible (long vl_item, boolean vb_switch);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -2321,7 +2321,7 @@ end function
 private function long of_createitem_separator (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -2401,7 +2401,7 @@ end function
 protected function integer of_drawbutton (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -2457,7 +2457,7 @@ end function
 private subroutine of_popmenu_dropdown ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -2597,7 +2597,7 @@ end subroutine
 protected function integer of_keydown (keycode vkc_key, unsignedinteger vui_keyflags);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -2699,7 +2699,7 @@ end function
 public function integer of_disabletext ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -2733,7 +2733,7 @@ end function
 public function integer of_enabletext ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -2763,7 +2763,7 @@ end function
 public function integer of_clickitem (string vs_button);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -2791,7 +2791,7 @@ end function
 public function integer of_clickitem (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -2807,7 +2807,7 @@ end function
 public function long of_clickbutton (string vs_button);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -2819,7 +2819,7 @@ end function
 public function long of_clickbutton (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -2831,7 +2831,7 @@ end function
 public function long of_additem (string vs_name);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -2843,7 +2843,7 @@ end function
 public function long of_additem (string vs_name, integer vi_position);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -2870,7 +2870,7 @@ end on
 event constructor;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -3020,7 +3020,7 @@ end event
 event destructor;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -3065,7 +3065,7 @@ end type
 event constructor;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -3090,7 +3090,7 @@ end type
 event ue_dwnlbuttonup;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -3134,7 +3134,7 @@ end event
 event ue_dwnmousemove;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -3182,7 +3182,7 @@ end event
 event ue_post_getfocus(long vl_tabbed);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -3207,7 +3207,7 @@ end event
 event ue_dwnkey;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -3219,7 +3219,7 @@ end event
 event ue_dwnhscoll;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -3231,7 +3231,7 @@ end event
 event constructor;call super::constructor;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -3262,7 +3262,7 @@ end event
 event losefocus;call super::losefocus;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -3288,7 +3288,7 @@ end event
 event getfocus;call super::getfocus;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -3312,7 +3312,7 @@ end event
 event rbuttondown;call super::rbuttondown;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //

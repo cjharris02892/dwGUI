@@ -46,7 +46,7 @@ end on
 event open;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -120,7 +120,7 @@ end event
 event resize;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -158,7 +158,7 @@ end type
 event itemchanged;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -215,7 +215,7 @@ end event
 event constructor;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -240,7 +240,7 @@ end on
 event ue_itemclicked;call super::ue_itemclicked;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
@@ -258,7 +258,7 @@ end event
 event ue_resized;call super::ue_resized;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
-// license which accompanys this distribution and can be found at:
+// license which accompanies this distribution and can be found at:
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
