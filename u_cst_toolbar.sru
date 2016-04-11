@@ -208,6 +208,8 @@ public function long of_clickbutton (string vs_button)
 public function long of_clickbutton (long vl_item)
 public function long of_additem (string vs_name)
 public function long of_additem (string vs_name, integer vi_position)
+public function string of_gettext (string vs_item)
+public function long of_locateitem (string vs_item)
 end prototypes
 
 event type integer ue_itemclicking(string vs_button);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -2866,6 +2868,30 @@ public function long of_additem (string vs_name, integer vi_position);// CopyRig
 // Original Author: Christopher Harris
 
 Return(of_addItem(vs_name, '', vs_name, vi_position))
+end function
+
+public function string of_gettext (string vs_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Return(of_getText(dw_toolBar.of_locateItem_name(vs_item)))
+end function
+
+public function long of_locateitem (string vs_item);//	CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Return(dw_toolBar.of_locateItem_name(vs_item))
 end function
 
 on u_cst_toolbar.create
