@@ -165,6 +165,29 @@ event itemchanged;// CopyRight (c) 2016 by Christopher Harris, all rights reserv
 // Original Author: Christopher Harris
 
 CHOOSE CASE dwo.Name
+	CASE 'change_text'
+		IF uo_toolbar.of_getText('Open') = 'Open' THEN
+			uo_toolbar.of_setText('Open', 'Open File')
+		ELSE
+			uo_toolbar.of_setText('Open File', 'Open')
+		END IF
+	CASE 'change_image'
+
+		Long										ll_item
+		ll_item									= uo_toolBar.of_locateItem('Open')
+		
+		IF isNull(ll_item) THEN
+			ll_item								= uo_toolBar.of_locateItem('Open File')
+		END IF
+		
+		IF NOT isNull(ll_item) THEN
+			IF data = 'N' THEN
+				uo_toolBar.of_setImage(ll_item, 'Open.bmp')
+			ELSE
+				uo_toolBar.of_setImage(ll_item, 'Copy.png')
+			END IF
+		END IF
+		
 	CASE 'show_open'
 		uo_toolbar.of_setVisible('Open',			data = 'Y')
 	CASE 'show_save'
@@ -248,7 +271,7 @@ event ue_itemclicked;call super::ue_itemclicked;// CopyRight (c) 2016 by Christo
 
 CHOOSE CASE Lower(vs_button)
 		
-	CASE 'exit'
+	CASE 'exit', 'open', 'open file'
 		
 		POST Close(parent)
 		
