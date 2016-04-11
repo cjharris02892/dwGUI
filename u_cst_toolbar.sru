@@ -1685,8 +1685,10 @@ END IF
 Long										ll_item
 ll_item									= dw_toolBar.of_addItem()
 
-IF isNull(vs_name)	THEN vs_name	= ''
-IF isNull(vs_image)	THEN vs_image	= ''
+IF isNull(vs_name)		THEN vs_name		= ''
+IF isNull(vs_image)		THEN vs_image		= ''
+IF isNull(vs_toolTip)	THEN vs_toolTip	= ''
+IF isNull(vi_position)	THEN vi_position	= LEFT
 
 dw_toolBar.of_setItem_name(ll_item, Trim(vs_name))
 dw_toolBar.of_setItem_image(ll_item, Trim(vs_image))
@@ -1830,6 +1832,8 @@ public function long of_addseparator (integer vi_position);// CopyRight (c) 2016
 
 Long										ll_item
 ll_item									= dw_toolBar.of_addItem()
+
+IF isNull(vi_position) THEN vi_position = LEFT
 
 dw_toolBar.of_setItem_name(ll_item, dw_toolBar.SEPARATOR + '_' + String(ll_item))
 dw_toolBar.of_setItem_image(ll_item, '')
@@ -2164,6 +2168,8 @@ IF isNull(vl_item) THEN Return(FAILURE)
 
 IF vl_item <= 0 OR vl_item > dw_toolBar.RowCount() THEN Return(FAILURE)
 
+IF isnull(vb_switch) THEN vb_switch = FALSE
+
 String									ls_describe
 
 IF dw_toolBar.of_getItem_checked(vl_item) = (NOT vb_switch) THEN
@@ -2190,6 +2196,8 @@ IF isNull(vl_item) THEN Return(FAILURE)
 
 IF vl_item <= 0 OR vl_item > dw_toolBar.RowCount() THEN Return(FAILURE)
 
+IF isnull(vb_switch) THEN vb_switch = FALSE
+
 String									ls_describe
 
 IF dw_toolBar.of_getItem_enabled(vl_item) = (NOT vb_switch) THEN
@@ -2215,6 +2223,8 @@ public function integer of_setimage (long vl_item, string vs_image);// CopyRight
 IF isNull(vl_item) THEN Return(FAILURE)
 
 IF vl_item <= 1 OR vl_item > dw_toolBar.RowCount() THEN Return(FAILURE)
+
+IF isNull(vs_image) THEN vs_image = ''
 
 dw_toolBar.of_setItem_image(vl_item, vs_image)
 
@@ -2249,6 +2259,8 @@ IF isNull(vl_item) THEN Return(FAILURE)
 
 IF vl_item <= 1 OR vl_item > dw_toolBar.RowCount() THEN Return(FAILURE)
 
+IF isNull(vs_text) THEN vs_text = ''
+
 Long										ll_itemCurrent
 ll_itemCurrent							= dw_toolBar.of_locateItem()
 
@@ -2273,6 +2285,8 @@ public function integer of_settiptext (long vl_item, string vs_tooltip);// CopyR
 IF isNull(vl_item) THEN Return(FAILURE)
 
 IF vl_item <= 0 OR vl_item > dw_toolbar.RowCount() THEN Return(FAILURE)
+
+IF isNull(vs_toolTip) THEN vs_toolTip = ''
 
 String									ls_describe
 
@@ -2305,6 +2319,8 @@ public function integer of_setvisible (long vl_item, boolean vb_switch);// CopyR
 IF isNull(vl_item) THEN Return(FAILURE)
 
 IF vl_item <= 0 OR vl_item > dw_toolBar.RowCount() THEN Return(FAILURE)
+
+IF isnull(vb_switch) THEN vb_switch = FALSE
 
 IF dw_toolBar.of_getItem_visible(vl_item) = (NOT vb_switch) THEN
 	
