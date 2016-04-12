@@ -489,6 +489,8 @@ public function string of_gettext (long vl_item);// CopyRight (c) 2016 by Christ
 
 String									ls_Text = ''
 
+IF isNull(vl_item) THEN Return(ls_text)
+
 IF vl_Item > 0 AND vl_Item <= dw_toolBar.RowCount() THEN
 	ls_Text								= dw_toolBar.of_getItem_name(vl_item)
 END IF
