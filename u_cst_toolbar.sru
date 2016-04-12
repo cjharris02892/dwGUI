@@ -35,15 +35,6 @@ type prototypes
 end prototypes
 
 type variables
-Public:
-
-	//	Reserved object types
-	CONSTANT String						SEPARATOR						= 'separator'
-	CONSTANT String						POPMENU							= 'popmenu'
-	CONSTANT String						DROPDOWN							= 'dropdown'
-	CONSTANT String						TOOLBARITEM						= 'toolbaritem'
-	CONSTANT String						COLUMN							= 'column'
-
 Private:
 
 	n_cst_toolBar							invo_toolBar
@@ -114,6 +105,10 @@ Public:
 	CONSTANT Long							MEDIUM							= 24
 	CONSTANT Long							LARGE								= 32
 	CONSTANT Long							XLARGE							= 48
+
+	//	Reserved object types, duplicated from u_cst_toolBar_items for ease
+	//	of implementation for the programmer when calling of_addItems()
+	CONSTANT String						SEPARATOR						= 'separator'
 
 Protected:
 
@@ -1810,7 +1805,7 @@ lb_update								= ib_update
 ib_update								= FALSE
 
 FOR ll_loop = 1 TO UpperBound(vs_name[])
-	IF vs_name[ll_loop] = SEPARATOR THEN
+	IF vs_name[ll_loop] = dw_toolBar.SEPARATOR THEN
 		of_addSeparator(vi_position[ll_loop])
 	ELSE
 		of_addItem(vs_name[ll_loop], vs_image[ll_loop], vs_toolTip[ll_loop], vi_Position[ll_loop])
@@ -1850,14 +1845,14 @@ ll_item									= dw_toolBar.of_addItem()
 
 IF isNull(vi_position) THEN vi_position = LEFT
 
-dw_toolBar.of_setItem_name(ll_item, SEPARATOR + '_' + String(ll_item))
+dw_toolBar.of_setItem_name(ll_item, dw_toolBar.SEPARATOR + '_' + String(ll_item))
 dw_toolBar.of_setItem_image(ll_item, '')
 dw_toolBar.of_setItem_toolTip(ll_item, '')
 dw_toolBar.of_setItem_position(ll_item, vi_Position)
 dw_toolBar.of_setItem_visible(ll_item, TRUE)
 dw_toolBar.of_setItem_enabled(ll_item, TRUE)
-dw_toolBar.of_setItem_objectName(ll_item, SEPARATOR + '_' + String(ll_item))
-dw_toolBar.of_setItem_objectType(ll_item, SEPARATOR)
+dw_toolBar.of_setItem_objectName(ll_item, dw_toolBar.SEPARATOR + '_' + String(ll_item))
+dw_toolBar.of_setItem_objectType(ll_item, dw_toolBar.SEPARATOR)
 dw_toolBar.of_setItem_imageTransparency(ll_item, of_getColor(DEFAULTIMAGETRANSPARENCY))
 dw_toolBar.of_setItem_displayText(ll_item, FALSE)
 dw_toolBar.of_setItem_displayInMenu(ll_item, FALSE)
