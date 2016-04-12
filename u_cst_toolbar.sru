@@ -210,6 +210,9 @@ public function long of_additem (string vs_name)
 public function long of_additem (string vs_name, integer vi_position)
 public function string of_gettext (string vs_item)
 public function long of_locateitem (string vs_item)
+public function long of_additems (string vs_name[])
+public function long of_additems (string vs_name[], integer vi_position[])
+public function long of_additems (string vs_name[], string vs_image[], integer vi_position[])
 end prototypes
 
 event type integer ue_itemclicking(string vs_button);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -2894,6 +2897,69 @@ public function long of_locateitem (string vs_item);//	CopyRight (c) 2016 by Chr
 // Original Author: Christopher Harris
 
 Return(dw_toolBar.of_locateItem_name(vs_item))
+end function
+
+public function long of_additems (string vs_name[]);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Long										ll_item
+
+Long										li_position[]
+String									ls_image[],		ls_toolTip[]
+
+FOR ll_item = 1 TO UpperBound(vs_name[])
+	li_position[ll_item]				= LEFT
+	ls_image[ll_item]					= ''
+	ls_toolTip[ll_item]				= ''
+NEXT
+
+Return(of_addItems(vs_name[], ls_image[], ls_toolTip[], li_position[]))
+end function
+
+public function long of_additems (string vs_name[], integer vi_position[]);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Long										ll_item
+
+String									ls_image[],		ls_toolTip[]
+
+FOR ll_item = 1 TO UpperBound(vs_name[])
+	ls_image[ll_item]					= ''
+	ls_toolTip[ll_item]				= ''
+NEXT
+
+Return(of_addItems(vs_name[], ls_image[], ls_toolTip[], vi_position[]))
+end function
+
+public function long of_additems (string vs_name[], string vs_image[], integer vi_position[]);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author: Christopher Harris
+
+Long										ll_item
+String									ls_toolTip[]
+
+FOR ll_item = 1 TO UpperBound(vs_name[])
+	ls_toolTip[ll_item]				= ''
+NEXT
+
+Return(of_addItems(vs_name[], vs_image[], ls_toolTip[], vi_position[]))
 end function
 
 on u_cst_toolbar.create
