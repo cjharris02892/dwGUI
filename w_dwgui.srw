@@ -74,14 +74,14 @@ event open;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //uo_toolbar.of_addItem('Preview', 'preview.bmp')
 //uo_toolbar.of_addItem('Exit', 'powerOff.bmp', 'Close the window', uo_toolbar.RIGHT)
 
-//	Left side items are added Left to Right
-
 uo_toolbar.of_disableUpdate()
 
-uo_toolbar.of_addItem('Open', 		'Open.bmp',			uo_toolbar.LEFT)
-uo_toolbar.of_addItem('Save', 		'Save.bmp',			uo_toolbar.LEFT)
-
-uo_toolbar.of_addSeparator()
+uo_toolbar.of_addItems({ 'Open',							'Save',					&
+								 uo_toolBar.SEPARATOR,		'Exit' },				&
+							  { 'Open.bmp',					'Save.bmp',				&
+							    '',								'powerOff.bmp' },		&
+							  { uo_toolbar.LEFT,				uo_toolBar.LEFT,		&
+							    uo_toolBar.LEFT,				uo_toolbar.RIGHT })
 
 uo_toolbar.of_addItem('',				'Print.bmp')
 uo_toolbar.of_addItem('Preview',		'Preview.bmp')
@@ -93,14 +93,6 @@ uo_toolbar.of_addItem('Cut', 			'Cut.png')
 uo_toolbar.of_addItem('Paste', 		'Paste.bmp')
 uo_toolbar.of_addItem('Clear', 		'Clear.bmp')
 
-uo_toolbar.of_addSeparator()
-
-//	Right side items are added from Right to Left
-
-uo_toolbar.of_addSeparator(uo_toolbar.RIGHT)
-
-uo_toolbar.of_addItem('Exit', 		'powerOff.bmp',		uo_toolbar.RIGHT)
-
 uo_toolbar.of_addSeparator(uo_toolbar.RIGHT)
 
 uo_toolbar.of_addItem('Text Only',	'',						uo_toolbar.RIGHT)
@@ -111,8 +103,6 @@ uo_toolbar.of_addItem('Text 4',	'', 'Text 4 ToolTip',	uo_toolbar.RIGHT)
 uo_toolbar.of_addItem('Text 3',									uo_toolbar.RIGHT)
 uo_toolbar.of_addItem('Text 2',	'',							uo_toolbar.RIGHT)
 uo_toolbar.of_addItem('Text 1',	'',							uo_toolbar.RIGHT)
-
-uo_toolbar.of_addSeparator(uo_toolbar.RIGHT)
 
 uo_toolbar.of_enableUpdate()
 end event
@@ -166,7 +156,7 @@ event itemchanged;// CopyRight (c) 2016 by Christopher Harris, all rights reserv
 
 CHOOSE CASE dwo.Name
 	CASE 'change_text'
-		IF uo_toolbar.of_getText('Open') = 'Open' THEN
+		IF isNull(uo_toolbar.of_locateItem('Open File')) THEN
 			uo_toolbar.of_setText('Open', 'Open File')
 		ELSE
 			uo_toolbar.of_setText('Open File', 'Open')
