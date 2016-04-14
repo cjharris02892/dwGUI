@@ -67,10 +67,13 @@ Public:
 	CONSTANT String						VISIBLEMODE						= 'visible'
 	CONSTANT String						INVISIBLE						= 'invisible'
 
+Private:
+
+	Boolean									#DisplayText					= FALSE
+	Boolean									#DisplayToolTips				= TRUE
+	
 Protected:
 
-	Boolean									#DisplayToolTips				= TRUE
-	Boolean									#DisplayText					= TRUE
 	Boolean									#DisplayBorder					= TRUE
 	Boolean									#RaisedBorder					= FALSE
 	Boolean									#SolidBackGround				= FALSE
