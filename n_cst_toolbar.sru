@@ -10,6 +10,8 @@ type point from structure within n_cst_toolbar
 end type
 type trackmouseevent from structure within n_cst_toolbar
 end type
+type textmetric from structure within n_cst_toolbar
+end type
 end forward
 
 type rect from structure
@@ -41,18 +43,44 @@ type trackmouseevent from structure
 	unsignedLong		dwHoverTime
 end type
 
+type TextMetric from structure
+	long		tmHeight
+	long		tmAscent
+	long		tmDescent
+	long		tmInternalLeading
+	long		tmExternalLeading
+	long		tmAveCharWidth
+	long		tmMaxCharWidth
+	long		tmWeight
+	long		tmOverHang
+	long		tmDigitizedAspectX
+	long		tmDigitizedAspectY
+	char		tmFirstChar
+	char		tmLastChar
+	char		tmDefaultChar
+	char		tmBreakChar
+	byte		tmItalic
+	byte		tmUnderLined
+	byte		tmStruckOut
+	byte		tmPitchAndFamily
+	byte		tmCharSet
+end type
+
 global type n_cst_toolbar from nonvisualobject autoinstantiate
 end type
 
 type prototypes
 Private:
 
-	FUNCTION Long	 SendMessage_ToolTip(unsignedLong hWnd, Long msg, Long wParam, REF TOOLINFO lpToolInfo) LIBRARY "user32.dll" ALIAS FOR "SendMessageW"
-	FUNCTION Long	 SendMessage_ToolTipA(unsignedLong hWnd, Long msg, Long wParam, REF TOOLINFO lpToolInfo) LIBRARY "user32.dll" ALIAS FOR "SendMessageA;Ansi"
+	FUNCTION Long SendMessage_ToolTip(unsignedLong hWnd, Long msg, Long wParam, REF TOOLINFO lpToolInfo) LIBRARY "user32.dll" ALIAS FOR "SendMessageW"
+	FUNCTION Long SendMessage_ToolTipA(unsignedLong hWnd, Long msg, Long wParam, REF TOOLINFO lpToolInfo) LIBRARY "user32.dll" ALIAS FOR "SendMessageA;Ansi"
 	
 	FUNCTION boolean GetTextExtentPoint32(unsignedLong hdc, string lpString, long c, REF point lpSize) LIBRARY "gdi32.DLL" ALIAS FOR "GetTextExtentPoint32W"
 	FUNCTION boolean GetTextExtentPoint32A(unsignedLong hdc, string lpString, long c, REF point lpSize) LIBRARY "gdi32.DLL" ALIAS FOR "GetTextExtentPoint32A;Ansi"
-	
+
+	FUNCTION boolean GetTextMetrics(unsignedLong hdc, REF TextMetric lpTM) LIBRARY "gdi32.DLL" ALIAS FOR "GetTextMetricsW"
+	FUNCTION boolean GetTextMetricsA(unsignedLong hdc, REF TextMetric lpTM) LIBRARY "gdi32.DLL" ALIAS FOR "GetTextMetricsA;Ansi"
+
 	FUNCTION unsignedLong SelectObject(unsignedLong hdc,ulong hObject) LIBRARY "gdi32.dll"
 	FUNCTION unsignedLong DeleteObject(unsignedLong hObject) LIBRARY "gdi32.dll"
 	
@@ -80,7 +108,6 @@ Private:
 
 	FUNCTION Boolean GetClientRect(UnsignedLong hWnd, REF RECT lpRect) LIBRARY "user32.dll"
 end prototypes
-
 type variables
 Public:
 
