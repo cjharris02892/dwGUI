@@ -69,8 +69,11 @@ Public:
 
 Private:
 
-	Boolean									#DisplayText					= FALSE
-	Boolean									#DisplayToolTips				= TRUE
+	Boolean									ib_displayText					= FALSE
+	Boolean									ib_displayToolTips			= TRUE
+
+	String									is_fontFace
+	Long										il_fontSize
 	
 Protected:
 
@@ -382,7 +385,7 @@ public function boolean of_displaytext ();// CopyRight (c) 2016 by Christopher H
 //
 // Original Author: Christopher Harris
 
-Return(#DisplayText)
+Return(ib_displayText)
 end function
 
 public subroutine of_enabletooltips ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -394,7 +397,7 @@ public subroutine of_enabletooltips ();// CopyRight (c) 2016 by Christopher Harr
 //
 // Original Author: Christopher Harris
 
-#DisplayToolTips						= TRUE
+ib_displayToolTips					= TRUE
 
 String									ls_describe
 Long										ll_item
@@ -427,7 +430,7 @@ public subroutine of_disabletooltips ();// CopyRight (c) 2016 by Christopher Har
 //
 // Original Author: Christopher Harris
 
-#DisplayToolTips						= FALSE
+ib_displayToolTips					= FALSE
 
 String									ls_describe
 Long										ll_item
@@ -484,7 +487,7 @@ public function boolean of_displaytooltips ();// CopyRight (c) 2016 by Christoph
 //
 // Original Author: Christopher Harris
 
-Return(#DisplayToolTips)
+Return(ib_displayToolTips)
 end function
 
 public function string of_gettext (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -761,7 +764,7 @@ Long										ll_pos
 ll_pos									= dw_toolBar.of_getItem_rectLeft(vl_item)
 
 Long										li_textYOffset
-li_textYOffset							= (of_size_imageHeight() - Int(#FontSize * 6.5)) / 2
+li_textYOffset							= (of_size_imageHeight() - Int(il_FontSize * 6.5)) / 2
 
 Boolean									lb_createdImage	= FALSE,	lb_createdText	= FALSE
 String									ls_modify			= ''
@@ -862,7 +865,7 @@ IF NOT (isNull(dw_toolBar.of_getItem_name(vl_item)) OR Trim(dw_toolBar.of_getIte
 											+ 'text="' + dw_toolBar.of_getItem_name(vl_item) + '" border="0" '		&
 											+ 'x="' + String(ll_pos) + '" ' +													&
 											+ 'y="' + String(li_textYOffset + 16) + '" '										&
-											+ 'height="' + String(Int(#FontSize * 6.5)) + '" '								&
+											+ 'height="' + String(Int(il_FontSize * 6.5)) + '" '							&
 											+ 'width="' + String(dw_toolBar.of_getItem_textWidth(vl_item)) + '" '	&
 											+ 'html.valueishtml="0" '																&
 											+ 'name=t_' + dw_toolBar.of_getItem_objectName(vl_item) + ' '				&
@@ -1113,10 +1116,11 @@ FOR ll_item = 1 TO dw_toolBar.RowCount()
 	IF (ll_posLeft + dw_toolBar.of_getItem_rectWidth(ll_item)) > (ll_width - ll_offSet) THEN EXIT
 	
 	dw_toolBar.of_setItem_displayInMenu(ll_item, FALSE)
-	dw_toolBar.of_setItem_rectLeft(ll_item, ll_posLeft)
 	
 	IF dw_toolBar.of_getItem_separator(ll_item) THEN
 		
+		dw_toolBar.of_setItem_rectLeft(ll_item, ll_posLeft - PixelsToUnits(3, XPixelsToUnits!))
+
 		//	No need to display consecutive separators
 		IF ll_separatorItem > 0 THEN
 			dw_toolBar.of_setItem_visible(ll_item, FALSE)
@@ -1126,18 +1130,20 @@ FOR ll_item = 1 TO dw_toolBar.RowCount()
 		ll_separatorItem				= ll_item
 		
 //		IF ll_item > 1 THEN
-			ll_posLeft					= ll_posLeft - PixelsToUnits(2, XPixelsToUnits!)
+			ll_posLeft					= ll_posLeft - PixelsToUnits(5, XPixelsToUnits!)
 //		END IF
 			
 		ll_posLeft						= ll_posLeft + dw_toolBar.of_getItem_rectWidth(ll_item)
-		ll_posLeft						= ll_posLeft + PixelsToUnits(5, XPixelsToUnits!)
+		ll_posLeft						= ll_posLeft + PixelsToUnits(4, XPixelsToUnits!)
 		
 	ELSE
 		
+		dw_toolBar.of_setItem_rectLeft(ll_item, ll_posLeft)
+
 		ll_separatorItem				= 0
 
 		ll_posLeft						= ll_posLeft + dw_toolBar.of_getItem_rectWidth(ll_item)
-		ll_posLeft						= ll_posLeft + PixelsToUnits(6, XPixelsToUnits!)
+		ll_posLeft						= ll_posLeft + PixelsToUnits(8, XPixelsToUnits!)
 
 	END IF
 
@@ -1218,13 +1224,13 @@ IF ll_item > dw_toolBar.RowCount() THEN
 			ll_separatorItem			= ll_item
 
 //			IF ll_item > 1 THEN
-				ll_posRight				= ll_posRight + PixelsToUnits(2, XPixelsToUnits!)
+				ll_posRight				= ll_posRight + PixelsToUnits(5, XPixelsToUnits!)
 //			END IF
 					
 			dw_toolBar.of_setItem_rectLeft(ll_item, ll_posRight)
 		
 			ll_posRight					= ll_posRight - dw_toolBar.of_getItem_rectWidth(ll_item)
-			ll_posRight					= ll_posRight - PixelsToUnits(5, XPixelsToUnits!)
+			ll_posRight					= ll_posRight - PixelsToUnits(4, XPixelsToUnits!)
 			
 		ELSE
 				
@@ -1234,7 +1240,7 @@ IF ll_item > dw_toolBar.RowCount() THEN
 				
 			dw_toolBar.of_setItem_rectLeft(ll_item, ll_posRight)
 	
-			ll_posRight					= ll_posRight - PixelsToUnits(6, XPixelsToUnits!)
+			ll_posRight					= ll_posRight - PixelsToUnits(8, XPixelsToUnits!)
 		
 		END IF
 		
@@ -1632,10 +1638,11 @@ dw_toolBar.of_setItem_imageTransparency(ll_item, of_getColor(DEFAULTIMAGETRANSPA
 dw_toolBar.of_setItem_displayText(ll_item, TRUE)
 dw_toolBar.of_setItem_displayInMenu(ll_item, FALSE)
 dw_toolBar.of_setItem_fontFace(ll_item, is_dropMenuFont)
-dw_toolBar.of_setItem_fontSize(ll_item, #FontSize)
+dw_toolBar.of_setItem_fontSize(ll_item, il_FontSize)
 dw_toolBar.of_setItem_tabSequence(ll_item, 1000)								//	object only allows 99 toolBarItems
 
-dw_toolBar.of_setItem_textWidth(ll_item, 23)										//	dw_toolBar.of_setItem_textWidth(ll_item, of_sizeText(dw_toolBar.of_getItem_name(ll_item), dw_toolBar.of_getItem_fontFace(ll_item), dw_toolBar.of_getItem_fontSize(ll_item)))
+dw_toolBar.of_setItem_textWidth(ll_item, 23)
+//dw_toolBar.of_setItem_textWidth(ll_item, of_size_text(dw_toolBar.of_getItem_name(ll_item), dw_toolBar.of_getItem_fontFace(ll_item), dw_toolBar.of_getItem_fontSize(ll_item)))
 dw_toolBar.of_setItem_imageWidth(ll_item, of_size_imageWidth(dw_toolBar.of_getItem_image(ll_item)))
 
 dw_toolBar.of_setItem_rectTop(ll_item, 16)
@@ -1741,8 +1748,8 @@ ELSE
 END IF
 
 dw_toolBar.of_setItem_DisplayInMenu(ll_item, FALSE)
-dw_toolBar.of_setItem_fontFace(ll_item, #FontFace)
-dw_toolBar.of_setItem_fontSize(ll_item, #FontSize)
+dw_toolBar.of_setItem_fontFace(ll_item, is_FontFace)
+dw_toolBar.of_setItem_fontSize(ll_item, il_FontSize)
 
 of_initializeItemSize(ll_item)
 of_update()
@@ -1925,7 +1932,7 @@ private function integer of_size_text (string vs_text);// CopyRight (c) 2016 by 
 //
 // Original Author: Christopher Harris
 
-Return(of_size_text(vs_text, #FontFace, #FontSize))
+Return(of_size_text(vs_text, is_fontFace, il_fontSize))
 end function
 
 private function long of_size_imageheight ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -2751,7 +2758,7 @@ FOR ll_item = 2 TO dw_toolBar.RowCount()
 	
 NEXT
 
-#DisplayText							= FALSE
+ib_displayText							= FALSE
 
 of_update()
 of_drawButton(ll_itemCurrent)
@@ -2781,7 +2788,7 @@ FOR ll_item = 2 TO dw_toolBar.RowCount()
 	
 NEXT
 
-#DisplayText							= TRUE
+ib_displayText							= TRUE
 
 of_update()
 of_drawButton(ll_itemCurrent)
@@ -2992,6 +2999,10 @@ event constructor;// CopyRight (c) 2016 by Christopher Harris, all rights reserv
 //
 // Original Author: Christopher Harris
 
+//	Save original font settings
+is_fontFace								= #FontFace
+il_fontSize								= #FontSize
+
 IF GetApplication().ToolBarText THEN
 	of_enableText()
 ELSE
@@ -3105,8 +3116,8 @@ dw_toolBar.SetPosition('r_button', #band, FALSE)
 of_highLight(HIGHLIGHT)
 of_highLight(INVISIBLE)
 
-st_toolBar.FaceName					= #FontFace
-st_toolBar.TextSize					= #FontSize * -1
+st_toolBar.FaceName					= is_FontFace
+st_toolBar.TextSize					= il_FontSize * -1
 
 of_size()
 of_addDropMenu()
