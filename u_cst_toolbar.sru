@@ -149,6 +149,7 @@ Private:
 	
 	Integer									ii_toolTipIsBubble			= 1
 end variables
+
 forward prototypes
 public function boolean of_displaytext ()
 public subroutine of_enabletooltips ()
@@ -231,7 +232,7 @@ event type integer ue_itemclicking(string vs_button);// CopyRight (c) 2016 by Ch
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Return(ALLOW)
 end event
@@ -243,7 +244,7 @@ event ue_itemclicked(string vs_button);// CopyRight (c) 2016 by Christopher Harr
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 CHOOSE CASE Lower(vs_button)
 	CASE is_dropMenuChar
@@ -258,7 +259,7 @@ event ue_context_size(string vs_size);// CopyRight (c) 2016 by Christopher Harri
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Long										ll_item
 
@@ -325,7 +326,7 @@ event ue_context_showtoolbartext(boolean vb_showtext);// CopyRight (c) 2016 by C
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 of_broadCast_showToolBarText(vb_showText)
 
@@ -341,7 +342,7 @@ event ue_context_showtoolbartips(boolean vb_showtips);// CopyRight (c) 2016 by C
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 of_broadCast_showToolBarTips(vb_showTips)
 
@@ -357,7 +358,7 @@ event ue_resized(long vl_oldheight, long vl_newheight);// CopyRight (c) 2016 by 
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 RETURN
 end event
@@ -369,7 +370,7 @@ event ue_post_constructor();// CopyRight (c) 2016 by Christopher Harris, all rig
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF dw_toolBar.of_locateItem_objectName(dw_toolBar.POPMENU + '_' + String(1)) <> 1 THEN
 	messageBox('Programmer Error', 'You have improperly initialized your toolBar.')
@@ -383,7 +384,7 @@ public function boolean of_displaytext ();// CopyRight (c) 2016 by Christopher H
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Return(ib_displayText)
 end function
@@ -395,7 +396,7 @@ public subroutine of_enabletooltips ();// CopyRight (c) 2016 by Christopher Harr
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 ib_displayToolTips					= TRUE
 
@@ -428,7 +429,7 @@ public subroutine of_disabletooltips ();// CopyRight (c) 2016 by Christopher Har
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 ib_displayToolTips					= FALSE
 
@@ -461,7 +462,7 @@ public function integer of_setenabled (string vs_item, boolean vb_switch);// Cop
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Return(of_setEnabled(dw_toolBar.of_locateItem_name(vs_item), vb_switch))
 end function
@@ -473,7 +474,7 @@ public function integer of_setvisible (string vs_item, boolean vb_switch);// Cop
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Return(of_setVisible(dw_toolbar.of_locateItem_name(vs_item), vb_switch))
 end function
@@ -485,7 +486,7 @@ public function boolean of_displaytooltips ();// CopyRight (c) 2016 by Christoph
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Return(ib_displayToolTips)
 end function
@@ -497,7 +498,7 @@ public function string of_gettext (long vl_item);// CopyRight (c) 2016 by Christ
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 String									ls_Text = ''
 
@@ -517,7 +518,7 @@ public function boolean of_isvisible (long vl_item);// CopyRight (c) 2016 by Chr
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Boolean									lb_Visible = FALSE
 
@@ -535,7 +536,7 @@ public function boolean of_isenabled (long vl_item);// CopyRight (c) 2016 by Chr
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Boolean									lb_Enabled = FALSE
 
@@ -553,7 +554,7 @@ public function boolean of_isvisible (string vs_item);// CopyRight (c) 2016 by C
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Boolean									lb_Visible = FALSE
 
@@ -574,7 +575,7 @@ public function boolean of_isenabled (string vs_item);// CopyRight (c) 2016 by C
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Boolean									lb_Enabled = FALSE
 
@@ -595,7 +596,7 @@ public function integer of_settext (string vs_item, string vs_text);// CopyRight
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Return(of_setText(dw_toolBar.of_locateItem_name(vs_item), vs_text))
 end function
@@ -607,7 +608,7 @@ public function integer of_settiptext (string vs_item, string vs_tooltip);// Cop
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Return(of_setTipText(dw_toolBar.of_locateItem_name(vs_item), vs_toolTip))
 end function
@@ -619,7 +620,7 @@ public function integer resize (integer w, integer h);// CopyRight (c) 2016 by C
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Long										ll_itemCurrent
 ll_itemCurrent							= dw_toolBar.of_locateItem()
@@ -643,7 +644,7 @@ private subroutine of_initializeitemsize (long vl_item);// CopyRight (c) 2016 by
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 dw_toolBar.of_setItem_rectTop(vl_item, 0)
 dw_toolBar.of_setItem_rectHeight(vl_item, 0)
@@ -681,7 +682,7 @@ public function integer of_setimage (string vs_item, string vs_image);// CopyRig
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Return(of_setImage(dw_toolBar.of_locateItem_name(vs_item), vs_image))
 end function
@@ -693,7 +694,7 @@ private subroutine of_size (integer vi_size);// CopyRight (c) 2016 by Christophe
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 #BitMapSize								= vi_size
 
@@ -758,7 +759,7 @@ private function long of_createitem (long vl_item);// CopyRight (c) 2016 by Chri
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Long										ll_pos
 ll_pos									= dw_toolBar.of_getItem_rectLeft(vl_item)
@@ -1050,7 +1051,7 @@ private function boolean of_updatepositions (boolean vb_dropdownmenu);// CopyRig
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Long										ll_width
 ll_width									= dw_toolBar.Width
@@ -1279,7 +1280,7 @@ public subroutine of_disableupdate ();// CopyRight (c) 2016 by Christopher Harri
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 ib_update								= FALSE
 
@@ -1293,7 +1294,7 @@ public subroutine of_enableupdate ();// CopyRight (c) 2016 by Christopher Harris
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF NOT ib_update THEN
 	
@@ -1313,7 +1314,7 @@ private subroutine of_size ();// CopyRight (c) 2016 by Christopher Harris, all r
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 of_size(#BitMapSize)
 
@@ -1327,7 +1328,7 @@ public function long of_getcolor (string vs_color);// CopyRight (c) 2016 by Chri
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Long										ll_color = -1
 
@@ -1406,7 +1407,7 @@ public function integer of_update ();// CopyRight (c) 2016 by Christopher Harris
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF NOT ib_update THEN Return(SUCCESS)
 
@@ -1447,7 +1448,7 @@ protected function string of_getClickedButton ();// CopyRight (c) 2016 by Christ
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Return(is_lButtonDown)
 end function
@@ -1459,7 +1460,7 @@ private subroutine of_broadcast_invisible (userobject vuo_broadcaster);// CopyRi
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 //	This routine notifies the other u_cst_toolBar objects that a "new"
 //	u_cst_toolBar has the highLight box and to hide theirs.  This way only
@@ -1488,7 +1489,7 @@ protected function integer of_highlight (string vs_mode);// CopyRight (c) 2016 b
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 CHOOSE CASE vs_mode
 	CASE SELECTMODE
@@ -1555,7 +1556,7 @@ private subroutine of_broadcast_showtoolbartext (boolean vb_showtext);// CopyRig
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 //	This routine notifies all u_cst_toolBar objects to turn on/off their text
 
@@ -1584,7 +1585,7 @@ private subroutine of_broadcast_showtoolbartips (boolean vb_showtips);// CopyRig
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 //	This routine notifies all u_cst_toolBar objects to turn on/off their toolTips
 
@@ -1613,7 +1614,7 @@ private function long of_adddropmenu ();//	CopyRight (c) 2016 by Christopher Har
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 //	The 1st item is always the DropDownMenu item that is displayed when
 //	not all menu items can be displayed in the toolBar.  The display logic
@@ -1660,7 +1661,7 @@ public function long of_additem (string vs_name, string vs_image);// CopyRight (
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Return(of_addItem(vs_name, vs_image, vs_name, LEFT))
 end function
@@ -1672,7 +1673,7 @@ public function long of_additem (string vs_name, string vs_image, string vs_tool
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Return(of_addItem(vs_name, vs_image, vs_toolTip, LEFT))
 end function
@@ -1684,7 +1685,7 @@ public function long of_additem (string vs_name, string vs_image, integer vi_pos
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Return(of_addItem(vs_name, vs_image, vs_name, vi_position))
 end function
@@ -1696,7 +1697,7 @@ public function long of_additem (string vs_name, string vs_image, string vs_tool
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF Trim(vs_name) = is_DropMenuChar THEN
 	Return(MessageBox('AddItem Error', 'The character ' + is_DropMenuChar + ' is reserved and can not be used as an item name.'))
@@ -1710,12 +1711,17 @@ IF isNull(vs_image)		THEN vs_image		= ''
 IF isNull(vs_toolTip)	THEN vs_toolTip	= ''
 IF isNull(vi_position)	THEN vi_position	= LEFT
 
-dw_toolBar.of_setItem_name(ll_item, Trim(vs_name))
-dw_toolBar.of_setItem_image(ll_item, Trim(vs_image))
+vs_name									= Trim(vs_name)
+vs_image									= Trim(vs_image)
+vs_toolTip								= Trim(vs_toolTip)
+
+dw_toolBar.of_setItem_name(ll_item, vs_name)
+dw_toolBar.of_setItem_image(ll_item, invo_toolBar.of_getImageName(vs_image))
+
 IF isNull(vs_toolTip) OR Trim(vs_toolTip) = '' THEN
-	dw_toolBar.of_setItem_toolTip(ll_item, Trim(vs_name))
+	dw_toolBar.of_setItem_toolTip(ll_item, vs_name)
 ELSE
-	dw_toolBar.of_setItem_toolTip(ll_item, Trim(vs_toolTip))
+	dw_toolBar.of_setItem_toolTip(ll_item, vs_toolTip)
 END IF
 
 //	Make sure position is a valid value
@@ -1730,12 +1736,12 @@ dw_toolBar.of_setItem_enabled(ll_item, TRUE)
 IF vs_name = '' THEN
 	dw_toolBar.of_setItem_objectName(ll_item, dw_toolBar.TOOLBARITEM + '_' + String(ll_item))
 ELSE
-	dw_toolBar.of_setItem_objectName(ll_item, invo_string.of_GlobalReplace(Trim(vs_name), ' ', '_') + '_' + String(ll_item))
+	dw_toolBar.of_setItem_objectName(ll_item, invo_string.of_GlobalReplace(vs_name, ' ', '_') + '_' + String(ll_item))
 END IF
 
 dw_toolBar.of_setItem_objectType(ll_item, dw_toolBar.TOOLBARITEM)
 
-IF isNull(vs_image) OR Trim(vs_image) = '' THEN
+IF isNull(vs_image) OR vs_image = '' THEN
 	
 	dw_toolBar.of_setItem_imageTransparency(ll_item, of_getColor(DEFAULTIMAGETRANSPARENCY))
 	dw_toolBar.of_setItem_displayText(ll_item, TRUE)
@@ -1764,7 +1770,7 @@ public function long of_additems (string vs_name[], string vs_image[]);// CopyRi
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Long										ll_item
 
@@ -1786,7 +1792,7 @@ public function long of_additems (string vs_name[], string vs_image[], string vs
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Long										ll_item
 Long										li_position[]
@@ -1805,7 +1811,7 @@ public function long of_additems (string vs_name[], string vs_image[], string vs
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Long										ll_loop
 
@@ -1836,7 +1842,7 @@ public function long of_addseparator ();// CopyRight (c) 2016 by Christopher Har
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Return(of_addSeparator(LEFT))
 end function
@@ -1848,7 +1854,7 @@ public function long of_addseparator (integer vi_position);// CopyRight (c) 2016
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Long										ll_item
 ll_item									= dw_toolBar.of_addItem()
@@ -1886,7 +1892,7 @@ private function long of_size_text (string vs_text, string vs_fontface, integer 
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Long										ll_width	= 0
 
@@ -1909,7 +1915,7 @@ private function long of_size_line ();// CopyRight (c) 2016 by Christopher Harri
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Long											ll_width
 
@@ -1930,7 +1936,7 @@ private function integer of_size_text (string vs_text);// CopyRight (c) 2016 by 
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Return(of_size_text(vs_text, is_fontFace, il_fontSize))
 end function
@@ -1942,7 +1948,7 @@ private function long of_size_imageheight ();// CopyRight (c) 2016 by Christophe
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Long										ll_height
 ll_height								= PixelsToUnits(#BitMapSize, YPixelsToUnits!)
@@ -1957,7 +1963,7 @@ private function long of_size_imagewidth (string vs_image);// CopyRight (c) 2016
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Long										ll_width
 
@@ -1977,7 +1983,7 @@ public function integer of_setchecked (string vs_item, boolean vb_switch);// Cop
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Return(of_setChecked(dw_toolBar.of_locateItem_name(vs_item), vb_switch))
 end function
@@ -1989,7 +1995,7 @@ public function boolean of_ischecked (long vl_item);// CopyRight (c) 2016 by Chr
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Boolean									lb_checked = FALSE
 
@@ -2007,7 +2013,7 @@ public function boolean of_ischecked (string vs_item);// CopyRight (c) 2016 by C
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Boolean									lb_checked = FALSE
 
@@ -2028,7 +2034,7 @@ private function integer of_drawenabled (long vl_item);// CopyRight (c) 2016 by 
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF isNull(vl_item) THEN Return(FAILURE)
 
@@ -2094,7 +2100,7 @@ private function integer of_drawchecked (long vl_item);// CopyRight (c) 2016 by 
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF isNull(vl_item) THEN Return(FAILURE)
 
@@ -2182,7 +2188,7 @@ public function integer of_setchecked (long vl_item, boolean vb_switch);// CopyR
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF isNull(vl_item) THEN Return(FAILURE)
 
@@ -2210,7 +2216,7 @@ public function integer of_setenabled (long vl_item, boolean vb_switch);// CopyR
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF isNull(vl_item) THEN Return(FAILURE)
 
@@ -2238,7 +2244,7 @@ public function integer of_setimage (long vl_item, string vs_image);// CopyRight
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF isNull(vl_item) THEN Return(FAILURE)
 
@@ -2246,7 +2252,7 @@ IF vl_item <= 1 OR vl_item > dw_toolBar.RowCount() THEN Return(FAILURE)
 
 IF isNull(vs_image) THEN vs_image = ''
 
-dw_toolBar.of_setItem_image(vl_item, vs_image)
+dw_toolBar.of_setItem_image(vl_item, invo_toolBar.of_getImageName(vs_image))
 
 IF isNull(vs_image) OR Trim(vs_image) = '' THEN
 	
@@ -2273,7 +2279,7 @@ public function integer of_settext (long vl_item, string vs_text);// CopyRight (
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF isNull(vl_item) THEN Return(FAILURE)
 
@@ -2300,7 +2306,7 @@ public function integer of_settiptext (long vl_item, string vs_tooltip);// CopyR
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF isNull(vl_item) THEN Return(FAILURE)
 
@@ -2334,7 +2340,7 @@ public function integer of_setvisible (long vl_item, boolean vb_switch);// CopyR
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF isNull(vl_item) THEN Return(FAILURE)
 
@@ -2361,7 +2367,7 @@ private function long of_createitem_separator (long vl_item);// CopyRight (c) 20
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Long										ll_pos
 ll_pos									= dw_toolBar.of_getItem_rectLeft(vl_item)
@@ -2441,7 +2447,7 @@ protected function integer of_drawbutton (long vl_item);// CopyRight (c) 2016 by
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 String									ls_describe
 ls_describe								= dw_toolBar.Describe('r_button.X')
@@ -2497,7 +2503,7 @@ private subroutine of_popmenu_dropdown ();// CopyRight (c) 2016 by Christopher H
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Boolean									lb_showMenu			= FALSE
 
@@ -2637,7 +2643,7 @@ protected function integer of_keydown (keycode vkc_key, unsignedinteger vui_keyf
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 //invo_toolBar.of_locateToolTips(invo_toolBar.of_getDesktopWindow())
 //
@@ -2739,7 +2745,7 @@ public function integer of_disabletext ();// CopyRight (c) 2016 by Christopher H
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Long										ll_itemCurrent
 ll_itemCurrent							= dw_toolBar.of_locateItem()
@@ -2773,7 +2779,7 @@ public function integer of_enabletext ();// CopyRight (c) 2016 by Christopher Ha
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Long										ll_itemCurrent
 ll_itemCurrent							= dw_toolBar.of_locateItem()
@@ -2803,7 +2809,7 @@ public function integer of_clickitem (string vs_button);// CopyRight (c) 2016 by
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Long										ll_Return	= PREVENT
 
@@ -2831,7 +2837,7 @@ public function integer of_clickitem (long vl_item);// CopyRight (c) 2016 by Chr
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF isNull(vl_item) THEN Return(PREVENT)
 
@@ -2847,7 +2853,7 @@ public function long of_clickbutton (string vs_button);// CopyRight (c) 2016 by 
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Return(of_clickItem(vs_button))
 end function
@@ -2859,7 +2865,7 @@ public function long of_clickbutton (long vl_item);// CopyRight (c) 2016 by Chri
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Return(of_clickItem(vl_item))
 end function
@@ -2871,7 +2877,7 @@ public function long of_additem (string vs_name);// CopyRight (c) 2016 by Christ
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Return(of_addItem(vs_name, '', vs_name, LEFT))
 end function
@@ -2883,7 +2889,7 @@ public function long of_additem (string vs_name, integer vi_position);// CopyRig
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Return(of_addItem(vs_name, '', vs_name, vi_position))
 end function
@@ -2895,7 +2901,7 @@ public function string of_gettext (string vs_item);// CopyRight (c) 2016 by Chri
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Return(of_getText(dw_toolBar.of_locateItem_name(vs_item)))
 end function
@@ -2907,7 +2913,7 @@ public function long of_locateitem (string vs_item);//	CopyRight (c) 2016 by Chr
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Return(dw_toolBar.of_locateItem_name(vs_item))
 end function
@@ -2919,7 +2925,7 @@ public function long of_additems (string vs_name[]);// CopyRight (c) 2016 by Chr
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Long										ll_item
 
@@ -2942,7 +2948,7 @@ public function long of_additems (string vs_name[], integer vi_position[]);// Co
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Long										ll_item
 
@@ -2963,7 +2969,7 @@ public function long of_additems (string vs_name[], string vs_image[], integer v
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Long										ll_item
 String									ls_toolTip[]
@@ -2997,7 +3003,7 @@ event constructor;// CopyRight (c) 2016 by Christopher Harris, all rights reserv
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 //	Save original font settings
 is_fontFace								= #FontFace
@@ -3151,7 +3157,7 @@ event destructor;// CopyRight (c) 2016 by Christopher Harris, all rights reserve
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Long										ll_index
 
@@ -3196,7 +3202,7 @@ event constructor;// CopyRight (c) 2016 by Christopher Harris, all rights reserv
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Hide()
 end event
@@ -3221,7 +3227,7 @@ event ue_dwnlbuttonup;// CopyRight (c) 2016 by Christopher Harris, all rights re
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 of_highLight(HIGHLIGHT)
 
@@ -3265,7 +3271,7 @@ event ue_dwnmousemove;// CopyRight (c) 2016 by Christopher Harris, all rights re
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Long										ll_item
 
@@ -3313,7 +3319,7 @@ event ue_post_getfocus(long vl_tabbed);// CopyRight (c) 2016 by Christopher Harr
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF ib_trackMouseEvent THEN
 ELSE
@@ -3338,7 +3344,7 @@ event ue_dwnkey;// CopyRight (c) 2016 by Christopher Harris, all rights reserved
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 of_keyDown(key, keyFlags)
 end event
@@ -3350,7 +3356,7 @@ event ue_dwnhscoll;// CopyRight (c) 2016 by Christopher Harris, all rights reser
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Object.DataWindow.HorizontalScrollPosition	= 0
 end event
@@ -3362,7 +3368,7 @@ event constructor;call super::constructor;// CopyRight (c) 2016 by Christopher H
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 BringToTop								= TRUE
 end event
@@ -3393,7 +3399,7 @@ event losefocus;call super::losefocus;// CopyRight (c) 2016 by Christopher Harri
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 of_highLight(INVISIBLE)
 
@@ -3419,7 +3425,7 @@ event getfocus;call super::getfocus;// CopyRight (c) 2016 by Christopher Harris,
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Modify('DataWindow.' + #band + '.Color="' + String(of_getColor(GETFOCUS)) + '" ')
 
@@ -3443,7 +3449,7 @@ event rbuttondown;call super::rbuttondown;// CopyRight (c) 2016 by Christopher H
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 m_toolBar_context						lm_context
 lm_context								= CREATE m_toolbar_context

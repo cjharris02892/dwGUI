@@ -50,7 +50,7 @@ event open;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 ////	Documentation example 1
 //
@@ -78,7 +78,7 @@ uo_toolbar.of_disableUpdate()
 
 uo_toolbar.of_addItems({ 'Open',							'Save',					&
 								 uo_toolBar.SEPARATOR,		'Exit' },				&
-							  { 'Open.bmp',					'Save.bmp',				&
+							  { 'Open!',						'Save.bmp',				&
 							    '',								'powerOff.bmp' },		&
 							  { uo_toolbar.LEFT,				uo_toolBar.LEFT,		&
 							    uo_toolBar.LEFT,				uo_toolbar.RIGHT })
@@ -114,7 +114,7 @@ event resize;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF il_oldWidth <> -1 AND il_oldHeight <> -1 THEN
 
@@ -152,7 +152,7 @@ event itemchanged;// CopyRight (c) 2016 by Christopher Harris, all rights reserv
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 CHOOSE CASE dwo.Name
 	CASE 'change_text'
@@ -172,7 +172,7 @@ CHOOSE CASE dwo.Name
 		
 		IF NOT isNull(ll_item) THEN
 			IF data = 'N' THEN
-				uo_toolBar.of_setImage(ll_item, 'Open.bmp')
+				uo_toolBar.of_setImage(ll_item, 'Open!')
 			ELSE
 				uo_toolBar.of_setImage(ll_item, 'Copy.png')
 			END IF
@@ -232,7 +232,7 @@ event constructor;// CopyRight (c) 2016 by Christopher Harris, all rights reserv
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 InsertRow(0)
 
@@ -257,7 +257,7 @@ event ue_itemclicked;call super::ue_itemclicked;// CopyRight (c) 2016 by Christo
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 CHOOSE CASE Lower(vs_button)
 		
@@ -275,7 +275,7 @@ event ue_resized;call super::ue_resized;// CopyRight (c) 2016 by Christopher Har
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 dw_options.Move(uo_toolbar.X, uo_toolbar.Height)
 dw_options.Resize(uo_toolbar.Width, dw_options.Height - (vl_newHeight - vl_oldHeight))
