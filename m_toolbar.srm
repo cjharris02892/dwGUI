@@ -30,7 +30,7 @@ public function integer mf_popmenu (dragobject vdrg_parent, menu vm_popmenu, int
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 n_cst_toolBar							lnvo_toolBar
 
@@ -112,7 +112,7 @@ public function integer mf_popmenu (dragobject vdrg_parent, integer vi_xpos, int
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Return(mf_popMenu(vdrg_parent, this, vi_xPos, vi_yPos))
 end function
@@ -124,7 +124,7 @@ public subroutine mf_register (dragobject vdrg_parent);// CopyRight (c) 2016 by 
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 idrg_parent								= vdrg_parent
 
@@ -138,7 +138,7 @@ public function dragobject mf_getparent ();// CopyRight (c) 2016 by Christopher 
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Return(idrg_parent)
 end function
@@ -150,7 +150,7 @@ public subroutine mf_setparent (dragobject vdrg_parent);// CopyRight (c) 2016 by
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 idrg_parent								= vdrg_parent
 

@@ -20,7 +20,7 @@ event clicked;call super::clicked;// CopyRight (c) 2016 by Christopher Harris, a
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF isValid(mf_getParent()) THEN
 	

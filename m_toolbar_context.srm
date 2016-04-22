@@ -123,7 +123,7 @@ event clicked;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF isValid(mf_getParent()) THEN
 	
@@ -197,7 +197,7 @@ event clicked;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF isValid(mf_getParent()) THEN
 	
@@ -245,7 +245,7 @@ event clicked;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF isValid(mf_getParent()) THEN
 	
@@ -293,7 +293,7 @@ event clicked;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF isValid(mf_getParent()) THEN
 	
@@ -344,7 +344,7 @@ event clicked;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF isValid(mf_getParent()) THEN
 	
@@ -395,7 +395,7 @@ event clicked;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF isValid(mf_getParent()) THEN
 	

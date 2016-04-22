@@ -96,7 +96,7 @@ public function boolean of_getitem_displayinmenu (long vl_item);// CopyRight (c)
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF vl_item < 1 OR vl_item > RowCount() THEN Return(FALSE)
 
@@ -110,7 +110,7 @@ public function boolean of_getitem_displaytext (long vl_item);// CopyRight (c) 2
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF vl_item < 1 OR vl_item > RowCount() THEN Return(FALSE)
 
@@ -124,7 +124,7 @@ public function boolean of_getitem_enabled (long vl_item);// CopyRight (c) 2016 
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF vl_item < 1 OR vl_item > RowCount() THEN Return(FALSE)
 
@@ -138,7 +138,7 @@ public function string of_getitem_fontface (long vl_item);// CopyRight (c) 2016 
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF vl_item < 1 OR vl_item > RowCount() THEN Return('')
 
@@ -152,7 +152,7 @@ public function long of_getitem_fontsize (long vl_item);// CopyRight (c) 2016 by
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF vl_item < 1 OR vl_item > RowCount() THEN Return(0)
 
@@ -166,7 +166,7 @@ public subroutine of_setitem_fontface (long vl_item, string vs_fontface);// Copy
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
 
@@ -183,7 +183,7 @@ public subroutine of_setitem_position (long vl_item, long vl_position);// CopyRi
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
 
@@ -200,7 +200,7 @@ public function string of_getitem_image (long vl_item);// CopyRight (c) 2016 by 
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF vl_item < 1 OR vl_item > RowCount() THEN Return('')
 
@@ -214,7 +214,7 @@ public function long of_getitem_imagetransparency (long vl_item);// CopyRight (c
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF vl_item < 1 OR vl_item > RowCount() THEN Return(0)
 
@@ -228,7 +228,7 @@ public function long of_getitem_imagewidth (long vl_item);// CopyRight (c) 2016 
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF vl_item < 1 OR vl_item > RowCount() THEN Return(0)
 
@@ -242,7 +242,7 @@ public function string of_getitem_name (long vl_item);// CopyRight (c) 2016 by C
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF vl_item < 1 OR vl_item > RowCount() THEN Return('')
 
@@ -256,7 +256,7 @@ public function string of_getitem_objectname (long vl_item);// CopyRight (c) 201
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF vl_item < 1 OR vl_item > RowCount() THEN Return('')
 
@@ -270,7 +270,7 @@ public function string of_getitem_objecttype (long vl_item);// CopyRight (c) 201
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF vl_item < 1 OR vl_item > RowCount() THEN Return('')
 
@@ -284,7 +284,7 @@ public function long of_getitem_position (long vl_item);// CopyRight (c) 2016 by
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF vl_item < 1 OR vl_item > RowCount() THEN Return(0)
 
@@ -298,7 +298,7 @@ public function long of_getitem_rectheight (long vl_item);// CopyRight (c) 2016 
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF vl_item < 1 OR vl_item > RowCount() THEN Return(0)
 
@@ -312,7 +312,7 @@ public function long of_getitem_rectleft (long vl_item);// CopyRight (c) 2016 by
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF vl_item < 1 OR vl_item > RowCount() THEN Return(0)
 
@@ -326,7 +326,7 @@ public function long of_getitem_recttop (long vl_item);// CopyRight (c) 2016 by 
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF vl_item < 1 OR vl_item > RowCount() THEN Return(0)
 
@@ -340,7 +340,7 @@ public function long of_getitem_rectwidth (long vl_item);// CopyRight (c) 2016 b
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF vl_item < 1 OR vl_item > RowCount() THEN Return(0)
 
@@ -354,7 +354,7 @@ public function boolean of_getitem_separator (long vl_item);// CopyRight (c) 201
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF vl_item < 1 OR vl_item > RowCount() THEN Return(FALSE)
 
@@ -368,7 +368,7 @@ public function long of_getitem_tabsequence (long vl_item);// CopyRight (c) 2016
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF vl_item < 1 OR vl_item > RowCount() THEN Return(0)
 
@@ -382,7 +382,7 @@ public function long of_getitem_textwidth (long vl_item);// CopyRight (c) 2016 b
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF vl_item < 1 OR vl_item > RowCount() THEN Return(0)
 
@@ -396,7 +396,7 @@ public function string of_getitem_tooltip (long vl_item);// CopyRight (c) 2016 b
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF vl_item < 1 OR vl_item > RowCount() THEN Return('')
 
@@ -410,7 +410,7 @@ public function boolean of_getitem_visible (long vl_item);// CopyRight (c) 2016 
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF vl_item < 1 OR vl_item > RowCount() THEN Return(FALSE)
 
@@ -424,7 +424,7 @@ public subroutine of_setitem_visible (long vl_item, boolean vb_visible);// CopyR
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
 
@@ -446,7 +446,7 @@ public subroutine of_setitem_displayinmenu (long vl_item, boolean vb_displayinme
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
 
@@ -468,7 +468,7 @@ public subroutine of_setitem_displaytext (long vl_item, boolean vb_displaytext);
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
 
@@ -490,7 +490,7 @@ public subroutine of_setitem_enabled (long vl_item, boolean vb_enabled);// CopyR
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
 
@@ -512,7 +512,7 @@ public subroutine of_setitem_tooltip (long vl_item, string vs_tooltip);// CopyRi
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
 
@@ -529,7 +529,7 @@ public subroutine of_setitem_textwidth (long vl_item, long vl_textwidth);// Copy
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
 
@@ -546,7 +546,7 @@ public subroutine of_setitem_tabsequence (long vl_item, long vl_tabsequence);// 
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
 
@@ -563,7 +563,7 @@ public subroutine of_setitem_rectwidth (long vl_item, long vl_rectwidth);// Copy
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
 
@@ -580,7 +580,7 @@ public subroutine of_setitem_recttop (long vl_item, long vl_recttop);// CopyRigh
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
 
@@ -597,7 +597,7 @@ public subroutine of_setitem_rectleft (long vl_item, long vl_rectleft);// CopyRi
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
 
@@ -614,7 +614,7 @@ public subroutine of_setitem_rectheight (long vl_item, long vl_rectheight);// Co
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
 
@@ -631,7 +631,7 @@ public subroutine of_setitem_objecttype (long vl_item, string vs_objecttype);// 
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
 
@@ -648,7 +648,7 @@ public subroutine of_setitem_objectname (long vl_item, string vs_objectname);// 
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
 
@@ -665,7 +665,7 @@ public subroutine of_setitem_name (long vl_item, string vs_name);// CopyRight (c
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
 
@@ -682,7 +682,7 @@ public subroutine of_setitem_imagewidth (long vl_item, long vl_imagewidth);// Co
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
 
@@ -699,7 +699,7 @@ public subroutine of_setitem_imagetransparency (long vl_item, long vl_imagetrans
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
 
@@ -716,7 +716,7 @@ public subroutine of_setitem_image (long vl_item, string vs_image);// CopyRight 
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
 
@@ -733,7 +733,7 @@ public subroutine of_setitem_fontsize (long vl_item, long vl_fontsize);// CopyRi
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
 
@@ -750,7 +750,7 @@ public function long of_locateitem ();// CopyRight (c) 2016 by Christopher Harri
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Long										ll_item
 setNull(ll_item)
@@ -790,7 +790,7 @@ public function long of_locateitem (long vl_x, long vl_y);// CopyRight (c) 2016 
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 String									ls_find
 ls_find									= String(vl_x) + '>=rectLeft AND '																		&
@@ -819,7 +819,7 @@ public function long of_locateitem_first ();// CopyRight (c) 2016 by Christopher
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Long										ll_itemFirst
 setNull(ll_itemFirst)
@@ -868,7 +868,7 @@ public function long of_locateitem_last ();// CopyRight (c) 2016 by Christopher 
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Long										ll_itemLast
 setNull(ll_itemLast)
@@ -917,7 +917,7 @@ public function long of_locateitem_next (long vl_itemcurrent);// CopyRight (c) 2
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF isNull(vl_itemCurrent) THEN Return(vl_itemCurrent)
 
@@ -973,7 +973,7 @@ public function long of_locateitem_previous (long vl_itemcurrent);// CopyRight (
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF isNull(vl_itemCurrent) THEN Return(vl_itemCurrent)
 
@@ -1029,7 +1029,7 @@ public function long of_additem ();// CopyRight (c) 2016 by Christopher Harris, 
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Long									ll_item
 ll_item								= InsertRow(0)
@@ -1048,7 +1048,7 @@ public function boolean of_getitem_checked (long vl_item);// CopyRight (c) 2016 
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF vl_item < 1 OR vl_item > RowCount() THEN Return(FALSE)
 
@@ -1075,7 +1075,7 @@ public function long of_getitem_order (long vl_item);// CopyRight (c) 2016 by Ch
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF vl_item < 1 OR vl_item > RowCount() THEN Return(0)
 
@@ -1089,7 +1089,7 @@ public subroutine of_setitem_order (long vl_item);// CopyRight (c) 2016 by Chris
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
 
@@ -1106,7 +1106,7 @@ public subroutine of_deleteitem (long vl_item);// CopyRight (c) 2016 by Christop
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 String									ls_describe
 
@@ -1163,7 +1163,7 @@ public function long of_locateitem_name (string vs_name);// CopyRight (c) 2016 b
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 String									ls_find
 ls_find									= 'Lower(name)=Lower("' + vs_name + '")'
@@ -1189,7 +1189,7 @@ public function long of_locateitem_objectname (string vs_objectname);// CopyRigh
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 String									ls_find
 ls_find									= 'Lower(objectName)=Lower("' + vs_objectName + '")'
@@ -1215,7 +1215,7 @@ public function double of_pbversion ();// CopyRight (c) 2016 by Christopher Harr
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Return(idbl_PBVersion)
 end function
@@ -1227,7 +1227,7 @@ public function boolean of_getitem_displayinmenu (string vs_item);// CopyRight (
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 IF isNull(vs_item) THEN Return(FALSE)
 
@@ -1256,7 +1256,7 @@ event constructor;// CopyRight (c) 2016 by Christopher Harris, all rights reserv
 //
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
-// Original Author: Christopher Harris
+// Original Author:	Christopher Harris
 
 Environment									lenv_temp
 GetEnvironment(lenv_temp)
