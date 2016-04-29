@@ -723,6 +723,8 @@ CHOOSE CASE TypeOf(vgo_GetFrame)
 			
 		END IF
 		
+	CASE Menu!, MenuCasCade!
+		lw_getFrame				= of_getFrame(of_getParentWindow(vgo_getFrame))
 	CASE ELSE
 		lw_GetFrame				= of_getFrame(vgo_GetFrame.GetParent())
 END CHOOSE

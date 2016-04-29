@@ -16,14 +16,79 @@ Private:
 end variables
 
 forward prototypes
-public function integer mf_popmenu (dragobject vdrg_parent, menu vm_popmenu, integer vi_xpos, integer vi_ypos)
-public function integer mf_popmenu (dragobject vdrg_parent, integer vi_xpos, integer vi_ypos)
 public subroutine mf_register (dragobject vdrg_parent)
 public function dragobject mf_getparent ()
 public subroutine mf_setparent (dragobject vdrg_parent)
+public function integer mf_popmenu (dragobject vdrg_parent)
+public function integer mf_popmenu (dragobject vdrg_parent, integer vi_xoffset, integer vi_yoffset)
+public function integer mf_popmenu (dragobject vdrg_parent, menu vm_popmenu, integer vi_xoffset, integer vi_yoffset)
 end prototypes
 
-public function integer mf_popmenu (dragobject vdrg_parent, menu vm_popmenu, integer vi_xpos, integer vi_ypos);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+public subroutine mf_register (dragobject vdrg_parent);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+idrg_parent								= vdrg_parent
+
+RETURN
+end subroutine
+
+public function dragobject mf_getparent ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+Return(idrg_parent)
+end function
+
+public subroutine mf_setparent (dragobject vdrg_parent);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+idrg_parent								= vdrg_parent
+
+RETURN
+end subroutine
+
+public function integer mf_popmenu (dragobject vdrg_parent);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+Return(mf_popMenu(vdrg_parent, this, 0, 0))
+end function
+
+public function integer mf_popmenu (dragobject vdrg_parent, integer vi_xoffset, integer vi_yoffset);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+Return(mf_popMenu(vdrg_parent, this, vi_xOffSet, vi_yOffSet))
+end function
+
+public function integer mf_popmenu (dragobject vdrg_parent, menu vm_popmenu, integer vi_xoffset, integer vi_yoffset);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
 // license which accompanies this distribution and can be found at:
@@ -102,60 +167,8 @@ ELSE
 	Return(-1)
 END IF
 
-Return(vm_popMenu.PopMenu(lw_parent.PointerX(), lw_parent.PointerY()))
+Return(vm_popMenu.PopMenu(lw_parent.PointerX() + vi_xOffSet, lw_parent.PointerY() + vi_yOffSet))
 end function
-
-public function integer mf_popmenu (dragobject vdrg_parent, integer vi_xpos, integer vi_ypos);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
-//
-// This code and accompanying materials are made available under the GPLv3
-// license which accompanies this distribution and can be found at:
-//
-// http://www.gnu.org/licenses/gpl-3.0.html.
-//
-// Original Author:	Christopher Harris
-
-Return(mf_popMenu(vdrg_parent, this, vi_xPos, vi_yPos))
-end function
-
-public subroutine mf_register (dragobject vdrg_parent);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
-//
-// This code and accompanying materials are made available under the GPLv3
-// license which accompanies this distribution and can be found at:
-//
-// http://www.gnu.org/licenses/gpl-3.0.html.
-//
-// Original Author:	Christopher Harris
-
-idrg_parent								= vdrg_parent
-
-RETURN
-end subroutine
-
-public function dragobject mf_getparent ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
-//
-// This code and accompanying materials are made available under the GPLv3
-// license which accompanies this distribution and can be found at:
-//
-// http://www.gnu.org/licenses/gpl-3.0.html.
-//
-// Original Author:	Christopher Harris
-
-Return(idrg_parent)
-end function
-
-public subroutine mf_setparent (dragobject vdrg_parent);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
-//
-// This code and accompanying materials are made available under the GPLv3
-// license which accompanies this distribution and can be found at:
-//
-// http://www.gnu.org/licenses/gpl-3.0.html.
-//
-// Original Author:	Christopher Harris
-
-idrg_parent								= vdrg_parent
-
-RETURN
-end subroutine
 
 on m_toolbar.create
 m_toolbar=this

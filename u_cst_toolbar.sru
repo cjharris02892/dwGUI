@@ -1476,7 +1476,9 @@ FOR ll_toolBar = 1 TO ll_toolBars
 	IF suo_toolBar[ll_toolBar] = vuo_broadCaster THEN CONTINUE
 
 	suo_toolBar[ll_toolBar].of_highLight(INVISIBLE)
-	
+
+	suo_toolBar[ll_toolBar].dw_toolbar.Modify('DataWindow.' + #band + '.Color="' + String(of_getColor(LOSEFOCUS)) + '" ')
+
 NEXT
 
 RETURN
@@ -2626,8 +2628,19 @@ IF lb_showMenu THEN
 			lb_isSeparated				= FALSE
 		END IF
 	NEXT
+
+	Long									ll_ptrX,	ll_ptrY
 	
-	lm_dropDown.popMenu(this.X + dw_toolBar.of_getItem_rectLeft(1) - PixelsToUnits(2, XPixelsToUnits!), this.Y + this.height)
+	ll_ptrX								= dw_toolBar.PointerX()
+	ll_ptrY								= dw_toolBar.PointerY()
+	
+	Long									ll_xOffSet
+	ll_xOffSet							= ll_ptrX - dw_toolBar.of_getItem_RectLeft(1) + PixelsToUnits(2, XPixelsToUnits!)
+
+	Long									ll_yOffSet
+	ll_yOffSet							= (dw_toolBar.of_getItem_rectTop(1) + dw_toolBar.of_getItem_RectHeight(1)) - ll_ptrY
+
+	lm_dropDown.mf_popMenu(this, ll_xOffSet * -1, ll_yOffSet)
 		
 END IF
 	
@@ -3308,7 +3321,9 @@ IF NOT ib_trackMouseEvent THEN
 	ib_trackMouseEvent				= invo_toolBar.of_trackMouseEvent(handle(this), invo_toolBar.TME_LEAVE)
 
 	Modify('DataWindow.' + #band + '.Color="' + String(of_getColor(TOOLBAR)) + '" ')
-		
+
+	of_broadCast_invisible(parent)
+	
 END IF
 end event
 
@@ -3476,7 +3491,7 @@ END CHOOSE
 lm_context.m_showToolBarText.Checked	= of_displayText()
 lm_context.m_showToolBarTips.Checked	= of_displayToolTips()
 
-lm_context.popMenu(parent.X + this.X + this.PointerX(), parent.Y + this.Y + this.PointerY())
+lm_context.mf_popMenu(this)
 end event
 
 type r_border from rectangle within u_cst_toolbar
