@@ -2,8 +2,6 @@ HA$PBExportHeader$w_dwgui.srw
 forward
 global type w_dwgui from window
 end type
-type uo_1 from u_cst_toolbar within w_dwgui
-end type
 type dw_options from datawindow within w_dwgui
 end type
 type uo_toolbar from u_cst_toolbar within w_dwgui
@@ -21,7 +19,6 @@ boolean maxbox = true
 boolean resizable = true
 string icon = "AppIcon!"
 boolean center = true
-uo_1 uo_1
 dw_options dw_options
 uo_toolbar uo_toolbar
 end type
@@ -37,16 +34,13 @@ Private:
 end variables
 
 on w_dwgui.create
-this.uo_1=create uo_1
 this.dw_options=create dw_options
 this.uo_toolbar=create uo_toolbar
-this.Control[]={this.uo_1,&
-this.dw_options,&
+this.Control[]={this.dw_options,&
 this.uo_toolbar}
 end on
 
 on w_dwgui.destroy
-destroy(this.uo_1)
 destroy(this.dw_options)
 destroy(this.uo_toolbar)
 end on
@@ -142,48 +136,6 @@ END IF
 il_oldWidth							= newWidth
 il_oldHeight						= newHeight
 end event
-
-type uo_1 from u_cst_toolbar within w_dwgui
-integer x = 14
-integer y = 972
-integer width = 1728
-integer taborder = 20
-end type
-
-event ue_itemclicked;call super::ue_itemclicked;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
-//
-// This code and accompanying materials are made available under the GPLv3
-// license which accompanies this distribution and can be found at:
-//
-// http://www.gnu.org/licenses/gpl-3.0.html.
-//
-// Original Author:	Christopher Harris
-
-CHOOSE CASE Lower(vs_button)
-		
-	CASE 'exit', 'open', 'open file'
-		
-		POST Close(parent)
-		
-END CHOOSE
-end event
-
-event ue_resized;call super::ue_resized;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
-//
-// This code and accompanying materials are made available under the GPLv3
-// license which accompanies this distribution and can be found at:
-//
-// http://www.gnu.org/licenses/gpl-3.0.html.
-//
-// Original Author:	Christopher Harris
-
-dw_options.Move(uo_toolbar.X, uo_toolbar.Height)
-dw_options.Resize(uo_toolbar.Width, dw_options.Height - (vl_newHeight - vl_oldHeight))
-end event
-
-on uo_1.destroy
-call u_cst_toolbar::destroy
-end on
 
 type dw_options from datawindow within w_dwgui
 integer x = 5
