@@ -32,6 +32,6 @@ destroy(error)
 destroy(message)
 end on
 
-event open;Open(w_DWGUI)
+event open;Open(w_DWGUI_frame)
 end event
 
