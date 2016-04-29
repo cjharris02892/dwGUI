@@ -3,8 +3,13 @@ Save Format v3.0(19990112)
  "dwgui_test.pbl" "";
 @end;
 @begin Objects
+ "m_dwgui.srm" "dwgui_test.pbl";
  "w_dwgui.srw" "dwgui_test.pbl";
+ "w_dwgui_child.srw" "dwgui_test.pbl";
+ "w_dwgui_frame.srw" "dwgui_test.pbl";
+ "w_dwgui_response.srw" "dwgui_test.pbl";
  "a_dwgui.sra" "dwgui_test.pbl";
+ "w_dwgui_popup.srw" "dwgui_test.pbl";
  "d_dwgui.srd" "dwgui_test.pbl";
  "p_dwgui.srj" "dwgui_test.pbl";
 @end;
