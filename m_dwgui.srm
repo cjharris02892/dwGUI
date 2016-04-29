@@ -1,0 +1,275 @@
+HA$PBExportHeader$m_dwgui.srm
+forward
+global type m_dwgui from menu
+end type
+type m_open from menu within m_dwgui
+end type
+type m_sheet from menu within m_open
+end type
+type m_main from menu within m_open
+end type
+type m_popup from menu within m_open
+end type
+type m_child from menu within m_open
+end type
+type m_response from menu within m_open
+end type
+type m_open from menu within m_dwgui
+m_sheet m_sheet
+m_main m_main
+m_popup m_popup
+m_child m_child
+m_response m_response
+end type
+global type m_dwgui from menu
+m_open m_open
+end type
+end forward
+
+global type m_dwgui from menu
+m_open m_open
+end type
+global m_dwgui m_dwgui
+
+on m_dwgui.create
+m_dwgui=this
+call super::create
+this.text = "m_dwgui"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+this.m_open=create m_open
+this.Item[UpperBound(this.Item)+1]=this.m_open
+end on
+
+on m_dwgui.destroy
+call super::destroy
+destroy(this.m_open)
+end on
+
+event clicked;Open(w_DWGUI)
+end event
+
+type m_open from menu within m_dwgui
+m_sheet m_sheet
+m_main m_main
+m_popup m_popup
+m_child m_child
+m_response m_response
+end type
+
+on m_open.create
+call super::create
+this.text = "Open Test Window As"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+this.m_sheet=create m_sheet
+this.m_main=create m_main
+this.m_popup=create m_popup
+this.m_child=create m_child
+this.m_response=create m_response
+this.Item[UpperBound(this.Item)+1]=this.m_sheet
+this.Item[UpperBound(this.Item)+1]=this.m_main
+this.Item[UpperBound(this.Item)+1]=this.m_popup
+this.Item[UpperBound(this.Item)+1]=this.m_child
+this.Item[UpperBound(this.Item)+1]=this.m_response
+end on
+
+on m_open.destroy
+call super::destroy
+destroy(this.m_sheet)
+destroy(this.m_main)
+destroy(this.m_popup)
+destroy(this.m_child)
+destroy(this.m_response)
+end on
+
+type m_sheet from menu within m_open
+end type
+
+on m_sheet.create
+call super::create
+this.text = "Sheet"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_sheet.destroy
+call super::destroy
+end on
+
+event clicked;n_cst_toolBar							lnvo_toolbar
+
+Window									lw_open
+
+OpenSheet(lw_open, 'w_DWGUI', lnvo_toolbar.of_getFrame(this))
+end event
+
+type m_main from menu within m_open
+end type
+
+on m_main.create
+call super::create
+this.text = "Main"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_main.destroy
+call super::destroy
+end on
+
+event clicked;Window									lw_open
+
+Open(lw_open, 'w_DWGUI')
+end event
+
+type m_popup from menu within m_open
+end type
+
+event clicked;Window									lw_open
+
+Open(lw_open, 'w_DWGUI_popUp')
+end event
+
+on m_popup.create
+call super::create
+this.text = "PopUp"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_popup.destroy
+call super::destroy
+end on
+
+type m_child from menu within m_open
+end type
+
+event clicked;n_cst_toolBar							lnvo_toolbar
+
+Window									lw_open
+
+OpenSheet(lw_open, 'w_DWGUI_child', lnvo_toolbar.of_getFrame(this))
+end event
+
+on m_child.create
+call super::create
+this.text = "Child"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_child.destroy
+call super::destroy
+end on
+
+type m_response from menu within m_open
+end type
+
+event clicked;Window									lw_open
+
+Open(lw_open, 'w_DWGUI_response')
+end event
+
+on m_response.create
+call super::create
+this.text = "Response"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_response.destroy
+call super::destroy
+end on
+
