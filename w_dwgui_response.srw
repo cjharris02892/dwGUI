@@ -23,9 +23,6 @@ on w_dwgui_response.destroy
 call super::destroy
 end on
 
-type uo_1 from w_dwgui`uo_1 within w_dwgui_response
-end type
-
 type dw_options from w_dwgui`dw_options within w_dwgui_response
 end type
 
