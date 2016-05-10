@@ -1086,13 +1086,29 @@ IF GetDIBits(lul_hDC_memory, lul_hBitmap, 0, 0, 0, lstr_Info, DIB_RGB_COLORS) > 
 				
 	// Copy the header structure to a blob
 	IF of_isUnicode() THEN
-		lblb_header						= Blob(Space(14 / 2))
+		IF of_PBVersion() = 12.6 THEN
+			
+			//	Allow for PB 12.6 byte alignment shift of two extra bytes
+			lblb_header					= Blob(Space(16 / 2))						
+			
+			CopyBitmapFileHeader(lblb_header, lstr_Header, 16)
+			
+			//	Copy the header, minus the two byte alignment shift
+			lblb_header					= blobMid(lblb_header, 1, 2) + blobMid(lblb_header, 5)
+			
+		ELSE
+			
+			lblb_header					= Blob(Space(14 / 2))
+			CopyBitmapFileHeader(lblb_header, lstr_Header, 14)
+			
+		END IF
 	ELSE
+		
 		lblb_header						= Blob(Space(14))
+		CopyBitmapFileHeader(lblb_header, lstr_Header, 14)
+		
 	END IF
 	
-	CopyBitmapFileHeader(lblb_header, lstr_Header, 14)
-				
 	// Copy the info structure to a blob
 	IF of_isUnicode() THEN
 		lblb_Info						= Blob(Space((40 + li_pixels * 4) / 2))
