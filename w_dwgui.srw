@@ -31,8 +31,9 @@ Private:
 	
 	Long								il_oldWidth				= -1
 	Long								il_oldHeight			= -1
+	
+	Long								il_print					= -1
 end variables
-
 on w_dwgui.create
 this.dw_options=create dw_options
 this.uo_toolbar=create uo_toolbar
@@ -88,7 +89,8 @@ uo_toolbar.of_addItems({ 'Open',							'Save',					&
 							  { uo_toolbar.LEFT,				uo_toolBar.LEFT,		&
 							    uo_toolBar.LEFT,				uo_toolbar.RIGHT })
 
-uo_toolbar.of_addItem('',				'Print.bmp')
+il_print								= uo_toolbar.of_addItem('',				'Print.bmp')
+
 uo_toolbar.of_addItem('Preview',		'Preview.bmp')
 
 uo_toolbar.of_addSeparator()
@@ -188,7 +190,7 @@ CHOOSE CASE dwo.Name
 	CASE 'show_save'
 		uo_toolbar.of_setVisible('Save',			data = 'Y')
 	CASE 'show_print'
-		uo_toolbar.of_setVisible(5,				data = 'Y')
+		uo_toolbar.of_setVisible(il_print,		data = 'Y')
 	CASE 'show_preview'
 		uo_toolbar.of_setVisible('Preview',		data = 'Y')
 	CASE 'show_text_1'
