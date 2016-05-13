@@ -6,10 +6,10 @@ COM:Christopher Harris
 DES:DataWindow Graphical User Interface
 CPY:Christopher Harris 2016
 PRD:DWGUI
-PVS:1.1.0.0
-PVN:1,1,0,0
-FVS:1.1.0.0
-FVN:1,1,0,0
+PVS:1.2.0.0
+PVN:1,2,0,0
+FVS:1.2.0.0
+FVN:1,2,0,0
 MAN:0,asInvoker,0
 PBD:dwgui_test.pbl,,0
 PBD:dwgui.pbl,,0
