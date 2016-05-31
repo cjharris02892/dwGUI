@@ -34,6 +34,7 @@ Private:
 	
 	Long								il_print					= -1
 end variables
+
 on w_dwgui.create
 this.dw_options=create dw_options
 this.uo_toolbar=create uo_toolbar
@@ -271,6 +272,10 @@ CHOOSE CASE Lower(vs_button)
 	CASE 'exit', 'open', 'open file'
 		
 		POST Close(parent)
+		
+//	CASE 'save'
+//		
+//		uo_toolBar.dw_toolBar.SaveAs('c:\temp\dw_toolBar.csv', csv!, TRUE)
 		
 END CHOOSE
 end event
