@@ -148,6 +148,7 @@ Private:
 	
 	Integer									ii_toolTipIsBubble			= 1
 end variables
+
 forward prototypes
 public function boolean of_displaytext ()
 public subroutine of_enabletooltips ()
@@ -376,6 +377,8 @@ event ue_post_constructor();// CopyRight (c) 2016 by Christopher Harris, all rig
 IF dw_toolBar.of_locateItem_objectName(dw_toolBar.POPMENU + '_' + String(1)) <> 1 THEN
 	messageBox('Programmer Error', 'You have improperly initialized your toolBar.')
 END IF
+
+RETURN
 end event
 
 public function boolean of_displaytext ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
