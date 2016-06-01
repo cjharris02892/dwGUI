@@ -33,6 +33,8 @@ Private:
 	Long								il_oldHeight			= -1
 	
 	Long								il_print					= -1
+	
+	n_cst_resize					invo_resize
 end variables
 
 on w_dwgui.create
@@ -58,6 +60,13 @@ event open;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 
 uo_toolbar.Resize(workSpaceWidth() - PixelsToUnits(2, XPixelsToUnits!), uo_toolbar.Height)
 dw_options.Resize(workSpaceWidth() - PixelsToUnits(2, XPixelsToUnits!), workSpaceHeight() - PixelsToUnits(1, YPixelsToUnits!) - uo_toolbar.Height)
+
+invo_resize							= CREATE n_cst_resize
+
+invo_resize.of_setOrigSize(this.WorkSpaceWidth(), this.WorkSpaceHeight())
+
+invo_resize.of_register(uo_toolbar, invo_resize.SCALERIGHT)
+invo_resize.of_register(dw_options, invo_resize.SCALERIGHTBOTTOM)
 
 ////	Documentation example 1
 //
@@ -124,20 +133,13 @@ event resize;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // Original Author:	Christopher Harris
 
-IF il_oldWidth <> -1 AND il_oldHeight <> -1 THEN
-
-	Long								ll_diffWidth,	ll_diffHeight
-	
-	ll_diffWidth					= newWidth - il_oldWidth
-	ll_diffHeight					= newHeight - il_oldHeight
-	
-	uo_toolbar.Resize(uo_toolbar.Width + ll_diffWidth, uo_toolbar.Height)
-	dw_options.Resize(dw_options.Width + ll_diffWidth, dw_options.Height + ll_diffHeight)
-	
+IF IsValid(invo_resize) AND windowState <> Minimized! THEN
+	invo_resize.EVENT pfc_Resize (sizetype, this.WorkSpaceWidth(), this.WorkSpaceHeight())
 END IF
 
-il_oldWidth							= newWidth
-il_oldHeight						= newHeight
+end event
+
+event close;IF isValid(invo_resize) THEN DESTROY invo_resize
 end event
 
 type dw_options from datawindow within w_dwgui
