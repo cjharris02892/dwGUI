@@ -3496,7 +3496,16 @@ event constructor;call super::constructor;// CopyRight (c) 2016 by Christopher H
 BringToTop								= TRUE
 end event
 
-event clicked;call super::clicked;CHOOSE CASE dwo.Type
+event clicked;call super::clicked;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+CHOOSE CASE dwo.Type
 		
 	CASE 'line'
 
@@ -3531,7 +3540,16 @@ Modify('DataWindow.' + #band + '.Color="' + String(of_getColor(LOSEFOCUS)) + '" 
 ib_trackMouseEvent					= FALSE
 end event
 
-event other;call super::other;CHOOSE CASE message.Number
+event other;call super::other;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+CHOOSE CASE message.Number
 	CASE invo_toolBar.WM_MOUSELEAVE
 		
 		ib_trackMouseEvent			= NOT (of_highLight(INVISIBLE) = SUCCESS)
