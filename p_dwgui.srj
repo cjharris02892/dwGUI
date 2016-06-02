@@ -13,7 +13,8 @@ FVN:1,2,0,0
 MAN:0,asInvoker,0
 PBD:dwgui_test.pbl,,0
 PBD:dwgui.pbl,,0
-PBD:dwgui_PFC.pbl,,0
+PBD:dwgui_pfc.pbl,,0
+PBD:dwgui_pfc_testOnly.pbl,,0
 OBJ:c:\powerbuilder\dwgui\dwgui_pfc.pbl,pfc_n_cst_string,u
 OBJ:c:\powerbuilder\dwgui\dwgui.pbl,u_cst_toolbar_items,u
 OBJ:c:\powerbuilder\dwgui\dwgui_pfc.pbl,pfc_n_cst_numerical,u
