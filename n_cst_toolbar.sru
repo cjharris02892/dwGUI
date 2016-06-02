@@ -200,6 +200,9 @@ Private:
 	SUBROUTINE CopyBitmapFileHeader(REF blob rblb_Destination, REF BITMAPFILEHEADER rstr_source, long vl_length) LIBRARY "kernel32.dll" ALIAS FOR "RtlMoveMemory"
 	SUBROUTINE CopyBitmapInfo(REF blob rblb_Destination, REF BITMAPINFO rstr_source, long vl_length) LIBRARY "kernel32.dll" ALIAS FOR "RtlMoveMemory"
 
+	SUBROUTINE CopyInteger(REF blob rblb_Destination, REF integer ri_source, long vl_length) LIBRARY "kernel32.dll" ALIAS FOR "RtlMoveMemory"
+	SUBROUTINE CopyUnsignedLong(REF blob rblb_Destination, REF unsignedLong rul_source, long vl_length) LIBRARY "kernel32.dll" ALIAS FOR "RtlMoveMemory"
+
 end prototypes
 
 type variables
@@ -1053,7 +1056,7 @@ CONSTANT Integer						BITMAPTYPE		= 19778						//	x42 (B) and x4D (M)
 BITMAPINFO								lstr_Info
 BITMAPFILEHEADER						lstr_Header
 Blob										lblb_header,	lblb_info,	lblb_bitMap
-Integer									li_pixels
+Integer									li_pixels,		li_null
 
 // Get the device context of window and allocate memory
 UnsignedLong							lul_hDC_memory
@@ -1083,19 +1086,62 @@ IF GetDIBits(lul_hDC_memory, lul_hBitmap, 0, 0, 0, lstr_Info, DIB_RGB_COLORS) > 
 	lstr_Header.bfType				= BITMAPTYPE
 	lstr_Header.bfSize				= lstr_Info.bmiHeader.biSizeImage
 	lstr_Header.bfOffBits			= 54 + (li_pixels * 4)						//	Size of header (14) + size of info (40) + 4 bytes per pixel 
-				
+
+	//	I know the logic that follows looks overly convoluted, but it works.
+	//	The reason for the "/ 2" clauses and the strange logic is get it to
+	//	work in versions prior to 10.5 when the "Encoding" parameter wasn't
+	//	part of the blob calls.  If I used the "Encoding" parameter in the
+	//	code it wouldn't compile in prior PB versions.  The way this is
+	//	written, it works for all.  It also handles 1 and 8, byte shifting
+	//	that PB introduced in PB12.6.  Again, uses a single set of code.
+	
 	// Copy the header structure to a blob
 	IF of_isUnicode() THEN
-		IF of_PBVersion() = 12.6 THEN
+		IF of_PBVersion() >= 12.6 THEN
 			
-			//	Allow for PB 12.6 byte alignment shift of two extra bytes
-			lblb_header					= Blob(Space(16 / 2))						
+//			//	Allow for PB 12.6 byte alignment shift of two extra bytes
+//			lblb_header					= Blob(Space(16 / 2))						
+//			
+//			CopyBitmapFileHeader(lblb_header, lstr_Header, 16)
+//			
+//			//	Copy the header, minus the two byte alignment shift
+//			lblb_header					= blobMid(lblb_header, 1, 2) + blobMid(lblb_header, 5)
+
+			//	This should take care of the byte shifting issue regardless of
+			//	what the setting is, 1 byte, 8 byte, etc.  I'm just building
+			//	the blob manually without using the structure directly in an
+			//	API call.  It may look like crap, but it gives me a single code
+			//	base without regard for PB version or processing.
 			
-			CopyBitmapFileHeader(lblb_header, lstr_Header, 16)
+			Blob							lblb_integer
+			Blob							lblb_unsignedLong
 			
-			//	Copy the header, minus the two byte alignment shift
-			lblb_header					= blobMid(lblb_header, 1, 2) + blobMid(lblb_header, 5)
+			lblb_integer				= Blob(Space(2 / 2))
 			
+			CopyInteger(lblb_integer, lstr_header.bfType, 2)
+			
+			lblb_header					= lblb_header + lblb_integer
+	
+			lblb_unsignedLong			= Blob(Space(4 / 2))
+			
+			CopyUnsignedLong(lblb_unsignedLong, lstr_header.bfSize, 4)
+	
+			lblb_header					= lblb_header + lblb_unsignedLong
+	
+			SetNull(li_null)
+			
+			lblb_integer				= Blob(Space(2 / 2))
+			
+			CopyInteger(lblb_integer, li_null, 2)
+			
+			lblb_header					= lblb_header + lblb_integer + lblb_integer
+			
+			lblb_unsignedLong			= Blob(Space(4 / 2))
+			
+			CopyUnsignedLong(lblb_unsignedLong, lstr_header.bfOffBits, 4)
+	
+			lblb_header					= lblb_header + lblb_unsignedLong
+		
 		ELSE
 			
 			lblb_header					= Blob(Space(14 / 2))
