@@ -9,6 +9,5 @@ Save Format v3.0(19990112)
  "pfc_n_cst_string.sru" "dwgui_PFC.pbl";
  "n_cst_string.sru" "dwgui_PFC.pbl";
  "pfc_n_base.sru" "dwgui_PFC.pbl";
- "n_cst_resize.sru" "dwgui_PFC.pbl";
  "n_cst_color.sru" "dwgui_PFC.pbl";
 @end;
