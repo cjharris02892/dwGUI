@@ -6,7 +6,6 @@ Save Format v3.0(19990112)
  "n_base.sru" "dwgui_PFC.pbl";
  "pfc_n_cst_numerical.sru" "dwgui_PFC.pbl";
  "n_cst_numerical.sru" "dwgui_PFC.pbl";
- "pfc_n_cst_resizeattrib.sru" "dwgui_PFC.pbl";
  "n_cst_resizeattrib.sru" "dwgui_PFC.pbl";
  "pfc_n_cst_baseattrib.sru" "dwgui_PFC.pbl";
  "n_cst_baseattrib.sru" "dwgui_PFC.pbl";
