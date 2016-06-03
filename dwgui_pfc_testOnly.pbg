@@ -3,10 +3,16 @@ Save Format v3.0(19990112)
  "dwgui_pfc_testOnly.pbl" "";
 @end;
 @begin Objects
+ "pfc_u_st.sru" "dwgui_pfc_testOnly.pbl";
+ "u_st.sru" "dwgui_pfc_testOnly.pbl";
  "pfc_n_cst_resizeattrib.sru" "dwgui_pfc_testOnly.pbl";
+ "pfc_n_cst_infoattrib.sru" "dwgui_pfc_testOnly.pbl";
+ "pfc_u_st_splitbar.sru" "dwgui_pfc_testOnly.pbl";
  "n_cst_resizeattrib.sru" "dwgui_pfc_testOnly.pbl";
  "pfc_n_cst_baseattrib.sru" "dwgui_pfc_testOnly.pbl";
  "n_cst_baseattrib.sru" "dwgui_pfc_testOnly.pbl";
+ "n_cst_infoattrib.sru" "dwgui_pfc_testOnly.pbl";
+ "u_st_splitbar.sru" "dwgui_pfc_testOnly.pbl";
  "pfc_n_cst_resize.sru" "dwgui_pfc_testOnly.pbl";
  "n_cst_resize.sru" "dwgui_pfc_testOnly.pbl";
 @end;
