@@ -1,0 +1,232 @@
+HA$PBExportHeader$m_xplistbar_context.srm
+$PBExportComments$Menu class
+forward
+global type m_xplistbar_context from m_toolbar
+end type
+type m_collapseall from menu within m_xplistbar_context
+end type
+type m_expandall from menu within m_xplistbar_context
+end type
+type m_0 from menu within m_xplistbar_context
+end type
+type m_showtooltips from menu within m_xplistbar_context
+end type
+global type m_xplistbar_context from m_toolbar
+m_collapseall m_collapseall
+m_expandall m_expandall
+m_0 m_0
+m_showtooltips m_showtooltips
+end type
+end forward
+
+global type m_xplistbar_context from m_toolbar
+m_collapseall m_collapseall
+m_expandall m_expandall
+m_0 m_0
+m_showtooltips m_showtooltips
+end type
+global m_xplistbar_context m_xplistbar_context
+
+type variables
+
+end variables
+
+on m_xplistbar_context.create
+m_xplistbar_context=this
+call super::create
+this.text = "m_xplistbar_context"
+this.menutitles = false
+this.m_collapseall=create m_collapseall
+this.m_expandall=create m_expandall
+this.m_0=create m_0
+this.m_showtooltips=create m_showtooltips
+this.Item[UpperBound(this.Item)+1]=this.m_collapseall
+this.Item[UpperBound(this.Item)+1]=this.m_expandall
+this.Item[UpperBound(this.Item)+1]=this.m_0
+this.Item[UpperBound(this.Item)+1]=this.m_showtooltips
+end on
+
+on m_xplistbar_context.destroy
+call super::destroy
+destroy(this.m_collapseall)
+destroy(this.m_expandall)
+destroy(this.m_0)
+destroy(this.m_showtooltips)
+end on
+
+type m_collapseall from menu within m_xplistbar_context
+end type
+
+on m_collapseall.create
+call super::create
+this.text = "Collapse All"
+this.menustyle = contemporarymenu!
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbarstyle = contemporarytoolbar!
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_collapseall.destroy
+call super::destroy
+end on
+
+event clicked;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+IF isValid(mf_getParent()) THEN
+	
+	u_cst_XPListBar					luo_parent
+	luo_parent							= mf_getParent()
+	
+	luo_parent.EVENT ue_context_collapseAll()
+	
+END IF
+end event
+
+type m_expandall from menu within m_xplistbar_context
+end type
+
+on m_expandall.create
+call super::create
+this.text = "Expand All"
+this.menustyle = contemporarymenu!
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbarstyle = contemporarytoolbar!
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_expandall.destroy
+call super::destroy
+end on
+
+event clicked;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+IF isValid(mf_getParent()) THEN
+	
+	u_cst_XPListBar					luo_parent
+	luo_parent							= mf_getParent()
+	
+	luo_parent.EVENT ue_context_expandAll()
+	
+END IF
+end event
+
+type m_0 from menu within m_xplistbar_context
+end type
+
+on m_0.create
+call super::create
+this.text = "-"
+this.menustyle = contemporarymenu!
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbarstyle = contemporarytoolbar!
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_0.destroy
+call super::destroy
+end on
+
+type m_showtooltips from menu within m_xplistbar_context
+end type
+
+event clicked;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+IF isValid(mf_getParent()) THEN
+	
+	u_cst_XPListBar					luo_parent
+	luo_parent							= mf_getParent()
+	
+	luo_parent.EVENT ue_context_showToolTips(NOT Checked)
+	
+END IF
+end event
+
+on m_showtooltips.create
+call super::create
+this.text = "Show ToolTips"
+this.toolbaritemname = "comment!"
+this.toolbaritemtext = "Show ToolTips"
+this.menuimage = "Comment!"
+this.menustyle = contemporarymenu!
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbarstyle = contemporarytoolbar!
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_showtooltips.destroy
+call super::destroy
+end on
+
