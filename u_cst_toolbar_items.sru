@@ -40,7 +40,7 @@ public subroutine of_setitem_position (long vl_item, long vl_position)
 public function string of_getitem_image (long vl_item)
 public function long of_getitem_imagetransparency (long vl_item)
 public function long of_getitem_imagewidth (long vl_item)
-public function string of_getitem_name (long vl_item)
+public function string of_getitem_text (long vl_item)
 public function string of_getitem_objectname (long vl_item)
 public function string of_getitem_objecttype (long vl_item)
 public function long of_getitem_position (long vl_item)
@@ -66,7 +66,7 @@ public subroutine of_setitem_rectleft (long vl_item, long vl_rectleft)
 public subroutine of_setitem_rectheight (long vl_item, long vl_rectheight)
 public subroutine of_setitem_objecttype (long vl_item, string vs_objecttype)
 public subroutine of_setitem_objectname (long vl_item, string vs_objectname)
-public subroutine of_setitem_name (long vl_item, string vs_name)
+public subroutine of_setitem_text (long vl_item, string vs_text)
 public subroutine of_setitem_imagewidth (long vl_item, long vl_imagewidth)
 public subroutine of_setitem_imagetransparency (long vl_item, long vl_imagetransparency)
 public subroutine of_setitem_image (long vl_item, string vs_image)
@@ -83,12 +83,17 @@ public subroutine of_setitem_checked (long vl_item, boolean vb_checked)
 public function long of_getitem_order (long vl_item)
 public subroutine of_setitem_order (long vl_item)
 public subroutine of_deleteitem (long vl_item)
-public function long of_locateitem_name (string vs_name)
 public function long of_locateitem_objectname (string vs_objectname)
 public function double of_pbversion ()
 public function boolean of_getitem_displayinmenu (string vs_item)
 public function long of_getitem_alignment (long vl_item)
 public subroutine of_setitem_alignment (long vl_item, long vl_alignment)
+public function long of_getitem_parent (long vl_item)
+public subroutine of_setitem_parent (long vl_item, long vl_parent)
+public function long of_locateitem_text (string vs_text)
+public function long of_locateitem_name (string vs_text)
+public subroutine of_setitem_name (long vl_item, string vs_text)
+public function string of_getitem_name (long vl_item)
 end prototypes
 
 public function boolean of_getitem_displayinmenu (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -237,7 +242,7 @@ IF vl_item < 1 OR vl_item > RowCount() THEN Return(0)
 Return(GetItemNumber(vl_item, 'imageWidth'))
 end function
 
-public function string of_getitem_name (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+public function string of_getitem_text (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
 // license which accompanies this distribution and can be found at:
@@ -248,7 +253,7 @@ public function string of_getitem_name (long vl_item);// CopyRight (c) 2016 by C
 
 IF vl_item < 1 OR vl_item > RowCount() THEN Return('')
 
-Return(GetItemString(vl_item, 'name'))
+Return(GetItemString(vl_item, 'text'))
 end function
 
 public function string of_getitem_objectname (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -660,7 +665,7 @@ ResetUpdate()
 RETURN
 end subroutine
 
-public subroutine of_setitem_name (long vl_item, string vs_name);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+public subroutine of_setitem_text (long vl_item, string vs_text);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
 // license which accompanies this distribution and can be found at:
@@ -671,7 +676,7 @@ public subroutine of_setitem_name (long vl_item, string vs_name);// CopyRight (c
 
 IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
 
-SetItem(vl_item, 'name', vs_name)
+SetItem(vl_item, 'text', vs_text)
 ResetUpdate()
 
 RETURN
@@ -1158,32 +1163,6 @@ of_setItem_tabSequence(vl_item, 0)
 RETURN
 end subroutine
 
-public function long of_locateitem_name (string vs_name);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
-//
-// This code and accompanying materials are made available under the GPLv3
-// license which accompanies this distribution and can be found at:
-//
-// http://www.gnu.org/licenses/gpl-3.0.html.
-//
-// Original Author:	Christopher Harris
-
-String									ls_find
-ls_find									= 'Lower(name)=Lower("' + vs_name + '")'
-
-Long										ll_item
-ll_item									= Find(ls_find, 1, rowCount())
-
-CHOOSE CASE ll_item
-	CASE 0
-		setNull(ll_item)
-	CASE -1
-		setNull(ll_item)
-		MessageBox('Programmer Error', 'Syntax error in find clause: ' + ls_find + '.')
-END CHOOSE
-
-Return(ll_item)
-end function
-
 public function long of_locateitem_objectname (string vs_objectname);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
@@ -1236,7 +1215,7 @@ IF isNull(vs_item) THEN Return(FALSE)
 Boolean									lb_displayInMenu	= FALSE
 
 Long										ll_item
-ll_item									= of_locateItem_name(vs_item)
+ll_item									= of_locateItem_text(vs_item)
 
 IF NOT isNull(ll_item) THEN
 	lb_displayInMenu					= of_getItem_displayInMenu(ll_item)
@@ -1275,6 +1254,107 @@ ResetUpdate()
 
 RETURN
 end subroutine
+
+public function long of_getitem_parent (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+IF vl_item < 1 OR vl_item > RowCount() THEN Return(0)
+
+Return(GetItemNumber(vl_item, 'parent'))
+end function
+
+public subroutine of_setitem_parent (long vl_item, long vl_parent);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
+
+SetItem(vl_item, 'parent', vl_parent)
+ResetUpdate()
+
+RETURN
+end subroutine
+
+public function long of_locateitem_text (string vs_text);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+String									ls_find
+ls_find									= 'Lower(text)=Lower("' + vs_text + '")'
+
+Long										ll_item
+ll_item									= Find(ls_find, 1, rowCount())
+
+CHOOSE CASE ll_item
+	CASE 0
+		setNull(ll_item)
+	CASE -1
+		setNull(ll_item)
+		MessageBox('Programmer Error', 'Syntax error in toolBar find clause: ' + ls_find + '.')
+END CHOOSE
+
+Return(ll_item)
+end function
+
+public function long of_locateitem_name (string vs_text);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+//	Changed 'name' to 'text', this method is to maintain backward compatibility
+
+Return(of_locateItem_text(vs_text))
+end function
+
+public subroutine of_setitem_name (long vl_item, string vs_text);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+//	Changed 'name' to 'text', this method is to maintain backward compatibility
+
+of_setItem_text(vl_item, vs_text)
+
+RETURN
+end subroutine
+
+public function string of_getitem_name (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+//	Changed 'name' to 'text', this method is to maintain backward compatibility
+
+Return(of_getItem_text(vl_item))
+end function
 
 on u_cst_toolbar_items.create
 end on

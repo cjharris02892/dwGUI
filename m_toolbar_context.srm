@@ -21,23 +21,23 @@ m_xlarge m_xlarge
 end type
 type m_0 from menu within m_toolbar_context
 end type
-type m_showtoolbartips from menu within m_toolbar_context
+type m_showtooltips from menu within m_toolbar_context
 end type
-type m_showtoolbartext from menu within m_toolbar_context
+type m_showtext from menu within m_toolbar_context
 end type
 global type m_toolbar_context from m_toolbar
 m_size m_size
 m_0 m_0
-m_showtoolbartips m_showtoolbartips
-m_showtoolbartext m_showtoolbartext
+m_showtooltips m_showtooltips
+m_showtext m_showtext
 end type
 end forward
 
 global type m_toolbar_context from m_toolbar
 m_size m_size
 m_0 m_0
-m_showtoolbartips m_showtoolbartips
-m_showtoolbartext m_showtoolbartext
+m_showtooltips m_showtooltips
+m_showtext m_showtext
 end type
 global m_toolbar_context m_toolbar_context
 
@@ -52,20 +52,20 @@ this.text = "m_toolbar_context"
 this.menutitles = false
 this.m_size=create m_size
 this.m_0=create m_0
-this.m_showtoolbartips=create m_showtoolbartips
-this.m_showtoolbartext=create m_showtoolbartext
+this.m_showtooltips=create m_showtooltips
+this.m_showtext=create m_showtext
 this.Item[UpperBound(this.Item)+1]=this.m_size
 this.Item[UpperBound(this.Item)+1]=this.m_0
-this.Item[UpperBound(this.Item)+1]=this.m_showtoolbartips
-this.Item[UpperBound(this.Item)+1]=this.m_showtoolbartext
+this.Item[UpperBound(this.Item)+1]=this.m_showtooltips
+this.Item[UpperBound(this.Item)+1]=this.m_showtext
 end on
 
 on m_toolbar_context.destroy
 call super::destroy
 destroy(this.m_size)
 destroy(this.m_0)
-destroy(this.m_showtoolbartips)
-destroy(this.m_showtoolbartext)
+destroy(this.m_showtooltips)
+destroy(this.m_showtext)
 end on
 
 type m_size from menu within m_toolbar_context
@@ -334,7 +334,7 @@ on m_0.destroy
 call super::destroy
 end on
 
-type m_showtoolbartips from menu within m_toolbar_context
+type m_showtooltips from menu within m_toolbar_context
 end type
 
 event clicked;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -351,14 +351,14 @@ IF isValid(mf_getParent()) THEN
 	u_cst_toolBar						luo_parent
 	luo_parent							= mf_getParent()
 	
-	luo_parent.EVENT ue_context_showToolBarTips(NOT Checked)
+	luo_parent.EVENT ue_context_showToolTips(NOT Checked)
 	
 END IF
 end event
 
-on m_showtoolbartips.create
+on m_showtooltips.create
 call super::create
-this.text = "Show ToolBar Tips"
+this.text = "Show ToolTips"
 this.toolbaritemname = "comment!"
 this.toolbaritemtext = "Show ToolBar Tips"
 this.menuimage = "Comment!"
@@ -381,11 +381,11 @@ this.toolbargradient = true
 this.bitmapgradient = true
 end on
 
-on m_showtoolbartips.destroy
+on m_showtooltips.destroy
 call super::destroy
 end on
 
-type m_showtoolbartext from menu within m_toolbar_context
+type m_showtext from menu within m_toolbar_context
 end type
 
 event clicked;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -402,14 +402,14 @@ IF isValid(mf_getParent()) THEN
 	u_cst_toolBar						luo_parent
 	luo_parent							= mf_getParent()
 	
-	luo_parent.EVENT ue_context_showToolBarText(NOT Checked)
+	luo_parent.EVENT ue_context_showText(NOT Checked)
 	
 END IF
 end event
 
-on m_showtoolbartext.create
+on m_showtext.create
 call super::create
-this.text = "Show ToolBar Text"
+this.text = "Show Text"
 this.menustyle = contemporarymenu!
 this.menutextcolor = 134217735
 this.menubackcolor = 134217732
@@ -429,7 +429,7 @@ this.toolbargradient = true
 this.bitmapgradient = true
 end on
 
-on m_showtoolbartext.destroy
+on m_showtext.destroy
 call super::destroy
 end on
 

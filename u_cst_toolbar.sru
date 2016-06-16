@@ -11,7 +11,7 @@ end type
 end forward
 
 shared variables
-u_cst_toolBar				suo_toolBar[]
+u_cst_toolBar								suo_toolBar[]
 end variables
 
 global type u_cst_toolbar from userobject
@@ -20,8 +20,8 @@ integer height = 104
 event type integer ue_itemclicking ( string vs_button )
 event ue_itemclicked ( string vs_button )
 event ue_context_size ( string vs_size )
-event ue_context_showtoolbartext ( boolean vb_showtext )
-event ue_context_showtoolbartips ( boolean vb_showtips )
+event ue_context_showtext ( boolean vb_showtext )
+event ue_context_showtooltips ( boolean vb_showtips )
 event ue_resized ( long vl_oldheight,  long vl_newheight )
 event ue_post_constructor ( )
 st_toolbar st_toolbar
@@ -172,21 +172,18 @@ private function boolean of_updatepositions (boolean vb_dropdownmenu)
 public subroutine of_disableupdate ()
 public subroutine of_enableupdate ()
 private subroutine of_size ()
-public function long of_getcolor (string vs_color)
 public function integer of_update ()
 protected function string of_getClickedButton ()
 private subroutine of_broadcast_invisible (userobject vuo_broadcaster)
 protected function integer of_highlight (string vs_mode)
-private subroutine of_broadcast_showtoolbartext (boolean vb_showtext)
-private subroutine of_broadcast_showtoolbartips (boolean vb_showtips)
 private function long of_adddropmenu ()
-public function long of_additem (string vs_name, string vs_image)
-public function long of_additem (string vs_name, string vs_image, string vs_tooltip)
-public function long of_additem (string vs_name, string vs_image, integer vi_position)
-public function long of_additem (string vs_name, string vs_image, string vs_tooltip, integer vi_position)
-public function long of_additems (string vs_name[], string vs_image[])
-public function long of_additems (string vs_name[], string vs_image[], string vs_tooltip[])
-public function long of_additems (string vs_name[], string vs_image[], string vs_tooltip[], integer vi_position[])
+public function long of_additem (string vs_text, string vs_image)
+public function long of_additem (string vs_text, string vs_image, string vs_tooltip)
+public function long of_additem (string vs_text, string vs_image, integer vi_position)
+public function long of_additem (string vs_text, string vs_image, string vs_tooltip, integer vi_position)
+public function long of_additems (string vs_text[], string vs_image[])
+public function long of_additems (string vs_text[], string vs_image[], string vs_tooltip[])
+public function long of_additems (string vs_text[], string vs_image[], string vs_tooltip[], integer vi_position[])
 public function long of_addseparator ()
 public function long of_addseparator (integer vi_position)
 private function long of_size_text (string vs_text, string vs_fontface, integer vi_fontsize)
@@ -215,16 +212,21 @@ public function integer of_clickitem (string vs_button)
 public function integer of_clickitem (long vl_item)
 public function long of_clickbutton (string vs_button)
 public function long of_clickbutton (long vl_item)
-public function long of_additem (string vs_name)
-public function long of_additem (string vs_name, integer vi_position)
+public function long of_additem (string vs_text)
+public function long of_additem (string vs_text, integer vi_position)
 public function string of_gettext (string vs_item)
-public function long of_locateitem (string vs_item)
-public function long of_additems (string vs_name[])
-public function long of_additems (string vs_name[], integer vi_position[])
-public function long of_additems (string vs_name[], string vs_image[], integer vi_position[])
+public function long of_additems (string vs_text[])
+public function long of_additems (string vs_text[], integer vi_position[])
+public function long of_additems (string vs_text[], string vs_image[], integer vi_position[])
 private subroutine of_correct_bitmapsize ()
 private subroutine of_correct_fontsize ()
 private subroutine of_correct_size ()
+private function long of_fontheight ()
+private function long of_fontheight (integer vi_fontsize)
+public function long of_locateitem (string vs_text)
+protected function long of_getcolor (string vs_color)
+private subroutine of_broadcast_showtext (boolean vb_showtext)
+private subroutine of_broadcast_showtooltips (boolean vb_showtips)
 end prototypes
 
 event type integer ue_itemclicking(string vs_button);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -321,7 +323,7 @@ CHOOSE CASE Lower(vs_size)
 END CHOOSE
 end event
 
-event ue_context_showtoolbartext(boolean vb_showtext);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+event ue_context_showtext(boolean vb_showtext);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
 // license which accompanies this distribution and can be found at:
@@ -330,14 +332,14 @@ event ue_context_showtoolbartext(boolean vb_showtext);// CopyRight (c) 2016 by C
 //
 // Original Author:	Christopher Harris
 
-of_broadCast_showToolBarText(vb_showText)
+of_broadCast_showText(vb_showText)
 
 //GetApplication().ToolBarText	= vb_showText
 
 RETURN
 end event
 
-event ue_context_showtoolbartips(boolean vb_showtips);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+event ue_context_showtooltips(boolean vb_showtips);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
 // license which accompanies this distribution and can be found at:
@@ -346,7 +348,7 @@ event ue_context_showtoolbartips(boolean vb_showtips);// CopyRight (c) 2016 by C
 //
 // Original Author:	Christopher Harris
 
-of_broadCast_showToolBarTips(vb_showTips)
+of_broadCast_showToolTips(vb_showTips)
 
 //GetApplication().ToolBarTips	= vb_showTips
 
@@ -468,7 +470,7 @@ public function integer of_setenabled (string vs_item, boolean vb_switch);// Cop
 //
 // Original Author:	Christopher Harris
 
-Return(of_setEnabled(dw_toolBar.of_locateItem_name(vs_item), vb_switch))
+Return(of_setEnabled(of_locateItem(vs_item), vb_switch))
 end function
 
 public function integer of_setvisible (string vs_item, boolean vb_switch);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -480,7 +482,7 @@ public function integer of_setvisible (string vs_item, boolean vb_switch);// Cop
 //
 // Original Author:	Christopher Harris
 
-Return(of_setVisible(dw_toolbar.of_locateItem_name(vs_item), vb_switch))
+Return(of_setVisible(of_locateItem(vs_item), vb_switch))
 end function
 
 public function boolean of_displaytooltips ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -509,7 +511,7 @@ String									ls_Text = ''
 IF isNull(vl_item) THEN Return(ls_text)
 
 IF vl_Item > 0 AND vl_Item <= dw_toolBar.RowCount() THEN
-	ls_Text								= dw_toolBar.of_getItem_name(vl_item)
+	ls_Text								= dw_toolBar.of_getItem_text(vl_item)
 END IF
 
 Return(ls_Text)
@@ -563,7 +565,7 @@ public function boolean of_isvisible (string vs_item);// CopyRight (c) 2016 by C
 Boolean									lb_Visible = FALSE
 
 Long										ll_item
-ll_item									= dw_toolbar.of_locateItem_name(vs_item)
+ll_item									= of_locateItem(vs_item)
 
 IF NOT IsNull(ll_item) THEN
 	lb_Visible							= dw_toolBar.of_getItem_visible(ll_item)
@@ -584,7 +586,7 @@ public function boolean of_isenabled (string vs_item);// CopyRight (c) 2016 by C
 Boolean									lb_Enabled = FALSE
 
 Long										ll_item
-ll_item									= dw_toolbar.of_locateItem_name(vs_item)
+ll_item									= of_locateItem(vs_item)
 
 IF NOT IsNull(ll_item) THEN
 	lb_Enabled							= dw_toolBar.of_getItem_enabled(ll_item)
@@ -602,7 +604,7 @@ public function integer of_settext (string vs_item, string vs_text);// CopyRight
 //
 // Original Author:	Christopher Harris
 
-Return(of_setText(dw_toolBar.of_locateItem_name(vs_item), vs_text))
+Return(of_setText(of_locateItem(vs_item), vs_text))
 end function
 
 public function integer of_settiptext (string vs_item, string vs_tooltip);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -614,7 +616,7 @@ public function integer of_settiptext (string vs_item, string vs_tooltip);// Cop
 //
 // Original Author:	Christopher Harris
 
-Return(of_setTipText(dw_toolBar.of_locateItem_name(vs_item), vs_toolTip))
+Return(of_setTipText(of_locateItem(vs_item), vs_toolTip))
 end function
 
 public function integer resize (integer w, integer h);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -626,17 +628,11 @@ public function integer resize (integer w, integer h);// CopyRight (c) 2016 by C
 //
 // Original Author:	Christopher Harris
 
-Long										ll_itemCurrent
-ll_itemCurrent							= dw_toolBar.of_locateItem()
-
 Long										li_RC
 li_RC										= Super::Resize(W, H)
 
 r_border.Resize(W, H)
 dw_toolBar.Resize(r_border.Width - PixelsToUnits(2, XPixelsToUnits!), r_border.Height - PixelsToUnits(2, YPixelsToUnits!))
-
-of_update()
-of_drawButton(ll_itemCurrent)
 
 Return(li_RC)
 end function
@@ -665,7 +661,7 @@ IF dw_toolBar.of_getItem_visible(vl_item) THEN
 	dw_toolBar.of_setItem_imageWidth(vl_item, of_size_imageWidth(dw_toolBar.of_getItem_image(vl_item)))
 		
 	IF dw_toolBar.of_getItem_displayText(vl_item) THEN
-		dw_toolBar.of_setItem_textWidth(vl_item, of_size_text(dw_toolBar.of_getItem_name(vl_item), dw_toolBar.of_getItem_fontFace(vl_item), #FontSize))
+		dw_toolBar.of_setItem_textWidth(vl_item, of_size_text(dw_toolBar.of_getItem_text(vl_item), dw_toolBar.of_getItem_fontFace(vl_item), #FontSize))
 	END IF
 
 	IF dw_toolBar.of_getItem_separator(vl_item) THEN
@@ -688,7 +684,7 @@ public function integer of_setimage (string vs_item, string vs_image);// CopyRig
 //
 // Original Author:	Christopher Harris
 
-Return(of_setImage(dw_toolBar.of_locateItem_name(vs_item), vs_image))
+Return(of_setImage(of_locateItem(vs_item), vs_image))
 end function
 
 private subroutine of_size (integer vi_size);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -776,7 +772,7 @@ private function long of_createitem (long vl_item);// CopyRight (c) 2016 by Chri
 // Original Author:	Christopher Harris
 
 Double									ldbl_fontHeight
-ldbl_fontHeight						= Double(#FontSize) * Double(6.4) + Double(0.5)
+ldbl_fontHeight						= of_fontHeight()
 
 Long										ll_pos
 ll_pos									= dw_toolBar.of_getItem_rectLeft(vl_item)
@@ -803,7 +799,7 @@ IF of_displayText() THEN
 	
 	//	If displayText is turned on and the name and toolTip are the same,
 	//	then we don't need a toolTip
-	IF dw_toolBar.of_getItem_name(vl_item) = dw_toolBar.of_getItem_toolTip(vl_item) THEN
+	IF dw_toolBar.of_getItem_text(vl_item) = dw_toolBar.of_getItem_toolTip(vl_item) THEN
 		ls_toolTip						= ''
 	END IF
 	
@@ -813,7 +809,7 @@ ELSE
 	//	to override the displayText setting and therefore we will only want
 	//	to set the toolTip if the name and toolTip are not the same
 	IF dw_toolBar.of_getItem_image(vl_item) = '' THEN
-		IF dw_toolBar.of_getItem_name(vl_item) = dw_toolBar.of_getItem_toolTip(vl_item) THEN
+		IF dw_toolBar.of_getItem_text(vl_item) = dw_toolBar.of_getItem_toolTip(vl_item) THEN
 			ls_toolTip					= ''
 		END IF
 	END IF
@@ -828,9 +824,10 @@ IF NOT (isNull(dw_toolBar.of_getItem_image(vl_item)) OR Trim(dw_toolBar.of_getIt
 											+ 'x="' + String(ll_pos) + '" '															&
 											+ 'y="16" '																						&
 											+ 'height="'+ String(of_size_imageHeight()) + '" '									&
-											+ 'width="' + String(dw_toolBar.of_getItem_imageWidth(vl_item))				&
-											+ '" border="0" '																				&
-											+ 'name=p_' + dw_toolBar.of_getItem_objectName(vl_item) + ' visible="1" '
+											+ 'width="' + String(dw_toolBar.of_getItem_imageWidth(vl_item)) + '" '		&
+											+ 'border="0" '																				&
+											+ 'name=p_' + dw_toolBar.of_getItem_objectName(vl_item) + ' '					&
+											+ 'visible="1" '
 //	IF dw_toolBar.of_PBVersion() >= 12.5 THEN
 //		
 //		IF dw_toolBar.of_getItem_enabled(vl_item) THEN
@@ -875,13 +872,13 @@ IF NOT (isNull(dw_toolBar.of_getItem_image(vl_item)) OR Trim(dw_toolBar.of_getIt
 END IF
 
 //	Text logic
-IF NOT (isNull(dw_toolBar.of_getItem_name(vl_item)) OR Trim(dw_toolBar.of_getItem_name(vl_item)) = '') THEN
+IF NOT (isNull(dw_toolBar.of_getItem_text(vl_item)) OR Trim(dw_toolBar.of_getItem_text(vl_item)) = '') THEN
 	IF dw_toolBar.of_getItem_displayText(vl_item) THEN
 		
 		ls_modify						= ls_modify																						&
 											+ 'CREATE text(band=' + #band + ' ' +													&
 											+ 'alignment="' + String(dw_toolBar.of_getItem_alignment(vl_item)) + '" '	&
-											+ 'text="' + dw_toolBar.of_getItem_name(vl_item) + '" border="0" '			&
+											+ 'text="' + dw_toolBar.of_getItem_text(vl_item) + '" border="0" '			&
 											+ 'x="' + String(ll_pos) + '" ' +														&
 											+ 'y="' + String(li_textYOffset + 16) + '" '											&
 											+ 'height="' + String(Int(ldbl_fontHeight)) + '" '									&
@@ -890,8 +887,7 @@ IF NOT (isNull(dw_toolBar.of_getItem_name(vl_item)) OR Trim(dw_toolBar.of_getIte
 											+ 'name=t_' + dw_toolBar.of_getItem_objectName(vl_item) + ' '					&
 											+ 'visible="1" '																				&
 											+ 'font.face="' + dw_toolBar.of_getItem_fontFace(vl_item) + '" '				&
-											+ 'font.height="'																				&
-											+ String(#FontSize * -1) + '" '															&
+											+ 'font.height="' + String(#FontSize * -1) + '" '									&
 											+ 'font.weight="400" '																		&
 											+ 'font.family="2" font.pitch="2" font.charset="0" '								&
 											+ 'background.mode="1" '
@@ -956,8 +952,7 @@ IF NOT (isNull(dw_toolBar.of_getItem_name(vl_item)) OR Trim(dw_toolBar.of_getIte
 											+ 'name=b_' + dw_toolBar.of_getItem_objectName(vl_item) + ' '					&
 											+ 'visible="1" '																				&
 											+ 'font.face="' + dw_toolBar.of_getItem_fontFace(vl_item) + '" '				&
-											+ 'font.height="'																				&
-											+ String(#FontSize * -1) + '" '															&
+											+ 'font.height="' + String(#FontSize * -1) + '" '									&
 											+ 'font.weight="400" '																		&
 											+ 'font.family="2" font.pitch="2" font.charset="0" '								&
 											+ 'background.mode="1" '
@@ -1019,7 +1014,7 @@ of_DrawChecked(vl_item)
 //	Originally, was going to use the focusRectangle during keyboard interface
 IF dw_toolbar.of_PBVersion() >= 12.5 THEN
 	
-	IF NOT (isNull(dw_toolBar.of_getItem_name(vl_item)) OR Trim(dw_toolBar.of_getItem_name(vl_item)) = '') THEN
+	IF NOT (isNull(dw_toolBar.of_getItem_text(vl_item)) OR Trim(dw_toolBar.of_getItem_text(vl_item)) = '') THEN
 		IF dw_toolBar.of_getItem_displayText(vl_item) THEN
 			dw_toolBar.Modify('t_' + dw_toolBar.of_getItem_objectName(vl_item) + '.FocusRectangle=no')
 		ELSE
@@ -1349,85 +1344,6 @@ of_size(#BitMapSize)
 RETURN
 end subroutine
 
-public function long of_getcolor (string vs_color);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
-//
-// This code and accompanying materials are made available under the GPLv3
-// license which accompanies this distribution and can be found at:
-//
-// http://www.gnu.org/licenses/gpl-3.0.html.
-//
-// Original Author:	Christopher Harris
-
-Long										ll_color = -1
-
-CHOOSE CASE vs_color
-	CASE HIGHLIGHTBORDER,	BORDERCOLOR
-		ll_color							= invo_color.of_hiLight()
-	CASE DEFAULTIMAGETRANSPARENCY
-		ll_color							= invo_color.of_silver()
-	CASE HIGHLIGHT1,			HIGHLIGHT2
-		ll_color							= invo_color.of_gradientInActiveCaption()
-	CASE SELECTED1, 			SELECTED2
-		ll_color							= invo_color.of_gradientActiveCaption()
-	CASE DISABLEDTEXT
-		ll_color							= invo_color.of_grayText()
-	CASE INFOTEXT
-		ll_color							= invo_color.of_infoText()
-	CASE INFOBACKGROUND
-		ll_color							= invo_color.of_infoBackGround()
-	CASE WINDOWTEXT
-		ll_color							= invo_color.of_windowText()
-	CASE MENUTEXT
-		ll_color							= invo_color.of_menuText()
-	CASE GETFOCUS
-		IF #SolidBackGround THEN
-			ll_color						= invo_color.of_menuBar()
-		ELSE
-			IF dw_toolbar.of_PBVersion() >= 11.5 THEN
-				ll_color					= invo_color.of_activeCaption()
-			ELSE
-				ll_color					= invo_color.of_menuBar()
-			END IF
-		END IF
-	CASE LOSEFOCUS
-		IF #SolidBackGround THEN
-			ll_color						= invo_color.of_menuBar()
-		ELSE
-			IF dw_toolbar.of_PBVersion() >= 11.5 THEN
-				ll_color					= invo_color.of_inactiveCaption()
-			ELSE
-				ll_color					= invo_color.of_menuBar()
-			END IF
-		END IF
-	CASE TOOLBAR
-		IF #SolidBackGround THEN
-			ll_color						= invo_color.of_menuBar()
-		ELSE
-			IF dw_toolbar.of_PBVersion() >= 11.5 THEN
-				IF ib_trackMouseEvent THEN
-					ll_color				= invo_color.of_activeCaption()
-				ELSE
-					ll_color				= invo_color.of_inactiveCaption()
-				END IF
-			ELSE
-				ll_color					= invo_color.of_menuBar()
-			END IF
-		END IF
-	CASE GRADIENT
-		ll_color							= invo_color.of_menuBar()
-	CASE THREEDDKSHADOW
-		ll_color							= invo_color.of_3DDkShadow()
-	CASE THREEDLIGHT
-		ll_color							= invo_color.of_3DLight()
-END CHOOSE
-
-IF ll_color = -1 THEN
-	ll_color								= messageBox('Color Error', vs_color) - 1
-END IF
-
-Return(ll_color)
-end function
-
 public function integer of_update ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
@@ -1579,64 +1495,6 @@ END CHOOSE
 Return(SUCCESS)
 end function
 
-private subroutine of_broadcast_showtoolbartext (boolean vb_showtext);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
-//
-// This code and accompanying materials are made available under the GPLv3
-// license which accompanies this distribution and can be found at:
-//
-// http://www.gnu.org/licenses/gpl-3.0.html.
-//
-// Original Author:	Christopher Harris
-
-//	This routine notifies all u_cst_toolBar objects to turn on/off their text
-
-Long										ll_toolbar,	ll_toolBars
-ll_toolBars								= upperBound(suo_toolBar[])
-
-FOR ll_toolBar = 1 TO ll_toolBars
-	
-	IF NOT IsValid(suo_toolBar[ll_toolBar]) THEN CONTINUE
-
-	IF vb_showText THEN
-		suo_toolBar[ll_toolBar].of_enableText()
-	ELSE
-		suo_toolBar[ll_toolBar].of_disableText()
-	END IF
-	
-NEXT
-
-RETURN
-end subroutine
-
-private subroutine of_broadcast_showtoolbartips (boolean vb_showtips);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
-//
-// This code and accompanying materials are made available under the GPLv3
-// license which accompanies this distribution and can be found at:
-//
-// http://www.gnu.org/licenses/gpl-3.0.html.
-//
-// Original Author:	Christopher Harris
-
-//	This routine notifies all u_cst_toolBar objects to turn on/off their toolTips
-
-Long										ll_toolbar,	ll_toolBars
-ll_toolBars								= upperBound(suo_toolBar[])
-
-FOR ll_toolBar = 1 TO ll_toolBars
-	
-	IF NOT IsValid(suo_toolBar[ll_toolBar]) THEN CONTINUE
-
-	IF vb_showTips THEN
-		suo_toolBar[ll_toolBar].of_enableToolTips()
-	ELSE
-		suo_toolBar[ll_toolBar].of_disableToolTips()
-	END IF
-	
-NEXT
-
-RETURN
-end subroutine
-
 private function long of_adddropmenu ();//	CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
@@ -1657,7 +1515,7 @@ dw_toolBar.Reset()
 Long										ll_item
 ll_item									= dw_toolBar.of_addItem()
 
-dw_toolBar.of_setItem_name(ll_item, is_dropMenuChar)
+dw_toolBar.of_setItem_text(ll_item, is_dropMenuChar)
 dw_toolBar.of_setItem_image(ll_item, '')
 dw_toolBar.of_setItem_toolTip(ll_item, 'ToolBar Items Menu')
 dw_toolBar.of_setItem_position(ll_item, RIGHT)
@@ -1682,7 +1540,7 @@ dw_toolBar.of_setItem_rectWidth(ll_item, dw_toolBar.of_getItem_textWidth(ll_item
 Return(1)
 end function
 
-public function long of_additem (string vs_name, string vs_image);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+public function long of_additem (string vs_text, string vs_image);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
 // license which accompanies this distribution and can be found at:
@@ -1691,10 +1549,10 @@ public function long of_additem (string vs_name, string vs_image);// CopyRight (
 //
 // Original Author:	Christopher Harris
 
-Return(of_addItem(vs_name, vs_image, vs_name, LEFT))
+Return(of_addItem(vs_text, vs_image, vs_text, LEFT))
 end function
 
-public function long of_additem (string vs_name, string vs_image, string vs_tooltip);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+public function long of_additem (string vs_text, string vs_image, string vs_tooltip);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
 // license which accompanies this distribution and can be found at:
@@ -1703,10 +1561,10 @@ public function long of_additem (string vs_name, string vs_image, string vs_tool
 //
 // Original Author:	Christopher Harris
 
-Return(of_addItem(vs_name, vs_image, vs_toolTip, LEFT))
+Return(of_addItem(vs_text, vs_image, vs_toolTip, LEFT))
 end function
 
-public function long of_additem (string vs_name, string vs_image, integer vi_position);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+public function long of_additem (string vs_text, string vs_image, integer vi_position);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
 // license which accompanies this distribution and can be found at:
@@ -1715,10 +1573,10 @@ public function long of_additem (string vs_name, string vs_image, integer vi_pos
 //
 // Original Author:	Christopher Harris
 
-Return(of_addItem(vs_name, vs_image, vs_name, vi_position))
+Return(of_addItem(vs_text, vs_image, vs_text, vi_position))
 end function
 
-public function long of_additem (string vs_name, string vs_image, string vs_tooltip, integer vi_position);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+public function long of_additem (string vs_text, string vs_image, string vs_tooltip, integer vi_position);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
 // license which accompanies this distribution and can be found at:
@@ -1727,27 +1585,27 @@ public function long of_additem (string vs_name, string vs_image, string vs_tool
 //
 // Original Author:	Christopher Harris
 
-IF Trim(vs_name) = is_DropMenuChar THEN
+IF Trim(vs_text) = is_DropMenuChar THEN
 	Return(MessageBox('AddItem Error', 'The character ' + is_DropMenuChar + ' is reserved and can not be used as an item name.'))
 END IF
 
 Long										ll_item
 ll_item									= dw_toolBar.of_addItem()
 
-IF isNull(vs_name)		THEN vs_name		= ''
+IF isNull(vs_text)		THEN vs_text		= ''
 IF isNull(vs_image)		THEN vs_image		= ''
 IF isNull(vs_toolTip)	THEN vs_toolTip	= ''
 IF isNull(vi_position)	THEN vi_position	= LEFT
 
-vs_name									= Trim(vs_name)
+vs_text									= Trim(vs_text)
 vs_image									= Trim(vs_image)
 vs_toolTip								= Trim(vs_toolTip)
 
-dw_toolBar.of_setItem_name(ll_item, vs_name)
+dw_toolBar.of_setItem_text(ll_item, vs_text)
 dw_toolBar.of_setItem_image(ll_item, invo_toolBar.of_getImageName(vs_image))
 
 IF isNull(vs_toolTip) OR Trim(vs_toolTip) = '' THEN
-	dw_toolBar.of_setItem_toolTip(ll_item, vs_name)
+	dw_toolBar.of_setItem_toolTip(ll_item, vs_text)
 ELSE
 	dw_toolBar.of_setItem_toolTip(ll_item, vs_toolTip)
 END IF
@@ -1761,10 +1619,10 @@ dw_toolBar.of_setItem_position(ll_item, vi_Position)
 dw_toolBar.of_setItem_visible(ll_item, TRUE)
 dw_toolBar.of_setItem_enabled(ll_item, TRUE)
 
-IF vs_name = '' THEN
+IF vs_text = '' THEN
 	dw_toolBar.of_setItem_objectName(ll_item, dw_toolBar.TOOLBARITEM + '_' + String(ll_item))
 ELSE
-	dw_toolBar.of_setItem_objectName(ll_item, invo_string.of_GlobalReplace(vs_name, ' ', '_') + '_' + String(ll_item))
+	dw_toolBar.of_setItem_objectName(ll_item, invo_string.of_GlobalReplace(vs_text, ' ', '_') + '_' + String(ll_item))
 END IF
 
 dw_toolBar.of_setItem_objectType(ll_item, dw_toolBar.TOOLBARITEM)
@@ -1791,7 +1649,7 @@ of_update()
 Return(ll_item)
 end function
 
-public function long of_additems (string vs_name[], string vs_image[]);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+public function long of_additems (string vs_text[], string vs_image[]);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
 // license which accompanies this distribution and can be found at:
@@ -1805,15 +1663,15 @@ Long										ll_item
 Long										li_position[]
 String									ls_toolTip[]
 
-FOR ll_item = 1 TO UpperBound(vs_name[])
+FOR ll_item = 1 TO UpperBound(vs_text[])
 	li_position[ll_item]				= LEFT
 	ls_toolTip[ll_item]				= ''
 NEXT
 
-Return(of_addItems(vs_name[], vs_image[], ls_toolTip[], li_position[]))
+Return(of_addItems(vs_text[], vs_image[], ls_toolTip[], li_position[]))
 end function
 
-public function long of_additems (string vs_name[], string vs_image[], string vs_tooltip[]);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+public function long of_additems (string vs_text[], string vs_image[], string vs_tooltip[]);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
 // license which accompanies this distribution and can be found at:
@@ -1825,14 +1683,14 @@ public function long of_additems (string vs_name[], string vs_image[], string vs
 Long										ll_item
 Long										li_position[]
 
-FOR ll_item = 1 TO UpperBound(vs_name[])
+FOR ll_item = 1 TO UpperBound(vs_text[])
 	li_position[ll_item]				= LEFT
 NEXT
 
-Return(of_addItems(vs_name[], vs_image[], vs_toolTip[], li_position[]))
+Return(of_addItems(vs_text[], vs_image[], vs_toolTip[], li_position[]))
 end function
 
-public function long of_additems (string vs_name[], string vs_image[], string vs_tooltip[], integer vi_position[]);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+public function long of_additems (string vs_text[], string vs_image[], string vs_tooltip[], integer vi_position[]);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
 // license which accompanies this distribution and can be found at:
@@ -1848,11 +1706,11 @@ lb_update								= ib_update
 
 ib_update								= FALSE
 
-FOR ll_loop = 1 TO UpperBound(vs_name[])
-	IF vs_name[ll_loop] = dw_toolBar.SEPARATOR THEN
+FOR ll_loop = 1 TO UpperBound(vs_text[])
+	IF vs_text[ll_loop] = dw_toolBar.SEPARATOR THEN
 		of_addSeparator(vi_position[ll_loop])
 	ELSE
-		of_addItem(vs_name[ll_loop], vs_image[ll_loop], vs_toolTip[ll_loop], vi_Position[ll_loop])
+		of_addItem(vs_text[ll_loop], vs_image[ll_loop], vs_toolTip[ll_loop], vi_Position[ll_loop])
 	END IF
 NEXT
 
@@ -1889,7 +1747,7 @@ ll_item									= dw_toolBar.of_addItem()
 
 IF isNull(vi_position) THEN vi_position = LEFT
 
-dw_toolBar.of_setItem_name(ll_item, dw_toolBar.SEPARATOR + '_' + String(ll_item))
+dw_toolBar.of_setItem_text(ll_item, dw_toolBar.SEPARATOR + '_' + String(ll_item))
 dw_toolBar.of_setItem_image(ll_item, '')
 dw_toolBar.of_setItem_toolTip(ll_item, '')
 dw_toolBar.of_setItem_position(ll_item, vi_Position)
@@ -2013,7 +1871,7 @@ public function integer of_setchecked (string vs_item, boolean vb_switch);// Cop
 //
 // Original Author:	Christopher Harris
 
-Return(of_setChecked(dw_toolBar.of_locateItem_name(vs_item), vb_switch))
+Return(of_setChecked(of_locateItem(vs_item), vb_switch))
 end function
 
 public function boolean of_ischecked (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -2046,7 +1904,7 @@ public function boolean of_ischecked (string vs_item);// CopyRight (c) 2016 by C
 Boolean									lb_checked = FALSE
 
 Long										ll_item
-ll_item									= dw_toolbar.of_locateItem_name(vs_item)
+ll_item									= of_locateItem(vs_item)
 
 IF NOT IsNull(ll_item) THEN
 	lb_checked							= dw_toolBar.of_getItem_checked(ll_item)
@@ -2318,7 +2176,7 @@ IF isNull(vs_text) THEN vs_text = ''
 Long										ll_itemCurrent
 ll_itemCurrent							= dw_toolBar.of_locateItem()
 
-dw_toolBar.of_setItem_name(vl_item, vs_text)
+dw_toolBar.of_setItem_text(vl_item, vs_text)
 
 of_initializeItemSize(vl_item)
 of_update()
@@ -2558,7 +2416,7 @@ FOR ll_item = 1 TO dw_toolBar.RowCount()
 					
 			lm_dropDown.Item[ll_itemMenu].DYNAMIC FUNCTION mf_setParent(this)
 					
-			lm_dropDown.Item[ll_itemMenu].Text			= dw_toolBar.of_getItem_name(ll_item)
+			lm_dropDown.Item[ll_itemMenu].Text			= dw_toolBar.of_getItem_text(ll_item)
 			lm_dropDown.Item[ll_itemMenu].Enabled		= dw_toolBar.of_getItem_enabled(ll_item)
 			lm_dropDown.Item[ll_itemMenu].MenuImage	= dw_toolBar.of_getItem_image(ll_item)
 			lm_dropDown.Item[ll_itemMenu].Checked		= dw_toolBar.of_getItem_checked(ll_item)
@@ -2602,7 +2460,7 @@ FOR ll_item = dw_toolBar.RowCount() TO 1 STEP -1
 					
 			lm_dropDown.Item[ll_itemMenu].DYNAMIC FUNCTION mf_setParent(this)
 					
-			lm_dropDown.Item[ll_itemMenu].Text			= dw_toolBar.of_getItem_name(ll_item)
+			lm_dropDown.Item[ll_itemMenu].Text			= dw_toolBar.of_getItem_text(ll_item)
 			lm_dropDown.Item[ll_itemMenu].Enabled		= dw_toolBar.of_getItem_enabled(ll_item)
 			lm_dropDown.Item[ll_itemMenu].MenuImage	= dw_toolBar.of_getItem_image(ll_item)
 			lm_dropDown.Item[ll_itemMenu].Checked		= dw_toolBar.of_getItem_checked(ll_item)
@@ -2863,7 +2721,7 @@ IF of_isVisible(vs_button) AND of_isEnabled(vs_button) THEN
 	END IF
 
 ELSE
-	MessageBox('ToolBar Error', 'Menu option (' + vs_button + ') is not currently available.')
+	MessageBox('ToolBar Error', 'ToolBar option (' + vs_button + ') is not currently available.')
 END IF
 
 Return(ll_Return)
@@ -2882,7 +2740,7 @@ IF isNull(vl_item) THEN Return(PREVENT)
 
 IF vl_item <= 0 OR vl_item > dw_toolBar.RowCount() THEN Return(PREVENT)
 
-Return(of_clickItem(dw_toolBar.of_getItem_name(vl_item)))
+Return(of_clickItem(dw_toolBar.of_getItem_text(vl_item)))
 end function
 
 public function long of_clickbutton (string vs_button);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -2909,7 +2767,7 @@ public function long of_clickbutton (long vl_item);// CopyRight (c) 2016 by Chri
 Return(of_clickItem(vl_item))
 end function
 
-public function long of_additem (string vs_name);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+public function long of_additem (string vs_text);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
 // license which accompanies this distribution and can be found at:
@@ -2918,10 +2776,10 @@ public function long of_additem (string vs_name);// CopyRight (c) 2016 by Christ
 //
 // Original Author:	Christopher Harris
 
-Return(of_addItem(vs_name, '', vs_name, LEFT))
+Return(of_addItem(vs_text, '', vs_text, LEFT))
 end function
 
-public function long of_additem (string vs_name, integer vi_position);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+public function long of_additem (string vs_text, integer vi_position);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
 // license which accompanies this distribution and can be found at:
@@ -2930,7 +2788,7 @@ public function long of_additem (string vs_name, integer vi_position);// CopyRig
 //
 // Original Author:	Christopher Harris
 
-Return(of_addItem(vs_name, '', vs_name, vi_position))
+Return(of_addItem(vs_text, '', vs_text, vi_position))
 end function
 
 public function string of_gettext (string vs_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -2942,22 +2800,10 @@ public function string of_gettext (string vs_item);// CopyRight (c) 2016 by Chri
 //
 // Original Author:	Christopher Harris
 
-Return(of_getText(dw_toolBar.of_locateItem_name(vs_item)))
+Return(of_getText(of_locateItem(vs_item)))
 end function
 
-public function long of_locateitem (string vs_item);//	CopyRight (c) 2016 by Christopher Harris, all rights reserved.
-//
-// This code and accompanying materials are made available under the GPLv3
-// license which accompanies this distribution and can be found at:
-//
-// http://www.gnu.org/licenses/gpl-3.0.html.
-//
-// Original Author:	Christopher Harris
-
-Return(dw_toolBar.of_locateItem_name(vs_item))
-end function
-
-public function long of_additems (string vs_name[]);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+public function long of_additems (string vs_text[]);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
 // license which accompanies this distribution and can be found at:
@@ -2971,16 +2817,16 @@ Long										ll_item
 Long										li_position[]
 String									ls_image[],		ls_toolTip[]
 
-FOR ll_item = 1 TO UpperBound(vs_name[])
+FOR ll_item = 1 TO UpperBound(vs_text[])
 	li_position[ll_item]				= LEFT
 	ls_image[ll_item]					= ''
 	ls_toolTip[ll_item]				= ''
 NEXT
 
-Return(of_addItems(vs_name[], ls_image[], ls_toolTip[], li_position[]))
+Return(of_addItems(vs_text[], ls_image[], ls_toolTip[], li_position[]))
 end function
 
-public function long of_additems (string vs_name[], integer vi_position[]);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+public function long of_additems (string vs_text[], integer vi_position[]);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
 // license which accompanies this distribution and can be found at:
@@ -2993,15 +2839,15 @@ Long										ll_item
 
 String									ls_image[],		ls_toolTip[]
 
-FOR ll_item = 1 TO UpperBound(vs_name[])
+FOR ll_item = 1 TO UpperBound(vs_text[])
 	ls_image[ll_item]					= ''
 	ls_toolTip[ll_item]				= ''
 NEXT
 
-Return(of_addItems(vs_name[], ls_image[], ls_toolTip[], vi_position[]))
+Return(of_addItems(vs_text[], ls_image[], ls_toolTip[], vi_position[]))
 end function
 
-public function long of_additems (string vs_name[], string vs_image[], integer vi_position[]);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+public function long of_additems (string vs_text[], string vs_image[], integer vi_position[]);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
 // license which accompanies this distribution and can be found at:
@@ -3013,14 +2859,23 @@ public function long of_additems (string vs_name[], string vs_image[], integer v
 Long										ll_item
 String									ls_toolTip[]
 
-FOR ll_item = 1 TO UpperBound(vs_name[])
+FOR ll_item = 1 TO UpperBound(vs_text[])
 	ls_toolTip[ll_item]				= ''
 NEXT
 
-Return(of_addItems(vs_name[], vs_image[], ls_toolTip[], vi_position[]))
+Return(of_addItems(vs_text[], vs_image[], ls_toolTip[], vi_position[]))
 end function
 
-private subroutine of_correct_bitmapsize ();CHOOSE CASE #BitMapSize
+private subroutine of_correct_bitmapsize ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+CHOOSE CASE #BitMapSize
 	CASE IS < MEDIUM
 		#BitMapSize						= SMALL
 	CASE IS < LARGE
@@ -3034,7 +2889,16 @@ END CHOOSE
 RETURN
 end subroutine
 
-private subroutine of_correct_fontsize ();CHOOSE CASE #FontSize
+private subroutine of_correct_fontsize ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+CHOOSE CASE #FontSize
 	CASE IS < 10
 		#FontSize						= 8
 	CASE IS < 12
@@ -3048,7 +2912,16 @@ END CHOOSE
 RETURN
 end subroutine
 
-private subroutine of_correct_size ();Long										ll_bitMapSize	= -1
+private subroutine of_correct_size ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+Long										ll_bitMapSize	= -1
 
 CHOOSE CASE #BitMapSize
 	CASE IS < MEDIUM
@@ -3100,6 +2973,179 @@ CHOOSE CASE ll_size
 		#FontSize						= 14
 
 END CHOOSE
+
+RETURN
+end subroutine
+
+private function long of_fontheight ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+Return(of_fontHeight(#FontSize))
+end function
+
+private function long of_fontheight (integer vi_fontsize);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+Return(Long(Round(Double(vi_fontsize) * Double(6.4) + Double(0.5), 0)))
+end function
+
+public function long of_locateitem (string vs_text);//	CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+Return(dw_toolBar.of_locateItem_text(vs_text))
+end function
+
+protected function long of_getcolor (string vs_color);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+Long										ll_color = -1
+
+CHOOSE CASE vs_color
+	CASE HIGHLIGHTBORDER,	BORDERCOLOR
+		ll_color							= invo_color.of_hiLight()
+	CASE DEFAULTIMAGETRANSPARENCY
+		ll_color							= invo_color.of_silver()
+	CASE HIGHLIGHT1,			HIGHLIGHT2
+		ll_color							= invo_color.of_gradientInActiveCaption()
+	CASE SELECTED1, 			SELECTED2
+		ll_color							= invo_color.of_gradientActiveCaption()
+	CASE DISABLEDTEXT
+		ll_color							= invo_color.of_grayText()
+	CASE INFOTEXT
+		ll_color							= invo_color.of_infoText()
+	CASE INFOBACKGROUND
+		ll_color							= invo_color.of_infoBackGround()
+	CASE WINDOWTEXT
+		ll_color							= invo_color.of_windowText()
+	CASE MENUTEXT
+		ll_color							= invo_color.of_menuText()
+	CASE GETFOCUS
+		IF #SolidBackGround THEN
+			ll_color						= invo_color.of_menuBar()
+		ELSE
+			IF dw_toolbar.of_PBVersion() >= 11.5 THEN
+				ll_color					= invo_color.of_activeCaption()
+			ELSE
+				ll_color					= invo_color.of_menuBar()
+			END IF
+		END IF
+	CASE LOSEFOCUS
+		IF #SolidBackGround THEN
+			ll_color						= invo_color.of_menuBar()
+		ELSE
+			IF dw_toolbar.of_PBVersion() >= 11.5 THEN
+				ll_color					= invo_color.of_inactiveCaption()
+			ELSE
+				ll_color					= invo_color.of_menuBar()
+			END IF
+		END IF
+	CASE TOOLBAR
+		IF #SolidBackGround THEN
+			ll_color						= invo_color.of_menuBar()
+		ELSE
+			IF dw_toolbar.of_PBVersion() >= 11.5 THEN
+				IF ib_trackMouseEvent THEN
+					ll_color				= invo_color.of_activeCaption()
+				ELSE
+					ll_color				= invo_color.of_inactiveCaption()
+				END IF
+			ELSE
+				ll_color					= invo_color.of_menuBar()
+			END IF
+		END IF
+	CASE GRADIENT
+		ll_color							= invo_color.of_menuBar()
+	CASE THREEDDKSHADOW
+		ll_color							= invo_color.of_3DDkShadow()
+	CASE THREEDLIGHT
+		ll_color							= invo_color.of_3DLight()
+END CHOOSE
+
+IF ll_color = -1 THEN
+	ll_color								= messageBox('Color Error', vs_color) - 1
+END IF
+
+Return(ll_color)
+end function
+
+private subroutine of_broadcast_showtext (boolean vb_showtext);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+//	This routine notifies all u_cst_toolBar objects to turn on/off their text
+
+Long										ll_toolbar,	ll_toolBars
+ll_toolBars								= upperBound(suo_toolBar[])
+
+FOR ll_toolBar = 1 TO ll_toolBars
+	
+	IF NOT IsValid(suo_toolBar[ll_toolBar]) THEN CONTINUE
+
+	IF vb_showText THEN
+		suo_toolBar[ll_toolBar].of_enableText()
+	ELSE
+		suo_toolBar[ll_toolBar].of_disableText()
+	END IF
+	
+NEXT
+
+RETURN
+end subroutine
+
+private subroutine of_broadcast_showtooltips (boolean vb_showtips);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+//	This routine notifies all u_cst_toolBar objects to turn on/off their toolTips
+
+Long										ll_toolbar,	ll_toolBars
+ll_toolBars								= upperBound(suo_toolBar[])
+
+FOR ll_toolBar = 1 TO ll_toolBars
+	
+	IF NOT IsValid(suo_toolBar[ll_toolBar]) THEN CONTINUE
+
+	IF vb_showTips THEN
+		suo_toolBar[ll_toolBar].of_enableToolTips()
+	ELSE
+		suo_toolBar[ll_toolBar].of_disableToolTips()
+	END IF
+	
+NEXT
 
 RETURN
 end subroutine
@@ -3249,8 +3295,6 @@ st_toolBar.TextSize					= #FontSize * -1
 of_size()
 of_addDropMenu()
 
-CALL super::constructor
-
 Long										ll_index
 
 Long										ll_last
@@ -3360,12 +3404,15 @@ IF dwo.Name = is_lButtonDown THEN
 	IF NOT isnull(ll_item) THEN
 		IF of_isVisible(ll_item) AND of_isEnabled(ll_item) THEN
 			
+			String						ls_text
+			ls_text						= of_getItem_text(ll_item)
+			
 			String						ls_name
 			
-			IF isNull(of_getItem_name(ll_item)) OR Trim(of_getItem_name(ll_item)) = '' THEN
+			IF isNull(ls_text) OR Trim(ls_text) = '' THEN
 				ls_name					= Mid(dwo.Name, 3)
 			ELSE
-				ls_name					= of_getItem_name(ll_item)
+				ls_name					= ls_text
 			END IF
 			
 			Long							ll_return
@@ -3614,10 +3661,26 @@ CHOOSE CASE #BitMapSize
 		MessageBox('ToolBar Error', 'Invalid BitMapSize (' + String(#BitMapSize) + ') defined.')
 END CHOOSE
 
-lm_context.m_showToolBarText.Checked	= of_displayText()
-lm_context.m_showToolBarTips.Checked	= of_displayToolTips()
+lm_context.m_showText.Checked				= of_displayText()
+lm_context.m_showToolTips.Checked		= of_displayToolTips()
 
 lm_context.mf_popMenu(this)
+end event
+
+event resize;call super::resize;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+Long										ll_itemCurrent
+ll_itemCurrent							= dw_toolBar.of_locateItem()
+
+of_update()
+of_drawButton(ll_itemCurrent)
 end event
 
 type r_border from rectangle within u_cst_toolbar
