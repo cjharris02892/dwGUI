@@ -23,6 +23,7 @@ end variables
 global type u_cst_xplistbar from userobject
 integer width = 878
 integer height = 992
+long backcolor = 553648127
 string text = "none"
 long tabtextcolor = 33554432
 long picturemaskcolor = 536870912
@@ -187,6 +188,8 @@ public function integer of_update (boolean vb_resetscrollposition)
 public function string of_gettext (long vl_item)
 public function string of_gettext (string vs_text)
 public function string of_gettext (string vs_text_group, string vs_text_item)
+public subroutine of_setbackcolor (long vl_backcolor)
+public subroutine of_setbackcolor (integer vi_red, integer vi_green, integer vi_blue)
 end prototypes
 
 event type integer ue_itemclicking(string vs_group, string vs_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -2652,6 +2655,34 @@ public function string of_gettext (string vs_text_group, string vs_text_item);//
 
 Return(of_getText(of_locateItem(vs_text_group, vs_text_item)))
 end function
+
+public subroutine of_setbackcolor (long vl_backcolor);//	CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+BackColor								= vl_backColor
+
+RETURN
+end subroutine
+
+public subroutine of_setbackcolor (integer vi_red, integer vi_green, integer vi_blue);//	CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+of_setBackColor(RGB(vi_red, vi_green, vi_blue))
+
+RETURN
+end subroutine
 
 on u_cst_xplistbar.create
 this.st_xplistbar=create st_xplistbar
