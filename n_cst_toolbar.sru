@@ -202,6 +202,15 @@ Private:
 
 	SUBROUTINE CopyInteger(REF blob rblb_Destination, REF integer ri_source, long vl_length) LIBRARY "kernel32.dll" ALIAS FOR "RtlMoveMemory"
 	SUBROUTINE CopyUnsignedLong(REF blob rblb_Destination, REF unsignedLong rul_source, long vl_length) LIBRARY "kernel32.dll" ALIAS FOR "RtlMoveMemory"
+	SUBROUTINE CopyCharacterArray(REF blob rblb_Destination, REF character rc_source[], long vl_length) LIBRARY "kernel32.dll" ALIAS FOR "RtlMoveMemory"
+	SUBROUTINE CopyCharacter(REF blob rblb_Destination, REF character rc_source, long vl_length) LIBRARY "kernel32.dll" ALIAS FOR "RtlMoveMemory"
+	SUBROUTINE CopyString(REF blob rblb_Destination, REF string rs_source, long vl_length) LIBRARY "kernel32.dll" ALIAS FOR "RtlMoveMemory"
+
+	FUNCTION Long CreateFile(REF String rs_FileName, UnsignedLong vul_Access, UnsignedLong vul_Share, Long vl_securityAttributes, UnsignedLong vul_creation, UnsignedLong vul_flagsAndAttributes, Long vl_templateFile) ALIAS FOR "CreateFileW" LIBRARY "kernel32.dll"
+	FUNCTION Long CreateFileA(REF String rs_FileName, UnsignedLong vul_Access, UnsignedLong vul_Share, Long vl_securityAttributes, UnsignedLong vul_creation, UnsignedLong vul_flagsAndAttributes, Long vl_templateFile) ALIAS FOR "CreateFileA;Ansi" LIBRARY "kernel32.dll"
+	FUNCTION Boolean WriteFile(UnsignedLong vul_Handle, REF Blob rblb_Buffer, UnsignedLong vul_BytesToWrite, REF UnsignedLong rul_BytesWritten, Long vl_OverLapped) LIBRARY "kernel32.dll"
+	FUNCTION Boolean FlushFileBuffers(UnsignedLong vul_Handle) LIBRARY "kernel32.dll"
+	FUNCTION Boolean CloseHandle(Long vl_Handle) LIBRARY "kernel32.dll"
 
 end prototypes
 
@@ -333,6 +342,28 @@ Public:
 	CONSTANT Long							DIB_PAL_COLORS					= 1						//	The color table should consist of an array of 16-bit indexes into the current logical palette.
 	CONSTANT Long							DIB_RGB_COLORS					= 0						//	The color table should consist of literal red, green, blue (RGB) values.
 
+	CONSTANT UnsignedLong				GENERIC_ALL						= 268435456
+	CONSTANT UnsignedLong				GENERIC_EXECUTE				= 536870912
+	CONSTANT UnsignedLong				GENERIC_WRITE					= 1073741824
+	CONSTANT UnsignedLong				GENERIC_READ					= 2147483648
+
+//	CONSTANT UnsignedLong				GENERIC_EXECUTE 				= FILE_READ_ATTRIBUTES + STANDARD_RIGHTS_EXECUTE + SYNCHRONIZE
+//	CONSTANT UnsignedLong				GENERIC_READ 					= FILE_READ_ATTRIBUTES + FILE_READ_DATA + FILE_READ_EA + STANDARD_RIGHTS_READ + SYNCHRONIZE
+//	CONSTANT UnsignedLong				GENERIC_WRITE 					= FILE_WRITE_ATTRIBUTES + FILE_APPEND_DATA + FILE_WRITE_DATA + FILE_WRITE_EA + STANDARD_RIGHTS_WRITE + SYNCHRONIZE
+
+	//	CreateFile - ShareMode
+	CONSTANT Integer						FILE_SHARE_NONE				= 0
+	CONSTANT Integer						FILE_SHARE_READ				= 1
+	CONSTANT Integer						FILE_SHARE_WRITE				= 2
+	CONSTANT Integer						FILE_SHARE_DELETE				= 4
+
+	//	CreateFile - CreationDisposition
+	CONSTANT Integer						CREATE_NEW						= 1
+	CONSTANT Integer						CREATE_ALWAYS					= 2
+	CONSTANT Integer						OPEN_EXISTING					= 3
+	CONSTANT Integer						OPEN_ALWAYS						= 4
+	CONSTANT Integer						TRUNCATE_EXISTING				= 5
+	
 Private:
 
 	CONSTANT Long							MAX_PATH							= 256
@@ -377,6 +408,13 @@ private function long of_resgetbitmapid (string vs_imagename)
 private function long of_resgetbitmapname (string vs_imagename)
 private function string of_pbvmlibrary ()
 private function unsignedlong of_loadimage (unsignedlong vul_hinstance, string vs_filename, unsignedlong vul_type, long vl_cxdesired, long vl_cydesired, unsignedlong vul_loadoptions)
+private function long of_hextolong (string vs_string)
+public function double of_filewriteex (unsignedlong vul_handle, blob vblb_buffer, unsignedlong vul_numberofbytestowrite)
+public function long of_createfile (string vs_filename, unsignedlong vul_access, unsignedlong vul_share, unsignedlong vul_creation)
+public function string of_image_save (string vs_filename, string vs_heximage)
+public function string of_image_extract (string vs_imagename)
+public function string of_image_chevrondown ()
+public function string of_image_chevronup ()
 end prototypes
 
 public function boolean of_isunicode ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -1009,9 +1047,6 @@ public function string of_getimagename (string vs_imagename);// CopyRight (c) 20
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
 // Original Author:	Christopher Harris
-//			Resources:	Roland Smith	(bitMap project from 2010 - www.topWizProgramming.com)
-//							Omar Parra		(uo_coolButton project from 2006)
-//							WikiPedia		(en.wikiPedia.org/wiki/BMP_file_format)
 
 IF Right(vs_imageName, 1) <> '!' THEN
 	IF FileExists(vs_imageName) THEN
@@ -1021,179 +1056,7 @@ IF Right(vs_imageName, 1) <> '!' THEN
 	END IF
 END IF
 
-String									ls_tempPath
-ls_tempPath								= of_getTempPath()
-
-String									ls_PBVersion
-ls_PBVersion							= String(of_PBVersion() * 10, '000')
-
-String									ls_fileName
-ls_fileName								= ls_tempPath + Left(vs_imageName, Len(vs_imageName) - 1) + '_' + ls_PBVersion + '.bmp'
-
-IF FileExists(ls_fileName) THEN Return(ls_fileName)
-
-Long										ll_bitMapID
-ll_bitMapID								= of_resGetBitmapID(vs_imageName)
- 
-IF ll_bitMapID <= 0 THEN Return('')
-	
-unsignedLong							lul_Module
-unsignedlong							lul_hBitmap
-	
-lul_Module								= of_LoadLibrary(of_PBVMLibrary())
-	
-IF isNull(lul_module) THEN Return('')
-
-String									ls_ResourceID
-ls_ResourceID							= "#" + String(ll_bitMapID)
-		
-// Get a handle to the bitmap
-lul_hBitmap								= of_LoadImage(lul_Module, ls_ResourceID, IMAGE_BITMAP, 0, 0, LR_DEFAULTCOLOR)
-
-IF lul_hBitMap <= 0 THEN Return('')
-
-CONSTANT Integer						BITMAPTYPE		= 19778						//	x42 (B) and x4D (M)
-BITMAPINFO								lstr_Info
-BITMAPFILEHEADER						lstr_Header
-Blob										lblb_header,	lblb_info,	lblb_bitMap
-Integer									li_pixels,		li_null
-
-// Get the device context of window and allocate memory
-UnsignedLong							lul_hDC_memory
-lul_hDC_memory							= CreateCompatibleDC(0)
-		
-// Select an object into the specified device context
-SelectObject(lul_hDC_memory, lul_hBitmap)
-
-lstr_Info.bmiHeader.biSize			= 40												//	Size of structure
-
-// Get the bitMapInfo
-IF GetDIBits(lul_hDC_memory, lul_hBitmap, 0, 0, 0, lstr_Info, DIB_RGB_COLORS) > 0 THEN
-				
-	li_pixels							= lstr_Info.bmiHeader.biBitCount
-	lstr_Info.bmiColors[li_pixels]													&
-											= 0
-	IF of_isUnicode() THEN
-		lblb_bitMap						= Blob(Space(lstr_Info.bmiHeader.biSizeImage / 2))
-	ELSE
-		lblb_bitMap						= Blob(Space(lstr_Info.bmiHeader.biSizeImage))
-	END IF
-	
-	// Get the actual bits
-	GetDIBits(lul_hDC_memory, lul_hBitmap, 0, abs(lstr_Info.bmiHeader.biHeight), lblb_bitMap, lstr_Info, DIB_RGB_COLORS) 
-		
-	// Create a bitmap header
-	lstr_Header.bfType				= BITMAPTYPE
-	lstr_Header.bfSize				= lstr_Info.bmiHeader.biSizeImage
-	lstr_Header.bfOffBits			= 54 + (li_pixels * 4)						//	Size of header (14) + size of info (40) + 4 bytes per pixel 
-
-	//	I know the logic that follows looks overly convoluted, but it works.
-	//	The reason for the "/ 2" clauses and the strange logic is get it to
-	//	work in versions prior to 10.5 when the "Encoding" parameter wasn't
-	//	part of the blob calls.  If I used the "Encoding" parameter in the
-	//	code it wouldn't compile in prior PB versions.  The way this is
-	//	written, it works for all.  It also handles 1 and 8, byte shifting
-	//	that PB introduced in PB12.6.  Again, uses a single set of code.
-	
-	// Copy the header structure to a blob
-	IF of_isUnicode() THEN
-		IF of_PBVersion() >= 12.6 THEN
-			
-//			//	Allow for PB 12.6 byte alignment shift of two extra bytes
-//			lblb_header					= Blob(Space(16 / 2))						
-//			
-//			CopyBitmapFileHeader(lblb_header, lstr_Header, 16)
-//			
-//			//	Copy the header, minus the two byte alignment shift
-//			lblb_header					= blobMid(lblb_header, 1, 2) + blobMid(lblb_header, 5)
-
-			//	This should take care of the byte shifting issue regardless of
-			//	what the setting is, 1 byte, 8 byte, etc.  I'm just building
-			//	the blob manually without using the structure directly in an
-			//	API call.  It may look like crap, but it gives me a single code
-			//	base without regard for PB version or processing.
-			
-			Blob							lblb_integer
-			Blob							lblb_unsignedLong
-			
-			lblb_integer				= Blob(Space(2 / 2))
-			
-			CopyInteger(lblb_integer, lstr_header.bfType, 2)
-			
-			lblb_header					= lblb_header + lblb_integer
-	
-			lblb_unsignedLong			= Blob(Space(4 / 2))
-			
-			CopyUnsignedLong(lblb_unsignedLong, lstr_header.bfSize, 4)
-	
-			lblb_header					= lblb_header + lblb_unsignedLong
-	
-			SetNull(li_null)
-			
-			lblb_integer				= Blob(Space(2 / 2))
-			
-			CopyInteger(lblb_integer, li_null, 2)
-			
-			lblb_header					= lblb_header + lblb_integer + lblb_integer
-			
-			lblb_unsignedLong			= Blob(Space(4 / 2))
-			
-			CopyUnsignedLong(lblb_unsignedLong, lstr_header.bfOffBits, 4)
-	
-			lblb_header					= lblb_header + lblb_unsignedLong
-		
-		ELSE
-			
-			lblb_header					= Blob(Space(14 / 2))
-			CopyBitmapFileHeader(lblb_header, lstr_Header, 14)
-			
-		END IF
-	ELSE
-		
-		lblb_header						= Blob(Space(14))
-		CopyBitmapFileHeader(lblb_header, lstr_Header, 14)
-		
-	END IF
-	
-	// Copy the info structure to a blob
-	IF of_isUnicode() THEN
-		lblb_Info						= Blob(Space((40 + li_pixels * 4) / 2))
-	ELSE
-		lblb_Info						= Blob(Space((40 + li_pixels * 4)))
-	END IF
-	
-	CopyBitmapInfo(lblb_Info, lstr_Info, 40 + li_pixels * 4)
-				
-	// Concatenate the parts into a whole bitMap
-	lblb_bitMap							= lblb_header + lblb_info + lblb_bitMap
-				
-	Long									ll_file
-	ll_file								= FileOpen(ls_fileName, StreamMode!, Write!, LockWrite!, Replace!)
-		
-	UnsignedLong						lul_length
-	lul_length							= Len(lblb_bitMap)
-				
-	Long									ll_written
-	ll_written 							= FileWriteEx(ll_file, lblb_bitMap, lul_length)
-			
-	IF ll_written <> lul_length THEN
-		ls_fileName						= ''
-	END IF
-				
-	FileClose(ll_file)
-				
-END IF
-			
-// Clean up handles
-DeleteDC(lul_hDC_memory)
-
-// Delete bitmap from memory
-DeleteObject(lul_hBitmap)
-		
-// Free the library
-FreeLibrary(lul_Module)
-
-Return(Trim(ls_fileName))
+Return(of_image_extract(vs_imageName))
 end function
 
 private function string of_gettemppath ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -1388,6 +1251,379 @@ ELSE
 END IF
 
 Return(lul_hModule)
+end function
+
+private function long of_hextolong (string vs_string);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+vs_string								= Upper(vs_string)
+
+Long										ll_power			= 1
+Long										ll_multiplier	= 0
+Character								lc_Hex
+
+Long										ll_char
+Long										ll_number
+
+FOR ll_char = Len(vs_string) TO 1 STEP -1
+
+   lc_hex                  		= Mid(vs_string, ll_char, 1)
+   
+   CHOOSE CASE lc_hex
+      CASE '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
+         ll_number					= ll_number + (Integer(lc_hex) * ll_power)
+      CASE 'A', 'B', 'C', 'D', 'E', 'F'
+         ll_number					= ll_number + ((Asc(lc_hex) - 55) * ll_power)
+   END CHOOSE
+
+   ll_multiplier ++
+   
+   ll_power								= ll_multiplier * 16
+   
+NEXT
+
+Return(ll_number)
+end function
+
+public function double of_filewriteex (unsignedlong vul_handle, blob vblb_buffer, unsignedlong vul_numberofbytestowrite);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+UnsignedLong							lul_NumberOfBytesWritten
+
+IF NOT WriteFile(vul_Handle, vblb_Buffer, vul_NumberOfBytesToWrite, lul_NumberOfBytesWritten, 0) THEN Return(-1)
+	
+Return(lul_NumberOfBytesWritten)
+end function
+
+public function long of_createfile (string vs_filename, unsignedlong vul_access, unsignedlong vul_share, unsignedlong vul_creation);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+IF of_isUnicode() THEN
+	Return(CreateFile(vs_FileName, vul_Access, vul_Share, 0, vul_Creation, 0, 0))
+ELSE
+	Return(CreateFileA(vs_FileName, vul_Access, vul_Share, 0, vul_Creation, 0, 0))
+END IF
+
+Return(-1)
+end function
+
+public function string of_image_save (string vs_filename, string vs_heximage);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+String									ls_image[]
+Blob                       		lblb_image
+Character								lc_image[]
+Integer									li_image[]
+
+Long										ll_char,	ll_chars
+ll_chars									= invo_string.of_parseToArray(vs_hexImage, ' ', ls_image[])
+                                    
+FOR ll_char = 1 TO ll_chars
+	
+	lc_image[ll_char]					= Char(of_HexToLong(ls_image[ll_char]))
+   li_image[ll_char]					= Asc(lc_image[ll_char])
+	
+NEXT
+
+lblb_image								= Blob(Space(1))
+
+String									ls_tempPath
+ls_tempPath								= of_getTempPath()
+
+String									ls_fileName
+ls_fileName								= ls_tempPath + vs_fileName
+
+IF FileExists(ls_fileName) THEN Return(ls_fileName)
+
+Long										ll_written
+
+Long										ll_file
+ll_file									= of_CreateFile(ls_FileName, GENERIC_WRITE + GENERIC_READ, FILE_SHARE_NONE, CREATE_NEW)
+
+FOR ll_char = 1 TO ll_chars
+	
+	CopyCharacter(lblb_image, lc_image[ll_char], 1)
+
+	ll_written 							= of_fileWriteEx(ll_file, lblb_image, 1)
+			
+	IF ll_written <> 1 THEN
+		
+		ls_fileName						= ''
+		EXIT
+		
+	END IF
+
+NEXT
+
+FlushFileBuffers(ll_File)
+CloseHandle(ll_File)
+	
+Return(ls_fileName)
+end function
+
+public function string of_image_extract (string vs_imagename);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+//			Resources:	Roland Smith	(bitMap project from 2010 - www.topWizProgramming.com)
+//							Omar Parra		(uo_coolButton project from 2006)
+//							WikiPedia		(en.wikiPedia.org/wiki/BMP_file_format)
+
+IF Right(vs_imageName, 1) <> '!' THEN Return('')
+
+String									ls_tempPath
+ls_tempPath								= of_getTempPath()
+
+String									ls_PBVersion
+ls_PBVersion							= String(of_PBVersion() * 10, '000')
+
+String									ls_fileName
+ls_fileName								= ls_tempPath + Left(vs_imageName, Len(vs_imageName) - 1) + '_' + ls_PBVersion + '.bmp'
+
+IF FileExists(ls_fileName) THEN Return(ls_fileName)
+
+Long										ll_bitMapID
+ll_bitMapID								= of_resGetBitmapID(vs_imageName)
+ 
+IF ll_bitMapID <= 0 THEN Return('')
+	
+unsignedLong							lul_Module
+unsignedlong							lul_hBitmap
+	
+lul_Module								= of_LoadLibrary(of_PBVMLibrary())
+	
+IF isNull(lul_module) THEN Return('')
+
+String									ls_ResourceID
+ls_ResourceID							= "#" + String(ll_bitMapID)
+		
+// Get a handle to the bitmap
+lul_hBitmap								= of_LoadImage(lul_Module, ls_ResourceID, IMAGE_BITMAP, 0, 0, LR_DEFAULTCOLOR)
+
+IF lul_hBitMap <= 0 THEN Return('')
+
+CONSTANT Integer						BITMAPTYPE		= 19778						//	x42 (B) and x4D (M)
+BITMAPINFO								lstr_Info
+BITMAPFILEHEADER						lstr_Header
+Blob										lblb_header,	lblb_info,	lblb_bitMap
+Integer									li_pixels,		li_null
+
+// Get the device context of window and allocate memory
+UnsignedLong							lul_hDC_memory
+lul_hDC_memory							= CreateCompatibleDC(0)
+		
+// Select an object into the specified device context
+SelectObject(lul_hDC_memory, lul_hBitmap)
+
+lstr_Info.bmiHeader.biSize			= 40												//	Size of structure
+
+// Get the bitMapInfo
+IF GetDIBits(lul_hDC_memory, lul_hBitmap, 0, 0, 0, lstr_Info, DIB_RGB_COLORS) > 0 THEN
+				
+	li_pixels							= lstr_Info.bmiHeader.biBitCount
+	lstr_Info.bmiColors[li_pixels]													&
+											= 0
+	IF of_isUnicode() THEN
+		lblb_bitMap						= Blob(Space(lstr_Info.bmiHeader.biSizeImage / 2))
+	ELSE
+		lblb_bitMap						= Blob(Space(lstr_Info.bmiHeader.biSizeImage))
+	END IF
+	
+	// Get the actual bits
+	GetDIBits(lul_hDC_memory, lul_hBitmap, 0, abs(lstr_Info.bmiHeader.biHeight), lblb_bitMap, lstr_Info, DIB_RGB_COLORS) 
+		
+	// Create a bitmap header
+	lstr_Header.bfType				= BITMAPTYPE
+	lstr_Header.bfSize				= lstr_Info.bmiHeader.biSizeImage
+	lstr_Header.bfOffBits			= 54 + (li_pixels * 4)						//	Size of header (14) + size of info (40) + 4 bytes per pixel 
+
+	//	I know the logic that follows looks overly convoluted, but it works.
+	//	The reason for the "/ 2" clauses and the strange logic is get it to
+	//	work in versions prior to 10.5 when the "Encoding" parameter wasn't
+	//	part of the blob calls.  If I used the "Encoding" parameter in the
+	//	code it wouldn't compile in prior PB versions.  The way this is
+	//	written, it works for all.  It also handles 1 and 8, byte shifting
+	//	that PB introduced in PB12.6.  Again, uses a single set of code.
+	
+	// Copy the header structure to a blob
+	IF of_isUnicode() THEN
+		IF of_PBVersion() >= 12.6 THEN
+			
+//			//	Allow for PB 12.6 byte alignment shift of two extra bytes
+//			lblb_header					= Blob(Space(16 / 2))						
+//			
+//			CopyBitmapFileHeader(lblb_header, lstr_Header, 16)
+//			
+//			//	Copy the header, minus the two byte alignment shift
+//			lblb_header					= blobMid(lblb_header, 1, 2) + blobMid(lblb_header, 5)
+
+			//	This should take care of the byte shifting issue regardless of
+			//	what the setting is, 1 byte, 8 byte, etc.  I'm just building
+			//	the blob manually without using the structure directly in an
+			//	API call.  It may look like crap, but it gives me a single code
+			//	base without regard for PB version or processing.
+			
+			Blob							lblb_integer
+			Blob							lblb_unsignedLong
+			
+			lblb_integer				= Blob(Space(2 / 2))
+			
+			CopyInteger(lblb_integer, lstr_header.bfType, 2)
+			
+			lblb_header					= lblb_header + lblb_integer
+	
+			lblb_unsignedLong			= Blob(Space(4 / 2))
+			
+			CopyUnsignedLong(lblb_unsignedLong, lstr_header.bfSize, 4)
+	
+			lblb_header					= lblb_header + lblb_unsignedLong
+	
+			SetNull(li_null)
+			
+			lblb_integer				= Blob(Space(2 / 2))
+			
+			CopyInteger(lblb_integer, li_null, 2)
+			
+			lblb_header					= lblb_header + lblb_integer + lblb_integer
+			
+			lblb_unsignedLong			= Blob(Space(4 / 2))
+			
+			CopyUnsignedLong(lblb_unsignedLong, lstr_header.bfOffBits, 4)
+	
+			lblb_header					= lblb_header + lblb_unsignedLong
+		
+		ELSE
+			
+			lblb_header					= Blob(Space(14 / 2))
+			CopyBitmapFileHeader(lblb_header, lstr_Header, 14)
+			
+		END IF
+	ELSE
+		
+		lblb_header						= Blob(Space(14))
+		CopyBitmapFileHeader(lblb_header, lstr_Header, 14)
+		
+	END IF
+	
+	// Copy the info structure to a blob
+	IF of_isUnicode() THEN
+		lblb_Info						= Blob(Space((40 + li_pixels * 4) / 2))
+	ELSE
+		lblb_Info						= Blob(Space((40 + li_pixels * 4)))
+	END IF
+	
+	CopyBitmapInfo(lblb_Info, lstr_Info, 40 + li_pixels * 4)
+				
+	// Concatenate the parts into a whole bitMap
+	lblb_bitMap							= lblb_header + lblb_info + lblb_bitMap
+				
+	Long									ll_file
+	ll_file								= FileOpen(ls_fileName, StreamMode!, Write!, LockWrite!, Replace!)
+		
+	UnsignedLong						lul_length
+	lul_length							= Len(lblb_bitMap)
+				
+	Long									ll_written
+	ll_written 							= of_fileWriteEx(ll_file, lblb_bitMap, lul_length)
+			
+	IF ll_written <> lul_length THEN
+		ls_fileName						= ''
+	END IF
+				
+	FileClose(ll_file)
+				
+END IF
+			
+// Clean up handles
+DeleteDC(lul_hDC_memory)
+
+// Delete bitmap from memory
+DeleteObject(lul_hBitmap)
+		
+// Free the library
+FreeLibrary(lul_Module)
+
+Return(Trim(ls_fileName))
+end function
+
+public function string of_image_chevrondown ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+String									ls_chevronDown	= '89 50 4E 47 0D 0A 1A 0A 00 00 00 0D 49 48 44 52 '	&
+																+ '00 00 00 0B 00 00 00 0B 08 02 00 00 00 26 CE E0 '	&
+																+ '05 00 00 00 09 70 48 59 73 00 00 0E C0 00 00 0E '	&
+																+ 'C0 01 6A D6 89 09 00 00 00 0E 74 45 58 74 53 6F '	&
+																+ '66 74 77 61 72 65 00 64 77 47 55 49 30 F4 72 A1 '	&
+																+ '00 00 00 53 49 44 41 54 28 53 85 8D C1 11 C0 20 '	&
+																+ '0C C3 B2 FF 54 D9 0C C4 25 E7 B8 F9 54 9F DA 58 '	&
+																+ 'D0 C8 3F 9E 11 11 E7 9C EA 82 13 CE 09 FD C6 92 '	&
+																+ '34 C3 FC 45 92 CF 30 09 4A F2 19 5E D1 ED CA 15 '	&
+																+ 'A4 76 77 09 FC A5 FE 80 24 9F 61 12 94 E4 33 7C '	&
+																+ '0A AC 19 76 DF 64 5E AA DC F2 17 8B FF F5 CB 00 '	&
+																+ '00 00 00 49 45 4E 44 AE 42 60 82'
+
+Return(of_image_save('chevronDown.png', ls_chevronDown))
+end function
+
+public function string of_image_chevronup ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+String									ls_chevronUp	= '89 50 4E 47 0D 0A 1A 0A 00 00 00 0D 49 48 44 52 '	&
+																+ '00 00 00 0B 00 00 00 0B 08 02 00 00 00 26 CE E0 '	&
+																+ '71 00 00 00 04 67 41 4D 41 00 00 B1 8F 0B FC 61 '	&
+																+ '05 00 00 00 09 70 48 59 73 00 00 0E BF 00 00 0E '	&
+																+ 'BF 01 38 05 53 24 00 00 00 0E 74 45 58 74 53 6F '	&
+																+ '66 74 77 61 72 65 00 64 77 47 55 49 30 F4 72 A1 '	&
+																+ '00 00 00 4C 49 44 41 54 28 53 85 8C 41 0E 00 20 '	&
+																+ '08 C3 F8 FF AB F8 19 A2 23 83 4C 13 7B 01 6C A3 '	&
+																+ 'F9 0F 2D CC AE 97 9A 87 D4 11 21 51 1F D0 B9 48 '	&
+																+ '54 1B 35 98 D1 1E 53 53 30 AA 1B 20 65 04 FA E0 '	&
+																+ '4F 12 D5 46 0D 66 B4 87 68 C0 A8 7F 7B E3 BE 00 '	&
+																+ '18 E3 F2 17 4E E5 57 40 00 00 00 00 49 45 4E 44 '	&
+																+ 'AE 42 60 82'
+
+
+Return(of_image_save('chevronUp.png', ls_chevronUp))
 end function
 
 on n_cst_toolbar.create

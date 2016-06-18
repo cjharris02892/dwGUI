@@ -121,6 +121,9 @@ Private:
 
 	Boolean									ib_displayToolTips			= TRUE
 	Integer									ii_toolTipIsBubble			= 1
+	
+	String									is_chevronUp					= ''
+	String									is_chevronDown					= ''
 end variables
 
 forward prototypes
@@ -801,7 +804,7 @@ ls_modify								= ls_modify																							&
 											+ 'font.family="2" font.pitch="2" font.charset="0" '									&
 											+ 'background.mode="1" '
 
-//IF invo_toolBar.of_PBVersion >= 12.5 THEN
+//IF ds_XPListbar.of_PBVersion >= 12.5 THEN
 //			
 //	IF ds_XPListBar.of_getItem_enabled(vl_item) THEN
 //		ls_modify						= ls_modify + 'enabled="1" '
@@ -840,6 +843,54 @@ END IF
 
 ls_modify								= ls_modify + ') '
 
+ls_modify								= ls_modify																							&
+											+ 'CREATE bitmap(band=detail '																&
+											+ 'filename="' + is_chevronUp + '" '														&
+											+ 'x="' + String(il_xIndent + ll_width - 87) + '" '									&
+											+ 'y="28" '																							&
+											+ 'height="'+ String(11 * il_yPixelInUnits) + '" '										&
+											+ 'width="' + String(11 * il_xPixelInUnits) + '" '										&
+											+ 'border="0" '																					&
+											+ 'name=p_' + ds_XPListBar.of_getItem_objectName(vl_item) + '_chevron '			&
+											+ 'visible="1" '
+
+//IF ds_XPListBar.of_PBVersion() >= 12.5 THEN
+//		
+//	IF ds_XPListBar.of_getItem_enabled(vl_item) THEN
+//		ls_modify						= ls_modify + 'enabled="1" '
+//	ELSE
+//		ls_modify						= ls_modify + 'enabled="0" '
+//	END IF
+//
+//END IF
+	
+IF ds_XPListbar.of_PBVersion() >= 11.5 THEN
+		
+	ls_modify							= ls_modify																							&
+											+ 'tooltip.backcolor="' + String(of_getColor(INFOBACKGROUND)) + '" '				&
+											+ 'tooltip.delay.initial="' + String(#ToolTipDelayInitial) + '" ' +				&
+											+ 'tooltip.delay.visible="' + String(#ToolTipDelayVisible) + '" ' +				&
+											+ 'tooltip.enabled="' + String(li_displayToolTips) + '" '							&
+											+ 'tooltip.hasclosebutton="0" tooltip.icon="0" ' +										&
+											+ 'tooltip.isbubble="' + String(ii_toolTipIsBubble) + '" '							&
+											+ 'tooltip.maxwidth="0" '																		&
+											+ 'tooltip.textcolor="' + String(of_getColor(INFOTEXT)) + '" '						&
+											+ 'tooltip.transparency="0" '																	&
+											+ 'tooltip.tip="' + '' + '" '																	&
+											+ 'transparentcolor="' + String(ds_XPListBar.of_getItem_imageTransparency(vl_item)) + '" '
+												
+//	IF ds_XPListBar.of_getItem_enabled(vl_item) THEN
+//		ls_modify						= ls_modify + 'transparency="0" '
+//	ELSE
+//		ls_modify						= ls_modify + 'transparency="50" '
+//	END IF
+		
+ELSE
+	//	Need to come up with a way to show enabled/disabled for version prior to 11.5
+END IF
+	
+ls_modify								= ls_modify + ') '
+	
 ls_modify								= dw_palette.Modify(ls_modify)
 
 IF ls_modify <> '' THEN
@@ -847,6 +898,7 @@ IF ls_modify <> '' THEN
 END IF
 
 dw_palette.SetPosition('t_' + ds_XPListBar.of_getItem_objectName(vl_item), "detail", TRUE)
+dw_palette.SetPosition('p_' + ds_XPListBar.of_getItem_objectName(vl_item), "detail", TRUE)
 
 RETURN
 end subroutine
@@ -1298,6 +1350,12 @@ IF ds_XPListBar.of_getItem_collapsed(vl_item) = (NOT vb_switch) THEN
 	
 	ds_XPListBar.of_setItem_collapsed(vl_item, vb_switch)
 
+	IF vb_switch THEN
+		dw_palette.Modify('p_group_' + String(vl_item) + '_chevron.filename="' + is_chevronDown + '"')
+	ELSE
+		dw_palette.Modify('p_group_' + String(vl_item) + '_chevron.filename="' + is_chevronUp + '"')
+	END IF
+	
 	of_update()
 	
 END IF
@@ -2284,7 +2342,8 @@ FOR ll_group = 1 TO ll_items
 											+ 'r_' + ls_group + '_left_corner.Visible="0" '											&
 											+ 'r_' + ls_group + '_left_shadow.Visible="0" '											&
 											+ 'e_' + ls_group + '.Visible="0" '															&
-											+ 't_' + ls_group + '.Visible="0" '
+											+ 't_' + ls_group + '.Visible="0" '															&
+											+ 'p_' + ls_group + '_chevron.Visible="0" '
 											
 		//	Items under the group are not visible
 		FOR ll_item = 1 TO ll_items
@@ -2319,7 +2378,8 @@ FOR ll_group = 1 TO ll_items
 											+ 'r_' + ls_group + '_left_corner.Visible="1" '											&
 											+ 'r_' + ls_group + '_left_shadow.Visible="1" '											&
 											+ 'e_' + ls_group + '.Visible="1" '															&
-											+ 't_' + ls_group + '.Visible="1" '
+											+ 't_' + ls_group + '.Visible="1" '															&
+											+ 'p_' + ls_group + '_chevron.Visible="1" '
 
 	//	Update the group's position
 	ls_modify							= ls_modify																							&
@@ -2332,7 +2392,9 @@ FOR ll_group = 1 TO ll_items
 											+ 'r_' + ls_group + '_right_shadow.'														&
 											+ 'x="' + String(il_xIndent + ll_width - 18) + '" '									&
 											+ 'e_' + ls_group + '.'																			&
-											+ 'x="' + String(il_xIndent + ll_width - 87 - (il_xPixelInUnits * 4)) + '" '
+											+ 'x="' + String(il_xIndent + ll_width - 87 - (il_xPixelInUnits * 4)) + '" '	&
+											+ 'p_' + ls_group + '_chevron.'																&
+											+ 'x="' + String(il_xIndent + ll_width - 87) + '" '
 											
 	ll_groupY							= ll_pos + ((il_groupHeight - ldbl_fontHeight) / 2)
 	
@@ -2361,7 +2423,9 @@ FOR ll_group = 1 TO ll_items
 											+ 't_' + ls_group + '.'																			&
 											+ 'height="' + String(1 * Int(ldbl_fontHeight)) + '" '								&
 											+ 't_' + ls_group + '.'																			&
-											+ 'width="' + String(ll_groupWidth) + '" '
+											+ 'width="' + String(ll_groupWidth) + '" '												&
+											+ 'p_' + ls_group + '_chevron.'																&
+											+ 'y="' + String(ll_pos + 28) + '" '
 
 	ll_pos							 	= ll_pos + il_groupHeight
 	
@@ -2715,6 +2779,9 @@ event constructor;// CopyRight (c) 2016 by Christopher Harris, all rights reserv
 //
 // Original Author:	Christopher Harris
 
+is_chevronUp							= invo_XPListBar.of_image_chevronUp()
+is_chevronDown							= invo_XPListBar.of_image_chevronDown()
+
 il_xPixelInUnits						= PixelsToUnits(1, XPixelsToUnits!)
 il_yPixelInUnits						= PixelsToUnits(1, YPixelsToUnits!)
 
@@ -3032,11 +3099,12 @@ ls_modify								= 't_scroll_top.x="' + String(il_xIndent) + '" '										&
 ls_modify								= dw_palette.Modify(ls_modify)
 end event
 
-event clicked;CHOOSE CASE dwo.Type
+event clicked;Long										ll_item
+
+CHOOSE CASE dwo.Type
 	
 	CASE 'ellipse'
 		
-		Long								ll_item
 		ll_item							= ds_XPListBar.of_locateItem_objectName(Mid(dwo.Name, 3))
 		
 		IF NOT isNull(ll_item) THEN
@@ -3047,7 +3115,21 @@ event clicked;CHOOSE CASE dwo.Type
 
 	CASE 'datawindow'
 	
-	CASE 'text',	'bitmap'
+	CASE 'bitmap'
+		
+		ll_item							= ds_XPListBar.of_locateItem_objectName(Mid(dwo.Name, 3))
+	
+		IF NOT isNull(ll_item) THEN
+			IF Pos(dwo.name, '_chevron') > 0 THEN
+				of_setCollapsed(ll_item, NOT of_isCollapsed(ll_item))
+			ELSE
+				is_lButtonDown			= ds_XPListBar.of_getItem_objectName(ll_item)
+			END IF
+		ELSE
+			setNull(is_lButtonDown)
+		END IF
+	
+	CASE 'text'
 	
 		ll_item							= ds_XPListBar.of_locateItem_objectName(Mid(dwo.Name, 3))
 		
@@ -3101,6 +3183,9 @@ lm_context.mf_setParent(parent)
 lm_context.m_showToolTips.Checked		= of_displayToolTips()
 
 lm_context.mf_popMenu(this)
+end event
+
+event scrollvertical;of_scrollButtons()
 end event
 
 type r_border from rectangle within u_cst_xplistbar
