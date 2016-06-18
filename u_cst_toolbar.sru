@@ -3379,7 +3379,6 @@ event ue_post_getfocus ( long vl_tabbed )
 event ue_dwnbacktabout pbm_dwnbacktabout
 event ue_dwnkey pbm_dwnkey
 event ue_syscommand pbm_syscommand
-event ue_dwnhscoll pbm_dwnhscroll
 integer x = 5
 integer y = 4
 integer taborder = 10
@@ -3517,18 +3516,6 @@ event ue_dwnkey;// CopyRight (c) 2016 by Christopher Harris, all rights reserved
 // Original Author:	Christopher Harris
 
 of_keyDown(key, keyFlags)
-end event
-
-event ue_dwnhscoll;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
-//
-// This code and accompanying materials are made available under the GPLv3
-// license which accompanies this distribution and can be found at:
-//
-// http://www.gnu.org/licenses/gpl-3.0.html.
-//
-// Original Author:	Christopher Harris
-
-Object.DataWindow.HorizontalScrollPosition	= 0
 end event
 
 event constructor;call super::constructor;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -3681,6 +3668,30 @@ ll_itemCurrent							= dw_toolBar.of_locateItem()
 
 of_update()
 of_drawButton(ll_itemCurrent)
+end event
+
+event scrollhorizontal;call super::scrollhorizontal;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+Object.DataWindow.HorizontalScrollPosition	= 0
+end event
+
+event scrollvertical;call super::scrollvertical;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+Object.DataWindow.VerticalScrollPosition		= 0
 end event
 
 type r_border from rectangle within u_cst_toolbar
