@@ -193,6 +193,12 @@ public function string of_gettext (string vs_text)
 public function string of_gettext (string vs_text_group, string vs_text_item)
 public subroutine of_setbackcolor (long vl_backcolor)
 public subroutine of_setbackcolor (integer vi_red, integer vi_green, integer vi_blue)
+public function long of_clickgroup (long vl_group)
+public function long of_clickgroup (string vs_text_group)
+public function long of_clicklabel (long vl_group, long vl_item)
+public function long of_clicklabel (string vs_text_group, string vs_text_item)
+public function long of_clicklink (string vs_text_group, string vs_text_item)
+public function long of_clicklink (long vl_group, long vl_item)
 end prototypes
 
 event type integer ue_itemclicking(string vs_group, string vs_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -2747,6 +2753,78 @@ of_setBackColor(RGB(vi_red, vi_green, vi_blue))
 
 RETURN
 end subroutine
+
+public function long of_clickgroup (long vl_group);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+Return(of_clickItem(vl_group))
+end function
+
+public function long of_clickgroup (string vs_text_group);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+Return(of_clickItem(vs_text_group))
+end function
+
+public function long of_clicklabel (long vl_group, long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+Return(of_clickItem(vl_group, vl_item))
+end function
+
+public function long of_clicklabel (string vs_text_group, string vs_text_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+Return(of_clickItem(vs_text_group, vs_text_item))
+end function
+
+public function long of_clicklink (string vs_text_group, string vs_text_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+Return(of_clickItem(vs_text_group, vs_text_item))
+end function
+
+public function long of_clicklink (long vl_group, long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+Return(of_clickItem(vl_group, vl_item))
+end function
 
 on u_cst_xplistbar.create
 this.st_xplistbar=create st_xplistbar
