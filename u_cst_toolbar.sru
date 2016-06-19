@@ -227,6 +227,18 @@ public function long of_locateitem (string vs_text)
 protected function long of_getcolor (string vs_color)
 private subroutine of_broadcast_showtext (boolean vb_showtext)
 private subroutine of_broadcast_showtooltips (boolean vb_showtips)
+public function long of_addbutton (string vs_text)
+public function long of_addbutton (string vs_text, integer vi_position)
+public function long of_addbutton (string vs_text, string vs_image)
+public function long of_addbutton (string vs_text, string vs_image, integer vi_position)
+public function long of_addbutton (string vs_text, string vs_image, string vs_tooltip)
+public function long of_addbutton (string vs_text, string vs_image, string vs_tooltip, integer vi_position)
+public function long of_addbuttons (string vs_text[], string vs_image[], string vs_tooltip[], integer vi_position[])
+public function long of_addbuttons (string vs_text[], string vs_image[], string vs_tooltip[])
+public function long of_addbuttons (string vs_text[], string vs_image[], integer vi_position[])
+public function long of_addbuttons (string vs_text[], string vs_image[])
+public function long of_addbuttons (string vs_text[], integer vi_position[])
+public function long of_addbuttons (string vs_text[])
 end prototypes
 
 event type integer ue_itemclicking(string vs_button);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -3149,6 +3161,150 @@ NEXT
 
 RETURN
 end subroutine
+
+public function long of_addbutton (string vs_text);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+Return(of_addItem(vs_text))
+end function
+
+public function long of_addbutton (string vs_text, integer vi_position);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+Return(of_addItem(vs_text, vi_position))
+end function
+
+public function long of_addbutton (string vs_text, string vs_image);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+Return(of_addItem(vs_text, vs_image))
+end function
+
+public function long of_addbutton (string vs_text, string vs_image, integer vi_position);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+Return(of_addItem(vs_text, vs_image, vi_position))
+end function
+
+public function long of_addbutton (string vs_text, string vs_image, string vs_tooltip);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+Return(of_addItem(vs_text, vs_image, vs_toolTip))
+end function
+
+public function long of_addbutton (string vs_text, string vs_image, string vs_tooltip, integer vi_position);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+Return(of_addItem(vs_text, vs_image, vs_toolTip, vi_position))
+end function
+
+public function long of_addbuttons (string vs_text[], string vs_image[], string vs_tooltip[], integer vi_position[]);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+Return(of_addItems(vs_text[], vs_image[], vs_toolTip[], vi_position[]))
+end function
+
+public function long of_addbuttons (string vs_text[], string vs_image[], string vs_tooltip[]);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+Return(of_addItems(vs_text[], vs_image[], vs_toolTip[]))
+end function
+
+public function long of_addbuttons (string vs_text[], string vs_image[], integer vi_position[]);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+Return(of_addItems(vs_text[], vs_image[], vi_position[]))
+end function
+
+public function long of_addbuttons (string vs_text[], string vs_image[]);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+Return(of_addItems(vs_text[], vs_image[]))
+end function
+
+public function long of_addbuttons (string vs_text[], integer vi_position[]);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+Return(of_addItems(vs_text[], vi_position[]))
+end function
+
+public function long of_addbuttons (string vs_text[]);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+Return(of_addItems(vs_text[]))
+end function
 
 on u_cst_toolbar.create
 this.st_toolbar=create st_toolbar
