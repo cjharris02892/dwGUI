@@ -1545,12 +1545,12 @@ IF GetDIBits(lul_hDC_memory, lul_hBitmap, 0, 0, 0, lstr_Info, DIB_RGB_COLORS) > 
 	// Concatenate the parts into a whole bitMap
 	lblb_bitMap							= lblb_header + lblb_info + lblb_bitMap
 				
-	Long									ll_file
-	ll_file								= FileOpen(ls_fileName, StreamMode!, Write!, LockWrite!, Replace!)
-		
 	UnsignedLong						lul_length
 	lul_length							= Len(lblb_bitMap)
 				
+	Long									ll_file
+	ll_file								= of_CreateFile(ls_FileName, GENERIC_WRITE + GENERIC_READ, FILE_SHARE_NONE, CREATE_NEW)
+
 	Long									ll_written
 	ll_written 							= of_fileWriteEx(ll_file, lblb_bitMap, lul_length)
 			
@@ -1558,8 +1558,9 @@ IF GetDIBits(lul_hDC_memory, lul_hBitmap, 0, 0, 0, lstr_Info, DIB_RGB_COLORS) > 
 		ls_fileName						= ''
 	END IF
 				
-	FileClose(ll_file)
-				
+	FlushFileBuffers(ll_File)
+	CloseHandle(ll_File)
+	
 END IF
 			
 // Clean up handles
