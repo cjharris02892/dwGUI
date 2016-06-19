@@ -1356,7 +1356,7 @@ IF ds_XPListBar.of_getItem_collapsed(vl_item) = (NOT vb_switch) THEN
 		dw_palette.Modify('p_group_' + String(vl_item) + '_chevron.filename="' + is_chevronUp + '"')
 	END IF
 	
-	of_update()
+	of_update(TRUE)
 	
 END IF
 
