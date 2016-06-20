@@ -18,6 +18,10 @@ type bitmapinfoheader from structure within n_cst_toolbar
 end type
 type bitmapinfo from structure within n_cst_toolbar
 end type
+type filetime from structure within n_cst_toolbar
+end type
+type win32_file_attribute_data from structure within n_cst_toolbar
+end type
 end forward
 
 type rect from structure
@@ -97,6 +101,20 @@ end type
 type bitmapinfo from structure
 	bitmapinfoheader		bmiheader
 	unsignedlong		bmicolors[]
+end type
+
+type filetime from structure
+	unsignedLong		dwLowDateTime
+	unsignedlong		dwHighDateTime
+end type
+
+type WIN32_FILE_ATTRIBUTE_DATA from structure
+	unsignedlong		dwFileAttributes
+	filetime		ftCreationTime
+	filetime		ftLastAccessTime
+	filetime		ftLastWriteTime
+	unsignedlong		nFileSizeHigh
+	unsignedLong		nFileSizeLow
 end type
 
 global type n_cst_toolbar from nonvisualobject autoinstantiate
@@ -212,8 +230,10 @@ Private:
 	FUNCTION Boolean FlushFileBuffers(UnsignedLong vul_Handle) LIBRARY "kernel32.dll"
 	FUNCTION Boolean CloseHandle(Long vl_Handle) LIBRARY "kernel32.dll"
 
-end prototypes
+	FUNCTION Boolean GetFileAttributesEx(REF String lpFileName, Integer fInfoLevelId, REF WIN32_FILE_ATTRIBUTE_DATA pFileInformation) ALIAS FOR "GetFileAttributesExW" LIBRARY "kernel32.dll"
+	FUNCTION Boolean GetFileAttributesExA(REF String lpFileName, Integer fInfoLevelId, REF WIN32_FILE_ATTRIBUTE_DATA pFileInformation) ALIAS FOR "GetFileAttributesExA;Ansi" LIBRARY "kernel32.dll"
 
+end prototypes
 type variables
 Public:
 
@@ -363,7 +383,30 @@ Public:
 	CONSTANT Integer						OPEN_EXISTING					= 3
 	CONSTANT Integer						OPEN_ALWAYS						= 4
 	CONSTANT Integer						TRUNCATE_EXISTING				= 5
-	
+
+	//	File Attributes
+	CONSTANT Long							FILE_ATTRIBUTE_ARCHIVE		= 32						//	(0x20) A file or directory that is an archive file or directory. Applications typically use this attribute to mark files for backup or removal . 
+	CONSTANT Long							FILE_ATTRIBUTE_COMPRESSED	= 2048					//	(0x800) A file or directory that is compressed. For a file, all of the data in the file is compressed. For a directory, compression is the default for newly created files and subdirectories.
+	CONSTANT Long							FILE_ATTRIBUTE_DEVICE		= 64						//	(0x40) This value is reserved for system use.
+	CONSTANT Long							FILE_ATTRIBUTE_DIRECTORY	= 16						// (0x10) The handle that identifies a directory.
+	CONSTANT Long							FILE_ATTRIBUTE_ENCRYPTED	= 16384					// (0x4000) A file or directory that is encrypted. For a file, all data streams in the file are encrypted. For a directory, encryption is the default for newly created files and subdirectories.
+	CONSTANT Long							FILE_ATTRIBUTE_HIDDEN		= 2						// (0x2) The file or directory is hidden. It is not included in an ordinary directory listing.
+	CONSTANT Long							FILE_ATTRIBUTE_INTEGRITY_STREAM						&
+																					= 32768					//	(0x8000) The directory or user data stream is configured with integrity (only supported on ReFS volumes). It is not included in an ordinary directory listing. The integrity setting persists with the file if it's renamed. If a file is copied the destination file will have integrity set if either the source file or destination directory have integrity set.  Windows Server 2008 R2, Windows 7, Windows Server 2008, Windows Vista, Windows Server 2003, and Windows XP:  This flag is not supported until Windows Server 2012.
+	CONSTANT Long							FILE_ATTRIBUTE_NORMAL		= 128						//	(0x80) A file that does not have other attributes set. This attribute is valid only when used alone.
+	CONSTANT Long							FILE_ATTRIBUTE_NOT_CONTENT_INDEXED					&
+																					= 8192					//	(0x2000) The file or directory is not to be indexed by the content indexing service.
+	CONSTANT Long							FILE_ATTRIBUTE_NO_SCRUB_DATA							&
+																					= 131072					//	(0x20000) The user data stream not to be read by the background data integrity scanner (AKA scrubber). When set on a directory it only provides inheritance. This flag is only supported on Storage Spaces and ReFS volumes. It is not included in an ordinary directory listing.  Windows Server 2008 R2, Windows 7, Windows Server 2008, Windows Vista, Windows Server 2003, and Windows XP:  This flag is not supported until Windows 8 and Windows Server 2012.
+	CONSTANT Long							FILE_ATTRIBUTE_OFFLINE		= 4096					// (0x1000) The data of a file is not available immediately. This attribute indicates that the file data is physically moved to offline storage. This attribute is used by Remote Storage, which is the hierarchical storage management software. Applications should not arbitrarily change this attribute.
+	CONSTANT Long							FILE_ATTRIBUTE_READONLY		= 1						// (0x1) A file that is read-only. Applications can read the file, but cannot write to it or delete it. This attribute is not honored on directories. For more information, see You cannot view or change the Read-only or the System attributes of folders in Windows Server 2003, in Windows XP, in Windows Vista or in Windows 7.
+	CONSTANT Long							FILE_ATTRIBUTE_REPARSE_POINT							&
+																					= 1024					// (0x400) A file or directory that has an associated reparse point, or a file that is a symbolic link.
+	CONSTANT Long							FILE_ATTRIBUTE_SPARSE_FILE	= 512						//	(0x200) A file that is a sparse file.
+ 	CONSTANT Long							FILE_ATTRIBUTE_SYSTEM		= 4						//	(0x4) A file or directory that the operating system uses a part of, or uses exclusively.
+ 	CONSTANT Long							FILE_ATTRIBUTE_TEMPORARY	= 256						//	(0x100) A file that is being used for temporary storage. File systems avoid writing data back to mass storage if sufficient cache memory is available, because typically, an application deletes a temporary file after the handle is closed. In that scenario, the system can entirely avoid writing the data. Otherwise, the data is written after the handle is closed.
+	CONSTANT Long							FILE_ATTRIBUTE_VIRTUAL		= 65536					//	(0x10000) This value is reserved for system 
+ 
 Private:
 
 	CONSTANT Long							MAX_PATH							= 256
@@ -373,7 +416,6 @@ Private:
 	Boolean									ib_isUnicode					= TRUE
 	Double									idbl_PBVersion					= 0.0
 end variables
-
 forward prototypes
 public function boolean of_isunicode ()
 public function long of_getfontwidth (ref statictext rst_font, string vs_text)
@@ -415,6 +457,7 @@ public function string of_image_save (string vs_filename, string vs_heximage)
 public function string of_image_extract (string vs_imagename)
 public function string of_image_chevrondown ()
 public function string of_image_chevronup ()
+public function longlong of_getfilesize (string vs_filename)
 end prototypes
 
 public function boolean of_isunicode ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -1357,8 +1400,14 @@ ls_tempPath								= of_getTempPath()
 String									ls_fileName
 ls_fileName								= ls_tempPath + vs_fileName
 
-IF FileExists(ls_fileName) THEN Return(ls_fileName)
-
+IF FileExists(ls_fileName) THEN
+	IF of_getFileSize(ls_fileName) <> ll_chars THEN 
+		FileDelete(ls_fileName)
+	ELSE
+		Return(ls_fileName)
+	END IF
+END IF
+	
 Long										ll_written
 
 Long										ll_file
@@ -1584,18 +1633,31 @@ public function string of_image_chevrondown ();// CopyRight (c) 2016 by Christop
 //
 // Original Author:	Christopher Harris
 
+//String									ls_chevronDown	= '89 50 4E 47 0D 0A 1A 0A 00 00 00 0D 49 48 44 52 '	&
+//																+ '00 00 00 0B 00 00 00 0B 08 02 00 00 00 26 CE E0 '	&
+//																+ '05 00 00 00 09 70 48 59 73 00 00 0E C0 00 00 0E '	&
+//																+ 'C0 01 6A D6 89 09 00 00 00 0E 74 45 58 74 53 6F '	&
+//																+ '66 74 77 61 72 65 00 64 77 47 55 49 30 F4 72 A1 '	&
+//																+ '00 00 00 53 49 44 41 54 28 53 85 8D C1 11 C0 20 '	&
+//																+ '0C C3 B2 FF 54 D9 0C C4 25 E7 B8 F9 54 9F DA 58 '	&
+//																+ 'D0 C8 3F 9E 11 11 E7 9C EA 82 13 CE 09 FD C6 92 '	&
+//																+ '34 C3 FC 45 92 CF 30 09 4A F2 19 5E D1 ED CA 15 '	&
+//																+ 'A4 76 77 09 FC A5 FE 80 24 9F 61 12 94 E4 33 7C '	&
+//																+ '0A AC 19 76 DF 64 5E AA DC F2 17 8B FF F5 CB 00 '	&
+//																+ '00 00 00 49 45 4E 44 AE 42 60 82'
 String									ls_chevronDown	= '89 50 4E 47 0D 0A 1A 0A 00 00 00 0D 49 48 44 52 '	&
-																+ '00 00 00 0B 00 00 00 0B 08 02 00 00 00 26 CE E0 '	&
+																+ '00 00 00 09 00 00 00 10 08 02 00 00 00 4B 2A C2 '	&
+																+ '14 00 00 00 04 67 41 4D 41 00 00 B1 8F 0B FC 61 '	&
 																+ '05 00 00 00 09 70 48 59 73 00 00 0E C0 00 00 0E '	&
 																+ 'C0 01 6A D6 89 09 00 00 00 0E 74 45 58 74 53 6F '	&
 																+ '66 74 77 61 72 65 00 64 77 47 55 49 30 F4 72 A1 '	&
-																+ '00 00 00 53 49 44 41 54 28 53 85 8D C1 11 C0 20 '	&
-																+ '0C C3 B2 FF 54 D9 0C C4 25 E7 B8 F9 54 9F DA 58 '	&
-																+ 'D0 C8 3F 9E 11 11 E7 9C EA 82 13 CE 09 FD C6 92 '	&
-																+ '34 C3 FC 45 92 CF 30 09 4A F2 19 5E D1 ED CA 15 '	&
-																+ 'A4 76 77 09 FC A5 FE 80 24 9F 61 12 94 E4 33 7C '	&
-																+ '0A AC 19 76 DF 64 5E AA DC F2 17 8B FF F5 CB 00 '	&
-																+ '00 00 00 49 45 4E 44 AE 42 60 82'
+																+ '00 00 00 51 49 44 41 54 28 53 CD 8D B1 0D C0 30 '	&
+																+ '0C C3 F2 FF 55 FE AC 95 44 A3 71 86 EC E5 10 83 '	&
+																+ '22 D0 AE BA F3 B7 F6 04 5C 7C EA B6 02 AE 17 ED '	&
+																+ 'E6 13 66 F0 C8 11 AC A2 9D E6 CF F3 83 84 AD 4C '	&
+																+ '02 D7 8B 76 F3 09 33 78 E4 08 56 D1 3E 9B 98 41 '	&
+																+ '1C 72 50 F5 02 68 19 18 66 18 08 FE 78 00 00 00 '	&
+																+ '00 49 45 4E 44 AE 42 60 82'
 
 Return(of_image_save('chevronDown.png', ls_chevronDown))
 end function
@@ -1609,22 +1671,62 @@ public function string of_image_chevronup ();// CopyRight (c) 2016 by Christophe
 //
 // Original Author:	Christopher Harris
 
+//String									ls_chevronUp	= '89 50 4E 47 0D 0A 1A 0A 00 00 00 0D 49 48 44 52 '	&
+//																+ '00 00 00 0B 00 00 00 0B 08 02 00 00 00 26 CE E0 '	&
+//																+ '71 00 00 00 04 67 41 4D 41 00 00 B1 8F 0B FC 61 '	&
+//																+ '05 00 00 00 09 70 48 59 73 00 00 0E BF 00 00 0E '	&
+//																+ 'BF 01 38 05 53 24 00 00 00 0E 74 45 58 74 53 6F '	&
+//																+ '66 74 77 61 72 65 00 64 77 47 55 49 30 F4 72 A1 '	&
+//																+ '00 00 00 4C 49 44 41 54 28 53 85 8C 41 0E 00 20 '	&
+//																+ '08 C3 F8 FF AB F8 19 A2 23 83 4C 13 7B 01 6C A3 '	&
+//																+ 'F9 0F 2D CC AE 97 9A 87 D4 11 21 51 1F D0 B9 48 '	&
+//																+ '54 1B 35 98 D1 1E 53 53 30 AA 1B 20 65 04 FA E0 '	&
+//																+ '4F 12 D5 46 0D 66 B4 87 68 C0 A8 7F 7B E3 BE 00 '	&
+//																+ '18 E3 F2 17 4E E5 57 40 00 00 00 00 49 45 4E 44 '	&
+//																+ 'AE 42 60 82'
 String									ls_chevronUp	= '89 50 4E 47 0D 0A 1A 0A 00 00 00 0D 49 48 44 52 '	&
-																+ '00 00 00 0B 00 00 00 0B 08 02 00 00 00 26 CE E0 '	&
-																+ '71 00 00 00 04 67 41 4D 41 00 00 B1 8F 0B FC 61 '	&
-																+ '05 00 00 00 09 70 48 59 73 00 00 0E BF 00 00 0E '	&
-																+ 'BF 01 38 05 53 24 00 00 00 0E 74 45 58 74 53 6F '	&
+																+ '00 00 00 09 00 00 00 10 08 02 00 00 00 4B 2A C2 '	&
+																+ '14 00 00 00 04 67 41 4D 41 00 00 B1 8F 0B FC 61 '	&
+																+ '05 00 00 00 09 70 48 59 73 00 00 0E C0 00 00 0E '	&
+																+ 'C0 01 6A D6 89 09 00 00 00 0E 74 45 58 74 53 6F '	&
 																+ '66 74 77 61 72 65 00 64 77 47 55 49 30 F4 72 A1 '	&
-																+ '00 00 00 4C 49 44 41 54 28 53 85 8C 41 0E 00 20 '	&
-																+ '08 C3 F8 FF AB F8 19 A2 23 83 4C 13 7B 01 6C A3 '	&
-																+ 'F9 0F 2D CC AE 97 9A 87 D4 11 21 51 1F D0 B9 48 '	&
-																+ '54 1B 35 98 D1 1E 53 53 30 AA 1B 20 65 04 FA E0 '	&
-																+ '4F 12 D5 46 0D 66 B4 87 68 C0 A8 7F 7B E3 BE 00 '	&
-																+ '18 E3 F2 17 4E E5 57 40 00 00 00 00 49 45 4E 44 '	&
-																+ 'AE 42 60 82'
-
+																+ '00 00 00 51 49 44 41 54 28 53 CD 8C C1 0D C0 30 '	&
+																+ '08 03 B3 FF 54 6C 46 4D CE A2 44 6A FF B1 84 62 '	&
+																+ 'FB 20 2B FE 75 B0 B5 CE E8 77 03 E4 DC 8C 36 33 '	&
+																+ '31 2E 27 90 9F B8 46 19 40 F5 46 0D 62 5D 72 6E '	&
+																+ '46 AB 75 8C CB 09 E4 27 AE A9 EF 37 40 1D 7D FE '	&
+																+ 'A9 7B 58 C4 03 4E 9D 18 66 F1 9B 2A 64 00 00 00 '	&
+																+ '00 49 45 4E 44 AE 42 60 82'
 
 Return(of_image_save('chevronUp.png', ls_chevronUp))
+end function
+
+public function longlong of_getfilesize (string vs_filename);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+Boolean									lb_RC
+win32_file_attribute_data			lstr_fileAttributes
+
+IF of_isUnicode() THEN
+	lb_RC									= GetFileAttributesEx(vs_FileName, 0, lstr_fileAttributes)
+ELSE
+	lb_RC									= GetFileAttributesExA(vs_FileName, 0, lstr_fileAttributes)
+END IF
+
+LongLong									lll_fileSize
+setNull(lll_fileSize)
+
+IF lb_RC THEN
+	lll_fileSize						= LongLong(lstr_fileAttributes.nFileSizeLow, lstr_fileAttributes.nFileSizeHigh)
+END IF
+
+Return(lll_fileSize)
 end function
 
 on n_cst_toolbar.create

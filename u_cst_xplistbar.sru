@@ -852,10 +852,10 @@ ls_modify								= ls_modify + ') '
 ls_modify								= ls_modify																							&
 											+ 'CREATE bitmap(band=detail '																&
 											+ 'filename="' + is_chevronUp + '" '														&
-											+ 'x="' + String(il_xIndent + ll_width - 87) + '" '									&
-											+ 'y="28" '																							&
-											+ 'height="'+ String(11 * il_yPixelInUnits) + '" '										&
-											+ 'width="' + String(11 * il_xPixelInUnits) + '" '										&
+											+ 'x="' + String(il_xIndent + ll_width - 84) + '" '									&
+											+ 'y="20" '																							&
+											+ 'height="'+ String(16 * il_yPixelInUnits) + '" '										&
+											+ 'width="' + String(9 * il_xPixelInUnits) + '" '										&
 											+ 'border="0" '																					&
 											+ 'name=p_' + ds_XPListBar.of_getItem_objectName(vl_item) + '_chevron '			&
 											+ 'visible="1" '
@@ -2400,7 +2400,7 @@ FOR ll_group = 1 TO ll_items
 											+ 'e_' + ls_group + '.'																			&
 											+ 'x="' + String(il_xIndent + ll_width - 87 - (il_xPixelInUnits * 4)) + '" '	&
 											+ 'p_' + ls_group + '_chevron.'																&
-											+ 'x="' + String(il_xIndent + ll_width - 87) + '" '
+											+ 'x="' + String(il_xIndent + ll_width - 84) + '" '
 											
 	ll_groupY							= ll_pos + ((il_groupHeight - ldbl_fontHeight) / 2)
 	
@@ -2431,7 +2431,7 @@ FOR ll_group = 1 TO ll_items
 											+ 't_' + ls_group + '.'																			&
 											+ 'width="' + String(ll_groupWidth) + '" '												&
 											+ 'p_' + ls_group + '_chevron.'																&
-											+ 'y="' + String(ll_pos + 28) + '" '
+											+ 'y="' + String(ll_pos + 20) + '" '
 
 	ll_pos							 	= ll_pos + il_groupHeight
 	
