@@ -25,7 +25,7 @@ table(column=(type=long updatewhereclause=no name=order dbname="order" initial="
  column=(type=long updatewhereclause=no name=recttop dbname="recttop" )
  column=(type=long updatewhereclause=no name=rectheight dbname="rectheight" )
  column=(type=char(1) updatewhereclause=no name=collapsed dbname="collapsed" initial="N" )
- )
+  sort="order A " )
 htmltable(border="1" )
 htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
 xhtmlgen() cssgen(sessionspecific="0" )
