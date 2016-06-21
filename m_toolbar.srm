@@ -97,16 +97,16 @@ public function integer mf_popmenu (dragobject vdrg_parent, menu vm_popmenu, int
 //
 // Original Author:	Christopher Harris
 
-n_cst_toolBar							lnvo_toolBar
+n_cst_dwGUI								lnvo_dwGUI
 
 Window									lw_parent,	lw_frame,	lw_childParent
 GraphicObject							lgo
 	
-lw_parent								= lnvo_toolBar.of_getParentWindow(vdrg_parent)
+lw_parent								= lnvo_dwGUI.of_getParentWindow(vdrg_parent)
 	
 IF IsValid(lw_parent) THEN
 	
-	lw_frame								= lnvo_toolBar.of_getFrame(vdrg_parent)
+	lw_frame								= lnvo_dwGUI.of_getFrame(vdrg_parent)
 
 	IF IsValid(lw_frame) THEN
 
@@ -114,11 +114,11 @@ IF IsValid(lw_parent) THEN
 			lw_parent					= lw_frame
 		ELSE
 
-			IF lw_parent.windowType = Main! AND lnvo_toolBar.of_IsMDIChild(lw_parent) THEN
+			IF lw_parent.windowType = Main! AND lnvo_dwGUI.of_IsMDIChild(lw_parent) THEN
 				lw_parent				= lw_frame
 			ELSE
 					
-				IF lw_parent.windowType = Main! AND lnvo_toolBar.of_IsChild(lw_parent) THEN
+				IF lw_parent.windowType = Main! AND lnvo_dwGUI.of_IsChild(lw_parent) THEN
 					
 					lgo 					= lw_parent
 						
@@ -143,7 +143,7 @@ IF IsValid(lw_parent) THEN
 					LOOP
 			
 					IF lw_parent.TypeOf() = Window! THEN
-						IF lw_parent.windowType = Main! AND lnvo_toolBar.of_IsMDIChild(lw_parent) THEN
+						IF lw_parent.windowType = Main! AND lnvo_dwGUI.of_IsMDIChild(lw_parent) THEN
 							lw_parent	= lw_frame
 						END IF
 					END IF

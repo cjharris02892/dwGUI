@@ -136,11 +136,11 @@ on m_sheet.destroy
 call super::destroy
 end on
 
-event clicked;n_cst_toolBar							lnvo_toolbar
+event clicked;n_cst_dwGUI								lnvo_dwGUI
 
 Window									lw_open
 
-OpenSheet(lw_open, 'w_DWGUI', lnvo_toolbar.of_getFrame(this))
+OpenSheet(lw_open, 'w_DWGUI', lnvo_dwGUI.of_getFrame(this))
 end event
 
 type m_main from menu within m_open
@@ -210,11 +210,11 @@ end on
 type m_child from menu within m_open
 end type
 
-event clicked;n_cst_toolBar							lnvo_toolbar
+event clicked;n_cst_dwGUI								lnvo_dwGUI
 
 Window									lw_open
 
-OpenSheet(lw_open, 'w_DWGUI_child', lnvo_toolbar.of_getFrame(this))
+OpenSheet(lw_open, 'w_DWGUI_child', lnvo_dwGUI.of_getFrame(this))
 end event
 
 on m_child.create

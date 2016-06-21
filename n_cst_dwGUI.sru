@@ -1,26 +1,26 @@
-HA$PBExportHeader$n_cst_toolbar.sru
+HA$PBExportHeader$n_cst_dwgui.sru
 forward
-global type n_cst_toolbar from nonvisualobject
+global type n_cst_dwgui from nonvisualobject
 end type
-type rect from structure within n_cst_toolbar
+type rect from structure within n_cst_dwgui
 end type
-type toolinfo from structure within n_cst_toolbar
+type toolinfo from structure within n_cst_dwgui
 end type
-type point from structure within n_cst_toolbar
+type point from structure within n_cst_dwgui
 end type
-type trackmouseevent from structure within n_cst_toolbar
+type trackmouseevent from structure within n_cst_dwgui
 end type
-type textmetric from structure within n_cst_toolbar
+type textmetric from structure within n_cst_dwgui
 end type
-type bitmapfileheader from structure within n_cst_toolbar
+type bitmapfileheader from structure within n_cst_dwgui
 end type
-type bitmapinfoheader from structure within n_cst_toolbar
+type bitmapinfoheader from structure within n_cst_dwgui
 end type
-type bitmapinfo from structure within n_cst_toolbar
+type bitmapinfo from structure within n_cst_dwgui
 end type
-type filetime from structure within n_cst_toolbar
+type filetime from structure within n_cst_dwgui
 end type
-type win32_file_attribute_data from structure within n_cst_toolbar
+type win32_file_attribute_data from structure within n_cst_dwgui
 end type
 end forward
 
@@ -117,7 +117,7 @@ type WIN32_FILE_ATTRIBUTE_DATA from structure
 	unsignedLong		nFileSizeLow
 end type
 
-global type n_cst_toolbar from nonvisualobject autoinstantiate
+global type n_cst_dwgui from nonvisualobject autoinstantiate
 end type
 
 type prototypes
@@ -234,6 +234,7 @@ Private:
 	FUNCTION Boolean GetFileAttributesExA(REF String lpFileName, Integer fInfoLevelId, REF WIN32_FILE_ATTRIBUTE_DATA pFileInformation) ALIAS FOR "GetFileAttributesExA;Ansi" LIBRARY "kernel32.dll"
 
 end prototypes
+
 type variables
 Public:
 
@@ -416,6 +417,7 @@ Private:
 	Boolean									ib_isUnicode					= TRUE
 	Double									idbl_PBVersion					= 0.0
 end variables
+
 forward prototypes
 public function boolean of_isunicode ()
 public function long of_getfontwidth (ref statictext rst_font, string vs_text)
@@ -1729,12 +1731,12 @@ END IF
 Return(lll_fileSize)
 end function
 
-on n_cst_toolbar.create
+on n_cst_dwgui.create
 call super::create
 TriggerEvent( this, "constructor" )
 end on
 
-on n_cst_toolbar.destroy
+on n_cst_dwgui.destroy
 TriggerEvent( this, "destructor" )
 call super::destroy
 end on

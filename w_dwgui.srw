@@ -33,8 +33,6 @@ global w_dwgui w_dwgui
 type variables
 Private:
 
-	n_cst_toolBar					invo_toolBar
-	
 	Long								il_oldWidth				= -1
 	Long								il_oldHeight			= -1
 	
@@ -42,7 +40,6 @@ Private:
 	
 	n_cst_resize					invo_resize
 end variables
-
 on w_dwgui.create
 this.st_splitbar=create st_splitbar
 this.uo_xplistbar=create uo_xplistbar

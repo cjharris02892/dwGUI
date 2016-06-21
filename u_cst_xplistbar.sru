@@ -98,7 +98,7 @@ Private:
 	CONSTANT Long							TAB								= 1
 	CONSTANT Long							BACKTAB							= 2
 	
-	n_cst_toolBar							invo_XPListBar
+	n_cst_dwGUI								invo_dwGUI
 	n_cst_color								invo_color
 	
 	Long										il_groupHeight					= 100
@@ -336,7 +336,7 @@ vs_toolTip								= Trim(vs_toolTip)
 ds_XPListBar.of_setItem_text(ll_item, vs_text)
 ds_XPListBar.of_setItem_toolTip(ll_item, vs_toolTip)
 
-ds_XPListBar.of_setItem_image(ll_item, invo_XPListBar.of_getImageName(vs_image))
+ds_XPListBar.of_setItem_image(ll_item, invo_dwGUI.of_getImageName(vs_image))
 ds_XPListBar.of_setItem_imageTransparency(ll_item, of_getColor(DEFAULTIMAGETRANSPARENCY))
 
 ds_XPListBar.of_setItem_objectName(ll_item, ds_XPListBar.GROUP + '_' + String(ll_item))
@@ -413,7 +413,7 @@ ds_XPListBar.of_setItem_parent(ll_item, vl_group)
 ds_XPListBar.of_setItem_text(ll_item, vs_text)
 ds_XPListBar.of_setItem_toolTip(ll_item, vs_toolTip)
 
-ds_XPListBar.of_setItem_image(ll_item, invo_XPListBar.of_getImageName(vs_image))
+ds_XPListBar.of_setItem_image(ll_item, invo_dwGUI.of_getImageName(vs_image))
 ds_XPListBar.of_setItem_imageTransparency(ll_item, of_getColor(DEFAULTIMAGETRANSPARENCY))
 
 ds_XPListBar.of_setItem_objectName(ll_item, ds_XPListBar.LABEL + '_' + String(ll_item))
@@ -481,7 +481,7 @@ ds_XPListBar.of_setItem_parent(ll_item, vl_group)
 ds_XPListBar.of_setItem_text(ll_item, vs_text)
 ds_XPListBar.of_setItem_toolTip(ll_item, vs_toolTip)
 
-ds_XPListBar.of_setItem_image(ll_item, invo_XPListBar.of_getImageName(vs_image))
+ds_XPListBar.of_setItem_image(ll_item, invo_dwGUI.of_getImageName(vs_image))
 ds_XPListBar.of_setItem_imageTransparency(ll_item, of_getColor(DEFAULTIMAGETRANSPARENCY))
 
 ds_XPListBar.of_setItem_objectName(ll_item, ds_XPListBar.LINK + '_' + String(ll_item))
@@ -945,7 +945,7 @@ ls_modify								= 'CREATE text(band=detail' + ' '															&
 											+ 'font.family="2" font.pitch="2" font.charset="0" '									&
 											+ 'background.mode="1" '
 
-//IF invo_XPListBar.of_PBVersion >= 12.5 THEN
+//IF invo_dwGUI.of_PBVersion >= 12.5 THEN
 //			
 //	IF ds_XPListBar.of_getItem_enabled(vl_item) THEN
 //		ls_modify						= ls_modify + 'enabled="1" '
@@ -1032,7 +1032,7 @@ ls_modify								= 'CREATE text(band=detail' + ' '															&
 											+ 'font.family="2" font.pitch="2" font.charset="0" '									&
 											+ 'background.mode="1" '
 
-//IF invo_XPListBar.of_PBVersion >= 12.5 THEN
+//IF invo_dwGUI.of_PBVersion >= 12.5 THEN
 //			
 //	IF ds_XPListBar.of_getItem_enabled(vl_item) THEN
 //		ls_modify						= ls_modify + 'enabled="1" '
@@ -1212,9 +1212,9 @@ IF isNull(vs_text) OR Trim(vs_text) = '' THEN Return(ll_width)
 IF isNull(vs_fontFace) OR Trim(vs_fontFace) = '' THEN Return(ll_width)
 
 st_XPListBar.FaceName				= vs_fontFace
-st_XPListBar.TextSize					= vi_fontSize * -1
+st_XPListBar.TextSize				= vi_fontSize * -1
 	
-ll_width									= PixelsToUnits(invo_XPListBar.of_GetFontWidth(st_XPListBar, vs_text) + 4, XPixelsToUnits!)
+ll_width									= PixelsToUnits(invo_dwGUI.of_GetFontWidth(st_XPListBar, vs_text) + 4, XPixelsToUnits!)
 	
 Return(ll_width)
 end function
@@ -2085,7 +2085,7 @@ IF vl_item <= 1 OR vl_item > ds_XPListBar.RowCount() THEN Return(FAILURE)
 
 IF isNull(vs_image) THEN vs_image = ''
 
-ds_XPListBar.of_setItem_image(vl_item, invo_XPListBar.of_getImageName(vs_image))
+ds_XPListBar.of_setItem_image(vl_item, invo_dwGUI.of_getImageName(vs_image))
 
 IF isNull(vs_image) OR Trim(vs_image) = '' THEN
 	ds_XPListBar.of_setItem_imageTransparency(vl_item, of_getColor(DEFAULTIMAGETRANSPARENCY))
@@ -2857,8 +2857,8 @@ event constructor;// CopyRight (c) 2016 by Christopher Harris, all rights reserv
 //
 // Original Author:	Christopher Harris
 
-is_chevronUp							= invo_XPListBar.of_image_chevronUp()
-is_chevronDown							= invo_XPListBar.of_image_chevronDown()
+is_chevronUp							= invo_dwGUI.of_image_chevronUp()
+is_chevronDown							= invo_dwGUI.of_image_chevronDown()
 
 il_xPixelInUnits						= PixelsToUnits(1, XPixelsToUnits!)
 il_yPixelInUnits						= PixelsToUnits(1, YPixelsToUnits!)
@@ -3010,7 +3010,7 @@ END CHOOSE
 
 IF NOT ib_trackMouseEvent THEN
 	
-	ib_trackMouseEvent				= invo_XPListBar.of_trackMouseEvent(handle(this), invo_XPListBar.TME_LEAVE)
+	ib_trackMouseEvent				= invo_dwGUI.of_trackMouseEvent(handle(this), invo_dwGUI.TME_LEAVE)
 
 	of_getFocus()
 
@@ -3121,7 +3121,7 @@ event other;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 // Original Author:	Christopher Harris
 
 CHOOSE CASE message.Number
-	CASE invo_XPListBar.WM_MOUSELEAVE
+	CASE invo_dwGUI.WM_MOUSELEAVE
 		
 		ib_trackMouseEvent			= FALSE
 //		ib_trackMouseEvent			= NOT (of_highLight(INVISIBLE) = SUCCESS)

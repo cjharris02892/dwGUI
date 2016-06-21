@@ -37,7 +37,7 @@ end prototypes
 type variables
 Private:
 
-	n_cst_toolBar							invo_toolBar
+	n_cst_dwGUI								invo_dwGUI
 
 Public:
 
@@ -904,7 +904,7 @@ IF NOT (isNull(dw_toolBar.of_getItem_text(vl_item)) OR Trim(dw_toolBar.of_getIte
 											+ 'font.family="2" font.pitch="2" font.charset="0" '								&
 											+ 'background.mode="1" '
 												
-//		IF invo_toolBar.of_PBVersion >= 12.5 THEN
+//		IF invo_dwGUI.of_PBVersion >= 12.5 THEN
 //			
 //			IF dw_toolBar.of_getItem_enabled(vl_item) THEN
 //				ls_modify				= ls_modify + 'enabled="1" '
@@ -969,7 +969,7 @@ IF NOT (isNull(dw_toolBar.of_getItem_text(vl_item)) OR Trim(dw_toolBar.of_getIte
 											+ 'font.family="2" font.pitch="2" font.charset="0" '								&
 											+ 'background.mode="1" '
 												
-//			IF invo_toolBar.of_PBVersion >= 12.5 THEN
+//			IF invo_dwGUI.of_PBVersion >= 12.5 THEN
 //				
 //				IF dw_toolBar.of_getItem_enabled(vl_item) THEN
 //					ls_modify			= ls_modify + 'enabled="1" '
@@ -1614,7 +1614,7 @@ vs_image									= Trim(vs_image)
 vs_toolTip								= Trim(vs_toolTip)
 
 dw_toolBar.of_setItem_text(ll_item, vs_text)
-dw_toolBar.of_setItem_image(ll_item, invo_toolBar.of_getImageName(vs_image))
+dw_toolBar.of_setItem_image(ll_item, invo_dwGUI.of_getImageName(vs_image))
 
 IF isNull(vs_toolTip) OR Trim(vs_toolTip) = '' THEN
 	dw_toolBar.of_setItem_toolTip(ll_item, vs_text)
@@ -1801,7 +1801,7 @@ IF isNull(vs_fontFace) OR Trim(vs_fontFace) = '' THEN Return(ll_width)
 st_toolBar.FaceName					= vs_fontFace
 st_toolBar.TextSize					= vi_fontSize * -1
 	
-ll_width									= PixelsToUnits(invo_toolBar.of_GetFontWidth(st_toolBar, vs_text) + 4, XPixelsToUnits!)
+ll_width									= PixelsToUnits(invo_dwGUI.of_GetFontWidth(st_toolBar, vs_text) + 4, XPixelsToUnits!)
 	
 Return(ll_width)
 end function
@@ -2150,7 +2150,7 @@ IF vl_item <= 1 OR vl_item > dw_toolBar.RowCount() THEN Return(FAILURE)
 
 IF isNull(vs_image) THEN vs_image = ''
 
-dw_toolBar.of_setItem_image(vl_item, invo_toolBar.of_getImageName(vs_image))
+dw_toolBar.of_setItem_image(vl_item, invo_dwGUI.of_getImageName(vs_image))
 
 IF isNull(vs_image) OR Trim(vs_image) = '' THEN
 	
@@ -2554,7 +2554,7 @@ protected function integer of_keydown (keycode vkc_key, unsignedinteger vui_keyf
 //
 // Original Author:	Christopher Harris
 
-//invo_toolBar.of_locateToolTips(invo_toolBar.of_getDesktopWindow())
+//invo_dwGUI.of_locateToolTips(invo_dwGUI.of_getDesktopWindow())
 //
 //IF dw_toolbar.of_PBVersion() >= 11.5 THEN
 //	
@@ -2590,7 +2590,7 @@ ELSEIF vkc_key = keyLeftArrow! THEN
 				ll_pointerX				= dw_toolBar.PointerX()
 				ll_startX				= Long(dw_toolBar.Describe('r_button.X'))
 
-				invo_toolBar.of_getCursorPos(ll_cursorX, ll_cursorY)
+				invo_dwGUI.of_getCursorPos(ll_cursorX, ll_cursorY)
 				
 			END IF
 
@@ -2601,7 +2601,7 @@ ELSEIF vkc_key = keyLeftArrow! THEN
 				ll_endX					= Long(dw_toolBar.Describe('r_button.X'))
 				ll_offSetX				= (ll_pointerX - ll_startX) + (ll_startX - ll_endX) - PixelsToUnits(4, XPixelsToUnits!)
 				
-				invo_toolBar.of_setCursorPos(ll_cursorX - UnitsToPixels(ll_offSetX, XUnitsToPixels!), ll_cursorY)
+				invo_dwGUI.of_setCursorPos(ll_cursorX - UnitsToPixels(ll_offSetX, XUnitsToPixels!), ll_cursorY)
 	
 			END IF
 			
@@ -2620,7 +2620,7 @@ ELSEIF vkc_key = keyRightArrow! THEN
 				ll_pointerX				= dw_toolBar.PointerX()
 				ll_startX				= Long(dw_toolBar.Describe('r_button.X'))
 
-				invo_toolBar.of_getCursorPos(ll_cursorX, ll_cursorY)
+				invo_dwGUI.of_getCursorPos(ll_cursorX, ll_cursorY)
 				
 			END IF
 
@@ -2631,7 +2631,7 @@ ELSEIF vkc_key = keyRightArrow! THEN
 				ll_endX					= Long(dw_toolBar.Describe('r_button.X'))
 				ll_offSetX				= (ll_startX - ll_pointerX) + (ll_endX - ll_startX) + PixelsToUnits(4, XPixelsToUnits!)
 				
-				invo_toolBar.of_setCursorPos(ll_cursorX + UnitsToPixels(ll_offSetX, XUnitsToPixels!), ll_cursorY)
+				invo_dwGUI.of_setCursorPos(ll_cursorX + UnitsToPixels(ll_offSetX, XUnitsToPixels!), ll_cursorY)
 	
 			END IF
 			
@@ -3628,7 +3628,7 @@ END IF
 
 IF NOT ib_trackMouseEvent THEN
 	
-	ib_trackMouseEvent				= invo_toolBar.of_trackMouseEvent(handle(this), invo_toolBar.TME_LEAVE)
+	ib_trackMouseEvent				= invo_dwGUI.of_trackMouseEvent(handle(this), invo_dwGUI.TME_LEAVE)
 
 	Modify('DataWindow.' + #band + '.Color="' + String(of_getColor(TOOLBAR)) + '" ')
 
@@ -3740,7 +3740,7 @@ event other;call super::other;// CopyRight (c) 2016 by Christopher Harris, all r
 // Original Author:	Christopher Harris
 
 CHOOSE CASE message.Number
-	CASE invo_toolBar.WM_MOUSELEAVE
+	CASE invo_dwGUI.WM_MOUSELEAVE
 		
 		ib_trackMouseEvent			= NOT (of_highLight(INVISIBLE) = SUCCESS)
 		
