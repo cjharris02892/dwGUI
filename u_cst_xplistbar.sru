@@ -176,7 +176,6 @@ public function boolean of_isenabled (string vs_text)
 public function boolean of_isvisible (string vs_text)
 public function boolean of_isvisible (string vs_text_group, string vs_text_item)
 private subroutine of_underline_link (string vs_objectname)
-public function integer of_setimage (long vl_item, string vs_image)
 public function integer of_setimage (string vs_text, string vs_image)
 public function integer of_setenabled (string vs_text_group, string vs_text_item, boolean vb_switch)
 public function integer of_setimage (string vs_text_group, string vs_text_item, string vs_image)
@@ -199,6 +198,10 @@ public function long of_clicklabel (long vl_group, long vl_item)
 public function long of_clicklabel (string vs_text_group, string vs_text_item)
 public function long of_clicklink (string vs_text_group, string vs_text_item)
 public function long of_clicklink (long vl_group, long vl_item)
+public subroutine of_createitem_image (long vl_item)
+public function integer of_setimage (long vl_item, string vs_image)
+private function long of_size_imageheight (string vs_image)
+private function long of_size_imagewidth (string vs_image)
 end prototypes
 
 event type integer ue_itemclicking(string vs_group, string vs_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -905,6 +908,8 @@ END IF
 
 dw_palette.SetPosition('t_' + ds_XPListBar.of_getItem_objectName(vl_item), "detail", TRUE)
 dw_palette.SetPosition('p_' + ds_XPListBar.of_getItem_objectName(vl_item), "detail", TRUE)
+
+dw_palette.SetPosition('p_' + ds_XPListBar.of_getItem_objectName(vl_item) + "_chevron", "detail", TRUE)
 
 RETURN
 end subroutine
@@ -2070,42 +2075,6 @@ of_underLine_link(ds_XPListBar.of_locateItem_objectName(vs_objectName))
 RETURN
 end subroutine
 
-public function integer of_setimage (long vl_item, string vs_image);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
-//
-// This code and accompanying materials are made available under the GPLv3
-// license which accompanies this distribution and can be found at:
-//
-// http://www.gnu.org/licenses/gpl-3.0.html.
-//
-// Original Author:	Christopher Harris
-
-IF isNull(vl_item) THEN Return(FAILURE)
-
-IF vl_item <= 1 OR vl_item > ds_XPListBar.RowCount() THEN Return(FAILURE)
-
-IF isNull(vs_image) THEN vs_image = ''
-
-ds_XPListBar.of_setItem_image(vl_item, invo_dwGUI.of_getImageName(vs_image))
-
-IF isNull(vs_image) OR Trim(vs_image) = '' THEN
-	ds_XPListBar.of_setItem_imageTransparency(vl_item, of_getColor(DEFAULTIMAGETRANSPARENCY))
-ELSE
-	ds_XPListBar.of_setItem_imageTransparency(vl_item, of_getColor(DEFAULTIMAGETRANSPARENCY))
-END IF
-
-String									ls_objectName
-ls_objectName							= ds_XPListBar.of_getItem_objectName(vl_item)
-			
-String									ls_describe
-ls_describe								= Trim(dw_palette.Describe('p_' + ls_objectName + '.X'))
-			
-IF ls_describe <> '!' AND ls_describe <> '?' AND ls_describe <> '' THEN
-	dw_palette.Modify('p_' + ls_objectName + '.FileName="' + vs_image + '"')
-END IF
-
-Return(SUCCESS)
-end function
-
 public function integer of_setimage (string vs_text, string vs_image);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
@@ -2824,6 +2793,155 @@ public function long of_clicklink (long vl_group, long vl_item);// CopyRight (c)
 // Original Author:	Christopher Harris
 
 Return(of_clickItem(vl_group, vl_item))
+end function
+
+public subroutine of_createitem_image (long vl_item);Long										li_displayToolTips
+
+IF of_displayToolTips() THEN
+	li_displayToolTips				= 1
+ELSE
+	li_displayToolTips				= 0
+END IF
+
+String									ls_toolTip = ''
+ls_toolTip								= ds_XPListBar.of_getItem_toolTip(vl_item)
+
+IF ds_XPListBar.of_getItem_text(vl_item) = ds_XPListBar.of_getItem_toolTip(vl_item) THEN
+	ls_toolTip							= ''
+END IF
+
+String									ls_image
+ls_image									= ds_XPListBar.of_getItem_image(vl_item)
+
+//	BitMap logic
+String									ls_modify
+	
+ls_modify								= 'CREATE bitmap(band=detail '															&
+											+ 'filename="' + ls_image + '" '															&
+											+ 'x="0" '																						&
+											+ 'y="0" '																						&
+											+ 'height="'+ String(of_size_imageHeight(ls_image)) + '" '						&
+											+ 'width="' + String(of_size_imageWidth(ls_image)) + '" '						&
+											+ 'border="0" '																				&
+											+ 'name=p_' + ds_XPListBar.of_getItem_objectName(vl_item) + ' '				&
+											+ 'visible="1" '
+											
+//IF ds_XPListBar.of_PBVersion() >= 12.5 THEN
+//		
+//	IF ds_XPListBar.of_getItem_enabled(vl_item) THEN
+//		ls_modify						= ls_modify + 'enabled="1" '
+//	ELSE
+//		ls_modify						= ls_modify + 'enabled="0" '
+//	END IF
+//
+//END IF
+	
+IF ds_XPListBar.of_PBVersion() >= 11.5 THEN
+		
+	ls_modify							= ls_modify																						&
+											+ 'tooltip.backcolor="' + String(of_getColor(INFOBACKGROUND)) + '" '			&
+											+ 'tooltip.delay.initial="' + String(#ToolTipDelayInitial) + '" ' +			&
+											+ 'tooltip.delay.visible="' + String(#ToolTipDelayVisible) + '" ' +			&
+											+ 'tooltip.enabled="' + String(li_displayToolTips) + '" '						&
+											+ 'tooltip.hasclosebutton="0" tooltip.icon="0" ' +									&
+											+ 'tooltip.isbubble="' + String(ii_toolTipIsBubble) + '" '						&
+											+ 'tooltip.maxwidth="0" '																	&
+											+ 'tooltip.textcolor="' + String(of_getColor(INFOTEXT)) + '" '					&
+											+ 'tooltip.transparency="0" '																&
+											+ 'tooltip.tip="' + ls_toolTip + '" '													&
+											+ 'transparentcolor="' + String(ds_XPListBar.of_getItem_imageTransparency(vl_item)) + '" '
+												
+//	IF ds_XPListBar.of_getItem_enabled(vl_item) THEN
+//		ls_modify						= ls_modify + 'transparency="0" '
+//	ELSE
+//		ls_modify						= ls_modify + 'transparency="50" '
+//	END IF
+		
+ELSE
+	//	Need to come up with a way to show enabled/disabled for version prior to 11.5
+END IF
+	
+ls_modify								= ls_modify + ') '
+
+ls_modify								= dw_palette.Modify(ls_modify)
+	
+RETURN
+end subroutine
+
+public function integer of_setimage (long vl_item, string vs_image);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+IF isNull(vl_item) THEN Return(FAILURE)
+
+IF vl_item <= 1 OR vl_item > ds_XPListBar.RowCount() THEN Return(FAILURE)
+
+IF isNull(vs_image) THEN vs_image = ''
+
+ds_XPListBar.of_setItem_image(vl_item, invo_dwGUI.of_getImageName(vs_image))
+
+IF isNull(vs_image) OR Trim(vs_image) = '' THEN
+	ds_XPListBar.of_setItem_imageTransparency(vl_item, of_getColor(DEFAULTIMAGETRANSPARENCY))
+ELSE
+	ds_XPListBar.of_setItem_imageTransparency(vl_item, of_getColor(DEFAULTIMAGETRANSPARENCY))
+END IF
+
+String									ls_objectName
+ls_objectName							= ds_XPListBar.of_getItem_objectName(vl_item)
+			
+String									ls_describe
+ls_describe								= Trim(dw_palette.Describe('p_' + ls_objectName + '.X'))
+			
+IF ls_describe <> '!' AND ls_describe <> '?' AND ls_describe <> '' THEN
+	dw_palette.Modify('p_' + ls_objectName + '.FileName="' + vs_image + '"')
+END IF
+
+Return(SUCCESS)
+end function
+
+private function long of_size_imageheight (string vs_image);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+Long										ll_height
+
+IF isNull(vs_image) OR Trim(vs_image) = '' THEN
+	ll_height							= 0
+ELSE
+	ll_height							= PixelsToUnits(#BitMapSize, YPixelsToUnits!)
+END IF
+
+Return(ll_height)
+end function
+
+private function long of_size_imagewidth (string vs_image);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+Long										ll_width
+
+IF isNull(vs_image) OR Trim(vs_image) = '' THEN
+	ll_width								= 0
+ELSE
+	ll_width								= PixelsToUnits(#BitMapSize, XPixelsToUnits!)
+END IF
+
+Return(ll_width)
 end function
 
 on u_cst_xplistbar.create

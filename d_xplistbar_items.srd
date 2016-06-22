@@ -12,7 +12,6 @@ table(column=(type=long updatewhereclause=no name=order dbname="order" initial="
  column=(type=number updatewhereclause=no name=fontsize dbname="fontSize" initial="8" )
  column=(type=char(255) updatewhereclause=no name=image dbname="image" initial="empty" )
  column=(type=long updatewhereclause=no name=imagetransparency dbname="imageTransparency" )
- column=(type=long updatewhereclause=no name=imagewidth dbname="imageWidth" )
  column=(type=char(255) updatewhereclause=no name=text dbname="text" initial="empty" )
  column=(type=char(255) updatewhereclause=no name=objectname dbname="objectname" )
  column=(type=char(255) updatewhereclause=no name=objecttype dbname="objecttype" initial="separator" )

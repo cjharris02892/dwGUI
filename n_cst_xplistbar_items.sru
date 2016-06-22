@@ -63,7 +63,6 @@ public function string of_getitem_image (long vl_item)
 public subroutine of_setitem_image (long vl_item, string vs_image)
 public function long of_getitem_imagetransparency (long vl_item)
 public subroutine of_setitem_imagetransparency (long vl_item, long vl_imagetransparency)
-public function long of_getitem_imagewidth (long vl_item)
 public subroutine of_setitem_imagewidth (long vl_item, long vl_imagewidth)
 end prototypes
 
@@ -759,20 +758,6 @@ ResetUpdate()
 
 RETURN
 end subroutine
-
-public function long of_getitem_imagewidth (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
-//
-// This code and accompanying materials are made available under the GPLv3
-// license which accompanies this distribution and can be found at:
-//
-// http://www.gnu.org/licenses/gpl-3.0.html.
-//
-// Original Author:	Christopher Harris
-
-IF vl_item < 1 OR vl_item > RowCount() THEN Return(0)
-
-Return(GetItemNumber(vl_item, 'imageWidth'))
-end function
 
 public subroutine of_setitem_imagewidth (long vl_item, long vl_imagewidth);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
