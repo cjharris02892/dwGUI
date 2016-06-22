@@ -6,7 +6,7 @@ Save Format v3.0(19990112)
  "n_cst_xplistbar_items.sru" "dwgui.pbl";
  "d_xplistbar_palette.srd" "dwgui.pbl";
  "d_xplistbar_items.srd" "dwgui.pbl";
- "u_cst_toolbar_items.sru" "dwgui.pbl";
+ "n_cst_toolbar_items.sru" "dwgui.pbl";
  "m_xplistbar_context.srm" "dwgui.pbl";
  "m_toolbar_popmenu.srm" "dwgui.pbl";
  "m_toolbar_context.srm" "dwgui.pbl";
