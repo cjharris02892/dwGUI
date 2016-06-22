@@ -1,18 +1,13 @@
-HA$PBExportHeader$u_cst_toolbar_items.sru
+HA$PBExportHeader$n_cst_toolbar_items.sru
 forward
-global type u_cst_toolbar_items from datawindow
+global type n_cst_toolbar_items from datastore
 end type
 end forward
 
-global type u_cst_toolbar_items from datawindow
-integer width = 2642
-integer height = 96
-string title = "none"
-string dataobject = "d_toolbar"
-boolean border = false
-borderstyle borderstyle = stylelowered!
+global type n_cst_toolbar_items from datastore
+string dataobject = "d_toolbar_items"
 end type
-global u_cst_toolbar_items u_cst_toolbar_items
+global n_cst_toolbar_items n_cst_toolbar_items
 
 type variables
 Public:
@@ -71,7 +66,6 @@ public subroutine of_setitem_imagewidth (long vl_item, long vl_imagewidth)
 public subroutine of_setitem_imagetransparency (long vl_item, long vl_imagetransparency)
 public subroutine of_setitem_image (long vl_item, string vs_image)
 public subroutine of_setitem_fontsize (long vl_item, long vl_fontsize)
-public function long of_locateitem ()
 public function long of_locateitem (long vl_x, long vl_y)
 public function long of_locateitem_first ()
 public function long of_locateitem_last ()
@@ -82,7 +76,6 @@ public function boolean of_getitem_checked (long vl_item)
 public subroutine of_setitem_checked (long vl_item, boolean vb_checked)
 public function long of_getitem_order (long vl_item)
 public subroutine of_setitem_order (long vl_item)
-public subroutine of_deleteitem (long vl_item)
 public function long of_locateitem_objectname (string vs_objectname)
 public function double of_pbversion ()
 public function boolean of_getitem_displayinmenu (string vs_item)
@@ -750,46 +743,6 @@ ResetUpdate()
 RETURN
 end subroutine
 
-public function long of_locateitem ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
-//
-// This code and accompanying materials are made available under the GPLv3
-// license which accompanies this distribution and can be found at:
-//
-// http://www.gnu.org/licenses/gpl-3.0.html.
-//
-// Original Author:	Christopher Harris
-
-Long										ll_item
-setNull(ll_item)
-
-String									ls_describe
-ls_describe								= Describe('r_button.X')
-
-IF ls_describe = '?' OR ls_describe = '!' OR ls_describe = '' THEN Return(ll_item)
-
-IF Long(Object.r_button.Visible) = 0 THEN Return(ll_item)
-
-Long										ll_buttonRight
-ll_buttonRight							= Long(Object.r_button.X) + Long(Object.r_button.Width)
-
-String									ls_find
-ls_find									= 'visible="Y" AND '																					&
-											+ 'rectLeft>=' + String(Object.r_button.X) + ' AND '										&
-											+ '(rectLeft + rectWidth)<=' + String(ll_buttonRight)
-
-ll_item									= Find(ls_find, 1, rowCount())
-
-CHOOSE CASE ll_item
-	CASE 0
-		setNull(ll_item)
-	CASE -1
-		setNull(ll_item)
-		MessageBox('Programmer Error', 'Syntax error in find clause: ' + ls_find + '.')
-END CHOOSE
-
-Return(ll_item)
-end function
-
 public function long of_locateitem (long vl_x, long vl_y);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
@@ -1106,63 +1059,6 @@ ResetUpdate()
 RETURN
 end subroutine
 
-public subroutine of_deleteitem (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
-//
-// This code and accompanying materials are made available under the GPLv3
-// license which accompanies this distribution and can be found at:
-//
-// http://www.gnu.org/licenses/gpl-3.0.html.
-//
-// Original Author:	Christopher Harris
-
-String									ls_describe
-
-of_setItem_displayInMenu(vl_item, TRUE)
-	
-IF of_getItem_separator(vl_item) THEN
-		
-	ls_describe							= Trim(Describe('l_' + of_getItem_objectName(vl_item) + '_a.X1'))
-
-	IF ls_describe <> '!' AND ls_describe <> '?' AND ls_describe <> '' THEN
-			
-		Modify('DESTROY l_' + of_getItem_objectName(vl_item) + '_a')
-		Modify('DESTROY l_' + of_getItem_objectName(vl_item) + '_b')
-			
-	END IF
-		
-ELSE
-	
-	ls_describe							= Trim(Describe('p_' + of_getItem_objectName(vl_item) + '.X'))
-		
-	IF ls_describe <> '!' AND ls_describe <> '?' AND ls_describe <> '' THEN
-		Modify('DESTROY p_' + of_getItem_objectName(vl_item))
-	END IF
-	
-	ls_describe							= Trim(Describe('t_' + of_getItem_objectName(vl_item) + '.X'))
-		
-	IF ls_describe <> '!' AND ls_describe <> '?' AND ls_describe <> '' THEN
-		Modify('DESTROY t_' + of_getItem_objectName(vl_item))
-	END IF
-
-	ls_describe							= Trim(Describe('b_' + of_getItem_objectName(vl_item) + '.X'))
-		
-	IF ls_describe <> '!' AND ls_describe <> '?' AND ls_describe <> '' THEN
-		Modify('DESTROY b_' + of_getItem_objectName(vl_item))
-	END IF
-
-	ls_describe							= Trim(Describe('r_' + of_getItem_objectName(vl_item) + '.X'))
-
-	IF ls_describe <> '!' AND ls_describe <> '?' AND ls_describe <> '' THEN
-		Modify('DESTROY r_' + of_getItem_objectName(vl_item))
-	END IF
-
-END IF
-
-of_setItem_tabSequence(vl_item, 0)
-
-RETURN
-end subroutine
-
 public function long of_locateitem_objectname (string vs_objectname);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
@@ -1356,10 +1252,14 @@ public function string of_getitem_name (long vl_item);// CopyRight (c) 2016 by C
 Return(of_getItem_text(vl_item))
 end function
 
-on u_cst_toolbar_items.create
+on n_cst_toolbar_items.create
+call super::create
+TriggerEvent( this, "constructor" )
 end on
 
-on u_cst_toolbar_items.destroy
+on n_cst_toolbar_items.destroy
+TriggerEvent( this, "destructor" )
+call super::destroy
 end on
 
 event constructor;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.

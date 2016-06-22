@@ -4,9 +4,11 @@ global type u_cst_toolbar from userobject
 end type
 type st_toolbar from statictext within u_cst_toolbar
 end type
-type dw_toolbar from u_cst_toolbar_items within u_cst_toolbar
+type dw_palette from datawindow within u_cst_toolbar
 end type
 type r_border from rectangle within u_cst_toolbar
+end type
+type ds_toolbar from n_cst_toolbar_items within u_cst_toolbar
 end type
 end forward
 
@@ -25,8 +27,9 @@ event ue_context_showtooltips ( boolean vb_showtips )
 event ue_resized ( long vl_oldheight,  long vl_newheight )
 event ue_post_constructor ( )
 st_toolbar st_toolbar
-dw_toolbar dw_toolbar
+dw_palette dw_palette
 r_border r_border
+ds_toolbar ds_toolbar
 end type
 global u_cst_toolbar u_cst_toolbar
 
@@ -109,7 +112,7 @@ Public:
 	CONSTANT Long							LARGE								= 32
 	CONSTANT Long							XLARGE							= 48
 
-	//	Reserved object types, duplicated from u_cst_toolBar_items for ease
+	//	Reserved object types, duplicated from n_cst_toolBar_items for ease
 	//	of implementation for the programmer when calling of_addItems()
 	CONSTANT String						SEPARATOR						= 'separator'
 
@@ -239,6 +242,8 @@ public function long of_addbuttons (string vs_text[], string vs_image[], integer
 public function long of_addbuttons (string vs_text[], string vs_image[])
 public function long of_addbuttons (string vs_text[], integer vi_position[])
 public function long of_addbuttons (string vs_text[])
+private subroutine of_destroyitem (long vl_item)
+private function long of_locateitem ()
 end prototypes
 
 event type integer ue_itemclicking(string vs_button);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -285,9 +290,9 @@ CHOOSE CASE Lower(vs_size)
 		of_disableUpdate()
 		of_size(SMALL)
 		
-		dw_toolBar.of_setItem_rectHeight(1, of_size_imageHeight() + 16)
+		ds_toolBar.of_setItem_rectHeight(1, of_size_imageHeight() + 16)
 		
-		FOR ll_item = 2 TO dw_toolBar.RowCount()
+		FOR ll_item = 2 TO ds_toolBar.RowCount()
 			of_initializeItemSize(ll_item)
 		NEXT
 
@@ -298,9 +303,9 @@ CHOOSE CASE Lower(vs_size)
 		of_disableUpdate()
 		of_size(MEDIUM)
 				
-		dw_toolBar.of_setItem_rectHeight(1, of_size_imageHeight() + 16)
+		ds_toolBar.of_setItem_rectHeight(1, of_size_imageHeight() + 16)
 		
-		FOR ll_item = 2 TO dw_toolBar.RowCount()
+		FOR ll_item = 2 TO ds_toolBar.RowCount()
 			of_initializeItemSize(ll_item)
 		NEXT
 
@@ -311,9 +316,9 @@ CHOOSE CASE Lower(vs_size)
 		of_disableUpdate()
 		of_size(LARGE)	
 		
-		dw_toolBar.of_setItem_rectHeight(1, of_size_imageHeight() + 16)
+		ds_toolBar.of_setItem_rectHeight(1, of_size_imageHeight() + 16)
 		
-		FOR ll_item = 2 TO dw_toolBar.RowCount()
+		FOR ll_item = 2 TO ds_toolBar.RowCount()
 			of_initializeItemSize(ll_item)
 		NEXT
 
@@ -324,9 +329,9 @@ CHOOSE CASE Lower(vs_size)
 		of_disableUpdate()
 		of_size(XLARGE)
 		
-		dw_toolBar.of_setItem_rectHeight(1, of_size_imageHeight() + 16)
+		ds_toolBar.of_setItem_rectHeight(1, of_size_imageHeight() + 16)
 
-		FOR ll_item = 2 TO dw_toolBar.RowCount()
+		FOR ll_item = 2 TO ds_toolBar.RowCount()
 			of_initializeItemSize(ll_item)
 		NEXT
 
@@ -388,7 +393,7 @@ event ue_post_constructor();// CopyRight (c) 2016 by Christopher Harris, all rig
 //
 // Original Author:	Christopher Harris
 
-IF dw_toolBar.of_locateItem_objectName(dw_toolBar.POPMENU + '_' + String(1)) <> 1 THEN
+IF ds_toolBar.of_locateItem_objectName(ds_toolBar.POPMENU + '_' + String(1)) <> 1 THEN
 	messageBox('Programmer Error', 'You have improperly initialized your toolBar.')
 END IF
 
@@ -421,18 +426,18 @@ ib_displayToolTips					= TRUE
 String									ls_describe
 Long										ll_item
 
-FOR ll_item = 1 TO dw_toolBar.RowCount()
+FOR ll_item = 1 TO ds_toolBar.RowCount()
 	
-	ls_describe							= Trim(dw_toolBar.Describe('p_' + dw_toolBar.of_getItem_objectName(ll_item) + '.X'))
+	ls_describe							= Trim(dw_palette.Describe('p_' + ds_toolBar.of_getItem_objectName(ll_item) + '.X'))
 	
 	IF ls_describe <> '!' AND ls_describe <> '?' AND ls_describe <> '' THEN
-		dw_toolBar.Modify('p_' + dw_toolBar.of_getItem_objectName(ll_item) + '.ToolTip.Enabled="1"')
+		dw_palette.Modify('p_' + ds_toolBar.of_getItem_objectName(ll_item) + '.ToolTip.Enabled="1"')
 	END IF
 
-	ls_describe							= Trim(dw_toolBar.Describe('t_' + dw_toolBar.of_getItem_objectName(ll_item) + '.X'))
+	ls_describe							= Trim(dw_palette.Describe('t_' + ds_toolBar.of_getItem_objectName(ll_item) + '.X'))
 	
 	IF ls_describe <> '!' AND ls_describe <> '?' AND ls_describe <> '' THEN
-		dw_toolBar.Modify('t_' + dw_toolBar.of_getItem_objectName(ll_item) + '.ToolTip.Enabled="1"')
+		dw_palette.Modify('t_' + ds_toolBar.of_getItem_objectName(ll_item) + '.ToolTip.Enabled="1"')
 	END IF
 
 NEXT
@@ -454,18 +459,18 @@ ib_displayToolTips					= FALSE
 String									ls_describe
 Long										ll_item
 
-FOR ll_item = 1 TO dw_toolBar.RowCount()
+FOR ll_item = 1 TO ds_toolBar.RowCount()
 	
-	ls_describe							= Trim(dw_toolBar.Describe('p_' + dw_toolBar.of_getItem_objectName(ll_item) + '.X'))
+	ls_describe							= Trim(dw_palette.Describe('p_' + ds_toolBar.of_getItem_objectName(ll_item) + '.X'))
 	
 	IF ls_describe <> '!' AND ls_describe <> '?' AND ls_describe <> '' THEN
-		dw_toolBar.Modify('p_' + dw_toolBar.of_getItem_objectName(ll_item) + '.ToolTip.Enabled="0"')
+		dw_palette.Modify('p_' + ds_toolBar.of_getItem_objectName(ll_item) + '.ToolTip.Enabled="0"')
 	END IF
 
-	ls_describe							= Trim(dw_toolBar.Describe('t_' + dw_toolBar.of_getItem_objectName(ll_item) + '.X'))
+	ls_describe							= Trim(dw_palette.Describe('t_' + ds_toolBar.of_getItem_objectName(ll_item) + '.X'))
 	
 	IF ls_describe <> '!' AND ls_describe <> '?' AND ls_describe <> '' THEN
-		dw_toolBar.Modify('t_' + dw_toolBar.of_getItem_objectName(ll_item) + '.ToolTip.Enabled="0"')
+		dw_palette.Modify('t_' + ds_toolBar.of_getItem_objectName(ll_item) + '.ToolTip.Enabled="0"')
 	END IF
 
 NEXT
@@ -522,8 +527,8 @@ String									ls_Text = ''
 
 IF isNull(vl_item) THEN Return(ls_text)
 
-IF vl_Item > 0 AND vl_Item <= dw_toolBar.RowCount() THEN
-	ls_Text								= dw_toolBar.of_getItem_text(vl_item)
+IF vl_Item > 0 AND vl_Item <= ds_toolBar.RowCount() THEN
+	ls_Text								= ds_toolBar.of_getItem_text(vl_item)
 END IF
 
 Return(ls_Text)
@@ -540,8 +545,8 @@ public function boolean of_isvisible (long vl_item);// CopyRight (c) 2016 by Chr
 
 Boolean									lb_Visible = FALSE
 
-IF vl_Item > 0 AND vl_Item <= dw_toolBar.RowCount() THEN
-	lb_Visible							= dw_toolbar.of_getItem_visible(vl_item)
+IF vl_Item > 0 AND vl_Item <= ds_toolBar.RowCount() THEN
+	lb_Visible							= ds_toolBar.of_getItem_visible(vl_item)
 END IF
 
 Return(lb_Visible)
@@ -558,8 +563,8 @@ public function boolean of_isenabled (long vl_item);// CopyRight (c) 2016 by Chr
 
 Boolean									lb_Enabled = FALSE
 
-IF vl_Item > 0 AND vl_Item <= dw_toolBar.RowCount() THEN
-	lb_Enabled							= dw_toolBar.of_getItem_enabled(vl_item)
+IF vl_Item > 0 AND vl_Item <= ds_toolBar.RowCount() THEN
+	lb_Enabled							= ds_toolBar.of_getItem_enabled(vl_item)
 END IF
 
 Return(lb_Enabled)
@@ -580,7 +585,7 @@ Long										ll_item
 ll_item									= of_locateItem(vs_item)
 
 IF NOT IsNull(ll_item) THEN
-	lb_Visible							= dw_toolBar.of_getItem_visible(ll_item)
+	lb_Visible							= ds_toolBar.of_getItem_visible(ll_item)
 END IF
 
 Return(lb_Visible)
@@ -601,7 +606,7 @@ Long										ll_item
 ll_item									= of_locateItem(vs_item)
 
 IF NOT IsNull(ll_item) THEN
-	lb_Enabled							= dw_toolBar.of_getItem_enabled(ll_item)
+	lb_Enabled							= ds_toolBar.of_getItem_enabled(ll_item)
 END IF
 
 Return(lb_Enabled)
@@ -644,7 +649,7 @@ Long										li_RC
 li_RC										= Super::Resize(W, H)
 
 r_border.Resize(W, H)
-dw_toolBar.Resize(r_border.Width - PixelsToUnits(2, XPixelsToUnits!), r_border.Height - PixelsToUnits(2, YPixelsToUnits!))
+dw_palette.Resize(r_border.Width - PixelsToUnits(2, XPixelsToUnits!), r_border.Height - PixelsToUnits(2, YPixelsToUnits!))
 
 Return(li_RC)
 end function
@@ -658,28 +663,28 @@ private subroutine of_initializeitemsize (long vl_item);// CopyRight (c) 2016 by
 //
 // Original Author:	Christopher Harris
 
-dw_toolBar.of_setItem_rectTop(vl_item, 0)
-dw_toolBar.of_setItem_rectHeight(vl_item, 0)
-dw_toolBar.of_setItem_rectLeft(vl_item, 0)
-dw_toolBar.of_setItem_rectWidth(vl_item, 0)
-dw_toolBar.of_setItem_textWidth(vl_item, 0)
-dw_toolBar.of_setItem_imageWidth(vl_item, 0)
+ds_toolBar.of_setItem_rectTop(vl_item, 0)
+ds_toolBar.of_setItem_rectHeight(vl_item, 0)
+ds_toolBar.of_setItem_rectLeft(vl_item, 0)
+ds_toolBar.of_setItem_rectWidth(vl_item, 0)
+ds_toolBar.of_setItem_textWidth(vl_item, 0)
+ds_toolBar.of_setItem_imageWidth(vl_item, 0)
 
-IF dw_toolBar.of_getItem_visible(vl_item) THEN
+IF ds_toolBar.of_getItem_visible(vl_item) THEN
 
-	dw_toolBar.of_setItem_rectTop(vl_item, 16)
-	dw_toolBar.of_setItem_rectHeight(vl_item, of_size_imageHeight() + 16)
+	ds_toolBar.of_setItem_rectTop(vl_item, 16)
+	ds_toolBar.of_setItem_rectHeight(vl_item, of_size_imageHeight() + 16)
 	
-	dw_toolBar.of_setItem_imageWidth(vl_item, of_size_imageWidth(dw_toolBar.of_getItem_image(vl_item)))
+	ds_toolBar.of_setItem_imageWidth(vl_item, of_size_imageWidth(ds_toolBar.of_getItem_image(vl_item)))
 		
-	IF dw_toolBar.of_getItem_displayText(vl_item) THEN
-		dw_toolBar.of_setItem_textWidth(vl_item, of_size_text(dw_toolBar.of_getItem_text(vl_item), dw_toolBar.of_getItem_fontFace(vl_item), #FontSize))
+	IF ds_toolBar.of_getItem_displayText(vl_item) THEN
+		ds_toolBar.of_setItem_textWidth(vl_item, of_size_text(ds_toolBar.of_getItem_text(vl_item), ds_toolBar.of_getItem_fontFace(vl_item), #FontSize))
 	END IF
 
-	IF dw_toolBar.of_getItem_separator(vl_item) THEN
-		dw_toolBar.of_setItem_rectWidth(vl_item, of_size_line())
+	IF ds_toolBar.of_getItem_separator(vl_item) THEN
+		ds_toolBar.of_setItem_rectWidth(vl_item, of_size_line())
 	ELSE
-		dw_toolBar.of_setItem_rectWidth(vl_item, dw_toolBar.of_getItem_imageWidth(vl_item) + dw_toolBar.of_getItem_textWidth(vl_item))
+		ds_toolBar.of_setItem_rectWidth(vl_item, ds_toolBar.of_getItem_imageWidth(vl_item) + ds_toolBar.of_getItem_textWidth(vl_item))
 	END IF
 	
 END IF
@@ -723,8 +728,8 @@ CHOOSE CASE #BitMapSize
 
 		il_dropSize						= 45
 		
-		dw_toolBar.Modify('DataWindow.' + #band + '.Height="104"')
-		dw_toolBar.Modify('r_button.Height="' + String(88 + 16) + '"')
+		dw_palette.Modify('DataWindow.' + #band + '.Height="104"')
+		dw_palette.Modify('r_button.Height="' + String(88 + 16) + '"')
 
 		Resize(Width, 104)
 
@@ -734,8 +739,8 @@ CHOOSE CASE #BitMapSize
 		
 		il_dropSize						= 55
 		
-		dw_toolBar.Modify('DataWindow.' + #band + '.Height="148"')
-		dw_toolBar.Modify('r_button.Height="' + String(132 + 16) + '"')
+		dw_palette.Modify('DataWindow.' + #band + '.Height="148"')
+		dw_palette.Modify('r_button.Height="' + String(132 + 16) + '"')
 
 		Resize(Width, 134)
 		
@@ -745,8 +750,8 @@ CHOOSE CASE #BitMapSize
 		
 		il_dropSize						= 65
 		
-		dw_toolBar.Modify('DataWindow.' + #band + '.Height="192"')
-		dw_toolBar.Modify('r_button.Height="' + String(176 + 16) + '"')
+		dw_palette.Modify('DataWindow.' + #band + '.Height="192"')
+		dw_palette.Modify('r_button.Height="' + String(176 + 16) + '"')
 
 		Resize(Width, 168)
 
@@ -756,15 +761,15 @@ CHOOSE CASE #BitMapSize
 		
 		il_dropSize						= 75
 		
-		dw_toolBar.Modify('DataWindow.' + #band + '.Height="236"')
-		dw_toolBar.Modify('r_button.Height="' + String(220 + 16) + '"')
+		dw_palette.Modify('DataWindow.' + #band + '.Height="236"')
+		dw_palette.Modify('r_button.Height="' + String(220 + 16) + '"')
 
 		Resize(Width, 230)
 		
 END CHOOSE
 
-dw_toolBar.of_setItem_textWidth(1, il_dropSize)
-dw_toolBar.of_setItem_rectWidth(1, dw_toolBar.of_getItem_textWidth(1))
+ds_toolBar.of_setItem_textWidth(1, il_dropSize)
+ds_toolBar.of_setItem_rectWidth(1, ds_toolBar.of_getItem_textWidth(1))
 
 Long										ll_newHeight
 ll_newHeight							= Height
@@ -787,7 +792,7 @@ Double									ldbl_fontHeight
 ldbl_fontHeight						= of_fontHeight()
 
 Long										ll_pos
-ll_pos									= dw_toolBar.of_getItem_rectLeft(vl_item)
+ll_pos									= ds_toolBar.of_getItem_rectLeft(vl_item)
 
 Long										li_textYOffset
 li_textYOffset							= (of_size_imageHeight() - Int(ldbl_fontHeight)) / 2
@@ -805,13 +810,13 @@ END IF
                                                                         &
 //	The following determines what to display for toolTip text
 String									ls_toolTip = ''
-ls_toolTip								= dw_toolBar.of_getItem_toolTip(vl_item)
+ls_toolTip								= ds_toolBar.of_getItem_toolTip(vl_item)
 
 IF of_displayText() THEN
 	
 	//	If displayText is turned on and the name and toolTip are the same,
 	//	then we don't need a toolTip
-	IF dw_toolBar.of_getItem_text(vl_item) = dw_toolBar.of_getItem_toolTip(vl_item) THEN
+	IF ds_toolBar.of_getItem_text(vl_item) = ds_toolBar.of_getItem_toolTip(vl_item) THEN
 		ls_toolTip						= ''
 	END IF
 	
@@ -820,8 +825,8 @@ ELSE
 	//	If displayText is turned off and there is no image then we are going
 	//	to override the displayText setting and therefore we will only want
 	//	to set the toolTip if the name and toolTip are not the same
-	IF dw_toolBar.of_getItem_image(vl_item) = '' THEN
-		IF dw_toolBar.of_getItem_text(vl_item) = dw_toolBar.of_getItem_toolTip(vl_item) THEN
+	IF ds_toolBar.of_getItem_image(vl_item) = '' THEN
+		IF ds_toolBar.of_getItem_text(vl_item) = ds_toolBar.of_getItem_toolTip(vl_item) THEN
 			ls_toolTip					= ''
 		END IF
 	END IF
@@ -829,20 +834,20 @@ ELSE
 END IF
 
 //	BitMap logic
-IF NOT (isNull(dw_toolBar.of_getItem_image(vl_item)) OR Trim(dw_toolBar.of_getItem_image(vl_item)) = '') THEN
+IF NOT (isNull(ds_toolBar.of_getItem_image(vl_item)) OR Trim(ds_toolBar.of_getItem_image(vl_item)) = '') THEN
 	
 	ls_modify							= 'CREATE bitmap(band=' + #band + ' filename='										&
-											+ '"' + dw_toolBar.of_getItem_image(vl_item) + '" '								&
+											+ '"' + ds_toolBar.of_getItem_image(vl_item) + '" '								&
 											+ 'x="' + String(ll_pos) + '" '															&
 											+ 'y="16" '																						&
 											+ 'height="'+ String(of_size_imageHeight()) + '" '									&
-											+ 'width="' + String(dw_toolBar.of_getItem_imageWidth(vl_item)) + '" '		&
+											+ 'width="' + String(ds_toolBar.of_getItem_imageWidth(vl_item)) + '" '		&
 											+ 'border="0" '																				&
-											+ 'name=p_' + dw_toolBar.of_getItem_objectName(vl_item) + ' '					&
+											+ 'name=p_' + ds_toolBar.of_getItem_objectName(vl_item) + ' '					&
 											+ 'visible="1" '
-//	IF dw_toolBar.of_PBVersion() >= 12.5 THEN
+//	IF ds_toolBar.of_PBVersion() >= 12.5 THEN
 //		
-//		IF dw_toolBar.of_getItem_enabled(vl_item) THEN
+//		IF ds_toolBar.of_getItem_enabled(vl_item) THEN
 //			ls_modify					= ls_modify + 'enabled="1" '
 //		ELSE
 //			ls_modify					= ls_modify + 'enabled="0" '
@@ -850,7 +855,7 @@ IF NOT (isNull(dw_toolBar.of_getItem_image(vl_item)) OR Trim(dw_toolBar.of_getIt
 //
 //	END IF
 	
-	IF dw_toolBar.of_PBVersion() >= 11.5 THEN
+	IF ds_toolBar.of_PBVersion() >= 11.5 THEN
 		
 		ls_modify						= ls_modify																						&
 											+ 'tooltip.backcolor="' + String(of_getColor(INFOBACKGROUND)) + '" '			&
@@ -863,9 +868,9 @@ IF NOT (isNull(dw_toolBar.of_getItem_image(vl_item)) OR Trim(dw_toolBar.of_getIt
 											+ 'tooltip.textcolor="' + String(of_getColor(INFOTEXT)) + '" '					&
 											+ 'tooltip.transparency="0" '																&
 											+ 'tooltip.tip="' + ls_toolTip + '" '													&
-											+ 'transparentcolor="' + String(dw_toolBar.of_getItem_imageTransparency(vl_item)) + '" '
+											+ 'transparentcolor="' + String(ds_toolBar.of_getItem_imageTransparency(vl_item)) + '" '
 												
-//		IF dw_toolBar.of_getItem_enabled(vl_item) THEN
+//		IF ds_toolBar.of_getItem_enabled(vl_item) THEN
 //			ls_modify					= ls_modify + 'transparency="0" '
 //		ELSE
 //			ls_modify					= ls_modify + 'transparency="50" '
@@ -879,34 +884,34 @@ IF NOT (isNull(dw_toolBar.of_getItem_image(vl_item)) OR Trim(dw_toolBar.of_getIt
 	
 	lb_createdImage					= TRUE
 	
-	ll_pos								= ll_pos + dw_toolBar.of_getItem_imageWidth(vl_item)
+	ll_pos								= ll_pos + ds_toolBar.of_getItem_imageWidth(vl_item)
 	
 END IF
 
 //	Text logic
-IF NOT (isNull(dw_toolBar.of_getItem_text(vl_item)) OR Trim(dw_toolBar.of_getItem_text(vl_item)) = '') THEN
-	IF dw_toolBar.of_getItem_displayText(vl_item) THEN
+IF NOT (isNull(ds_toolBar.of_getItem_text(vl_item)) OR Trim(ds_toolBar.of_getItem_text(vl_item)) = '') THEN
+	IF ds_toolBar.of_getItem_displayText(vl_item) THEN
 		
 		ls_modify						= ls_modify																						&
 											+ 'CREATE text(band=' + #band + ' ' +													&
-											+ 'alignment="' + String(dw_toolBar.of_getItem_alignment(vl_item)) + '" '	&
-											+ 'text="' + dw_toolBar.of_getItem_text(vl_item) + '" border="0" '			&
+											+ 'alignment="' + String(ds_toolBar.of_getItem_alignment(vl_item)) + '" '	&
+											+ 'text="' + ds_toolBar.of_getItem_text(vl_item) + '" border="0" '			&
 											+ 'x="' + String(ll_pos) + '" ' +														&
 											+ 'y="' + String(li_textYOffset + 16) + '" '											&
 											+ 'height="' + String(Int(ldbl_fontHeight)) + '" '									&
-											+ 'width="' + String(dw_toolBar.of_getItem_textWidth(vl_item)) + '" '		&
+											+ 'width="' + String(ds_toolBar.of_getItem_textWidth(vl_item)) + '" '		&
 											+ 'html.valueishtml="0" '																	&
-											+ 'name=t_' + dw_toolBar.of_getItem_objectName(vl_item) + ' '					&
+											+ 'name=t_' + ds_toolBar.of_getItem_objectName(vl_item) + ' '					&
 											+ 'visible="1" '																				&
-											+ 'font.face="' + dw_toolBar.of_getItem_fontFace(vl_item) + '" '				&
+											+ 'font.face="' + ds_toolBar.of_getItem_fontFace(vl_item) + '" '				&
 											+ 'font.height="' + String(#FontSize * -1) + '" '									&
 											+ 'font.weight="400" '																		&
 											+ 'font.family="2" font.pitch="2" font.charset="0" '								&
 											+ 'background.mode="1" '
 												
-//		IF invo_dwGUI.of_PBVersion >= 12.5 THEN
+//		IF ds_toolBar.of_PBVersion >= 12.5 THEN
 //			
-//			IF dw_toolBar.of_getItem_enabled(vl_item) THEN
+//			IF ds_toolBar.of_getItem_enabled(vl_item) THEN
 //				ls_modify				= ls_modify + 'enabled="1" '
 //			ELSE
 //				ls_modify				= ls_modify + 'enabled="0" '
@@ -914,7 +919,7 @@ IF NOT (isNull(dw_toolBar.of_getItem_text(vl_item)) OR Trim(dw_toolBar.of_getIte
 //
 //		END IF
 
-		IF dw_toolbar.of_PBVersion() >= 11.5 THEN
+		IF ds_toolBar.of_PBVersion() >= 11.5 THEN
 
 			ls_modify					= ls_modify + 'color="' + String(of_getColor(MENUTEXT)) + '" '
 
@@ -936,7 +941,7 @@ IF NOT (isNull(dw_toolBar.of_getItem_text(vl_item)) OR Trim(dw_toolBar.of_getIte
 											+ 'tooltip.tip="' + ls_toolTip + '" '
 		END IF
 
-//		IF dw_toolBar.of_getItem_enabled(vl_item) THEN
+//		IF ds_toolBar.of_getItem_enabled(vl_item) THEN
 //			ls_modify					= ls_modify + 'color="' + String(of_getColor(MENUTEXT)) + '" '
 //		ELSE
 //			ls_modify					= ls_modify + 'color="' + String(of_getColor(DISABLEDTEXT)) + '" '
@@ -954,24 +959,24 @@ IF NOT (isNull(dw_toolBar.of_getItem_text(vl_item)) OR Trim(dw_toolBar.of_getIte
 			
 			ls_modify					= ls_modify																						&
 											+ 'CREATE text(band=' + #band + ' '														&
-											+ 'alignment="' + String(dw_toolBar.of_getItem_alignment(vl_item)) + '" '	&
+											+ 'alignment="' + String(ds_toolBar.of_getItem_alignment(vl_item)) + '" '	&
 											+ 'text="' + '' + '" border="0" '														&
 											+ 'x="' + String(ll_pos) + '" ' +														&
 											+ 'y="' + String(16) + '" '																&
 											+ 'height="' + String(of_size_imageHeight()) + '" '								&
-											+ 'width="' + String(dw_toolBar.of_getItem_textWidth(vl_item)) + '" '		&
+											+ 'width="' + String(ds_toolBar.of_getItem_textWidth(vl_item)) + '" '		&
 											+ 'html.valueishtml="0" '																	&
-											+ 'name=b_' + dw_toolBar.of_getItem_objectName(vl_item) + ' '					&
+											+ 'name=b_' + ds_toolBar.of_getItem_objectName(vl_item) + ' '					&
 											+ 'visible="1" '																				&
-											+ 'font.face="' + dw_toolBar.of_getItem_fontFace(vl_item) + '" '				&
+											+ 'font.face="' + ds_toolBar.of_getItem_fontFace(vl_item) + '" '				&
 											+ 'font.height="' + String(#FontSize * -1) + '" '									&
 											+ 'font.weight="400" '																		&
 											+ 'font.family="2" font.pitch="2" font.charset="0" '								&
 											+ 'background.mode="1" '
 												
-//			IF invo_dwGUI.of_PBVersion >= 12.5 THEN
+//			IF ds_toolBar.of_PBVersion >= 12.5 THEN
 //				
-//				IF dw_toolBar.of_getItem_enabled(vl_item) THEN
+//				IF ds_toolBar.of_getItem_enabled(vl_item) THEN
 //					ls_modify			= ls_modify + 'enabled="1" '
 //				ELSE
 //					ls_modify			= ls_modify + 'enabled="0" '
@@ -979,7 +984,7 @@ IF NOT (isNull(dw_toolBar.of_getItem_text(vl_item)) OR Trim(dw_toolBar.of_getIte
 //	
 //			END IF
 	
-			IF dw_toolbar.of_PBVersion() >= 11.5 THEN
+			IF ds_toolBar.of_PBVersion() >= 11.5 THEN
 	
 				ls_modify				= ls_modify + 'color="' + String(of_getColor(MENUTEXT)) + '" '
 	
@@ -1001,7 +1006,7 @@ IF NOT (isNull(dw_toolBar.of_getItem_text(vl_item)) OR Trim(dw_toolBar.of_getIte
 											+ 'tooltip.tip="' + ls_toolTip + '" '
 			END IF
 
-//			IF dw_toolBar.of_getItem_enabled(vl_item) THEN
+//			IF ds_toolBar.of_getItem_enabled(vl_item) THEN
 //				ls_modify				= ls_modify + 'color="' + String(of_getColor(MENUTEXT)) + '" '
 //			ELSE
 //				ls_modify				= ls_modify + 'color="' + String(of_getColor(DISABLEDTEXT)) + '" '
@@ -1013,30 +1018,30 @@ IF NOT (isNull(dw_toolBar.of_getItem_text(vl_item)) OR Trim(dw_toolBar.of_getIte
 		
 		lb_createdText					= TRUE
 		
-		ll_pos							= ll_pos + dw_toolBar.of_getItem_textWidth(vl_item)
+		ll_pos							= ll_pos + ds_toolBar.of_getItem_textWidth(vl_item)
 		
 	END IF
 END IF
 
-dw_toolBar.Modify(ls_modify)
+dw_palette.Modify(ls_modify)
 
 of_DrawEnabled(vl_item)
 of_DrawChecked(vl_item)
 
 //	Originally, was going to use the focusRectangle during keyboard interface
-IF dw_toolbar.of_PBVersion() >= 12.5 THEN
+IF ds_toolBar.of_PBVersion() >= 12.5 THEN
 	
-	IF NOT (isNull(dw_toolBar.of_getItem_text(vl_item)) OR Trim(dw_toolBar.of_getItem_text(vl_item)) = '') THEN
-		IF dw_toolBar.of_getItem_displayText(vl_item) THEN
-			dw_toolBar.Modify('t_' + dw_toolBar.of_getItem_objectName(vl_item) + '.FocusRectangle=no')
+	IF NOT (isNull(ds_toolBar.of_getItem_text(vl_item)) OR Trim(ds_toolBar.of_getItem_text(vl_item)) = '') THEN
+		IF ds_toolBar.of_getItem_displayText(vl_item) THEN
+			dw_palette.Modify('t_' + ds_toolBar.of_getItem_objectName(vl_item) + '.FocusRectangle=no')
 		ELSE
-			IF NOT (isNull(dw_toolBar.of_getItem_image(vl_item)) OR Trim(dw_toolBar.of_getItem_image(vl_item)) = '') THEN
-				dw_toolBar.Modify('p_' + dw_toolBar.of_getItem_objectName(vl_item) + '.FocusRectangle=no')
+			IF NOT (isNull(ds_toolBar.of_getItem_image(vl_item)) OR Trim(ds_toolBar.of_getItem_image(vl_item)) = '') THEN
+				dw_palette.Modify('p_' + ds_toolBar.of_getItem_objectName(vl_item) + '.FocusRectangle=no')
 			END IF
 		END IF
 	ELSE
-		IF NOT (isNull(dw_toolBar.of_getItem_image(vl_item)) OR Trim(dw_toolBar.of_getItem_image(vl_item)) = '') THEN
-			dw_toolBar.Modify('p_' + dw_toolBar.of_getItem_objectName(vl_item) + '.FocusRectangle=no')
+		IF NOT (isNull(ds_toolBar.of_getItem_image(vl_item)) OR Trim(ds_toolBar.of_getItem_image(vl_item)) = '') THEN
+			dw_palette.Modify('p_' + ds_toolBar.of_getItem_objectName(vl_item) + '.FocusRectangle=no')
 		END IF
 	END IF
 
@@ -1044,30 +1049,30 @@ END IF
 
 //	Set the position of the bitmap objects within the requested band
 IF lb_createdImage THEN
-	dw_toolBar.setPosition('p_' + dw_toolBar.of_getItem_objectName(vl_item), #band, TRUE)
+	dw_palette.setPosition('p_' + ds_toolBar.of_getItem_objectName(vl_item), #band, TRUE)
 END IF
 
 //	Set the position of the text objects within the requested band
 IF lb_createdText THEN
 
 	IF #BitMapSize >= MEDIUM THEN
-		dw_toolBar.setPosition('b_' + dw_toolBar.of_getItem_objectName(vl_item), #band, TRUE)
+		dw_palette.setPosition('b_' + ds_toolBar.of_getItem_objectName(vl_item), #band, TRUE)
 	END IF
 
-	dw_toolBar.setPosition('t_' + dw_toolBar.of_getItem_objectName(vl_item), #band, TRUE)
+	dw_palette.setPosition('t_' + ds_toolBar.of_getItem_objectName(vl_item), #band, TRUE)
 	
 END IF
 
 //	Set tabSequence for keyboard interface
 IF lb_createdImage OR lb_createdText THEN
-	IF dw_toolBar.of_getItem_position(vl_item) = LEFT THEN 
-		dw_toolBar.of_setItem_tabSequence(vl_item, vl_item * 10)
+	IF ds_toolBar.of_getItem_position(vl_item) = LEFT THEN 
+		ds_toolBar.of_setItem_tabSequence(vl_item, vl_item * 10)
 	ELSE
-		dw_toolBar.of_setItem_tabSequence(vl_item, 1000 - (vl_item * 10))
+		ds_toolBar.of_setItem_tabSequence(vl_item, 1000 - (vl_item * 10))
 	END IF
 END IF
 	
-Return(dw_toolBar.of_getItem_rectWidth(vl_item))
+Return(ds_toolBar.of_getItem_rectWidth(vl_item))
 end function
 
 private function boolean of_updatepositions (boolean vb_dropdownmenu);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -1080,44 +1085,44 @@ private function boolean of_updatepositions (boolean vb_dropdownmenu);// CopyRig
 // Original Author:	Christopher Harris
 
 Long										ll_width
-ll_width									= dw_toolBar.Width
+ll_width									= dw_palette.Width
 
-dw_toolBar.of_setItem_visible(1, vb_dropDownMenu)
-dw_toolBar.of_setItem_displayInMenu(1, FALSE)
+ds_toolBar.of_setItem_visible(1, vb_dropDownMenu)
+ds_toolBar.of_setItem_displayInMenu(1, FALSE)
 
 Long										ll_offSet			= 0
 
 IF vb_dropDownMenu THEN
-	dw_toolBar.of_setItem_tabSequence(1, 1000)													//	object only allows 99 toolBarItems
-	ll_offSet							= dw_toolBar.of_getItem_rectWidth(1) + PixelsToUnits(13, XPixelsToUnits!)
+	ds_toolBar.of_setItem_tabSequence(1, 1000)													//	object only allows 99 toolBarItems
+	ll_offSet							= ds_toolBar.of_getItem_rectWidth(1) + PixelsToUnits(13, XPixelsToUnits!)
 END IF
 
 Long										ll_item,	ll_index
 
-FOR ll_item = 2 TO dw_toolBar.RowCount()
+FOR ll_item = 2 TO ds_toolBar.RowCount()
 	
-	dw_toolBar.of_setItem_displayInMenu(ll_item, TRUE)
+	ds_toolBar.of_setItem_displayInMenu(ll_item, TRUE)
 	
-	IF dw_toolbar.of_getItem_separator(ll_item) THEN
-		dw_toolBar.of_setItem_visible(ll_item, TRUE)
+	IF ds_toolBar.of_getItem_separator(ll_item) THEN
+		ds_toolBar.of_setItem_visible(ll_item, TRUE)
 	END IF
 	
 NEXT
 
 //	No need to display any trailing separators
-dw_toolBar.SetFilter('visible="Y" AND position=' + String(LEFT))
-dw_toolBar.Filter()
+ds_toolBar.SetFilter('visible="Y" AND position=' + String(LEFT))
+ds_toolBar.Filter()
 
-FOR ll_index = dw_toolBar.RowCount() TO 1 STEP -1
+FOR ll_index = ds_toolBar.RowCount() TO 1 STEP -1
 	
-	IF NOT dw_toolBar.of_getItem_separator(ll_index) THEN EXIT
+	IF NOT ds_toolBar.of_getItem_separator(ll_index) THEN EXIT
 	
-	dw_toolBar.of_setItem_visible(ll_index, FALSE)
+	ds_toolBar.of_setItem_visible(ll_index, FALSE)
 	
 NEXT
 
-dw_toolBar.SetFilter('')
-dw_toolBar.Filter()
+ds_toolBar.SetFilter('')
+ds_toolBar.Filter()
 
 Boolean									lb_itemFound		= FALSE
 Long										ll_separatorItem	= 0
@@ -1125,32 +1130,32 @@ Long										ll_separatorItem	= 0
 Long										ll_posLeft
 ll_posLeft								= PixelsToUnits(4, XPixelsToUnits!)
 
-FOR ll_item = 1 TO dw_toolBar.RowCount()
+FOR ll_item = 1 TO ds_toolBar.RowCount()
 
-	IF dw_toolBar.of_getItem_position(ll_item) <> LEFT THEN CONTINUE
-	IF NOT dw_toolBar.of_getItem_visible(ll_item) THEN CONTINUE
+	IF ds_toolBar.of_getItem_position(ll_item) <> LEFT THEN CONTINUE
+	IF NOT ds_toolBar.of_getItem_visible(ll_item) THEN CONTINUE
 
 	//	The first item should not be a separator
 	IF NOT lb_itemFound THEN
-		IF dw_toolBar.of_getItem_separator(ll_item) THEN
-			dw_toolBar.of_setItem_visible(ll_item, FALSE)
+		IF ds_toolBar.of_getItem_separator(ll_item) THEN
+			ds_toolBar.of_setItem_visible(ll_item, FALSE)
 			CONTINUE
 		END IF
 	END IF
 	
 	lb_itemFound						= TRUE
 	
-	IF (ll_posLeft + dw_toolBar.of_getItem_rectWidth(ll_item)) > (ll_width - ll_offSet) THEN EXIT
+	IF (ll_posLeft + ds_toolBar.of_getItem_rectWidth(ll_item)) > (ll_width - ll_offSet) THEN EXIT
 	
-	dw_toolBar.of_setItem_displayInMenu(ll_item, FALSE)
+	ds_toolBar.of_setItem_displayInMenu(ll_item, FALSE)
 	
-	IF dw_toolBar.of_getItem_separator(ll_item) THEN
+	IF ds_toolBar.of_getItem_separator(ll_item) THEN
 		
-		dw_toolBar.of_setItem_rectLeft(ll_item, ll_posLeft - PixelsToUnits(3, XPixelsToUnits!))
+		ds_toolBar.of_setItem_rectLeft(ll_item, ll_posLeft - PixelsToUnits(3, XPixelsToUnits!))
 
 		//	No need to display consecutive separators
 		IF ll_separatorItem > 0 THEN
-			dw_toolBar.of_setItem_visible(ll_item, FALSE)
+			ds_toolBar.of_setItem_visible(ll_item, FALSE)
 			CONTINUE
 		END IF
 		
@@ -1160,16 +1165,16 @@ FOR ll_item = 1 TO dw_toolBar.RowCount()
 			ll_posLeft					= ll_posLeft - PixelsToUnits(5, XPixelsToUnits!)
 //		END IF
 			
-		ll_posLeft						= ll_posLeft + dw_toolBar.of_getItem_rectWidth(ll_item)
+		ll_posLeft						= ll_posLeft + ds_toolBar.of_getItem_rectWidth(ll_item)
 		ll_posLeft						= ll_posLeft + PixelsToUnits(4, XPixelsToUnits!)
 		
 	ELSE
 		
-		dw_toolBar.of_setItem_rectLeft(ll_item, ll_posLeft)
+		ds_toolBar.of_setItem_rectLeft(ll_item, ll_posLeft)
 
 		ll_separatorItem				= 0
 
-		ll_posLeft						= ll_posLeft + dw_toolBar.of_getItem_rectWidth(ll_item)
+		ll_posLeft						= ll_posLeft + ds_toolBar.of_getItem_rectWidth(ll_item)
 		ll_posLeft						= ll_posLeft + PixelsToUnits(8, XPixelsToUnits!)
 
 	END IF
@@ -1178,49 +1183,49 @@ NEXT
 
 //	If last item was a separator then make it invisible
 IF ll_separatorItem > 0 THEN
-	dw_toolBar.of_setItem_visible(ll_separatorItem, FALSE)
+	ds_toolBar.of_setItem_visible(ll_separatorItem, FALSE)
 END IF
 
 IF vb_dropDownMenu THEN
 	CHOOSE CASE #FontSize
 		CASE 8
-			ll_offSet					= dw_toolBar.of_getItem_rectWidth(1) - PixelsToUnits(10, XPixelsToUnits!)
+			ll_offSet					= ds_toolBar.of_getItem_rectWidth(1) - PixelsToUnits(10, XPixelsToUnits!)
 		CASE 10
-			ll_offSet					= dw_toolBar.of_getItem_rectWidth(1) - PixelsToUnits(12, XPixelsToUnits!)
+			ll_offSet					= ds_toolBar.of_getItem_rectWidth(1) - PixelsToUnits(12, XPixelsToUnits!)
 		CASE 12
-			ll_offSet					= dw_toolBar.of_getItem_rectWidth(1) - PixelsToUnits(14, XPixelsToUnits!)
+			ll_offSet					= ds_toolBar.of_getItem_rectWidth(1) - PixelsToUnits(14, XPixelsToUnits!)
 		CASE 14
-			ll_offSet					= dw_toolBar.of_getItem_rectWidth(1) - PixelsToUnits(17, XPixelsToUnits!)
+			ll_offSet					= ds_toolBar.of_getItem_rectWidth(1) - PixelsToUnits(17, XPixelsToUnits!)
 	END CHOOSE
 END IF
 
 //	No need to display any trailing separators
-dw_toolBar.SetFilter('visible="Y" AND position=' + String(RIGHT))
-dw_toolBar.Filter()
+ds_toolBar.SetFilter('visible="Y" AND position=' + String(RIGHT))
+ds_toolBar.Filter()
 
-FOR ll_index = dw_toolBar.RowCount() TO 1 STEP -1
+FOR ll_index = ds_toolBar.RowCount() TO 1 STEP -1
 	
-	IF NOT dw_toolBar.of_getItem_separator(ll_index) THEN EXIT
+	IF NOT ds_toolBar.of_getItem_separator(ll_index) THEN EXIT
 	
-	dw_toolBar.of_setItem_visible(ll_index, FALSE)
+	ds_toolBar.of_setItem_visible(ll_index, FALSE)
 	
 NEXT
 
 IF vb_dropDownMenu THEN
 	
 	//	Get rid of any separators directly in front of the drop menu
-	FOR ll_index = 2 TO dw_toolBar.RowCount()
+	FOR ll_index = 2 TO ds_toolBar.RowCount()
 	
-		IF NOT dw_toolBar.of_getItem_separator(ll_index) THEN EXIT
+		IF NOT ds_toolBar.of_getItem_separator(ll_index) THEN EXIT
 		
-		dw_toolBar.of_setItem_visible(ll_index, FALSE)
+		ds_toolBar.of_setItem_visible(ll_index, FALSE)
 		
 	NEXT
 
 END IF
 
-dw_toolBar.SetFilter('')
-dw_toolBar.Filter()
+ds_toolBar.SetFilter('')
+ds_toolBar.Filter()
 
 lb_itemFound							= FALSE
 ll_separatorItem						= 0
@@ -1228,32 +1233,32 @@ ll_separatorItem						= 0
 Long										ll_posRight
 ll_posRight								= (ll_width + ll_offSet) - PixelsToUnits(5, XPixelsToUnits!)
 
-IF ll_item > dw_toolBar.RowCount() THEN
+IF ll_item > ds_toolBar.RowCount() THEN
 	
-	FOR ll_item = 1 TO dw_toolBar.RowCount()
+	FOR ll_item = 1 TO ds_toolBar.RowCount()
 		
-		IF dw_toolBar.of_getItem_position(ll_item) <> RIGHT THEN CONTINUE
-		IF NOT dw_toolBar.of_getItem_visible(ll_item) THEN CONTINUE
+		IF ds_toolBar.of_getItem_position(ll_item) <> RIGHT THEN CONTINUE
+		IF NOT ds_toolBar.of_getItem_visible(ll_item) THEN CONTINUE
 
 		//	The first item should not be a separator
 		IF NOT lb_itemFound THEN
-			IF dw_toolBar.of_getItem_separator(ll_item) THEN
-				dw_toolBar.of_setItem_visible(ll_item, FALSE)
+			IF ds_toolBar.of_getItem_separator(ll_item) THEN
+				ds_toolBar.of_setItem_visible(ll_item, FALSE)
 				CONTINUE
 			END IF
 		END IF
 		
 		lb_itemFound					= TRUE
 	
-		IF ll_posRight - dw_toolBar.of_getItem_rectWidth(ll_item) <= ll_posLeft THEN EXIT
+		IF ll_posRight - ds_toolBar.of_getItem_rectWidth(ll_item) <= ll_posLeft THEN EXIT
 			
-		dw_toolBar.of_setItem_displayInMenu(ll_item, FALSE)
+		ds_toolBar.of_setItem_displayInMenu(ll_item, FALSE)
 		
-		IF dw_toolBar.of_getItem_separator(ll_item) THEN
+		IF ds_toolBar.of_getItem_separator(ll_item) THEN
 		
 			//	No need to display consecutive separators
 			IF ll_separatorItem > 0 THEN
-				dw_toolBar.of_setItem_visible(ll_item, FALSE)
+				ds_toolBar.of_setItem_visible(ll_item, FALSE)
 				CONTINUE
 			END IF
 			
@@ -1263,18 +1268,18 @@ IF ll_item > dw_toolBar.RowCount() THEN
 				ll_posRight				= ll_posRight + PixelsToUnits(5, XPixelsToUnits!)
 //			END IF
 					
-			dw_toolBar.of_setItem_rectLeft(ll_item, ll_posRight)
+			ds_toolBar.of_setItem_rectLeft(ll_item, ll_posRight)
 		
-			ll_posRight					= ll_posRight - dw_toolBar.of_getItem_rectWidth(ll_item)
+			ll_posRight					= ll_posRight - ds_toolBar.of_getItem_rectWidth(ll_item)
 			ll_posRight					= ll_posRight - PixelsToUnits(4, XPixelsToUnits!)
 			
 		ELSE
 				
 			ll_separatorItem			= 0
 
-			ll_posRight					= ll_posRight - dw_toolBar.of_getItem_rectWidth(ll_item)
+			ll_posRight					= ll_posRight - ds_toolBar.of_getItem_rectWidth(ll_item)
 				
-			dw_toolBar.of_setItem_rectLeft(ll_item, ll_posRight)
+			ds_toolBar.of_setItem_rectLeft(ll_item, ll_posRight)
 	
 			ll_posRight					= ll_posRight - PixelsToUnits(8, XPixelsToUnits!)
 		
@@ -1286,20 +1291,20 @@ END IF
 
 //	If last item was a separator then make it invisible
 IF ll_separatorItem > 0 THEN
-	dw_toolBar.of_setItem_visible(ll_separatorItem, FALSE)
+	ds_toolBar.of_setItem_visible(ll_separatorItem, FALSE)
 END IF
 
-IF dw_toolBar.of_getItem_visible(1) THEN
-	dw_toolBar.of_setItem_rectLeft(1, ll_width - dw_toolBar.of_getItem_rectWidth(1) - PixelsToUnits(5, XPixelsToUnits!))
+IF ds_toolBar.of_getItem_visible(1) THEN
+	ds_toolBar.of_setItem_rectLeft(1, ll_width - ds_toolBar.of_getItem_rectWidth(1) - PixelsToUnits(5, XPixelsToUnits!))
 END IF
 
 IF NOT vb_dropDownMenu THEN
 	
-	FOR ll_item = 1 TO dw_toolBar.RowCount()
+	FOR ll_item = 1 TO ds_toolBar.RowCount()
 	
-		IF NOT dw_toolBar.of_getItem_visible(ll_item) THEN CONTINUE
+		IF NOT ds_toolBar.of_getItem_visible(ll_item) THEN CONTINUE
 		
-		IF dw_toolBar.of_getItem_displayInMenu(ll_item) THEN Return(TRUE)
+		IF ds_toolBar.of_getItem_displayInMenu(ll_item) THEN Return(TRUE)
 	
 	NEXT
 	
@@ -1367,24 +1372,24 @@ public function integer of_update ();// CopyRight (c) 2016 by Christopher Harris
 
 IF NOT ib_update THEN Return(SUCCESS)
 
-dw_toolBar.SetRedraw(FALSE)
+dw_palette.SetRedraw(FALSE)
 
 Long										ll_item
 
-FOR ll_item = 1 TO dw_toolBar.RowCount()
-	dw_toolbar.of_deleteItem(ll_item)
+FOR ll_item = 1 TO ds_toolBar.RowCount()
+	of_destroyItem(ll_item)
 NEXT
 
 IF of_updatePositions(FALSE) THEN
 	of_updatePositions(TRUE)
 END IF
 
-FOR ll_item = 1 TO dw_toolBar.RowCount()
+FOR ll_item = 1 TO ds_toolBar.RowCount()
 
-	IF NOT dw_toolBar.of_getItem_visible(ll_item) THEN CONTINUE
-	IF dw_toolBar.of_getItem_displayInMenu(ll_item)	THEN CONTINUE
+	IF NOT ds_toolBar.of_getItem_visible(ll_item) THEN CONTINUE
+	IF ds_toolBar.of_getItem_displayInMenu(ll_item)	THEN CONTINUE
 	
-	IF dw_toolBar.of_getItem_separator(ll_item) THEN
+	IF ds_toolBar.of_getItem_separator(ll_item) THEN
 		of_createItem_separator(ll_item)
 	ELSE
 		of_createItem(ll_item)
@@ -1392,7 +1397,7 @@ FOR ll_item = 1 TO dw_toolBar.RowCount()
 
 NEXT
 
-dw_toolBar.SetRedraw(TRUE)
+dw_palette.SetRedraw(TRUE)
 
 Return(SUCCESS)
 end function
@@ -1433,7 +1438,7 @@ FOR ll_toolBar = 1 TO ll_toolBars
 
 	suo_toolBar[ll_toolBar].of_highLight(INVISIBLE)
 
-	suo_toolBar[ll_toolBar].dw_toolbar.Modify('DataWindow.' + #band + '.Color="' + String(of_getColor(LOSEFOCUS)) + '" ')
+	suo_toolBar[ll_toolBar].dw_palette.Modify('DataWindow.' + #band + '.Color="' + String(of_getColor(LOSEFOCUS)) + '" ')
 
 NEXT
 
@@ -1452,40 +1457,40 @@ protected function integer of_highlight (string vs_mode);// CopyRight (c) 2016 b
 CHOOSE CASE vs_mode
 	CASE SELECTMODE
 		
-		dw_toolBar.Modify('r_button.brush.color="' + String(of_GetColor(SELECTED2)) + '" ' +			&
+		dw_palette.Modify('r_button.brush.color="' + String(of_GetColor(SELECTED2)) + '" ' +			&
 								'r_button.pen.color="' + String(of_GetColor(HIGHLIGHTBORDER)) + '" ' +		&
 								'r_button.background.color="' + String(of_GetColor(SELECTED2)) + '" ')
 								
-		IF dw_toolbar.of_PBVersion() >= 11.5 THEN
-			dw_toolBar.Modify('r_button.background.gradient.color="' + String(of_GetColor(SELECTED1)) + '"')
+		IF ds_toolBar.of_PBVersion() >= 11.5 THEN
+			dw_palette.Modify('r_button.background.gradient.color="' + String(of_GetColor(SELECTED1)) + '"')
 		END IF
 		
 	CASE HIGHLIGHT
 		
-		dw_toolBar.Modify('r_button.brush.color="' + String(of_GetColor(HIGHLIGHT2)) + '" ' +		&
+		dw_palette.Modify('r_button.brush.color="' + String(of_GetColor(HIGHLIGHT2)) + '" ' +		&
 								'r_button.pen.color="' + String(of_GetColor(HIGHLIGHTBORDER)) + '" ' +		&
 								'r_button.background.color="' + String(of_GetColor(HIGHLIGHT2)) + '" ')
 								
-		IF dw_toolbar.of_PBVersion() >= 11.5 THEN
-			dw_toolBar.Modify('r_button.background.gradient.color="' + String(of_GetColor(HIGHLIGHT1)) + '"')
+		IF ds_toolBar.of_PBVersion() >= 11.5 THEN
+			dw_palette.Modify('r_button.background.gradient.color="' + String(of_GetColor(HIGHLIGHT1)) + '"')
 		END IF
 		
 	CASE VISIBLEMODE
-		dw_toolBar.Object.r_button.Visible	= 1
+		dw_palette.Object.r_button.Visible	= 1
 	CASE INVISIBLE
 		
 		//	If we are hiding the highlight and the item underneath is checked,
 		//	then make sure the checked indicator is visible
 		IF il_itemChecked <> -1 THEN
 			
-			dw_toolBar.Modify('r_' + dw_toolbar.of_getItem_objectName(il_itemChecked) + '.Visible="1"')
+			dw_palette.Modify('r_' + ds_toolBar.of_getItem_objectName(il_itemChecked) + '.Visible="1"')
 			
 			il_itemChecked							= -1
 			
 		END IF
 		
 		//	Hide the highlight
-		dw_toolBar.Object.r_button.Visible	= 0
+		dw_palette.Object.r_button.Visible	= 0
 		
 	CASE ELSE
 
@@ -1493,14 +1498,14 @@ CHOOSE CASE vs_mode
 		//	then make sure the checked indicator is visible
 		IF il_itemChecked <> -1 THEN
 			
-			dw_toolBar.Modify('r_' + dw_toolbar.of_getItem_objectName(il_itemChecked) + '.Visible="1"')
+			dw_palette.Modify('r_' + ds_toolBar.of_getItem_objectName(il_itemChecked) + '.Visible="1"')
 			
 			il_itemChecked							= -1
 			
 		END IF
 		
 		//	Hide the highlight
-		dw_toolBar.Object.r_button.Visible	= 0
+		dw_palette.Object.r_button.Visible	= 0
 		
 END CHOOSE
 
@@ -1522,32 +1527,32 @@ private function long of_adddropmenu ();//	CopyRight (c) 2016 by Christopher Har
 //	item in the toolBar when displayed and will display a popMenu of the
 //	items that are not shown to the user when clicked.
 
-dw_toolBar.Reset()
+dw_palette.Reset()
 
 Long										ll_item
-ll_item									= dw_toolBar.of_addItem()
+ll_item									= ds_toolBar.of_addItem()
 
-dw_toolBar.of_setItem_text(ll_item, is_dropMenuChar)
-dw_toolBar.of_setItem_image(ll_item, '')
-dw_toolBar.of_setItem_toolTip(ll_item, 'ToolBar Items Menu')
-dw_toolBar.of_setItem_position(ll_item, RIGHT)
-dw_toolBar.of_setItem_visible(ll_item, FALSE)
-dw_toolBar.of_setItem_enabled(ll_item, TRUE)
-dw_toolBar.of_setItem_objectName(ll_item, dw_toolBar.POPMENU + '_' + String(ll_item))
-dw_toolBar.of_setItem_objectType(ll_item, dw_toolbar.POPMENU)
-dw_toolBar.of_setItem_imageTransparency(ll_item, of_getColor(DEFAULTIMAGETRANSPARENCY))
-dw_toolBar.of_setItem_displayText(ll_item, TRUE)
-dw_toolBar.of_setItem_displayInMenu(ll_item, FALSE)
-dw_toolBar.of_setItem_fontFace(ll_item, is_dropMenuFont)
-dw_toolBar.of_setItem_tabSequence(ll_item, 1000)								//	object only allows 99 toolBarItems
-dw_toolBar.of_setItem_alignment(ll_item, 0)
+ds_toolBar.of_setItem_text(ll_item, is_dropMenuChar)
+ds_toolBar.of_setItem_image(ll_item, '')
+ds_toolBar.of_setItem_toolTip(ll_item, 'ToolBar Items Menu')
+ds_toolBar.of_setItem_position(ll_item, RIGHT)
+ds_toolBar.of_setItem_visible(ll_item, FALSE)
+ds_toolBar.of_setItem_enabled(ll_item, TRUE)
+ds_toolBar.of_setItem_objectName(ll_item, ds_toolBar.POPMENU + '_' + String(ll_item))
+ds_toolBar.of_setItem_objectType(ll_item, ds_toolBar.POPMENU)
+ds_toolBar.of_setItem_imageTransparency(ll_item, of_getColor(DEFAULTIMAGETRANSPARENCY))
+ds_toolBar.of_setItem_displayText(ll_item, TRUE)
+ds_toolBar.of_setItem_displayInMenu(ll_item, FALSE)
+ds_toolBar.of_setItem_fontFace(ll_item, is_dropMenuFont)
+ds_toolBar.of_setItem_tabSequence(ll_item, 1000)								//	object only allows 99 toolBarItems
+ds_toolBar.of_setItem_alignment(ll_item, 0)
 
-dw_toolBar.of_setItem_textWidth(ll_item, il_dropSize)
+ds_toolBar.of_setItem_textWidth(ll_item, il_dropSize)
 
-dw_toolBar.of_setItem_rectTop(ll_item, 16)
-dw_toolBar.of_setItem_rectHeight(ll_item, of_size_imageHeight() + 16)
-dw_toolBar.of_setItem_rectLeft(ll_item, 0)
-dw_toolBar.of_setItem_rectWidth(ll_item, dw_toolBar.of_getItem_textWidth(ll_item))
+ds_toolBar.of_setItem_rectTop(ll_item, 16)
+ds_toolBar.of_setItem_rectHeight(ll_item, of_size_imageHeight() + 16)
+ds_toolBar.of_setItem_rectLeft(ll_item, 0)
+ds_toolBar.of_setItem_rectWidth(ll_item, ds_toolBar.of_getItem_textWidth(ll_item))
 
 Return(1)
 end function
@@ -1602,7 +1607,7 @@ IF Trim(vs_text) = is_DropMenuChar THEN
 END IF
 
 Long										ll_item
-ll_item									= dw_toolBar.of_addItem()
+ll_item									= ds_toolBar.of_addItem()
 
 IF isNull(vs_text)		THEN vs_text		= ''
 IF isNull(vs_image)		THEN vs_image		= ''
@@ -1613,13 +1618,13 @@ vs_text									= Trim(vs_text)
 vs_image									= Trim(vs_image)
 vs_toolTip								= Trim(vs_toolTip)
 
-dw_toolBar.of_setItem_text(ll_item, vs_text)
-dw_toolBar.of_setItem_image(ll_item, invo_dwGUI.of_getImageName(vs_image))
+ds_toolBar.of_setItem_text(ll_item, vs_text)
+ds_toolBar.of_setItem_image(ll_item, invo_dwGUI.of_getImageName(vs_image))
 
 IF isNull(vs_toolTip) OR Trim(vs_toolTip) = '' THEN
-	dw_toolBar.of_setItem_toolTip(ll_item, vs_text)
+	ds_toolBar.of_setItem_toolTip(ll_item, vs_text)
 ELSE
-	dw_toolBar.of_setItem_toolTip(ll_item, vs_toolTip)
+	ds_toolBar.of_setItem_toolTip(ll_item, vs_toolTip)
 END IF
 
 //	Make sure position is a valid value
@@ -1627,33 +1632,33 @@ IF vi_position <> LEFT AND vi_position <> RIGHT THEN
 	vi_position							= LEFT
 END IF
 
-dw_toolBar.of_setItem_position(ll_item, vi_Position)
-dw_toolBar.of_setItem_visible(ll_item, TRUE)
-dw_toolBar.of_setItem_enabled(ll_item, TRUE)
+ds_toolBar.of_setItem_position(ll_item, vi_Position)
+ds_toolBar.of_setItem_visible(ll_item, TRUE)
+ds_toolBar.of_setItem_enabled(ll_item, TRUE)
 
 IF vs_text = '' THEN
-	dw_toolBar.of_setItem_objectName(ll_item, dw_toolBar.TOOLBARITEM + '_' + String(ll_item))
+	ds_toolBar.of_setItem_objectName(ll_item, ds_toolBar.TOOLBARITEM + '_' + String(ll_item))
 ELSE
-	dw_toolBar.of_setItem_objectName(ll_item, invo_string.of_GlobalReplace(vs_text, ' ', '_') + '_' + String(ll_item))
+	ds_toolBar.of_setItem_objectName(ll_item, invo_string.of_GlobalReplace(vs_text, ' ', '_') + '_' + String(ll_item))
 END IF
 
-dw_toolBar.of_setItem_objectType(ll_item, dw_toolBar.TOOLBARITEM)
+ds_toolBar.of_setItem_objectType(ll_item, ds_toolBar.TOOLBARITEM)
 
 IF isNull(vs_image) OR vs_image = '' THEN
 	
-	dw_toolBar.of_setItem_imageTransparency(ll_item, of_getColor(DEFAULTIMAGETRANSPARENCY))
-	dw_toolBar.of_setItem_displayText(ll_item, TRUE)
+	ds_toolBar.of_setItem_imageTransparency(ll_item, of_getColor(DEFAULTIMAGETRANSPARENCY))
+	ds_toolBar.of_setItem_displayText(ll_item, TRUE)
 	
 ELSE
 	
-	dw_toolBar.of_setItem_imageTransparency(ll_item, of_getColor(DEFAULTIMAGETRANSPARENCY))
-	dw_toolBar.of_setItem_displayText(ll_item, of_displayText())
+	ds_toolBar.of_setItem_imageTransparency(ll_item, of_getColor(DEFAULTIMAGETRANSPARENCY))
+	ds_toolBar.of_setItem_displayText(ll_item, of_displayText())
 	
 END IF
 
-dw_toolBar.of_setItem_DisplayInMenu(ll_item, FALSE)
+ds_toolBar.of_setItem_DisplayInMenu(ll_item, FALSE)
 
-dw_toolBar.of_setItem_fontFace(ll_item, #FontFace)
+ds_toolBar.of_setItem_fontFace(ll_item, #FontFace)
 
 of_initializeItemSize(ll_item)
 of_update()
@@ -1719,7 +1724,7 @@ lb_update								= ib_update
 ib_update								= FALSE
 
 FOR ll_loop = 1 TO UpperBound(vs_text[])
-	IF vs_text[ll_loop] = dw_toolBar.SEPARATOR THEN
+	IF vs_text[ll_loop] = ds_toolBar.SEPARATOR THEN
 		of_addSeparator(vi_position[ll_loop])
 	ELSE
 		of_addItem(vs_text[ll_loop], vs_image[ll_loop], vs_toolTip[ll_loop], vi_Position[ll_loop])
@@ -1730,7 +1735,7 @@ ib_update								= lb_update
 
 of_update()
 
-Return(dw_toolBar.RowCount())
+Return(ds_toolBar.RowCount())
 end function
 
 public function long of_addseparator ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -1755,28 +1760,28 @@ public function long of_addseparator (integer vi_position);// CopyRight (c) 2016
 // Original Author:	Christopher Harris
 
 Long										ll_item
-ll_item									= dw_toolBar.of_addItem()
+ll_item									= ds_toolBar.of_addItem()
 
 IF isNull(vi_position) THEN vi_position = LEFT
 
-dw_toolBar.of_setItem_text(ll_item, dw_toolBar.SEPARATOR + '_' + String(ll_item))
-dw_toolBar.of_setItem_image(ll_item, '')
-dw_toolBar.of_setItem_toolTip(ll_item, '')
-dw_toolBar.of_setItem_position(ll_item, vi_Position)
-dw_toolBar.of_setItem_visible(ll_item, TRUE)
-dw_toolBar.of_setItem_enabled(ll_item, TRUE)
-dw_toolBar.of_setItem_objectName(ll_item, dw_toolBar.SEPARATOR + '_' + String(ll_item))
-dw_toolBar.of_setItem_objectType(ll_item, dw_toolBar.SEPARATOR)
-dw_toolBar.of_setItem_imageTransparency(ll_item, of_getColor(DEFAULTIMAGETRANSPARENCY))
-dw_toolBar.of_setItem_displayText(ll_item, FALSE)
-dw_toolBar.of_setItem_displayInMenu(ll_item, FALSE)
+ds_toolBar.of_setItem_text(ll_item, ds_toolBar.SEPARATOR + '_' + String(ll_item))
+ds_toolBar.of_setItem_image(ll_item, '')
+ds_toolBar.of_setItem_toolTip(ll_item, '')
+ds_toolBar.of_setItem_position(ll_item, vi_Position)
+ds_toolBar.of_setItem_visible(ll_item, TRUE)
+ds_toolBar.of_setItem_enabled(ll_item, TRUE)
+ds_toolBar.of_setItem_objectName(ll_item, ds_toolBar.SEPARATOR + '_' + String(ll_item))
+ds_toolBar.of_setItem_objectType(ll_item, ds_toolBar.SEPARATOR)
+ds_toolBar.of_setItem_imageTransparency(ll_item, of_getColor(DEFAULTIMAGETRANSPARENCY))
+ds_toolBar.of_setItem_displayText(ll_item, FALSE)
+ds_toolBar.of_setItem_displayInMenu(ll_item, FALSE)
 
-dw_toolBar.of_setItem_rectTop(ll_item, 16)
-dw_toolBar.of_setItem_rectHeight(ll_item, of_size_imageHeight() + 16)
-dw_toolBar.of_setItem_rectLeft(ll_item, 0)
-dw_toolBar.of_setItem_rectWidth(ll_item, of_size_line())
-dw_toolBar.of_setItem_textWidth(ll_item, 0)
-dw_toolBar.of_setItem_imageWidth(ll_item, 0)
+ds_toolBar.of_setItem_rectTop(ll_item, 16)
+ds_toolBar.of_setItem_rectHeight(ll_item, of_size_imageHeight() + 16)
+ds_toolBar.of_setItem_rectLeft(ll_item, 0)
+ds_toolBar.of_setItem_rectWidth(ll_item, of_size_line())
+ds_toolBar.of_setItem_textWidth(ll_item, 0)
+ds_toolBar.of_setItem_imageWidth(ll_item, 0)
 
 of_update()
 
@@ -1897,8 +1902,8 @@ public function boolean of_ischecked (long vl_item);// CopyRight (c) 2016 by Chr
 
 Boolean									lb_checked = FALSE
 
-IF vl_Item > 0 AND vl_Item <= dw_toolBar.RowCount() THEN
-	lb_checked							= dw_toolbar.of_getItem_checked(vl_item)
+IF vl_Item > 0 AND vl_Item <= ds_toolBar.RowCount() THEN
+	lb_checked							= ds_toolBar.of_getItem_checked(vl_item)
 END IF
 
 Return(lb_checked)
@@ -1919,7 +1924,7 @@ Long										ll_item
 ll_item									= of_locateItem(vs_item)
 
 IF NOT IsNull(ll_item) THEN
-	lb_checked							= dw_toolBar.of_getItem_checked(ll_item)
+	lb_checked							= ds_toolBar.of_getItem_checked(ll_item)
 END IF
 
 Return(lb_checked)
@@ -1936,53 +1941,53 @@ private function integer of_drawenabled (long vl_item);// CopyRight (c) 2016 by 
 
 IF isNull(vl_item) THEN Return(FAILURE)
 
-IF vl_item <= 0 OR vl_item > dw_toolBar.RowCount() THEN Return(FAILURE)
+IF vl_item <= 0 OR vl_item > ds_toolBar.RowCount() THEN Return(FAILURE)
 
 String									ls_object
-ls_object								= 'p_' + dw_toolBar.of_getItem_objectName(vl_item)
+ls_object								= 'p_' + ds_toolBar.of_getItem_objectName(vl_item)
 
 String									ls_describe
-ls_describe								= Trim(dw_toolBar.Describe(ls_object + '.X'))
+ls_describe								= Trim(dw_palette.Describe(ls_object + '.X'))
 	
 IF ls_describe <> '!' AND ls_describe <> '?' AND ls_describe <> '' THEN
 		
-	IF dw_toolbar.of_PBVersion() >= 11.5 THEN
-		IF dw_toolBar.of_getItem_enabled(vl_item) THEN
-			dw_toolBar.Modify(ls_object + '.Transparency="0"')
+	IF ds_toolBar.of_PBVersion() >= 11.5 THEN
+		IF ds_toolBar.of_getItem_enabled(vl_item) THEN
+			dw_palette.Modify(ls_object + '.Transparency="0"')
 		ELSE
-			dw_toolBar.Modify(ls_object + '.Transparency="50"')
+			dw_palette.Modify(ls_object + '.Transparency="50"')
 		END IF
 	ELSE
 		//	Need to come up with a way to show enabled/disabled for version prior to 11.5
 	END IF
 		
-	IF dw_toolbar.of_PBVersion() >= 12.5 THEN
-		IF dw_toolBar.of_getItem_enabled(vl_item) THEN
-			dw_toolBar.Modify(ls_object + '.Enabled="1"')
+	IF ds_toolBar.of_PBVersion() >= 12.5 THEN
+		IF ds_toolBar.of_getItem_enabled(vl_item) THEN
+			dw_palette.Modify(ls_object + '.Enabled="1"')
 		ELSE
-			dw_toolBar.Modify(ls_object + '.Enabled="0"')
+			dw_palette.Modify(ls_object + '.Enabled="0"')
 		END IF
 	END IF
 	
 END IF
 
-ls_object								= 't_' + dw_toolBar.of_getItem_objectName(vl_item)
+ls_object								= 't_' + ds_toolBar.of_getItem_objectName(vl_item)
 
-ls_describe								= Trim(dw_toolBar.Describe('t_' + dw_toolBar.of_getItem_objectName(vl_item) + '.X'))
+ls_describe								= Trim(dw_palette.Describe('t_' + ds_toolBar.of_getItem_objectName(vl_item) + '.X'))
 	
 IF ls_describe <> '!' AND ls_describe <> '?' AND ls_describe <> '' THEN
 	
-	IF dw_toolBar.of_getItem_enabled(vl_item) THEN
-		dw_toolBar.Modify(ls_object + '.Color="' + String(of_getColor(MENUTEXT)) + '"')
+	IF ds_toolBar.of_getItem_enabled(vl_item) THEN
+		dw_palette.Modify(ls_object + '.Color="' + String(of_getColor(MENUTEXT)) + '"')
 	ELSE
-		dw_toolBar.Modify(ls_object + '.Color="' + String(of_getColor(DISABLEDTEXT)) + '"')
+		dw_palette.Modify(ls_object + '.Color="' + String(of_getColor(DISABLEDTEXT)) + '"')
 	END IF
 		
-	IF dw_toolbar.of_PBVersion() >= 12.5 THEN
-		IF dw_toolBar.of_getItem_enabled(vl_item) THEN
-			dw_toolBar.Modify(ls_object + '.Enabled="1"')
+	IF ds_toolBar.of_PBVersion() >= 12.5 THEN
+		IF ds_toolBar.of_getItem_enabled(vl_item) THEN
+			dw_palette.Modify(ls_object + '.Enabled="1"')
 		ELSE
-			dw_toolBar.Modify(ls_object + '.Enabled="0"')
+			dw_palette.Modify(ls_object + '.Enabled="0"')
 		END IF
 	END IF
 
@@ -2002,22 +2007,22 @@ private function integer of_drawchecked (long vl_item);// CopyRight (c) 2016 by 
 
 IF isNull(vl_item) THEN Return(FAILURE)
 
-IF vl_item <= 0 OR vl_item > dw_toolBar.RowCount() THEN Return(FAILURE)
+IF vl_item <= 0 OR vl_item > ds_toolBar.RowCount() THEN Return(FAILURE)
 
 String									ls_object
-ls_object								= 'r_' + dw_toolBar.of_getItem_objectName(vl_item)
+ls_object								= 'r_' + ds_toolBar.of_getItem_objectName(vl_item)
 
 String									ls_describe
-ls_describe								= dw_toolBar.Describe(ls_object + '.X')
+ls_describe								= dw_palette.Describe(ls_object + '.X')
 
-IF dw_toolBar.of_getItem_checked(vl_item) AND (NOT dw_toolBar.of_getItem_displayInMenu(vl_item)) AND dw_toolBar.of_getItem_visible(vl_item) THEN
+IF ds_toolBar.of_getItem_checked(vl_item) AND (NOT ds_toolBar.of_getItem_displayInMenu(vl_item)) AND ds_toolBar.of_getItem_visible(vl_item) THEN
 
 	Long									ll_x,	ll_y,	ll_width,	ll_height
 	
-	ll_X									= dw_toolBar.of_getItem_rectLeft(vl_item)		- PixelsToUnits(3, XPixelsToUnits!)
-	ll_Y									= dw_toolBar.of_getItem_rectTop(vl_item)		- PixelsToUnits(3, YPixelsToUnits!)
-	ll_Width								= dw_toolBar.of_getItem_rectWidth(vl_item)	+ PixelsToUnits(7, XPixelsToUnits!)
-	ll_height							= dw_toolBar.of_getItem_rectHeight(vl_item)	+ PixelsToUnits(2, YPixelsToUnits!)
+	ll_X									= ds_toolBar.of_getItem_rectLeft(vl_item)		- PixelsToUnits(3, XPixelsToUnits!)
+	ll_Y									= ds_toolBar.of_getItem_rectTop(vl_item)		- PixelsToUnits(3, YPixelsToUnits!)
+	ll_Width								= ds_toolBar.of_getItem_rectWidth(vl_item)	+ PixelsToUnits(7, XPixelsToUnits!)
+	ll_height							= ds_toolBar.of_getItem_rectHeight(vl_item)	+ PixelsToUnits(2, YPixelsToUnits!)
 											
 	String								ls_modify
 	
@@ -2032,13 +2037,13 @@ IF dw_toolBar.of_getItem_checked(vl_item) AND (NOT dw_toolBar.of_getItem_display
 											  'pen.style="0" pen.width="5" pen.color="' +  String(of_getColor(HIGHLIGHTBORDER)) + '" ' +	&
 											  'background.mode="2" background.color="' +  String(of_getColor(THREEDLIGHT)) + '") '
 
-		ls_modify						= dw_toolbar.Modify(ls_modify)
+		ls_modify						= dw_palette.Modify(ls_modify)
 		
-		IF dw_toolbar.of_PBVersion() >= 11.5 THEN
+		IF ds_toolBar.of_PBVersion() >= 11.5 THEN
 		
-			dw_toolBar.Modify(ls_object + '.brush.hatch="8"')
+			dw_palette.Modify(ls_object + '.brush.hatch="8"')
 		
-			dw_toolBar.Modify(ls_object + '.background.transparency="10" ' +																		&
+			dw_palette.Modify(ls_object + '.background.transparency="10" ' +																		&
 									ls_object + '.background.gradient.color="' +  String(of_getColor(INFOBACKGROUND)) + '" ' +			&
 									ls_object + '.background.gradient.transparency="10" ' +															&
 									ls_object + '.background.gradient.angle="0" ' +																		&
@@ -2060,20 +2065,20 @@ IF dw_toolBar.of_getItem_checked(vl_item) AND (NOT dw_toolBar.of_getItem_display
 									ls_object + '.tooltip.textcolor="' +  String(of_getColor(INFOTEXT)) + '" ' +								&
 									ls_object + '.tooltip.transparency="0"')
 		ELSE
-			dw_toolBar.Modify(ls_object + '.brush.hatch="7"')
+			dw_palette.Modify(ls_object + '.brush.hatch="7"')
 		END IF
 	
 	ELSE
-		dw_toolBar.Modify(ls_object + '.x="' + String(ll_x) + '" ' +																				&
+		dw_palette.Modify(ls_object + '.x="' + String(ll_x) + '" ' +																				&
 								ls_object + '.y="' + String(ll_y) + '" ' +																				&
 								ls_object + '.height="' + String(ll_height) + '" ' +																	&
 								ls_object + '.width="' + String(ll_width) + '"')
 	END IF
 
-	dw_toolBar.SetPosition(ls_object, #band, FALSE)
+	dw_palette.SetPosition(ls_object, #band, FALSE)
 	
 ELSE
-	dw_toolBar.Modify('DESTROY ' + ls_object)
+	dw_palette.Modify('DESTROY ' + ls_object)
 END IF
 
 Return(SUCCESS)
@@ -2090,15 +2095,15 @@ public function integer of_setchecked (long vl_item, boolean vb_switch);// CopyR
 
 IF isNull(vl_item) THEN Return(FAILURE)
 
-IF vl_item <= 0 OR vl_item > dw_toolBar.RowCount() THEN Return(FAILURE)
+IF vl_item <= 0 OR vl_item > ds_toolBar.RowCount() THEN Return(FAILURE)
 
 IF isnull(vb_switch) THEN vb_switch = FALSE
 
 String									ls_describe
 
-IF dw_toolBar.of_getItem_checked(vl_item) = (NOT vb_switch) THEN
+IF ds_toolBar.of_getItem_checked(vl_item) = (NOT vb_switch) THEN
 	
-	dw_toolBar.of_setItem_checked(vl_item, vb_switch)
+	ds_toolBar.of_setItem_checked(vl_item, vb_switch)
 
 	of_drawChecked(vl_item)
 
@@ -2118,15 +2123,15 @@ public function integer of_setenabled (long vl_item, boolean vb_switch);// CopyR
 
 IF isNull(vl_item) THEN Return(FAILURE)
 
-IF vl_item <= 0 OR vl_item > dw_toolBar.RowCount() THEN Return(FAILURE)
+IF vl_item <= 0 OR vl_item > ds_toolBar.RowCount() THEN Return(FAILURE)
 
 IF isnull(vb_switch) THEN vb_switch = FALSE
 
 String									ls_describe
 
-IF dw_toolBar.of_getItem_enabled(vl_item) = (NOT vb_switch) THEN
+IF ds_toolBar.of_getItem_enabled(vl_item) = (NOT vb_switch) THEN
 	
-	dw_toolBar.of_setItem_enabled(vl_item, vb_switch)
+	ds_toolBar.of_setItem_enabled(vl_item, vb_switch)
 
 	of_drawEnabled(vl_item)
 
@@ -2146,21 +2151,21 @@ public function integer of_setimage (long vl_item, string vs_image);// CopyRight
 
 IF isNull(vl_item) THEN Return(FAILURE)
 
-IF vl_item <= 1 OR vl_item > dw_toolBar.RowCount() THEN Return(FAILURE)
+IF vl_item <= 1 OR vl_item > ds_toolBar.RowCount() THEN Return(FAILURE)
 
 IF isNull(vs_image) THEN vs_image = ''
 
-dw_toolBar.of_setItem_image(vl_item, invo_dwGUI.of_getImageName(vs_image))
+ds_toolBar.of_setItem_image(vl_item, invo_dwGUI.of_getImageName(vs_image))
 
 IF isNull(vs_image) OR Trim(vs_image) = '' THEN
 	
-	dw_toolBar.of_setItem_imageTransparency(vl_item, of_getColor(DEFAULTIMAGETRANSPARENCY))
-	dw_toolBar.of_setItem_displayText(vl_item, TRUE)
+	ds_toolBar.of_setItem_imageTransparency(vl_item, of_getColor(DEFAULTIMAGETRANSPARENCY))
+	ds_toolBar.of_setItem_displayText(vl_item, TRUE)
 	
 ELSE
 	
-	dw_toolBar.of_setItem_imageTransparency(vl_item, of_getColor(DEFAULTIMAGETRANSPARENCY))
-	dw_toolBar.of_setItem_displayText(vl_item, of_displayText())
+	ds_toolBar.of_setItem_imageTransparency(vl_item, of_getColor(DEFAULTIMAGETRANSPARENCY))
+	ds_toolBar.of_setItem_displayText(vl_item, of_displayText())
 	
 END IF
 
@@ -2181,14 +2186,14 @@ public function integer of_settext (long vl_item, string vs_text);// CopyRight (
 
 IF isNull(vl_item) THEN Return(FAILURE)
 
-IF vl_item <= 1 OR vl_item > dw_toolBar.RowCount() THEN Return(FAILURE)
+IF vl_item <= 1 OR vl_item > ds_toolBar.RowCount() THEN Return(FAILURE)
 
 IF isNull(vs_text) THEN vs_text = ''
 
 Long										ll_itemCurrent
-ll_itemCurrent							= dw_toolBar.of_locateItem()
+ll_itemCurrent							= of_locateItem()
 
-dw_toolBar.of_setItem_text(vl_item, vs_text)
+ds_toolBar.of_setItem_text(vl_item, vs_text)
 
 of_initializeItemSize(vl_item)
 of_update()
@@ -2208,24 +2213,24 @@ public function integer of_settiptext (long vl_item, string vs_tooltip);// CopyR
 
 IF isNull(vl_item) THEN Return(FAILURE)
 
-IF vl_item <= 0 OR vl_item > dw_toolbar.RowCount() THEN Return(FAILURE)
+IF vl_item <= 0 OR vl_item > ds_toolBar.RowCount() THEN Return(FAILURE)
 
 IF isNull(vs_toolTip) THEN vs_toolTip = ''
 
 String									ls_describe
 
-dw_toolBar.of_setItem_toolTip(vl_item, vs_toolTip)
+ds_toolBar.of_setItem_toolTip(vl_item, vs_toolTip)
 
-ls_describe								= Trim(dw_toolBar.Describe('p_' + dw_toolBar.of_getItem_objectName(vl_item) + '.X'))
+ls_describe								= Trim(dw_palette.Describe('p_' + ds_toolBar.of_getItem_objectName(vl_item) + '.X'))
 
 IF ls_describe <> '!' AND ls_describe <> '?' AND ls_describe <> '' THEN
-	dw_toolBar.Modify('p_' + dw_toolBar.of_getItem_objectName(vl_item) + '.ToolTip.Tip="' + vs_toolTip + '"')
+	dw_palette.Modify('p_' + ds_toolBar.of_getItem_objectName(vl_item) + '.ToolTip.Tip="' + vs_toolTip + '"')
 END IF
 
-ls_describe								= Trim(dw_toolBar.Describe('t_' + dw_toolBar.of_getItem_objectName(vl_item) + '.X'))
+ls_describe								= Trim(dw_palette.Describe('t_' + ds_toolBar.of_getItem_objectName(vl_item) + '.X'))
 
 IF ls_describe <> '!' AND ls_describe <> '?' AND ls_describe <> '' THEN
-	dw_toolBar.Modify('t_' + dw_toolBar.of_getItem_objectName(vl_item) + '.ToolTip.Tip="' + vs_toolTip + '"')
+	dw_palette.Modify('t_' + ds_toolBar.of_getItem_objectName(vl_item) + '.ToolTip.Tip="' + vs_toolTip + '"')
 END IF
 
 Return(SUCCESS)
@@ -2242,13 +2247,13 @@ public function integer of_setvisible (long vl_item, boolean vb_switch);// CopyR
 
 IF isNull(vl_item) THEN Return(FAILURE)
 
-IF vl_item <= 0 OR vl_item > dw_toolBar.RowCount() THEN Return(FAILURE)
+IF vl_item <= 0 OR vl_item > ds_toolBar.RowCount() THEN Return(FAILURE)
 
 IF isnull(vb_switch) THEN vb_switch = FALSE
 
-IF dw_toolBar.of_getItem_visible(vl_item) = (NOT vb_switch) THEN
+IF ds_toolBar.of_getItem_visible(vl_item) = (NOT vb_switch) THEN
 	
-	dw_toolBar.of_setItem_visible(vl_item, vb_switch)
+	ds_toolBar.of_setItem_visible(vl_item, vb_switch)
 
 	of_initializeItemSize(vl_item)
 	of_update()
@@ -2268,11 +2273,11 @@ private function long of_createitem_separator (long vl_item);// CopyRight (c) 20
 // Original Author:	Christopher Harris
 
 Long										ll_pos
-ll_pos									= dw_toolBar.of_getItem_rectLeft(vl_item)
+ll_pos									= ds_toolBar.of_getItem_rectLeft(vl_item)
 
 Integer									li_offset[]
 
-IF dw_toolBar.of_getItem_position(vl_item) = RIGHT THEN
+IF ds_toolBar.of_getItem_position(vl_item) = RIGHT THEN
 	li_offset[]							= { -3, -2 }
 ELSE
 	li_offset[]							= { 0, 1 }
@@ -2287,7 +2292,7 @@ IF il_currentOrientation = HORIZONTAL THEN
 											+ 'y1="16" '																							&
 											+ 'x2="' + String(ll_pos + PixelsToUnits(li_offset[1], XPixelsToUnits!)) + '" '	&
 											+ 'y2="' + String(of_size_imageHeight() + 16) + '" '										&
-											+ 'name=l_' + dw_toolBar.of_getItem_objectName(vl_item) + '_a visible="1" '		&
+											+ 'name=l_' + ds_toolBar.of_getItem_objectName(vl_item) + '_a visible="1" '		&
 											+ 'pen.style="0" '																					&
 											+ 'pen.width="' + String(PixelsToUnits(1, XPixelsToUnits!)) + '" '					&
 											+ 'pen.color="' + String(of_getColor(THREEDDKSHADOW)) + '" '							&
@@ -2297,17 +2302,17 @@ IF il_currentOrientation = HORIZONTAL THEN
 											+ 'y1="16" '																							&
 											+ 'x2="' + String(ll_pos + PixelsToUnits(li_offset[2], XPixelsToUnits!)) + '" '	&
 											+ 'y2="' + String(of_size_imageHeight() + 16) + '" '										&
-											+ 'name=l_' + dw_toolBar.of_getItem_objectName(vl_item) + '_b visible="1" '		&
+											+ 'name=l_' + ds_toolBar.of_getItem_objectName(vl_item) + '_b visible="1" '		&
 											+ 'pen.style="0" '																					&
 											+ 'pen.width="' + String(PixelsToUnits(1, XPixelsToUnits!)) + '" '					&
 											+ 'pen.color="' + String(of_getColor(THREEDLIGHT)) + '" '								&
 											+ 'background.mode="2")'
-	dw_toolBar.Modify(ls_modify)
+	dw_palette.Modify(ls_modify)
 
 	Long									ll_x1aPixels,	ll_x1bPixels
 
-	ll_x1aPixels						= UnitsToPixels(Long(dw_toolBar.Describe('l_' + dw_toolBar.of_getItem_objectName(vl_item) + '_a' + '.x1')), XUnitsToPixels!)
-	ll_x1bPixels						= UnitsToPixels(Long(dw_toolBar.Describe('l_' + dw_toolBar.of_getItem_objectName(vl_item) + '_b' + '.x1')), XUnitsToPixels!)
+	ll_x1aPixels						= UnitsToPixels(Long(dw_palette.Describe('l_' + ds_toolBar.of_getItem_objectName(vl_item) + '_a' + '.x1')), XUnitsToPixels!)
+	ll_x1bPixels						= UnitsToPixels(Long(dw_palette.Describe('l_' + ds_toolBar.of_getItem_objectName(vl_item) + '_b' + '.x1')), XUnitsToPixels!)
 
 	//	The lines should be right next to each other, some how PB makes a
 	//	mistake once in while and the lines have an extra pixel between
@@ -2320,21 +2325,21 @@ IF il_currentOrientation = HORIZONTAL THEN
 		Long								ll_x1bUnits
 		ll_x1bUnits						= PixelsToUnits(ll_x1aPixels + 1, XPixelsToUnits!)
 		
-		ls_modify						= 'l_' + dw_toolBar.of_getItem_objectName(vl_item) + '_b.x1="'							&
+		ls_modify						= 'l_' + ds_toolBar.of_getItem_objectName(vl_item) + '_b.x1="'							&
 											+ String(ll_x1bUnits) + '" '																		&
-											+ 'l_' + dw_toolBar.of_getItem_objectName(vl_item) + '_b.x2="'							&
+											+ 'l_' + ds_toolBar.of_getItem_objectName(vl_item) + '_b.x2="'							&
 											+ String(ll_x1bUnits) + '" '
 											
-		dw_toolBar.Modify(ls_modify)
+		dw_palette.Modify(ls_modify)
 		
 	END IF
 	
 ELSE
 END IF
 
-dw_toolBar.of_setItem_tabSequence(vl_item, 0)
+ds_toolBar.of_setItem_tabSequence(vl_item, 0)
 
-Return(dw_toolBar.of_getItem_rectWidth(vl_item))
+Return(ds_toolBar.of_getItem_rectWidth(vl_item))
 
 end function
 
@@ -2348,18 +2353,18 @@ protected function integer of_drawbutton (long vl_item);// CopyRight (c) 2016 by
 // Original Author:	Christopher Harris
 
 String									ls_describe
-ls_describe								= dw_toolBar.Describe('r_button.X')
+ls_describe								= dw_palette.Describe('r_button.X')
 
 IF ls_describe = '?' OR ls_describe = '!' OR ls_describe = '' THEN Return(FAILURE)
 
 IF isNull(vl_item) THEN Return(of_highLight(INVISIBLE))
 
-IF vl_item <= 0 OR vl_item > dw_toolBar.RowCount() THEN Return(of_highLight(INVISIBLE))
+IF vl_item <= 0 OR vl_item > ds_toolBar.RowCount() THEN Return(of_highLight(INVISIBLE))
 
-IF NOT dw_toolBar.of_getItem_visible(vl_item) THEN Return(of_highLight(INVISIBLE))
-IF NOT dw_toolBar.of_getItem_enabled(vl_item) THEN Return(of_highLight(INVISIBLE))
+IF NOT ds_toolBar.of_getItem_visible(vl_item) THEN Return(of_highLight(INVISIBLE))
+IF NOT ds_toolBar.of_getItem_enabled(vl_item) THEN Return(of_highLight(INVISIBLE))
 
-IF dw_toolBar.of_getItem_tabSequence(vl_item) = 0 THEN Return(of_highLight(INVISIBLE))
+IF ds_toolBar.of_getItem_tabSequence(vl_item) = 0 THEN Return(of_highLight(INVISIBLE))
 
 of_broadCast_invisible(this)
 
@@ -2368,24 +2373,24 @@ of_broadCast_invisible(this)
 IF il_itemChecked <> -1 THEN
 	IF vl_item <> il_itemChecked THEN
 
-		dw_toolBar.Modify('r_' + dw_toolbar.of_getItem_objectName(il_itemChecked) + '.Visible="1"')
+		dw_palette.Modify('r_' + ds_toolBar.of_getItem_objectName(il_itemChecked) + '.Visible="1"')
 			
 		il_itemChecked					= -1
 	
 	END IF
 END IF
 
-dw_toolBar.Object.r_button.X		= dw_toolBar.of_getItem_rectLeft(vl_item)		- PixelsToUnits(3, XPixelsToUnits!)
-dw_toolBar.Object.r_button.Y		= dw_toolBar.of_getItem_rectTop(vl_item)		- PixelsToUnits(3, YPixelsToUnits!)
-dw_toolBar.Object.r_button.Width	= dw_toolBar.of_getItem_rectWidth(vl_item)	+ PixelsToUnits(7, XPixelsToUnits!)
-dw_toolBar.Object.r_button.Height													&
-											= dw_toolBar.of_getItem_rectHeight(vl_item)	+ PixelsToUnits(2, YPixelsToUnits!)
+dw_palette.Object.r_button.X		= ds_toolBar.of_getItem_rectLeft(vl_item)		- PixelsToUnits(3, XPixelsToUnits!)
+dw_palette.Object.r_button.Y		= ds_toolBar.of_getItem_rectTop(vl_item)		- PixelsToUnits(3, YPixelsToUnits!)
+dw_palette.Object.r_button.Width	= ds_toolBar.of_getItem_rectWidth(vl_item)	+ PixelsToUnits(7, XPixelsToUnits!)
+dw_palette.Object.r_button.Height													&
+											= ds_toolBar.of_getItem_rectHeight(vl_item)	+ PixelsToUnits(2, YPixelsToUnits!)
 											
 //	If we are showing the highlight over a checked item, then make sure
 //	the checked indicator is hidden
 IF of_isChecked(vl_item) THEN
 			
-	dw_toolBar.Modify('r_' + dw_toolbar.of_getItem_objectName(il_itemChecked) + '.Visible="0"')
+	dw_palette.Modify('r_' + ds_toolBar.of_getItem_objectName(il_itemChecked) + '.Visible="0"')
 			
 	il_itemChecked						= vl_item
 			
@@ -2410,28 +2415,28 @@ lm_dropDown								= CREATE m_toolBar_popMenu
 		
 Long										ll_item, ll_itemMenu = 0
 		
-FOR ll_item = 1 TO dw_toolBar.RowCount()
+FOR ll_item = 1 TO ds_toolBar.RowCount()
 		
-	IF NOT dw_toolBar.of_getItem_visible(ll_item) THEN CONTINUE
+	IF NOT ds_toolBar.of_getItem_visible(ll_item) THEN CONTINUE
 
-	IF dw_toolBar.of_getItem_displayInMenu(ll_item) THEN
+	IF ds_toolBar.of_getItem_displayInMenu(ll_item) THEN
 				
-		IF NOT dw_toolBar.of_getItem_position(ll_item) = LEFT THEN CONTINUE
+		IF NOT ds_toolBar.of_getItem_position(ll_item) = LEFT THEN CONTINUE
 				
 		ll_itemMenu ++
 				
 		lm_dropDown.Item[ll_itemMenu]						= CREATE m_toolBar_popMenu
 				
-		IF dw_toolBar.of_getItem_separator(ll_item) THEN
+		IF ds_toolBar.of_getItem_separator(ll_item) THEN
 			lm_dropDown.Item[ll_itemMenu].Text			= '-'
 		ELSE
 					
 			lm_dropDown.Item[ll_itemMenu].DYNAMIC FUNCTION mf_setParent(this)
 					
-			lm_dropDown.Item[ll_itemMenu].Text			= dw_toolBar.of_getItem_text(ll_item)
-			lm_dropDown.Item[ll_itemMenu].Enabled		= dw_toolBar.of_getItem_enabled(ll_item)
-			lm_dropDown.Item[ll_itemMenu].MenuImage	= dw_toolBar.of_getItem_image(ll_item)
-			lm_dropDown.Item[ll_itemMenu].Checked		= dw_toolBar.of_getItem_checked(ll_item)
+			lm_dropDown.Item[ll_itemMenu].Text			= ds_toolBar.of_getItem_text(ll_item)
+			lm_dropDown.Item[ll_itemMenu].Enabled		= ds_toolBar.of_getItem_enabled(ll_item)
+			lm_dropDown.Item[ll_itemMenu].MenuImage	= ds_toolBar.of_getItem_image(ll_item)
+			lm_dropDown.Item[ll_itemMenu].Checked		= ds_toolBar.of_getItem_checked(ll_item)
 			
 			lb_showMenu											= TRUE
 			
@@ -2443,13 +2448,13 @@ NEXT
 		
 Boolean									lb_firstItem		= TRUE
 		
-FOR ll_item = dw_toolBar.RowCount() TO 1 STEP -1 
+FOR ll_item = ds_toolBar.RowCount() TO 1 STEP -1 
 		
-	IF NOT dw_toolBar.of_getItem_visible(ll_item) THEN CONTINUE
+	IF NOT ds_toolBar.of_getItem_visible(ll_item) THEN CONTINUE
 			
-	IF dw_toolBar.of_getItem_displayInMenu(ll_item) THEN
+	IF ds_toolBar.of_getItem_displayInMenu(ll_item) THEN
 				
-		IF NOT dw_toolBar.of_getItem_position(ll_item) = RIGHT THEN CONTINUE
+		IF NOT ds_toolBar.of_getItem_position(ll_item) = RIGHT THEN CONTINUE
 		
 		IF lb_firstItem THEN
 
@@ -2466,16 +2471,16 @@ FOR ll_item = dw_toolBar.RowCount() TO 1 STEP -1
 				
 		lm_dropDown.Item[ll_itemMenu]						= CREATE m_toolBar_popMenu
 				
-		IF dw_toolBar.of_getItem_separator(ll_item) THEN
+		IF ds_toolBar.of_getItem_separator(ll_item) THEN
 			lm_dropDown.Item[ll_itemMenu].Text			= '-'
 		ELSE
 					
 			lm_dropDown.Item[ll_itemMenu].DYNAMIC FUNCTION mf_setParent(this)
 					
-			lm_dropDown.Item[ll_itemMenu].Text			= dw_toolBar.of_getItem_text(ll_item)
-			lm_dropDown.Item[ll_itemMenu].Enabled		= dw_toolBar.of_getItem_enabled(ll_item)
-			lm_dropDown.Item[ll_itemMenu].MenuImage	= dw_toolBar.of_getItem_image(ll_item)
-			lm_dropDown.Item[ll_itemMenu].Checked		= dw_toolBar.of_getItem_checked(ll_item)
+			lm_dropDown.Item[ll_itemMenu].Text			= ds_toolBar.of_getItem_text(ll_item)
+			lm_dropDown.Item[ll_itemMenu].Enabled		= ds_toolBar.of_getItem_enabled(ll_item)
+			lm_dropDown.Item[ll_itemMenu].MenuImage	= ds_toolBar.of_getItem_image(ll_item)
+			lm_dropDown.Item[ll_itemMenu].Checked		= ds_toolBar.of_getItem_checked(ll_item)
 			
 			lb_showMenu											= TRUE
 
@@ -2527,14 +2532,14 @@ IF lb_showMenu THEN
 
 	Long									ll_ptrX,	ll_ptrY
 	
-	ll_ptrX								= dw_toolBar.PointerX()
-	ll_ptrY								= dw_toolBar.PointerY()
+	ll_ptrX								= dw_palette.PointerX()
+	ll_ptrY								= dw_palette.PointerY()
 	
 	Long									ll_xOffSet
-	ll_xOffSet							= ll_ptrX - dw_toolBar.of_getItem_RectLeft(1) + PixelsToUnits(2, XPixelsToUnits!)
+	ll_xOffSet							= ll_ptrX - ds_toolBar.of_getItem_RectLeft(1) + PixelsToUnits(2, XPixelsToUnits!)
 
 	Long									ll_yOffSet
-	ll_yOffSet							= (dw_toolBar.of_getItem_rectTop(1) + dw_toolBar.of_getItem_RectHeight(1)) - ll_ptrY
+	ll_yOffSet							= (ds_toolBar.of_getItem_rectTop(1) + ds_toolBar.of_getItem_RectHeight(1)) - ll_ptrY
 
 	lm_dropDown.mf_popMenu(this, ll_xOffSet * -1, ll_yOffSet)
 		
@@ -2556,14 +2561,14 @@ protected function integer of_keydown (keycode vkc_key, unsignedinteger vui_keyf
 
 //invo_dwGUI.of_locateToolTips(invo_dwGUI.of_getDesktopWindow())
 //
-//IF dw_toolbar.of_PBVersion() >= 11.5 THEN
+//IF ds_toolBar.of_PBVersion() >= 11.5 THEN
 //	
 //	Boolean								lb_enabled
-//	lb_enabled							= Long(dw_toolbar.Describe('p_save_2.ToolTip.Enabled')) = 1
+//	lb_enabled							= Long(dw_palette.Describe('p_save_2.ToolTip.Enabled')) = 1
 //
 //	IF lb_enabled THEN
-//		dw_toolbar.Modify('p_save_2.ToolTip.Enabled="0"')
-//		dw_toolbar.Modify('p_save_2.ToolTip.Enabled="1"')
+//		dw_palette.Modify('p_save_2.ToolTip.Enabled="0"')
+//		dw_palette.Modify('p_save_2.ToolTip.Enabled="1"')
 //	END IF
 //
 //END IF
@@ -2574,21 +2579,21 @@ Long										ll_cursorY
 Long										ll_itemMove
 
 Long										ll_item
-ll_item									= dw_toolBar.of_locateItem()
+ll_item									= of_locateItem()
 	
 IF vkc_key = keySpaceBar! THEN
 	IF NOT IsNull(ll_item) THEN of_clickButton(ll_item)
 ELSEIF vkc_key = keyLeftArrow! THEN
 	IF NOT isNull(ll_item) THEN
 		
-		ll_itemMove						= dw_toolBar.of_locateItem_previous(ll_item)
+		ll_itemMove						= ds_toolBar.of_locateItem_previous(ll_item)
 		
 		IF NOT isNull(ll_itemMove) THEN
 			
 			IF ib_trackMouseEvent THEN
 				
-				ll_pointerX				= dw_toolBar.PointerX()
-				ll_startX				= Long(dw_toolBar.Describe('r_button.X'))
+				ll_pointerX				= dw_palette.PointerX()
+				ll_startX				= Long(dw_palette.Describe('r_button.X'))
 
 				invo_dwGUI.of_getCursorPos(ll_cursorX, ll_cursorY)
 				
@@ -2598,7 +2603,7 @@ ELSEIF vkc_key = keyLeftArrow! THEN
 
 			IF ib_trackMouseEvent THEN
 				
-				ll_endX					= Long(dw_toolBar.Describe('r_button.X'))
+				ll_endX					= Long(dw_palette.Describe('r_button.X'))
 				ll_offSetX				= (ll_pointerX - ll_startX) + (ll_startX - ll_endX) - PixelsToUnits(4, XPixelsToUnits!)
 				
 				invo_dwGUI.of_setCursorPos(ll_cursorX - UnitsToPixels(ll_offSetX, XUnitsToPixels!), ll_cursorY)
@@ -2611,14 +2616,14 @@ ELSEIF vkc_key = keyLeftArrow! THEN
 ELSEIF vkc_key = keyRightArrow! THEN
 	IF NOT isNull(ll_item) THEN
 		
-		ll_itemMove						= dw_toolbar.of_locateItem_next(ll_item)
+		ll_itemMove						= ds_toolBar.of_locateItem_next(ll_item)
 		
 		IF NOT isNull(ll_itemMove) THEN
 			
 			IF ib_trackMouseEvent THEN
 				
-				ll_pointerX				= dw_toolBar.PointerX()
-				ll_startX				= Long(dw_toolBar.Describe('r_button.X'))
+				ll_pointerX				= dw_palette.PointerX()
+				ll_startX				= Long(dw_palette.Describe('r_button.X'))
 
 				invo_dwGUI.of_getCursorPos(ll_cursorX, ll_cursorY)
 				
@@ -2628,7 +2633,7 @@ ELSEIF vkc_key = keyRightArrow! THEN
 
 			IF ib_trackMouseEvent THEN
 				
-				ll_endX					= Long(dw_toolBar.Describe('r_button.X'))
+				ll_endX					= Long(dw_palette.Describe('r_button.X'))
 				ll_offSetX				= (ll_startX - ll_pointerX) + (ll_endX - ll_startX) + PixelsToUnits(4, XPixelsToUnits!)
 				
 				invo_dwGUI.of_setCursorPos(ll_cursorX + UnitsToPixels(ll_offSetX, XUnitsToPixels!), ll_cursorY)
@@ -2657,16 +2662,16 @@ public function integer of_disabletext ();// CopyRight (c) 2016 by Christopher H
 // Original Author:	Christopher Harris
 
 Long										ll_itemCurrent
-ll_itemCurrent							= dw_toolBar.of_locateItem()
+ll_itemCurrent							= of_locateItem()
 
 Long										ll_item
 
-FOR ll_item = 2 TO dw_toolBar.RowCount()
+FOR ll_item = 2 TO ds_toolBar.RowCount()
 	
-	IF isNull(dw_toolBar.of_getItem_image(ll_item)) OR Trim(dw_toolBar.of_getItem_image(ll_item)) = '' THEN
-		dw_toolBar.of_setItem_displayText(ll_item, TRUE)
+	IF isNull(ds_toolBar.of_getItem_image(ll_item)) OR Trim(ds_toolBar.of_getItem_image(ll_item)) = '' THEN
+		ds_toolBar.of_setItem_displayText(ll_item, TRUE)
 	ELSE
-		dw_toolBar.of_setItem_displayText(ll_item, FALSE)
+		ds_toolBar.of_setItem_displayText(ll_item, FALSE)
 	END IF
 	
 	of_initializeItemSize(ll_item)
@@ -2691,13 +2696,13 @@ public function integer of_enabletext ();// CopyRight (c) 2016 by Christopher Ha
 // Original Author:	Christopher Harris
 
 Long										ll_itemCurrent
-ll_itemCurrent							= dw_toolBar.of_locateItem()
+ll_itemCurrent							= of_locateItem()
 
 Long										ll_item
 
-FOR ll_item = 2 TO dw_toolBar.RowCount()
+FOR ll_item = 2 TO ds_toolBar.RowCount()
 	
-	dw_toolBar.of_setItem_displayText(ll_item, TRUE)
+	ds_toolBar.of_setItem_displayText(ll_item, TRUE)
 	
 	of_initializeItemSize(ll_item)
 	
@@ -2750,9 +2755,9 @@ public function integer of_clickitem (long vl_item);// CopyRight (c) 2016 by Chr
 
 IF isNull(vl_item) THEN Return(PREVENT)
 
-IF vl_item <= 0 OR vl_item > dw_toolBar.RowCount() THEN Return(PREVENT)
+IF vl_item <= 0 OR vl_item > ds_toolBar.RowCount() THEN Return(PREVENT)
 
-Return(of_clickItem(dw_toolBar.of_getItem_text(vl_item)))
+Return(of_clickItem(ds_toolBar.of_getItem_text(vl_item)))
 end function
 
 public function long of_clickbutton (string vs_button);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -3022,7 +3027,7 @@ public function long of_locateitem (string vs_text);//	CopyRight (c) 2016 by Chr
 //
 // Original Author:	Christopher Harris
 
-Return(dw_toolBar.of_locateItem_text(vs_text))
+Return(ds_toolBar.of_locateItem_text(vs_text))
 end function
 
 protected function long of_getcolor (string vs_color);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -3059,7 +3064,7 @@ CHOOSE CASE vs_color
 		IF #SolidBackGround THEN
 			ll_color						= invo_color.of_menuBar()
 		ELSE
-			IF dw_toolbar.of_PBVersion() >= 11.5 THEN
+			IF ds_toolBar.of_PBVersion() >= 11.5 THEN
 				ll_color					= invo_color.of_activeCaption()
 			ELSE
 				ll_color					= invo_color.of_menuBar()
@@ -3069,7 +3074,7 @@ CHOOSE CASE vs_color
 		IF #SolidBackGround THEN
 			ll_color						= invo_color.of_menuBar()
 		ELSE
-			IF dw_toolbar.of_PBVersion() >= 11.5 THEN
+			IF ds_toolBar.of_PBVersion() >= 11.5 THEN
 				ll_color					= invo_color.of_inactiveCaption()
 			ELSE
 				ll_color					= invo_color.of_menuBar()
@@ -3079,7 +3084,7 @@ CHOOSE CASE vs_color
 		IF #SolidBackGround THEN
 			ll_color						= invo_color.of_menuBar()
 		ELSE
-			IF dw_toolbar.of_PBVersion() >= 11.5 THEN
+			IF ds_toolBar.of_PBVersion() >= 11.5 THEN
 				IF ib_trackMouseEvent THEN
 					ll_color				= invo_color.of_activeCaption()
 				ELSE
@@ -3306,19 +3311,118 @@ public function long of_addbuttons (string vs_text[]);// CopyRight (c) 2016 by C
 Return(of_addItems(vs_text[]))
 end function
 
+private subroutine of_destroyitem (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+String									ls_describe
+
+ds_toolBar.of_setItem_displayInMenu(vl_item, TRUE)
+	
+IF ds_toolBar.of_getItem_separator(vl_item) THEN
+		
+	ls_describe							= Trim(dw_palette.Describe('l_' + ds_toolBar.of_getItem_objectName(vl_item) + '_a.X1'))
+
+	IF ls_describe <> '!' AND ls_describe <> '?' AND ls_describe <> '' THEN
+			
+		dw_palette.Modify('DESTROY l_' + ds_toolBar.of_getItem_objectName(vl_item) + '_a')
+		dw_palette.Modify('DESTROY l_' + ds_toolBar.of_getItem_objectName(vl_item) + '_b')
+			
+	END IF
+		
+ELSE
+	
+	ls_describe							= Trim(dw_palette.Describe('p_' + ds_toolBar.of_getItem_objectName(vl_item) + '.X'))
+		
+	IF ls_describe <> '!' AND ls_describe <> '?' AND ls_describe <> '' THEN
+		dw_palette.Modify('DESTROY p_' + ds_toolBar.of_getItem_objectName(vl_item))
+	END IF
+	
+	ls_describe							= Trim(dw_palette.Describe('t_' + ds_toolBar.of_getItem_objectName(vl_item) + '.X'))
+		
+	IF ls_describe <> '!' AND ls_describe <> '?' AND ls_describe <> '' THEN
+		dw_palette.Modify('DESTROY t_' + ds_toolBar.of_getItem_objectName(vl_item))
+	END IF
+
+	ls_describe							= Trim(dw_palette.Describe('b_' + ds_toolBar.of_getItem_objectName(vl_item) + '.X'))
+		
+	IF ls_describe <> '!' AND ls_describe <> '?' AND ls_describe <> '' THEN
+		dw_palette.Modify('DESTROY b_' + ds_toolBar.of_getItem_objectName(vl_item))
+	END IF
+
+	ls_describe							= Trim(dw_palette.Describe('r_' + ds_toolBar.of_getItem_objectName(vl_item) + '.X'))
+
+	IF ls_describe <> '!' AND ls_describe <> '?' AND ls_describe <> '' THEN
+		dw_palette.Modify('DESTROY r_' + ds_toolBar.of_getItem_objectName(vl_item))
+	END IF
+
+END IF
+
+ds_toolBar.of_setItem_tabSequence(vl_item, 0)
+
+RETURN
+end subroutine
+
+private function long of_locateitem ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+Long										ll_item
+setNull(ll_item)
+
+String									ls_describe
+ls_describe								= dw_palette.Describe('r_button.X')
+
+IF ls_describe = '?' OR ls_describe = '!' OR ls_describe = '' THEN Return(ll_item)
+
+IF Long(dw_palette.Object.r_button.Visible) = 0 THEN Return(ll_item)
+
+Long										ll_buttonRight
+ll_buttonRight							= Long(dw_palette.Object.r_button.X) + Long(dw_palette.Object.r_button.Width)
+
+String									ls_find
+ls_find									= 'visible="Y" AND '																					&
+											+ 'rectLeft>=' + String(dw_palette.Object.r_button.X) + ' AND '						&
+											+ '(rectLeft + rectWidth)<=' + String(ll_buttonRight)
+
+ll_item									= ds_toolBar.Find(ls_find, 1, ds_toolBar.rowCount())
+
+CHOOSE CASE ll_item
+	CASE 0
+		setNull(ll_item)
+	CASE -1
+		setNull(ll_item)
+		MessageBox('Programmer Error', 'Syntax error in find clause: ' + ls_find + '.')
+END CHOOSE
+
+Return(ll_item)
+end function
+
 on u_cst_toolbar.create
 this.st_toolbar=create st_toolbar
-this.dw_toolbar=create dw_toolbar
+this.dw_palette=create dw_palette
 this.r_border=create r_border
+this.ds_toolbar=create ds_toolbar
 this.Control[]={this.st_toolbar,&
-this.dw_toolbar,&
+this.dw_palette,&
 this.r_border}
 end on
 
 on u_cst_toolbar.destroy
 destroy(this.st_toolbar)
-destroy(this.dw_toolbar)
+destroy(this.dw_palette)
 destroy(this.r_border)
+destroy(this.ds_toolbar)
 end on
 
 event constructor;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -3357,19 +3461,19 @@ setNull(is_lButtonDown)
 r_border.Move(0, 0)
 r_border.Resize(Width, Height)
 
-dw_toolBar.Move(PixelsToUnits(1, XPixelsToUnits!), PixelsToUnits(1, YPixelsToUnits!))
-dw_toolBar.Resize(Width - PixelsToUnits(2, XPixelsToUnits!), Height - PixelsToUnits(2, YPixelsToUnits!))
+dw_palette.Move(PixelsToUnits(1, XPixelsToUnits!), PixelsToUnits(1, YPixelsToUnits!))
+dw_palette.Resize(Width - PixelsToUnits(2, XPixelsToUnits!), Height - PixelsToUnits(2, YPixelsToUnits!))
 
 r_border.LineColor					= of_getColor(THREEDDKSHADOW)
 r_border.Visible						= #DisplayBorder
 
 IF #SolidBackGround THEN
 	
-	dw_toolBar.Modify('DataWindow.' + #band + '.Color="' + String(of_getColor(TOOLBAR)) + '" ')
+	dw_palette.Modify('DataWindow.' + #band + '.Color="' + String(of_getColor(TOOLBAR)) + '" ')
 							
-	IF dw_toolbar.of_PBVersion() >= 11.5 THEN
+	IF ds_toolBar.of_PBVersion() >= 11.5 THEN
 		
-		dw_toolBar.Modify('DataWindow.' + #band + '.BrushMode="0" ' +																		&
+		dw_palette.Modify('DataWindow.' + #band + '.BrushMode="0" ' +																		&
 								'DataWindow.' + #band + '.Gradient.Color="' + String(of_getColor(TOOLBAR)) + '" ' +					&
 								'DataWindow.' + #band + '.gradient.transparency="0" ' +														&
 								'DataWindow.' + #band + '.gradient.angle="0" ' +																&
@@ -3383,11 +3487,11 @@ IF #SolidBackGround THEN
 							
 ELSE
 	
-	IF dw_toolbar.of_PBVersion() >= 11.5 THEN
+	IF ds_toolBar.of_PBVersion() >= 11.5 THEN
 		
-		dw_toolBar.Modify('DataWindow.' + #band + '.Color="' + String(of_getColor(TOOLBAR)) + '" ')
+		dw_palette.Modify('DataWindow.' + #band + '.Color="' + String(of_getColor(TOOLBAR)) + '" ')
 	
-		dw_toolBar.Modify('DataWindow.' + #band + '.BrushMode="2" ' +																		&
+		dw_palette.Modify('DataWindow.' + #band + '.BrushMode="2" ' +																		&
 								'DataWindow.' + #band + '.Gradient.Color="' + String(of_getColor(GRADIENT)) + '" ' +				&
 								'DataWindow.' + #band + '.gradient.transparency="0" ' +														&
 								'DataWindow.' + #band + '.gradient.angle="0" ' +																&
@@ -3398,24 +3502,24 @@ ELSE
 								'DataWindow.' + #band + '.gradient.scale="100" ' +																&
 								'DataWindow.' + #band + '.gradient.spread="100" ')
 	ELSE
-		dw_toolBar.Modify('DataWindow.' + #band + '.Color="' + String(of_getColor(TOOLBAR)) + '" ')
+		dw_palette.Modify('DataWindow.' + #band + '.Color="' + String(of_getColor(TOOLBAR)) + '" ')
 	END IF
 							
 END IF
 
-dw_toolBar.Modify('DataWindow.' + #band + '.Height="104"')
+dw_palette.Modify('DataWindow.' + #band + '.Height="104"')
 
-dw_toolBar.Modify('CREATE rectangle(band=' + #band + ' ' +																					&
+dw_palette.Modify('CREATE rectangle(band=' + #band + ' ' +																					&
 						'x="5" y="4" height="88" width="224" name=r_button ' +																&
 						'visible="0" brush.color="' +  String(of_getColor(INFOBACKGROUND)) + '" ' +									&
 						'pen.style="0" pen.width="5" pen.color="' +  String(of_getColor(WINDOWTEXT)) + '" ' +						&
 						'background.mode="2" background.color="' +  String(of_getColor(INFOBACKGROUND)) + '") ')
 
-IF dw_toolbar.of_PBVersion() >= 11.5 THEN
+IF ds_toolBar.of_PBVersion() >= 11.5 THEN
 
-	dw_toolBar.Modify('r_button.brush.hatch="8"')
+	dw_palette.Modify('r_button.brush.hatch="8"')
 
-	dw_toolBar.Modify('r_button.background.transparency="10" ' +																			&
+	dw_palette.Modify('r_button.background.transparency="10" ' +																			&
 							'r_button.background.gradient.color="' +  String(of_getColor(INFOBACKGROUND)) + '" ' +					&
 							'r_button.background.gradient.transparency="10" ' +																&
 							'r_button.background.gradient.angle="0" ' +																			&
@@ -3437,10 +3541,10 @@ IF dw_toolbar.of_PBVersion() >= 11.5 THEN
 							'r_button.tooltip.textcolor="' +  String(of_getColor(INFOTEXT)) + '" ' +									&
 							'r_button.tooltip.transparency="0"')
 ELSE
-	dw_toolBar.Modify('r_button.brush.hatch="7"')
+	dw_palette.Modify('r_button.brush.hatch="7"')
 END IF
 
-dw_toolBar.SetPosition('r_button', #band, FALSE)
+dw_palette.SetPosition('r_button', #band, FALSE)
 
 of_highLight(HIGHLIGHT)
 of_highLight(INVISIBLE)
@@ -3528,7 +3632,7 @@ event constructor;// CopyRight (c) 2016 by Christopher Harris, all rights reserv
 Hide()
 end event
 
-type dw_toolbar from u_cst_toolbar_items within u_cst_toolbar
+type dw_palette from datawindow within u_cst_toolbar
 event ue_dwnlbuttonup pbm_dwnlbuttonup
 event ue_dwnmousemove pbm_dwnmousemove
 event ue_post_getfocus ( long vl_tabbed )
@@ -3538,6 +3642,8 @@ event ue_syscommand pbm_syscommand
 integer x = 5
 integer y = 4
 integer taborder = 10
+string dataobject = "d_toolbar_palette"
+boolean border = false
 end type
 
 event ue_dwnlbuttonup;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -3554,13 +3660,13 @@ of_highLight(HIGHLIGHT)
 IF dwo.Name = is_lButtonDown THEN
 
 	Long									ll_item
-	ll_item								= of_LocateItem_objectName(Mid(dwo.Name, 3))
+	ll_item								= ds_toolBar.of_locateItem_objectName(Mid(dwo.Name, 3))
 		
 	IF NOT isnull(ll_item) THEN
 		IF of_isVisible(ll_item) AND of_isEnabled(ll_item) THEN
 			
 			String						ls_text
-			ls_text						= of_getItem_text(ll_item)
+			ls_text						= ds_toolBar.of_getItem_text(ll_item)
 			
 			String						ls_name
 			
@@ -3603,7 +3709,7 @@ IF isNull(is_lButtonDown) THEN
 			
 		CASE 'text',	'bitmap'
 			
-			ll_item						= of_locateItem_objectName(Mid(dwo.Name, 3))
+			ll_item						= ds_toolBar.of_locateItem_objectName(Mid(dwo.Name, 3))
 			
 			IF isNull(ll_item) THEN
 				of_highLight(INVISIBLE)
@@ -3651,11 +3757,11 @@ ELSE
 	CHOOSE CASE vl_tabbed
 		CASE TAB, 0
 			
-			of_drawButton(of_locateItem_first())
+			of_drawButton(ds_toolBar.of_locateItem_first())
 
 		CASE BACKTAB
 			
-			of_drawButton(of_locateItem_last())
+			of_drawButton(ds_toolBar.of_locateItem_last())
 			
 		CASE ELSE
 	END CHOOSE
@@ -3683,10 +3789,14 @@ event constructor;call super::constructor;// CopyRight (c) 2016 by Christopher H
 //
 // Original Author:	Christopher Harris
 
+//	Make the dataWindow visible
+InsertRow(0)
+ResetUpdate()
+
 BringToTop								= TRUE
 end event
 
-event clicked;call super::clicked;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+event clicked;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
 // license which accompanies this distribution and can be found at:
@@ -3705,7 +3815,7 @@ CHOOSE CASE dwo.Type
 	
 		of_highLight(SELECTMODE)
 		
-		IF NOT isNull(of_locateItem_objectName(Mid(dwo.Name, 3))) THEN
+		IF NOT isNull(ds_toolBar.of_locateItem_objectName(Mid(dwo.Name, 3))) THEN
 			is_lButtonDown						= dwo.Name
 		ELSE
 			setNull(is_lButtonDown)
@@ -3714,7 +3824,7 @@ CHOOSE CASE dwo.Type
 END CHOOSE
 end event
 
-event losefocus;call super::losefocus;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+event losefocus;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
 // license which accompanies this distribution and can be found at:
@@ -3730,7 +3840,7 @@ Modify('DataWindow.' + #band + '.Color="' + String(of_getColor(LOSEFOCUS)) + '" 
 ib_trackMouseEvent					= FALSE
 end event
 
-event other;call super::other;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+event other;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
 // license which accompanies this distribution and can be found at:
@@ -3749,7 +3859,7 @@ CHOOSE CASE message.Number
 END CHOOSE
 end event
 
-event getfocus;call super::getfocus;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+event getfocus;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
 // license which accompanies this distribution and can be found at:
@@ -3773,7 +3883,7 @@ END IF
 POST EVENT ue_post_getFocus(ll_tab)
 end event
 
-event rbuttondown;call super::rbuttondown;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+event rbuttondown;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
 // license which accompanies this distribution and can be found at:
@@ -3810,7 +3920,7 @@ lm_context.m_showToolTips.Checked		= of_displayToolTips()
 lm_context.mf_popMenu(this)
 end event
 
-event resize;call super::resize;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+event resize;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
 // license which accompanies this distribution and can be found at:
@@ -3820,13 +3930,13 @@ event resize;call super::resize;// CopyRight (c) 2016 by Christopher Harris, all
 // Original Author:	Christopher Harris
 
 Long										ll_itemCurrent
-ll_itemCurrent							= dw_toolBar.of_locateItem()
+ll_itemCurrent							= of_locateItem()
 
 of_update()
 of_drawButton(ll_itemCurrent)
 end event
 
-event scrollhorizontal;call super::scrollhorizontal;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+event scrollhorizontal;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
 // license which accompanies this distribution and can be found at:
@@ -3838,7 +3948,7 @@ event scrollhorizontal;call super::scrollhorizontal;// CopyRight (c) 2016 by Chr
 Object.DataWindow.HorizontalScrollPosition	= 0
 end event
 
-event scrollvertical;call super::scrollvertical;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+event scrollvertical;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
 // license which accompanies this distribution and can be found at:
@@ -3857,4 +3967,15 @@ long fillcolor = 134217752
 integer width = 2651
 integer height = 104
 end type
+
+type ds_toolbar from n_cst_toolbar_items within u_cst_toolbar descriptor "pb_nvo" = "true" 
+end type
+
+on ds_toolbar.create
+call super::create
+end on
+
+on ds_toolbar.destroy
+call super::destroy
+end on
 
