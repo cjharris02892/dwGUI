@@ -33,6 +33,7 @@ event ue_post_constructor ( )
 event ue_context_collapseall ( )
 event ue_context_expandall ( )
 event ue_context_showtooltips ( boolean vb_showtips )
+event ue_context_scrollspeed ( long vl_scrollspeed )
 st_xplistbar st_xplistbar
 dw_palette dw_palette
 r_border r_border
@@ -77,6 +78,10 @@ Public:
 	CONSTANT Long							LARGE								= 32
 	CONSTANT Long							XLARGE							= 48
 
+	CONSTANT Long							NORMAL							= 1
+	CONSTANT Long							FAST								= 5
+	CONSTANT Long							FASTEST							= 10
+	
 Protected:
 
 	Boolean									#DisplayBorder					= TRUE
@@ -87,6 +92,8 @@ Protected:
 	Long										#FontSize						= 8
 
 	Long										#BitMapSize						= 16
+	
+	Long										#ScrollSpeed					= 1
 	
 	Long										#ToolTipDelayInitial			= 1000
 	Long										#ToolTipDelayVisible			= 32000
@@ -117,13 +124,14 @@ Private:
 	Long										il_xPixelInUnits				= -1
 	Long										il_yPixelInUnits				= -1
 	
-	Long										il_lastLink						= 0
-
 	Boolean									ib_displayToolTips			= TRUE
 	Integer									ii_toolTipIsBubble			= 1
 	
 	String									is_chevronUp					= ''
 	String									is_chevronDown					= ''
+	
+	Long										il_lastLink						= 0
+	Long										il_groupFocus					= -1
 end variables
 
 forward prototypes
@@ -202,6 +210,9 @@ public subroutine of_createitem_image (long vl_item)
 public function integer of_setimage (long vl_item, string vs_image)
 private function long of_size_imageheight (string vs_image)
 private function long of_size_imagewidth (string vs_image)
+private subroutine of_getfocus (long vl_group)
+private subroutine of_losefocus (ref long vl_group)
+private subroutine of_correct_scrollspeed ()
 end prototypes
 
 event type integer ue_itemclicking(string vs_group, string vs_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -294,6 +305,20 @@ event ue_context_showtooltips(boolean vb_showtips);// CopyRight (c) 2016 by Chri
 of_broadCast_showToolTips(vb_showTips)
 
 //GetApplication().ToolBarTips	= vb_showTips
+
+RETURN
+end event
+
+event ue_context_scrollspeed(long vl_scrollspeed);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+#ScrollSpeed							= vl_scrollSpeed
 
 RETURN
 end event
@@ -2944,6 +2969,83 @@ END IF
 Return(ll_width)
 end function
 
+private subroutine of_getfocus (long vl_group);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+IF vl_group = il_groupFocus THEN RETURN
+
+dw_palette.SetRedraw(FALSE)
+
+String									ls_modify			= ''
+
+ls_modify								= ls_modify																							&
+											+ 'r_' + ds_XPListBar.of_getItem_objectName(vl_group) + '_container.'			&
+											+ 'background.color="' + String(of_getColor(GETFOCUS)) + '" '
+
+ls_modify								= dw_palette.Modify(ls_modify)
+
+il_groupFocus							= vl_group
+
+dw_palette.SetRedraw(TRUE)
+
+RETURN
+end subroutine
+
+private subroutine of_losefocus (ref long vl_group);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+IF isNull(il_groupFocus) THEN RETURN
+
+dw_palette.SetRedraw(FALSE)
+
+String									ls_modify			= ''
+
+ls_modify								= ls_modify																							&
+											+ 'r_' + ds_XPListBar.of_getItem_objectName(vl_group) + '_container.'			&
+											+ 'background.color="' + String(of_getColor(LOSEFOCUS)) + '" '
+
+ls_modify								= dw_palette.Modify(ls_modify)
+
+setNull(il_groupFocus)
+
+dw_palette.SetRedraw(TRUE)
+
+RETURN
+end subroutine
+
+private subroutine of_correct_scrollspeed ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+CHOOSE CASE #ScrollSpeed
+	CASE IS < FAST
+		#ScrollSpeed					= NORMAL
+	CASE IS < FASTEST
+		#ScrollSpeed					= FAST
+	CASE ELSE
+		#ScrollSpeed					= FASTEST
+END CHOOSE
+
+RETURN
+end subroutine
+
 on u_cst_xplistbar.create
 this.st_xplistbar=create st_xplistbar
 this.dw_palette=create dw_palette
@@ -2975,6 +3077,8 @@ event constructor;// CopyRight (c) 2016 by Christopher Harris, all rights reserv
 //
 // Original Author:	Christopher Harris
 
+setNull(il_groupFocus)
+
 is_chevronUp							= invo_dwGUI.of_image_chevronUp()
 is_chevronDown							= invo_dwGUI.of_image_chevronDown()
 
@@ -2982,6 +3086,7 @@ il_xPixelInUnits						= PixelsToUnits(1, XPixelsToUnits!)
 il_yPixelInUnits						= PixelsToUnits(1, YPixelsToUnits!)
 
 of_correct_size()
+of_correct_scrollSpeed()
 
 IF #toolTipIsBubble THEN
 	ii_toolTipIsBubble				= 1
@@ -3099,6 +3204,9 @@ CHOOSE CASE dwo.Name
 		
 	CASE 't_scroll_top'
 		
+		of_underLine_link(0)
+		of_loseFocus(il_groupFocus)
+		
 		ib_scrollTop					= TRUE
 		ib_scrollBottom				= FALSE
 
@@ -3106,11 +3214,14 @@ CHOOSE CASE dwo.Name
 
 	CASE 't_scroll_bottom'
 		
+		of_underLine_link(0)
+		of_loseFocus(il_groupFocus)
+		
 		ib_scrollTop					= FALSE
 		ib_scrollBottom				= TRUE
 		
 		IF NOT tmg_XPListBar.Running THEN tmg_XPListBar.Start(.0025)
-		
+
 	CASE ELSE
 		
 		ib_scrollTop					= FALSE
@@ -3118,11 +3229,37 @@ CHOOSE CASE dwo.Name
 
 		IF tmg_XPListBar.Running THEN tmg_XPListBar.Stop()
 		
-		IF Pos(dwo.Name, 'link') > 0 THEN
-			of_underLine_link(ds_XPListBar.of_locateItem_objectName(Mid(dwo.Name, 3)))
-		ELSE
-			of_underLine_link(0)
-		END IF
+		long								ll_item
+		ll_item							= ds_XPListBar.of_locateItem_objectName(Mid(dwo.Name, 3))
+		
+		CHOOSE CASE ds_XPListBar.of_getItem_objectType(ll_item)
+				
+			CASE ds_XPListBar.LINK
+				
+				of_underLine_link(ll_item)
+				of_getFocus(ds_XPListBar.of_getItem_parent(ll_item))
+				
+			CASE ds_XPListBar.GROUP
+				
+				of_underLine_link(0)
+				of_getFocus(ll_item)
+				
+			CASE ds_XPListBar.LABEL
+				
+				of_underLine_link(0)
+				of_getFocus(ds_XPListBar.of_getItem_parent(ll_item))
+			
+			CASE ds_XPListBar.SEPARATOR
+				
+				of_underLine_link(0)
+				of_getFocus(ds_XPListBar.of_getItem_parent(ll_item))
+
+			CASE ELSE
+				
+				of_underLine_link(0)
+				of_loseFocus(il_groupFocus)
+
+		END CHOOSE
 
 END CHOOSE
 
@@ -3130,7 +3267,7 @@ IF NOT ib_trackMouseEvent THEN
 	
 	ib_trackMouseEvent				= invo_dwGUI.of_trackMouseEvent(handle(this), invo_dwGUI.TME_LEAVE)
 
-	of_getFocus()
+//	of_getFocus()
 
 //	of_broadCast_invisible(parent)
 	
@@ -3224,9 +3361,12 @@ event losefocus;// CopyRight (c) 2016 by Christopher Harris, all rights reserved
 //
 // Original Author:	Christopher Harris
 
-of_loseFocus()
-
 ib_trackMouseEvent					= FALSE
+
+IF tmg_XPListBar.Running THEN tmg_XPListBar.Stop()
+
+of_loseFocus(il_groupFocus)
+of_underLine_link(0)
 end event
 
 event other;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -3244,10 +3384,9 @@ CHOOSE CASE message.Number
 		ib_trackMouseEvent			= FALSE
 //		ib_trackMouseEvent			= NOT (of_highLight(INVISIBLE) = SUCCESS)
 		
-		of_loseFocus()
-		
 		IF tmg_XPListBar.Running THEN tmg_XPListBar.Stop()
 
+		of_loseFocus(il_groupFocus)
 		of_underLine_link(0)
 		
 END CHOOSE
@@ -3347,7 +3486,7 @@ event getfocus;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // Original Author:	Christopher Harris
 
-of_getFocus()
+//of_getFocus()
 
 Long										ll_tab	= NOTAB
 
@@ -3375,6 +3514,20 @@ m_XPListBar_context					lm_context
 lm_context								= CREATE m_XPListBar_context
 
 lm_context.mf_setParent(parent)
+
+CHOOSE CASE #ScrollSpeed
+	CASE NORMAL
+		lm_context.m_scrollSpeed.m_normal.Checked									&
+											= TRUE
+	CASE FAST
+		lm_context.m_scrollSpeed.m_fast.Checked									&
+											= TRUE
+	CASE FASTEST
+		lm_context.m_scrollSpeed.m_fastest.Checked								&
+											= TRUE
+	CASE ELSE
+		MessageBox('XPListBar Error', 'Invalid ScrollSpeed (' + String(#ScrollSpeed) + ') defined.')
+END CHOOSE
 
 lm_context.m_showToolTips.Checked		= of_displayToolTips()
 
@@ -3441,7 +3594,7 @@ ll_pos									= Long(dw_palette.Describe('dataWindow.VerticalScrollPosition'))
 
 IF ib_scrollTop THEN
 	
-	ll_new								= Max(ll_pos - il_yPixelInUnits, 0)
+	ll_new								= Max(ll_pos - (il_yPixelInUnits * #ScrollSpeed), 0)
 	
 	ls_modify							= dw_palette.Modify('dataWindow.VerticalScrollPosition="' + String(ll_new) + '"')
 
@@ -3453,7 +3606,7 @@ ELSE
 		Long								ll_max
 		ll_max							= Long(dw_palette.Describe('dataWindow.VerticalScrollMaximum'))
 		
-		ll_new							= Min(ll_pos + il_yPixelInUnits, ll_max)
+		ll_new							= Min(ll_pos + (il_yPixelInUnits * #ScrollSpeed), ll_max)
 
 		ls_modify						= dw_palette.Modify('dataWindow.VerticalScrollPosition="' + String(ll_new) + '"')
 

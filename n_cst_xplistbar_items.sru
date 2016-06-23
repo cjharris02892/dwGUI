@@ -621,12 +621,13 @@ ll_item									= Find(ls_find, 1, rowCount())
 CHOOSE CASE ll_item
 	CASE 0
 		
+		String							ls_item
+		
 		Long								ll_pos
 		ll_pos							= Pos(Lower(vs_objectName), 'group_')
 		
 		IF ll_pos > 0 THEN
 		
-			String						ls_item
 			ls_item						= Mid(vs_objectName, ll_pos + Len('group_'))
 			
 			IF isNumber(ls_item) THEN Return(Long(ls_item))
@@ -639,6 +640,23 @@ CHOOSE CASE ll_item
 			
 		END IF
 		
+		ll_pos							= Pos(Lower(vs_objectName), 'separator_')
+		
+		IF ll_pos > 0 THEN
+		
+			ls_item						= Mid(vs_objectName, ll_pos + Len('separator_'))
+			ls_item						= Left(ls_item, Len(ls_item) - 2)
+			
+			IF isNumber(ls_item) THEN Return(Long(ls_item))
+
+			ll_pos						= Pos(ls_item, '_')
+			
+			ls_item						= Left(ls_item, ll_pos - 1)
+			
+			IF isNumber(ls_item) THEN Return(Long(ls_item))
+			
+		END IF
+
 		setNull(ll_item)
 
 	CASE -1
