@@ -3898,16 +3898,16 @@ lm_context								= CREATE m_toolbar_context
 lm_context.mf_setParent(parent)
 
 CHOOSE CASE #BitMapSize
-	CASE 16
+	CASE SMALL
 		lm_context.m_size.m_small.Checked											&
 											= TRUE
-	CASE 24
+	CASE MEDIUM
 		lm_context.m_size.m_medium.Checked											&
 											= TRUE
-	CASE 32
+	CASE LARGE
 		lm_context.m_size.m_large.Checked											&
 											= TRUE
-	CASE 48
+	CASE XLARGE
 		lm_context.m_size.m_xLarge.Checked											&
 											= TRUE
 	CASE ELSE
