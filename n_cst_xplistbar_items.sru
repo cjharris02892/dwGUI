@@ -64,6 +64,9 @@ public subroutine of_setitem_image (long vl_item, string vs_image)
 public function long of_getitem_imagetransparency (long vl_item)
 public subroutine of_setitem_imagetransparency (long vl_item, long vl_imagetransparency)
 public subroutine of_setitem_imagewidth (long vl_item, long vl_imagewidth)
+public function long of_locateitem_group (string vs_group)
+public function long of_locateitem_link (string vs_link)
+public function long of_locateitem_label (string vs_label)
 end prototypes
 
 public function double of_pbversion ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -793,6 +796,84 @@ ResetUpdate()
 
 RETURN
 end subroutine
+
+public function long of_locateitem_group (string vs_group);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+String									ls_find
+ls_find									= 'Lower(text)=Lower("' + vs_group + '") AND Lower(objectType)=Lower("' + GROUP + '")'
+
+Long										ll_item
+ll_item									= Find(ls_find, 1, rowCount())
+
+CHOOSE CASE ll_item
+	CASE 0
+		setNull(ll_item)
+	CASE -1
+		setNull(ll_item)
+		MessageBox('Programmer Error', 'Syntax error in XPListBar find clause: ' + ls_find + '.')
+END CHOOSE
+
+Return(ll_item)
+end function
+
+public function long of_locateitem_link (string vs_link);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+String									ls_find
+ls_find									= 'Lower(text)=Lower("' + vs_link + '") AND Lower(objectType)=Lower("' + LINK + '")'
+
+Long										ll_item
+ll_item									= Find(ls_find, 1, rowCount())
+
+CHOOSE CASE ll_item
+	CASE 0
+		setNull(ll_item)
+	CASE -1
+		setNull(ll_item)
+		MessageBox('Programmer Error', 'Syntax error in XPListBar find clause: ' + ls_find + '.')
+END CHOOSE
+
+Return(ll_item)
+end function
+
+public function long of_locateitem_label (string vs_label);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+String									ls_find
+ls_find									= 'Lower(text)=Lower("' + vs_label + '") AND Lower(objectType)=Lower("' + LABEL + '")'
+
+Long										ll_item
+ll_item									= Find(ls_find, 1, rowCount())
+
+CHOOSE CASE ll_item
+	CASE 0
+		setNull(ll_item)
+	CASE -1
+		setNull(ll_item)
+		MessageBox('Programmer Error', 'Syntax error in XPListBar find clause: ' + ls_find + '.')
+END CHOOSE
+
+Return(ll_item)
+end function
 
 on n_cst_xplistbar_items.create
 call super::create
