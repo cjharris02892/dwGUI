@@ -205,7 +205,6 @@ public function long of_clicklabel (long vl_group, long vl_item)
 public function long of_clicklabel (string vs_text_group, string vs_text_item)
 public function long of_clicklink (string vs_text_group, string vs_text_item)
 public function long of_clicklink (long vl_group, long vl_item)
-public subroutine of_createitem_image (long vl_item)
 public function integer of_setimage (long vl_item, string vs_image)
 private function long of_size_imageheight (string vs_image)
 private function long of_size_imagewidth (string vs_image)
@@ -213,6 +212,7 @@ private subroutine of_getfocus (long vl_group)
 private subroutine of_losefocus (ref long vl_group)
 private subroutine of_correct_scrollspeed ()
 public subroutine of_setbackcolor (long vl_red, integer vi_green, integer vi_blue)
+private subroutine of_createitem_image (long vl_item)
 end prototypes
 
 event type integer ue_itemclicking(string vs_group, string vs_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -2806,79 +2806,6 @@ public function long of_clicklink (long vl_group, long vl_item);// CopyRight (c)
 Return(of_clickItem(vl_group, vl_item))
 end function
 
-public subroutine of_createitem_image (long vl_item);Long										li_displayToolTips
-
-IF of_displayToolTips() THEN
-	li_displayToolTips				= 1
-ELSE
-	li_displayToolTips				= 0
-END IF
-
-String									ls_toolTip = ''
-ls_toolTip								= ds_XPListBar.of_getItem_toolTip(vl_item)
-
-IF ds_XPListBar.of_getItem_text(vl_item) = ds_XPListBar.of_getItem_toolTip(vl_item) THEN
-	ls_toolTip							= ''
-END IF
-
-String									ls_image
-ls_image									= ds_XPListBar.of_getItem_image(vl_item)
-
-//	BitMap logic
-String									ls_modify
-	
-ls_modify								= 'CREATE bitmap(band=detail '															&
-											+ 'filename="' + ls_image + '" '															&
-											+ 'x="0" '																						&
-											+ 'y="0" '																						&
-											+ 'height="'+ String(of_size_imageHeight(ls_image)) + '" '						&
-											+ 'width="' + String(of_size_imageWidth(ls_image)) + '" '						&
-											+ 'border="0" '																				&
-											+ 'name=p_' + ds_XPListBar.of_getItem_objectName(vl_item) + ' '				&
-											+ 'visible="1" '
-											
-//IF ds_XPListBar.of_PBVersion() >= 12.5 THEN
-//		
-//	IF ds_XPListBar.of_getItem_enabled(vl_item) THEN
-//		ls_modify						= ls_modify + 'enabled="1" '
-//	ELSE
-//		ls_modify						= ls_modify + 'enabled="0" '
-//	END IF
-//
-//END IF
-	
-IF ds_XPListBar.of_PBVersion() >= 11.5 THEN
-		
-	ls_modify							= ls_modify																						&
-											+ 'tooltip.backcolor="' + String(of_getColor(INFOBACKGROUND)) + '" '			&
-											+ 'tooltip.delay.initial="' + String(#ToolTipDelayInitial) + '" ' +			&
-											+ 'tooltip.delay.visible="' + String(#ToolTipDelayVisible) + '" ' +			&
-											+ 'tooltip.enabled="' + String(li_displayToolTips) + '" '						&
-											+ 'tooltip.hasclosebutton="0" tooltip.icon="0" ' +									&
-											+ 'tooltip.isbubble="' + String(ii_toolTipIsBubble) + '" '						&
-											+ 'tooltip.maxwidth="0" '																	&
-											+ 'tooltip.textcolor="' + String(of_getColor(INFOTEXT)) + '" '					&
-											+ 'tooltip.transparency="0" '																&
-											+ 'tooltip.tip="' + ls_toolTip + '" '													&
-											+ 'transparentcolor="' + String(ds_XPListBar.of_getItem_imageTransparency(vl_item)) + '" '
-												
-//	IF ds_XPListBar.of_getItem_enabled(vl_item) THEN
-//		ls_modify						= ls_modify + 'transparency="0" '
-//	ELSE
-//		ls_modify						= ls_modify + 'transparency="50" '
-//	END IF
-		
-ELSE
-	//	Need to come up with a way to show enabled/disabled for version prior to 11.5
-END IF
-	
-ls_modify								= ls_modify + ') '
-
-ls_modify								= dw_palette.Modify(ls_modify)
-	
-RETURN
-end subroutine
-
 public function integer of_setimage (long vl_item, string vs_image);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
@@ -3047,6 +2974,79 @@ ELSE
 	of_setBackColor(RGB(vl_red, vi_green, vi_blue))
 END IF
 
+RETURN
+end subroutine
+
+private subroutine of_createitem_image (long vl_item);Long										li_displayToolTips
+
+IF of_displayToolTips() THEN
+	li_displayToolTips				= 1
+ELSE
+	li_displayToolTips				= 0
+END IF
+
+String									ls_toolTip = ''
+ls_toolTip								= ds_XPListBar.of_getItem_toolTip(vl_item)
+
+IF ds_XPListBar.of_getItem_text(vl_item) = ds_XPListBar.of_getItem_toolTip(vl_item) THEN
+	ls_toolTip							= ''
+END IF
+
+String									ls_image
+ls_image									= ds_XPListBar.of_getItem_image(vl_item)
+
+//	BitMap logic
+String									ls_modify
+	
+ls_modify								= 'CREATE bitmap(band=detail '															&
+											+ 'filename="' + ls_image + '" '															&
+											+ 'x="0" '																						&
+											+ 'y="0" '																						&
+											+ 'height="'+ String(of_size_imageHeight(ls_image)) + '" '						&
+											+ 'width="' + String(of_size_imageWidth(ls_image)) + '" '						&
+											+ 'border="0" '																				&
+											+ 'name=p_' + ds_XPListBar.of_getItem_objectName(vl_item) + ' '				&
+											+ 'visible="1" '
+											
+//IF ds_XPListBar.of_PBVersion() >= 12.5 THEN
+//		
+//	IF ds_XPListBar.of_getItem_enabled(vl_item) THEN
+//		ls_modify						= ls_modify + 'enabled="1" '
+//	ELSE
+//		ls_modify						= ls_modify + 'enabled="0" '
+//	END IF
+//
+//END IF
+	
+IF ds_XPListBar.of_PBVersion() >= 11.5 THEN
+		
+	ls_modify							= ls_modify																						&
+											+ 'tooltip.backcolor="' + String(of_getColor(INFOBACKGROUND)) + '" '			&
+											+ 'tooltip.delay.initial="' + String(#ToolTipDelayInitial) + '" ' +			&
+											+ 'tooltip.delay.visible="' + String(#ToolTipDelayVisible) + '" ' +			&
+											+ 'tooltip.enabled="' + String(li_displayToolTips) + '" '						&
+											+ 'tooltip.hasclosebutton="0" tooltip.icon="0" ' +									&
+											+ 'tooltip.isbubble="' + String(ii_toolTipIsBubble) + '" '						&
+											+ 'tooltip.maxwidth="0" '																	&
+											+ 'tooltip.textcolor="' + String(of_getColor(INFOTEXT)) + '" '					&
+											+ 'tooltip.transparency="0" '																&
+											+ 'tooltip.tip="' + ls_toolTip + '" '													&
+											+ 'transparentcolor="' + String(ds_XPListBar.of_getItem_imageTransparency(vl_item)) + '" '
+												
+//	IF ds_XPListBar.of_getItem_enabled(vl_item) THEN
+//		ls_modify						= ls_modify + 'transparency="0" '
+//	ELSE
+//		ls_modify						= ls_modify + 'transparency="50" '
+//	END IF
+		
+ELSE
+	//	Need to come up with a way to show enabled/disabled for version prior to 11.5
+END IF
+	
+ls_modify								= ls_modify + ') '
+
+ls_modify								= dw_palette.Modify(ls_modify)
+	
 RETURN
 end subroutine
 
