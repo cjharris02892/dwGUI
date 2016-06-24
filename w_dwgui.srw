@@ -40,6 +40,7 @@ Private:
 	
 	n_cst_resize					invo_resize
 end variables
+
 on w_dwgui.create
 this.st_splitbar=create st_splitbar
 this.uo_xplistbar=create uo_xplistbar
@@ -87,56 +88,56 @@ st_splitBar.of_register(dw_options, st_splitBar.RIGHT)
 
 ////	Documentation example 1
 //
-//uo_toolbar.of_addItem('Exit', 'powerOff.bmp', 'Close the window', uo_toolbar.RIGHT)
-//uo_toolbar.of_addItem('', 'open.bmp', uo_toolbar.LEFT)
-//uo_toolbar.of_addItem('Save', 'save.bmp', uo_toolbar.LEFT)
+//uo_toolbar.of_addButton('Exit', 'powerOff.bmp', 'Close the window', uo_toolbar.RIGHT)
+//uo_toolbar.of_addButton('', 'open.bmp', uo_toolbar.LEFT)
+//uo_toolbar.of_addButton('Save', 'save.bmp', uo_toolbar.LEFT)
 //
 //// Documentation example 2
 //
-//uo_toolbar.of_addItem('Exit', 'powerOff.bmp', 'Close the window', uo_toolbar.RIGHT)
+//uo_toolbar.of_addButton('Exit', 'powerOff.bmp', 'Close the window', uo_toolbar.RIGHT)
 //uo_toolbar.of_addSeparator(uo_toolbar.RIGHT)
-//uo_toolbar.of_addItem('Save', 'save.bmp', uo_toolbar.RIGHT)
-//uo_toolbar.of_addItem('', 'open.bmp', uo_toolbar.RIGHT)
+//uo_toolbar.of_addButton('Save', 'save.bmp', uo_toolbar.RIGHT)
+//uo_toolbar.of_addButton('', 'open.bmp', uo_toolbar.RIGHT)
 //
 //// Documentation example 3
 //
-//uo_toolbar.of_addItem('Open', 'open.bmp')
-//uo_toolbar.of_addItem('Save', 'save.bmp')
+//uo_toolbar.of_addButton('Open', 'open.bmp')
+//uo_toolbar.of_addButton('Save', 'save.bmp')
 //uo_toolbar.of_addSeparator()
-//uo_toolbar.of_addItem('Print', 'print.bmp')
-//uo_toolbar.of_addItem('Preview', 'preview.bmp')
-//uo_toolbar.of_addItem('Exit', 'powerOff.bmp', 'Close the window', uo_toolbar.RIGHT)
+//uo_toolbar.of_addButton('Print', 'print.bmp')
+//uo_toolbar.of_addButton('Preview', 'preview.bmp')
+//uo_toolbar.of_addButton('Exit', 'powerOff.bmp', 'Close the window', uo_toolbar.RIGHT)
 
 uo_toolbar.of_disableUpdate()
 
-uo_toolbar.of_addItems({ 'Open',							'Save',					&
-								 uo_toolBar.SEPARATOR,		'Exit' },				&
-							  { 'Open!',						'Save.bmp',				&
-							    '',								'powerOff.bmp' },		&
-							  { uo_toolbar.LEFT,				uo_toolBar.LEFT,		&
-							    uo_toolBar.LEFT,				uo_toolbar.RIGHT })
+uo_toolbar.of_addButtons({ 'Open',						'Save',					&
+									uo_toolBar.SEPARATOR,	'Exit' },				&
+								 { 'Open!',						'Save.bmp',				&
+								 '',								'powerOff.bmp' },		&
+								 { uo_toolbar.LEFT,			uo_toolBar.LEFT,		&
+								   uo_toolBar.LEFT,			uo_toolbar.RIGHT })
 
-il_print									= uo_toolbar.of_addItem('',				'Print.bmp')
+il_print									= uo_toolbar.of_addButton('',				'Print.bmp')
 
-uo_toolbar.of_addItem('Preview',		'Preview.bmp')
+uo_toolbar.of_addButton('Preview',		'Preview.bmp')
 
 uo_toolbar.of_addSeparator()
 
-uo_toolbar.of_addItem('Copy', 		'Copy.png')
-uo_toolbar.of_addItem('Cut', 			'Cut.png')
-uo_toolbar.of_addItem('Paste', 		'Paste.bmp')
-uo_toolbar.of_addItem('Clear', 		'Clear.bmp')
+uo_toolbar.of_addButton('Copy', 			'Copy.png')
+uo_toolbar.of_addButton('Cut', 			'Cut.png')
+uo_toolbar.of_addButton('Paste', 		'Paste.bmp')
+uo_toolbar.of_addButton('Clear', 		'Clear.bmp')
 
 uo_toolbar.of_addSeparator(uo_toolbar.RIGHT)
 
-uo_toolbar.of_addItem('Text Only',	'',						uo_toolbar.RIGHT)
+uo_toolbar.of_addButton('Text Only',	'',						uo_toolbar.RIGHT)
 
 uo_toolbar.of_addSeparator(uo_toolbar.RIGHT)
 
-uo_toolbar.of_addItem('Text 4',	'', 'Text 4 ToolTip',	uo_toolbar.RIGHT)
-uo_toolbar.of_addItem('Text 3',									uo_toolbar.RIGHT)
-uo_toolbar.of_addItem('Text 2',	'',							uo_toolbar.RIGHT)
-uo_toolbar.of_addItem('Text 1',	'',							uo_toolbar.RIGHT)
+uo_toolbar.of_addButton('Text 4',	'', 'Text 4 ToolTip',	uo_toolbar.RIGHT)
+uo_toolbar.of_addButton('Text 3',									uo_toolbar.RIGHT)
+uo_toolbar.of_addButton('Text 2',	'',							uo_toolbar.RIGHT)
+uo_toolbar.of_addButton('Text 1',	'',							uo_toolbar.RIGHT)
 
 uo_toolbar.of_enableUpdate()
 
