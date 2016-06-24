@@ -587,7 +587,7 @@ ls_modify								= 'CREATE roundrectangle(band=detail '														&
 											+ 'height="' + String(il_groupHeight) + '" '												&
 											+ 'width="0" '																						&
 											+ 'name=r_' + ds_XPListBar.GROUP + '_' + String(vl_item) + '_roundrectangle '	&
-											+ 'visible="1" '																					&
+											+ 'visible="0" '																					&
 											+ 'brush.hatch="8" '																				&
 											+ 'brush.color="0" '																				&
 											+ 'pen.style="0" pen.width="5" ' +															&	
@@ -623,7 +623,7 @@ ls_modify								= 'CREATE rectangle(band=detail '															&
 											+ 'height="0" '																					&
 											+ 'width="0" '																						&
 											+ 'name=r_' + ds_XPListBar.GROUP + '_' + String(vl_item) + '_container '		&
-											+ 'visible="1" '																					&
+											+ 'visible="0" '																					&
 											+ 'brush.hatch="8" '																				&
 											+ 'brush.color="0" '																				&
 											+ 'pen.style="0" pen.width="5" ' +															&	
@@ -659,7 +659,7 @@ ls_modify								= 'CREATE rectangle(band=detail '															&
 											+ 'height="16" '																					&
 											+ 'width="18" '																					&
 											+ 'name=r_' + ds_XPListBar.GROUP + '_' + String(vl_item) + '_left_corner '		&
-											+ 'visible="1" '																					&
+											+ 'visible="0" '																					&
 											+ 'brush.hatch="6" '																				&
 											+ 'brush.color="' + String(of_getColor(SELECTED1)) + '" '							&
 											+ 'pen.style="0" pen.width="5" '																&
@@ -694,7 +694,7 @@ ls_modify								= 'CREATE rectangle(band=detail '															&
 											+ 'height="16" '																					&
 											+ 'width="18" '																					&
 											+ 'name=r_' + ds_XPListBar.GROUP + '_' + String(vl_item) + '_left_shadow '		&
-											+ 'visible="1" '																					&
+											+ 'visible="0" '																					&
 											+ 'brush.hatch="6" '																				&
 											+ 'brush.color="' + String(of_getColor(SELECTED1)) + '" '							&
 											+ 'pen.style="5" pen.width="5" '																&
@@ -729,7 +729,7 @@ ls_modify								= 'CREATE rectangle(band=detail '															&
 											+ 'height="16" '																					&
 											+ 'width="18" '																					&
 											+ 'name=r_' + ds_XPListBar.GROUP + '_' + String(vl_item) + '_right_corner '	&
-											+ 'visible="1" '																					&
+											+ 'visible="0" '																					&
 											+ 'brush.hatch="6" '																				&
 											+ 'brush.color="' + String(of_getColor(SELECTED1)) + '" '							&
 											+ 'pen.style="0" pen.width="5" '																&
@@ -764,7 +764,7 @@ ls_modify								= 'CREATE rectangle(band=detail '															&
 											+ 'height="16" '																					&
 											+ 'width="18" '																					&
 											+ 'name=r_' + ds_XPListBar.GROUP + '_' + String(vl_item) + '_right_shadow '	&
-											+ 'visible="1" '																					&
+											+ 'visible="0" '																					&
 											+ 'brush.hatch="6" '																				&
 											+ 'brush.color="' + String(of_getColor(SELECTED1)) + '" '							&
 											+ 'pen.style="5" pen.width="5" '																&
@@ -800,7 +800,7 @@ ls_modify								= 'CREATE ellipse(band=detail '																&
 											+ 'height="76" '																					&
 											+ 'width="87" '																					&
 											+ 'name=e_' + ds_XPListBar.GROUP + '_' + String(vl_item) + ' '						&
-											+ 'visible="1" '																					&
+											+ 'visible="0" '																					&
 											+ 'brush.hatch="6" '																				&
 											+ 'brush.color="' + String("67108864") + '" '											&
 											+ 'pen.style="0" pen.width="5" '																&
@@ -838,7 +838,7 @@ ls_modify								= ls_modify																							&
 											+ 'height="0" '																					&
 											+ 'html.valueishtml="0" '																		&
 											+ 'name=t_' + ds_XPListBar.of_getItem_objectName(vl_item) + ' '					&
-											+ 'visible="1" '																					&
+											+ 'visible="0" '																					&
 											+ 'font.face="' + ds_XPListBar.of_getItem_fontFace(vl_item) + '" '				&
 											+ 'font.height="' + String(#FontSize * -1) + '" '										&
 											+ 'font.weight="400" '																			&
@@ -893,7 +893,7 @@ ls_modify								= ls_modify																							&
 											+ 'width="' + String(9 * il_xPixelInUnits) + '" '										&
 											+ 'border="0" '																					&
 											+ 'name=p_' + ds_XPListBar.of_getItem_objectName(vl_item) + '_chevron '			&
-											+ 'visible="1" '
+											+ 'visible="0" '
 
 //IF ds_XPListBar.of_PBVersion() >= 12.5 THEN
 //		
@@ -975,7 +975,7 @@ ls_modify								= 'CREATE text(band=detail' + ' '															&
 											+ 'height="0" '																					&
 											+ 'html.valueishtml="0" '																		&
 											+ 'name=t_' + ds_XPListBar.of_getItem_objectName(vl_item) + ' '					&
-											+ 'visible="1" '																					&
+											+ 'visible="0" '																					&
 											+ 'font.face="' + ds_XPListBar.of_getItem_fontFace(vl_item) + '" '				&
 											+ 'font.height="' + String(#FontSize * -1) + '" '										&
 											+ 'font.weight="400" '																			&
@@ -1062,7 +1062,7 @@ ls_modify								= 'CREATE text(band=detail' + ' '															&
 											+ 'html.valueishtml="0" '																		&
 											+ 'name=t_' + ds_XPListBar.of_getItem_objectName(vl_item) + ' '					&
 											+ 'pointer="HyperLink!"'																		&
-											+ 'visible="1" '																					&
+											+ 'visible="0" '																					&
 											+ 'font.face="' + ds_XPListBar.of_getItem_fontFace(vl_item) + '" '				&
 											+ 'font.height="' + String(#FontSize * -1) + '" '										&
 											+ 'font.weight="400" '																			&
@@ -1136,7 +1136,7 @@ ls_modify								= 'CREATE line(band=detail' + ' '																&
 											+ 'x2="0" '																								&
 											+ 'y2="0" '																								&
 											+ 'name=l_' + ds_XPListBar.SEPARATOR + '_' + String(vl_item) + '_a '					&
-											+ 'visible="1" '																						&
+											+ 'visible="0" '																						&
 											+ 'pen.style="0" '																					&
 											+ 'pen.width="' + String(il_yPixelInUnits) + '" '											&
 											+ 'pen.color="' + String(of_getColor(THREEDDKSHADOW)) + '" '							&
@@ -1147,7 +1147,7 @@ ls_modify								= 'CREATE line(band=detail' + ' '																&
 											+ 'x2="0" '																								&
 											+ 'y2="0" '																								&
 											+ 'name=l_' + ds_XPListBar.SEPARATOR + '_' + String(vl_item) + '_b '					&
-											+ 'visible="1" '																						&
+											+ 'visible="0" '																						&
 											+ 'pen.style="0" '																					&
 											+ 'pen.width="' + String(il_yPixelInUnits) + '" '											&
 											+ 'pen.color="' + String(of_getColor(THREEDLIGHT)) + '" '								&
@@ -2994,7 +2994,7 @@ ls_modify								= 'CREATE bitmap(band=detail '															&
 											+ 'width="' + String(of_size_imageWidth(ls_image)) + '" '						&
 											+ 'border="0" '																				&
 											+ 'name=p_' + ds_XPListBar.of_getItem_objectName(vl_item) + ' '				&
-											+ 'visible="1" '
+											+ 'visible="0" '
 											
 //IF ds_XPListBar.of_PBVersion() >= 12.5 THEN
 //		
