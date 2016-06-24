@@ -220,6 +220,16 @@ public function long of_addlabel (string vs_group, string vs_text, string vs_ima
 public function long of_addseparator (string vs_group)
 public function long of_addlink (string vs_group, string vs_text, string vs_image, string vs_tooltip)
 public function long of_clickgroup (string vs_group)
+public function long of_addlabel (long vl_group, string vs_text)
+public function long of_addlabel (long vl_group, string vs_text, string vs_image)
+public function long of_addlabel (string vs_group, string vs_text)
+public function long of_addlabel (string vs_group, string vs_text, string vs_image)
+public function long of_addlink (string vs_group, string vs_text)
+public function long of_addlink (string vs_group, string vs_text, string vs_image)
+public function long of_addgroup (string vs_text, string vs_image)
+public function long of_addgroup (string vs_text)
+public function long of_addlink (long vl_group, string vs_text)
+public function long of_addlink (long vl_group, string vs_text, string vs_image)
 end prototypes
 
 event type integer ue_itemclicking(string vs_group, string vs_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -3256,6 +3266,126 @@ IF isNull(ll_item) THEN Return(PREVENT)
 IF ds_XPListBar.of_getItem_objectType(ll_item) <> ds_XPListBar.GROUP THEN Return(PREVENT)
 
 Return(of_clickItem(vs_group, ''))
+end function
+
+public function long of_addlabel (long vl_group, string vs_text);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+Return(of_addLabel(vl_group, vs_text, '', ''))
+end function
+
+public function long of_addlabel (long vl_group, string vs_text, string vs_image);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+Return(of_addLabel(vl_group, vs_text, vs_image, ''))
+end function
+
+public function long of_addlabel (string vs_group, string vs_text);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+Return(of_addLabel(vs_group, vs_text, '', ''))
+end function
+
+public function long of_addlabel (string vs_group, string vs_text, string vs_image);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+Return(of_addLabel(vs_group, vs_text, vs_image, ''))
+end function
+
+public function long of_addlink (string vs_group, string vs_text);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+Return(of_addLink(vs_group, vs_text, '', ''))
+end function
+
+public function long of_addlink (string vs_group, string vs_text, string vs_image);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+Return(of_addLink(vs_group, vs_text, vs_image, ''))
+end function
+
+public function long of_addgroup (string vs_text, string vs_image);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+Return(of_addGroup(vs_text, vs_image, ''))
+end function
+
+public function long of_addgroup (string vs_text);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+Return(of_addGroup(vs_text, '', ''))
+end function
+
+public function long of_addlink (long vl_group, string vs_text);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+Return(of_addLink(vl_group, vs_text, '', ''))
+end function
+
+public function long of_addlink (long vl_group, string vs_text, string vs_image);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+Return(of_addLink(vl_group, vs_text, vs_image, ''))
 end function
 
 on u_cst_xplistbar.create
