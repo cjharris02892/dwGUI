@@ -169,7 +169,6 @@ private subroutine of_correct_size ()
 private subroutine of_losefocus ()
 private subroutine of_getfocus ()
 public subroutine of_broadcast_showtooltips (boolean vb_showtext)
-public function long of_clickitem (long vl_group)
 public function long of_clickitem (long vl_group, long vl_item)
 public function long of_locateitem (string vs_text_group, string vs_text_item)
 public function integer of_setvisible (string vs_text, boolean vb_switch)
@@ -177,7 +176,6 @@ public function integer of_setenabled (string vs_text, boolean vb_switch)
 public function integer of_setvisible (string vs_text_group, string vs_text_item, boolean vb_switch)
 public function boolean of_iscollapsed (string vs_text_group)
 public function integer of_setcollapsed (string vs_text_group, boolean vb_switch)
-public function long of_clickitem (string vs_text_group)
 public function long of_clickitem (string vs_text_group, string vs_text_item)
 public function boolean of_isenabled (string vs_text_group, string vs_text_item)
 public function boolean of_isenabled (string vs_text)
@@ -213,6 +211,12 @@ private subroutine of_losefocus (ref long vl_group)
 private subroutine of_correct_scrollspeed ()
 public subroutine of_setbackcolor (long vl_red, integer vi_green, integer vi_blue)
 private subroutine of_createitem_image (long vl_item)
+public function long of_clickitem (long vl_item)
+public function long of_clickitem (string vs_text)
+public function long of_clicklabel (string vs_text_item)
+public function long of_clicklink (string vs_text_item)
+public function long of_clicklink (long vl_item)
+public function long of_clicklabel (long vl_item)
 end prototypes
 
 event type integer ue_itemclicking(string vs_group, string vs_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -1829,22 +1833,6 @@ NEXT
 RETURN
 end subroutine
 
-public function long of_clickitem (long vl_group);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
-//
-// This code and accompanying materials are made available under the GPLv3
-// license which accompanies this distribution and can be found at:
-//
-// http://www.gnu.org/licenses/gpl-3.0.html.
-//
-// Original Author:	Christopher Harris
-
-IF isNull(vl_group) THEN Return(PREVENT)
-
-IF vl_group <= 0 OR vl_group > ds_XPListBar.RowCount() THEN Return(PREVENT)
-
-Return(of_clickItem(ds_XPListBar.of_getItem_text(vl_group), ''))
-end function
-
 public function long of_clickitem (long vl_group, long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
@@ -1857,6 +1845,8 @@ public function long of_clickitem (long vl_group, long vl_item);// CopyRight (c)
 IF isNull(vl_group) THEN Return(PREVENT)
 
 IF vl_group <= 0 OR vl_group > ds_XPListBar.RowCount() THEN Return(PREVENT)
+
+IF ds_XPListBar.of_getItem_objectType(vl_group) <> ds_XPListBar.GROUP THEN Return(PREVENT)
 
 IF isNull(vl_item) THEN Return(PREVENT)
 
@@ -1946,18 +1936,6 @@ public function integer of_setcollapsed (string vs_text_group, boolean vb_switch
 Return(of_setCollapsed(of_locateItem(vs_text_group, ''), vb_switch))
 end function
 
-public function long of_clickitem (string vs_text_group);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
-//
-// This code and accompanying materials are made available under the GPLv3
-// license which accompanies this distribution and can be found at:
-//
-// http://www.gnu.org/licenses/gpl-3.0.html.
-//
-// Original Author:	Christopher Harris
-
-Return(of_clickItem(vs_text_group, ''))
-end function
-
 public function long of_clickitem (string vs_text_group, string vs_text_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
@@ -1971,10 +1949,10 @@ Long										ll_Return		= PREVENT
 
 Boolean									lb_available	= TRUE
 
-IF of_isVisible(vs_text_group) AND of_isEnabled(vs_text_group) THEN
+IF of_isVisible(vs_text_group, '') AND of_isEnabled(vs_text_group, '') THEN
 	IF isNull(vs_text_item) OR Trim(vs_text_item) = '' THEN
 	ELSE
-		IF of_isVisible(vs_text_item) AND of_isEnabled(vs_text_item) THEN
+		IF of_isVisible(vs_text_group, vs_text_item) AND of_isEnabled(vs_text_group, vs_text_item) THEN
 		ELSE
 			lb_available				= FALSE
 		END IF
@@ -2743,7 +2721,13 @@ public function long of_clickgroup (long vl_group);// CopyRight (c) 2016 by Chri
 //
 // Original Author:	Christopher Harris
 
-Return(of_clickItem(vl_group))
+IF isNull(vl_group) THEN Return(PREVENT)
+
+IF vl_group <= 0 OR vl_group > ds_XPListBar.RowCount() THEN Return(PREVENT)
+
+IF ds_XPListBar.of_getItem_objectType(vl_group) <> ds_XPListBar.GROUP THEN Return(PREVENT)
+
+Return(of_clickItem(ds_XPListBar.of_getItem_text(vl_group), ''))
 end function
 
 public function long of_clickgroup (string vs_text_group);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -2755,7 +2739,14 @@ public function long of_clickgroup (string vs_text_group);// CopyRight (c) 2016 
 //
 // Original Author:	Christopher Harris
 
-Return(of_clickItem(vs_text_group))
+Long										ll_item
+ll_item									= ds_XPListBar.of_locateItem_group(vs_text_group)
+
+IF isNull(ll_item) THEN Return(PREVENT)
+
+IF ds_XPListBar.of_getItem_objectType(ll_item) <> ds_XPListBar.GROUP THEN Return(PREVENT)
+
+Return(of_clickItem(vs_text_group, ''))
 end function
 
 public function long of_clicklabel (long vl_group, long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -2767,7 +2758,21 @@ public function long of_clicklabel (long vl_group, long vl_item);// CopyRight (c
 //
 // Original Author:	Christopher Harris
 
-Return(of_clickItem(vl_group, vl_item))
+IF isNull(vl_group) THEN Return(PREVENT)
+
+IF vl_group <= 0 OR vl_group > ds_XPListBar.RowCount() THEN Return(PREVENT)
+
+IF isNull(vl_item) THEN Return(PREVENT)
+
+IF vl_item <= 0 OR vl_item > ds_XPListBar.RowCount() THEN Return(PREVENT)
+
+IF ds_XPListBar.of_getItem_objectType(vl_group) <> ds_XPListBar.GROUP THEN Return(PREVENT)
+
+IF ds_XPListBar.of_getItem_objectType(vl_item) <> ds_XPListBar.LABEL THEN Return(PREVENT)
+
+IF ds_XPListBar.of_getItem_parent(vl_item) <> vl_group THEN Return(PREVENT)
+
+Return(of_clickItem(ds_XPListBar.of_getItem_text(vl_group), ds_XPListBar.of_getItem_text(vl_item)))
 end function
 
 public function long of_clicklabel (string vs_text_group, string vs_text_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -2778,6 +2783,13 @@ public function long of_clicklabel (string vs_text_group, string vs_text_item);/
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
 // Original Author:	Christopher Harris
+
+Long										ll_item
+ll_item									= ds_XPListBar.of_locateItem_text(vs_text_group, vs_text_item)
+
+IF isNull(ll_item) THEN Return(PREVENT)
+
+IF ds_XPListBar.of_getItem_objectType(ll_item) <> ds_XPListBar.LABEL THEN Return(PREVENT)
 
 Return(of_clickItem(vs_text_group, vs_text_item))
 end function
@@ -2791,6 +2803,13 @@ public function long of_clicklink (string vs_text_group, string vs_text_item);//
 //
 // Original Author:	Christopher Harris
 
+Long										ll_item
+ll_item									= ds_XPListBar.of_locateItem_text(vs_text_group, vs_text_item)
+
+IF isNull(ll_item) THEN Return(PREVENT)
+
+IF ds_XPListBar.of_getItem_objectType(ll_item) <> ds_XPListBar.LINK THEN Return(PREVENT)
+
 Return(of_clickItem(vs_text_group, vs_text_item))
 end function
 
@@ -2803,7 +2822,21 @@ public function long of_clicklink (long vl_group, long vl_item);// CopyRight (c)
 //
 // Original Author:	Christopher Harris
 
-Return(of_clickItem(vl_group, vl_item))
+IF isNull(vl_group) THEN Return(PREVENT)
+
+IF vl_group <= 0 OR vl_group > ds_XPListBar.RowCount() THEN Return(PREVENT)
+
+IF isNull(vl_item) THEN Return(PREVENT)
+
+IF vl_item <= 0 OR vl_item > ds_XPListBar.RowCount() THEN Return(PREVENT)
+
+IF ds_XPListBar.of_getItem_objectType(vl_group) <> ds_XPListBar.GROUP THEN Return(PREVENT)
+
+IF ds_XPListBar.of_getItem_objectType(vl_item) <> ds_XPListBar.LINK THEN Return(PREVENT)
+
+IF ds_XPListBar.of_getItem_parent(vl_item) <> vl_group THEN Return(PREVENT)
+
+Return(of_clickItem(ds_XPListBar.of_getItem_text(vl_group), ds_XPListBar.of_getItem_text(vl_item)))
 end function
 
 public function integer of_setimage (long vl_item, string vs_image);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -3049,6 +3082,121 @@ ls_modify								= dw_palette.Modify(ls_modify)
 	
 RETURN
 end subroutine
+
+public function long of_clickitem (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+IF isNull(vl_item) THEN Return(PREVENT)
+
+IF vl_item <= 0 OR vl_item > ds_XPListBar.RowCount() THEN Return(PREVENT)
+
+IF ds_XPListBar.of_getItem_objectType(vl_item) = ds_XPListBar.GROUP THEN
+	Return(of_clickItem(ds_XPListBar.of_getItem_text(vl_item), ''))
+END IF
+
+Return(of_clickItem(ds_XPListBar.of_getItem_text(ds_XPListBar.of_getItem_parent(vl_item)), ds_XPListBar.of_getItem_text(vl_item)))
+end function
+
+public function long of_clickitem (string vs_text);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+Long										ll_item
+ll_item									= ds_XPListBar.of_locateItem_text(vs_text)
+
+IF isNull(ll_item) THEN Return(PREVENT)
+
+IF ds_XPListBar.of_getItem_objectType(ll_item) = ds_XPListBar.GROUP THEN
+	Return(of_clickItem(text, ''))
+END IF
+
+Return(of_clickItem(ds_XPListBar.of_getItem_text(ds_XPListBar.of_getItem_parent(ll_item)), vs_text))
+end function
+
+public function long of_clicklabel (string vs_text_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+Long										ll_item
+ll_item									= ds_XPListBar.of_locateItem_label(vs_text_item)
+
+IF isNull(ll_item) THEN Return(PREVENT)
+
+IF ds_XPListBar.of_getItem_objectType(ll_item) <> ds_XPListBar.LABEL THEN Return(PREVENT)
+
+Return(of_clickItem(ds_XPListBar.of_getItem_Text(ds_XPListBar.of_getItem_parent(ll_item)), vs_text_item))
+end function
+
+public function long of_clicklink (string vs_text_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+Long										ll_item
+ll_item									= ds_XPListBar.of_locateItem_link(vs_text_item)
+
+IF isNull(ll_item) THEN Return(PREVENT)
+
+IF ds_XPListBar.of_getItem_objectType(ll_item) <> ds_XPListBar.LINK THEN Return(PREVENT)
+
+Return(of_clickItem(ds_XPListBar.of_getItem_Text(ds_XPListBar.of_getItem_parent(ll_item)), vs_text_item))
+end function
+
+public function long of_clicklink (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+IF isNull(vl_item) THEN Return(PREVENT)
+
+IF vl_item <= 0 OR vl_item > ds_XPListBar.RowCount() THEN Return(PREVENT)
+
+IF ds_XPListBar.of_getItem_objectType(vl_item) <> ds_XPListBar.LINK THEN Return(PREVENT)
+
+Return(of_clickItem(ds_XPListBar.of_getItem_text(ds_XPListBar.of_getItem_parent(vl_item)), ds_XPListBar.of_getItem_text(vl_item)))
+end function
+
+public function long of_clicklabel (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+IF isNull(vl_item) THEN Return(PREVENT)
+
+IF vl_item <= 0 OR vl_item > ds_XPListBar.RowCount() THEN Return(PREVENT)
+
+IF ds_XPListBar.of_getItem_objectType(vl_item) <> ds_XPListBar.LABEL THEN Return(PREVENT)
+
+Return(of_clickItem(ds_XPListBar.of_getItem_text(ds_XPListBar.of_getItem_parent(vl_item)), ds_XPListBar.of_getItem_text(vl_item)))
+end function
 
 on u_cst_xplistbar.create
 this.st_xplistbar=create st_xplistbar
