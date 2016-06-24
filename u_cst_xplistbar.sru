@@ -168,7 +168,6 @@ private subroutine of_correct_bitmapsize ()
 private subroutine of_correct_size ()
 private subroutine of_losefocus ()
 private subroutine of_getfocus ()
-public subroutine of_broadcast_showtooltips (boolean vb_showtext)
 public function long of_clickitem (long vl_group, long vl_item)
 public function long of_locateitem (string vs_text_group, string vs_text_item)
 public function integer of_setvisible (string vs_text, boolean vb_switch)
@@ -217,6 +216,7 @@ public function long of_clicklabel (string vs_text_item)
 public function long of_clicklink (string vs_text_item)
 public function long of_clicklink (long vl_item)
 public function long of_clicklabel (long vl_item)
+private subroutine of_broadcast_showtooltips (boolean vb_showtext)
 end prototypes
 
 event type integer ue_itemclicking(string vs_group, string vs_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -1804,35 +1804,6 @@ ls_modify								= dw_palette.Modify(ls_modify)
 dw_palette.SetRedraw(TRUE)
 end subroutine
 
-public subroutine of_broadcast_showtooltips (boolean vb_showtext);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
-//
-// This code and accompanying materials are made available under the GPLv3
-// license which accompanies this distribution and can be found at:
-//
-// http://www.gnu.org/licenses/gpl-3.0.html.
-//
-// Original Author:	Christopher Harris
-
-//	This routine notifies all u_cst_toolBar objects to turn on/off their text
-
-Long										ll_XPListBar,	ll_XPListBars
-ll_XPListBars							= upperBound(suo_XPListBar[])
-
-FOR ll_XPListBar = 1 TO ll_XPListBars
-	
-	IF NOT IsValid(suo_XPListBar[ll_XPListBar]) THEN CONTINUE
-
-	IF vb_showText THEN
-		suo_XPListBar[ll_XPListBar].of_enableToolTips()
-	ELSE
-		suo_XPListBar[ll_XPListBar].of_disableToolTips()
-	END IF
-	
-NEXT
-
-RETURN
-end subroutine
-
 public function long of_clickitem (long vl_group, long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
@@ -3197,6 +3168,35 @@ IF ds_XPListBar.of_getItem_objectType(vl_item) <> ds_XPListBar.LABEL THEN Return
 
 Return(of_clickItem(ds_XPListBar.of_getItem_text(ds_XPListBar.of_getItem_parent(vl_item)), ds_XPListBar.of_getItem_text(vl_item)))
 end function
+
+private subroutine of_broadcast_showtooltips (boolean vb_showtext);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+//	This routine notifies all u_cst_toolBar objects to turn on/off their text
+
+Long										ll_XPListBar,	ll_XPListBars
+ll_XPListBars							= upperBound(suo_XPListBar[])
+
+FOR ll_XPListBar = 1 TO ll_XPListBars
+	
+	IF NOT IsValid(suo_XPListBar[ll_XPListBar]) THEN CONTINUE
+
+	IF vb_showText THEN
+		suo_XPListBar[ll_XPListBar].of_enableToolTips()
+	ELSE
+		suo_XPListBar[ll_XPListBar].of_disableToolTips()
+	END IF
+	
+NEXT
+
+RETURN
+end subroutine
 
 on u_cst_xplistbar.create
 this.st_xplistbar=create st_xplistbar
