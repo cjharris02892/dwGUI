@@ -199,7 +199,6 @@ public function string of_gettext (long vl_item)
 public function string of_gettext (string vs_text)
 public function string of_gettext (string vs_text_group, string vs_text_item)
 public subroutine of_setbackcolor (long vl_backcolor)
-public subroutine of_setbackcolor (integer vi_red, integer vi_green, integer vi_blue)
 public function long of_clickgroup (long vl_group)
 public function long of_clickgroup (string vs_text_group)
 public function long of_clicklabel (long vl_group, long vl_item)
@@ -213,6 +212,7 @@ private function long of_size_imagewidth (string vs_image)
 private subroutine of_getfocus (long vl_group)
 private subroutine of_losefocus (ref long vl_group)
 private subroutine of_correct_scrollspeed ()
+public subroutine of_setbackcolor (long vl_red, integer vi_green, integer vi_blue)
 end prototypes
 
 event type integer ue_itemclicking(string vs_group, string vs_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -2734,20 +2734,6 @@ BackColor								= vl_backColor
 RETURN
 end subroutine
 
-public subroutine of_setbackcolor (integer vi_red, integer vi_green, integer vi_blue);//	CopyRight (c) 2016 by Christopher Harris, all rights reserved.
-//
-// This code and accompanying materials are made available under the GPLv3
-// license which accompanies this distribution and can be found at:
-//
-// http://www.gnu.org/licenses/gpl-3.0.html.
-//
-// Original Author:	Christopher Harris
-
-of_setBackColor(RGB(vi_red, vi_green, vi_blue))
-
-RETURN
-end subroutine
-
 public function long of_clickgroup (long vl_group);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
@@ -3042,6 +3028,24 @@ CHOOSE CASE #ScrollSpeed
 	CASE ELSE
 		#ScrollSpeed					= FASTEST
 END CHOOSE
+
+RETURN
+end subroutine
+
+public subroutine of_setbackcolor (long vl_red, integer vi_green, integer vi_blue);//	CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+IF vl_red > 255 THEn
+	of_setBackColor(vl_red)
+ELSE
+	of_setBackColor(RGB(vl_red, vi_green, vi_blue))
+END IF
 
 RETURN
 end subroutine
