@@ -197,7 +197,6 @@ public function string of_gettext (string vs_text)
 public function string of_gettext (string vs_text_group, string vs_text_item)
 public subroutine of_setbackcolor (long vl_backcolor)
 public function long of_clickgroup (long vl_group)
-public function long of_clickgroup (string vs_text_group)
 public function long of_clicklabel (long vl_group, long vl_item)
 public function long of_clicklabel (string vs_text_group, string vs_text_item)
 public function long of_clicklink (string vs_text_group, string vs_text_item)
@@ -217,6 +216,10 @@ public function long of_clicklink (string vs_text_item)
 public function long of_clicklink (long vl_item)
 public function long of_clicklabel (long vl_item)
 private subroutine of_broadcast_showtooltips (boolean vb_showtext)
+public function long of_addlabel (string vs_group, string vs_text, string vs_image, string vs_tooltip)
+public function long of_addseparator (string vs_group)
+public function long of_addlink (string vs_group, string vs_text, string vs_image, string vs_tooltip)
+public function long of_clickgroup (string vs_group)
 end prototypes
 
 event type integer ue_itemclicking(string vs_group, string vs_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -2701,25 +2704,6 @@ IF ds_XPListBar.of_getItem_objectType(vl_group) <> ds_XPListBar.GROUP THEN Retur
 Return(of_clickItem(ds_XPListBar.of_getItem_text(vl_group), ''))
 end function
 
-public function long of_clickgroup (string vs_text_group);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
-//
-// This code and accompanying materials are made available under the GPLv3
-// license which accompanies this distribution and can be found at:
-//
-// http://www.gnu.org/licenses/gpl-3.0.html.
-//
-// Original Author:	Christopher Harris
-
-Long										ll_item
-ll_item									= ds_XPListBar.of_locateItem_group(vs_text_group)
-
-IF isNull(ll_item) THEN Return(PREVENT)
-
-IF ds_XPListBar.of_getItem_objectType(ll_item) <> ds_XPListBar.GROUP THEN Return(PREVENT)
-
-Return(of_clickItem(vs_text_group, ''))
-end function
-
 public function long of_clicklabel (long vl_group, long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
@@ -3197,6 +3181,82 @@ NEXT
 
 RETURN
 end subroutine
+
+public function long of_addlabel (string vs_group, string vs_text, string vs_image, string vs_tooltip);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+Long										ll_group
+ll_group									= ds_XPListBar.of_locateItem_group(vs_group)
+
+IF isNull(ll_group) THEN Return(PREVENT)
+
+IF ds_XPListBar.of_getItem_objectType(ll_group) <> ds_XPListBar.GROUP THEN Return(PREVENT)
+
+Return(of_addLabel(ll_group, vs_text, vs_image, vs_toolTip))
+end function
+
+public function long of_addseparator (string vs_group);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+Long										ll_item
+ll_item									= ds_XPListBar.of_locateItem_group(vs_group)
+
+IF isNull(ll_item) THEN Return(PREVENT)
+
+IF ds_XPListBar.of_getItem_objectType(ll_item) <> ds_XPListBar.GROUP THEN Return(PREVENT)
+
+Return(of_addSeparator(ll_item))
+end function
+
+public function long of_addlink (string vs_group, string vs_text, string vs_image, string vs_tooltip);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+Long										ll_group
+ll_group									= ds_XPListBar.of_locateItem_group(vs_group)
+
+IF isNull(ll_group) THEN Return(PREVENT)
+
+IF ds_XPListBar.of_getItem_objectType(ll_group) <> ds_XPListBar.GROUP THEN Return(PREVENT)
+
+Return(of_addLink(ll_group, vs_text, vs_image, vs_toolTip))
+end function
+
+public function long of_clickgroup (string vs_group);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+Long										ll_item
+ll_item									= ds_XPListBar.of_locateItem_group(vs_group)
+
+IF isNull(ll_item) THEN Return(PREVENT)
+
+IF ds_XPListBar.of_getItem_objectType(ll_item) <> ds_XPListBar.GROUP THEN Return(PREVENT)
+
+Return(of_clickItem(vs_group, ''))
+end function
 
 on u_cst_xplistbar.create
 this.st_xplistbar=create st_xplistbar
