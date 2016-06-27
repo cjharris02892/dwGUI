@@ -1395,7 +1395,8 @@ IF isNull(vl_item) THEN Return(FAILURE)
 
 IF vl_item <= 0 OR vl_item > ds_XPListBar.RowCount() THEN Return(FAILURE)
 
-IF ds_XPListBar.of_getItem_parent(vl_item) <> 0 THEN Return(FAILURE)		//	If this is not a parent, then it can't be collapsed
+//	If this is not a group, then it can't be collapsed
+IF ds_XPListBar.of_getItem_objectType(vl_item) <> ds_XPListBar.GROUP THEN Return(FAILURE)
 
 IF isnull(vb_switch) THEN vb_switch = FALSE
 
@@ -3643,7 +3644,7 @@ IF ls_lButtonDown = is_lButtonDown THEN
 		String							ls_group,	ls_item
 		String							ls_text
 
-		IF ds_XPListBar.of_getItem_parent(ll_item) = 0 THEN
+		IF ds_XPListBar.of_getItem_objectType(ll_item) = ds_XPListBar.GROUP THEN
 			
 			ls_text						= ds_XPListBar.of_getItem_text(ll_item)
 			
