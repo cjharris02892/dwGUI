@@ -203,6 +203,7 @@ Private:
 	FUNCTION UnsignedLong GetWindowLongA(UnsignedLong hWnd, Long nIndex) ALIAS FOR "GetWindowLongA" LIBRARY "user32.dll"
 
 	FUNCTION Boolean GetClientRect(UnsignedLong hWnd, REF RECT lpRect) LIBRARY "user32.dll"
+	FUNCTION boolean DrawFocusRect(unsignedLong hDC, REF RECT lpRect) LIBRARY "user32.dll"
 	
 	FUNCTION Unsignedlong LoadLibrary(String lpFileName) ALIAS FOR "LoadLibraryW" LIBRARY "kernel32.dll"
 	FUNCTION Unsignedlong LoadLibraryA(String lpFileName) ALIAS FOR "LoadLibraryA;Ansi" LIBRARY "kernel32.dll"
@@ -234,7 +235,6 @@ Private:
 	FUNCTION Boolean GetFileAttributesExA(REF String lpFileName, Integer fInfoLevelId, REF WIN32_FILE_ATTRIBUTE_DATA pFileInformation) ALIAS FOR "GetFileAttributesExA;Ansi" LIBRARY "kernel32.dll"
 
 end prototypes
-
 type variables
 Public:
 
@@ -460,6 +460,7 @@ public function string of_image_extract (string vs_imagename)
 public function string of_image_chevrondown ()
 public function string of_image_chevronup ()
 public function longlong of_getfilesize (string vs_filename)
+public subroutine of_drawfocusrect (datawindow vdw_palette, long vl_left, long vl_top, long vl_right, long vl_bottom)
 end prototypes
 
 public function boolean of_isunicode ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -1730,6 +1731,26 @@ END IF
 
 Return(lll_fileSize)
 end function
+
+public subroutine of_drawfocusrect (datawindow vdw_palette, long vl_left, long vl_top, long vl_right, long vl_bottom);unsignedLong						lul_handle
+lul_handle							= Handle(vdw_palette)
+
+unsignedLong						lul_device
+lul_device							= GetDC(lul_handle)
+
+RECT									lstr_rect
+
+lstr_rect.left						= vl_left
+lstr_rect.top						= vl_top
+lstr_rect.right					= vl_right
+lstr_rect.bottom					= vl_bottom
+
+DrawFocusRect(lul_device, lstr_rect)
+
+ReleaseDC(lul_handle, lul_device)
+
+RETURN
+end subroutine
 
 on n_cst_dwgui.create
 call super::create
