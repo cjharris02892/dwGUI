@@ -2967,7 +2967,7 @@ public subroutine of_setbackcolor (long vl_red, integer vi_green, integer vi_blu
 //
 // Original Author:	Christopher Harris
 
-IF vl_red > 255 THEn
+IF vl_red > 255 THEN
 	of_setBackColor(vl_red)
 ELSE
 	of_setBackColor(RGB(vl_red, vi_green, vi_blue))
