@@ -235,6 +235,7 @@ Private:
 	FUNCTION Boolean GetFileAttributesExA(REF String lpFileName, Integer fInfoLevelId, REF WIN32_FILE_ATTRIBUTE_DATA pFileInformation) ALIAS FOR "GetFileAttributesExA;Ansi" LIBRARY "kernel32.dll"
 
 end prototypes
+
 type variables
 Public:
 
@@ -461,6 +462,8 @@ public function string of_image_chevrondown ()
 public function string of_image_chevronup ()
 public function longlong of_getfilesize (string vs_filename)
 public subroutine of_drawfocusrect (datawindow vdw_palette, long vl_left, long vl_top, long vl_right, long vl_bottom)
+public function string of_image_dropmenu ()
+public function string of_image_dropitem ()
 end prototypes
 
 public function boolean of_isunicode ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -1636,18 +1639,6 @@ public function string of_image_chevrondown ();// CopyRight (c) 2016 by Christop
 //
 // Original Author:	Christopher Harris
 
-//String									ls_chevronDown	= '89 50 4E 47 0D 0A 1A 0A 00 00 00 0D 49 48 44 52 '	&
-//																+ '00 00 00 0B 00 00 00 0B 08 02 00 00 00 26 CE E0 '	&
-//																+ '05 00 00 00 09 70 48 59 73 00 00 0E C0 00 00 0E '	&
-//																+ 'C0 01 6A D6 89 09 00 00 00 0E 74 45 58 74 53 6F '	&
-//																+ '66 74 77 61 72 65 00 64 77 47 55 49 30 F4 72 A1 '	&
-//																+ '00 00 00 53 49 44 41 54 28 53 85 8D C1 11 C0 20 '	&
-//																+ '0C C3 B2 FF 54 D9 0C C4 25 E7 B8 F9 54 9F DA 58 '	&
-//																+ 'D0 C8 3F 9E 11 11 E7 9C EA 82 13 CE 09 FD C6 92 '	&
-//																+ '34 C3 FC 45 92 CF 30 09 4A F2 19 5E D1 ED CA 15 '	&
-//																+ 'A4 76 77 09 FC A5 FE 80 24 9F 61 12 94 E4 33 7C '	&
-//																+ '0A AC 19 76 DF 64 5E AA DC F2 17 8B FF F5 CB 00 '	&
-//																+ '00 00 00 49 45 4E 44 AE 42 60 82'
 String									ls_chevronDown	= '89 50 4E 47 0D 0A 1A 0A 00 00 00 0D 49 48 44 52 '	&
 																+ '00 00 00 09 00 00 00 10 08 02 00 00 00 4B 2A C2 '	&
 																+ '14 00 00 00 04 67 41 4D 41 00 00 B1 8F 0B FC 61 '	&
@@ -1674,19 +1665,6 @@ public function string of_image_chevronup ();// CopyRight (c) 2016 by Christophe
 //
 // Original Author:	Christopher Harris
 
-//String									ls_chevronUp	= '89 50 4E 47 0D 0A 1A 0A 00 00 00 0D 49 48 44 52 '	&
-//																+ '00 00 00 0B 00 00 00 0B 08 02 00 00 00 26 CE E0 '	&
-//																+ '71 00 00 00 04 67 41 4D 41 00 00 B1 8F 0B FC 61 '	&
-//																+ '05 00 00 00 09 70 48 59 73 00 00 0E BF 00 00 0E '	&
-//																+ 'BF 01 38 05 53 24 00 00 00 0E 74 45 58 74 53 6F '	&
-//																+ '66 74 77 61 72 65 00 64 77 47 55 49 30 F4 72 A1 '	&
-//																+ '00 00 00 4C 49 44 41 54 28 53 85 8C 41 0E 00 20 '	&
-//																+ '08 C3 F8 FF AB F8 19 A2 23 83 4C 13 7B 01 6C A3 '	&
-//																+ 'F9 0F 2D CC AE 97 9A 87 D4 11 21 51 1F D0 B9 48 '	&
-//																+ '54 1B 35 98 D1 1E 53 53 30 AA 1B 20 65 04 FA E0 '	&
-//																+ '4F 12 D5 46 0D 66 B4 87 68 C0 A8 7F 7B E3 BE 00 '	&
-//																+ '18 E3 F2 17 4E E5 57 40 00 00 00 00 49 45 4E 44 '	&
-//																+ 'AE 42 60 82'
 String									ls_chevronUp	= '89 50 4E 47 0D 0A 1A 0A 00 00 00 0D 49 48 44 52 '	&
 																+ '00 00 00 09 00 00 00 10 08 02 00 00 00 4B 2A C2 '	&
 																+ '14 00 00 00 04 67 41 4D 41 00 00 B1 8F 0B FC 61 '	&
@@ -1751,6 +1729,60 @@ ReleaseDC(lul_handle, lul_device)
 
 RETURN
 end subroutine
+
+public function string of_image_dropmenu ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+String									ls_dropMenu		= '89 50 4E 47 0D 0A 1A 0A 00 00 00 0D 49 48 44 52 '	&
+																+ '00 00 00 09 00 00 00 10 08 06 00 00 00 C4 48 55 '	&
+																+ '43 00 00 00 01 73 52 47 42 00 AE CE 1C E9 00 00 '	&
+																+ '00 04 67 41 4D 41 00 00 B1 8F 0B FC 61 05 00 00 '	&
+																+ '00 09 70 48 59 73 00 00 0E C3 00 00 0E C3 01 C7 '	&
+																+ '6F A8 64 00 00 00 0E 74 45 58 74 53 6F 66 74 77 '	&
+																+ '61 72 65 00 64 77 47 55 49 FC 8C 63 DF 00 00 00 '	&
+																+ '55 49 44 41 54 28 53 E5 8E 31 0A C0 40 08 04 ED '	&
+																+ '2C AD 6D 44 FC FF 23 FC 99 61 03 86 C8 15 77 A9 '	&
+																+ '53 0C E2 32 B0 4B 99 59 3B 7E 20 B9 7B A9 EA 02 '	&
+																+ 'F2 6F D2 8E 73 29 22 CA CC 46 15 7E E4 8F 04 D0 '	&
+																+ 'CF CC 45 44 F7 ED 3D 43 6A 51 44 86 00 96 4D 5D '	&
+																+ 'F1 E6 60 78 D6 05 8B 27 99 0C 27 CA 69 03 00 00 '	&
+																+ '00 00 49 45 4E 44 AE 42 60 82'
+																
+Return(of_image_save('dropMenu.png', ls_dropMenu))
+end function
+
+public function string of_image_dropitem ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+String									ls_dropItem		= '89 50 4E 47 0D 0A 1A 0A 00 00 00 0D 49 48 44 52 '	&
+																+ '00 00 00 09 00 00 00 10 08 06 00 00 00 C4 48 55 '	&
+																+ '43 00 00 00 01 73 52 47 42 00 AE CE 1C E9 00 00 '	&
+																+ '00 04 67 41 4D 41 00 00 B1 8F 0B FC 61 05 00 00 '	&
+																+ '00 09 70 48 59 73 00 00 0E C3 00 00 0E C3 01 C7 '	&
+																+ '6F A8 64 00 00 00 0E 74 45 58 74 53 6F 66 74 77 '	&
+																+ '61 72 65 00 64 77 47 55 49 FC 8C 63 DF 00 00 00 '	&
+																+ '4E 49 44 41 54 28 53 63 38 70 E0 C0 7F 42 78 54 '	&
+																+ 'D1 80 28 52 52 52 FA 2F 27 27 F7 5F 52 52 12 8E '	&
+																+ '41 7C 90 38 5C 11 08 2B 28 28 FC 67 67 67 FF CF '	&
+																+ 'C0 C0 00 A6 41 7C 98 1C 8A 75 20 09 7E 7E 7E 14 '	&
+																+ '05 20 8C E1 26 98 15 C8 98 08 87 1F F8 0F 00 E7 '	&
+																+ '51 B4 1E 20 74 C5 83 00 00 00 00 49 45 4E 44 AE '	&
+																+ '42 60 82'
+																
+Return(of_image_save('dropItem.png', ls_dropItem))
+end function
 
 on n_cst_dwgui.create
 call super::create
