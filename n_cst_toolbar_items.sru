@@ -87,6 +87,8 @@ public function long of_locateitem_text (string vs_text)
 public function long of_locateitem_name (string vs_text)
 public subroutine of_setitem_name (long vl_item, string vs_text)
 public function string of_getitem_name (long vl_item)
+public function long of_getitem_color (long vl_item)
+public subroutine of_setitem_color (long vl_item, long vl_color)
 end prototypes
 
 public function boolean of_getitem_displayinmenu (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -1251,6 +1253,37 @@ public function string of_getitem_name (long vl_item);// CopyRight (c) 2016 by C
 
 Return(of_getItem_text(vl_item))
 end function
+
+public function long of_getitem_color (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+IF vl_item < 1 OR vl_item > RowCount() THEN Return(0)
+
+Return(GetItemNumber(vl_item, 'color'))
+end function
+
+public subroutine of_setitem_color (long vl_item, long vl_color);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
+
+SetItem(vl_item, 'color', vl_color)
+ResetUpdate()
+
+RETURN
+end subroutine
 
 on n_cst_toolbar_items.create
 call super::create

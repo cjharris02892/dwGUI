@@ -67,6 +67,8 @@ public subroutine of_setitem_imagewidth (long vl_item, long vl_imagewidth)
 public function long of_locateitem_group (string vs_group)
 public function long of_locateitem_link (string vs_link)
 public function long of_locateitem_label (string vs_label)
+public subroutine of_setitem_color (long vl_item, long vl_color)
+public function long of_getitem_color (long vl_item)
 end prototypes
 
 public function double of_pbversion ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -873,6 +875,37 @@ CHOOSE CASE ll_item
 END CHOOSE
 
 Return(ll_item)
+end function
+
+public subroutine of_setitem_color (long vl_item, long vl_color);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+IF vl_item < 1 OR vl_item > RowCount() THEN RETURN
+
+SetItem(vl_item, 'color', vl_color)
+ResetUpdate()
+
+RETURN
+end subroutine
+
+public function long of_getitem_color (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+IF vl_item < 1 OR vl_item > RowCount() THEN Return(0)
+
+Return(GetItemNumber(vl_item, 'color'))
 end function
 
 on n_cst_xplistbar_items.create

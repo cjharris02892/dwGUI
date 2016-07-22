@@ -23,6 +23,7 @@ table(column=(type=long updatewhereclause=no name=order dbname="order" initial="
  column=(type=long updatewhereclause=no name=recttop dbname="recttop" )
  column=(type=long updatewhereclause=no name=rectheight dbname="rectheight" )
  column=(type=char(1) updatewhereclause=no name=checked dbname="checked" initial="N" )
+ column=(type=long updatewhereclause=yes name=color dbname="name_1" )
  column=(type=char(1) updatewhereclause=no name=collapsed dbname="collapsed" initial="N" )
   sort="order A " )
 htmltable(border="1" )
@@ -35,3 +36,4 @@ export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
 import.xml()
 export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
 export.xhtml()
+ 
