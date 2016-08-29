@@ -9,11 +9,16 @@ Save Format v3.0(19990112)
  "d_xplistbar_items.srd" "dwgui.pbl";
  "n_cst_toolbar_items.sru" "dwgui.pbl";
  "d_toolbar_items.srd" "dwgui.pbl";
+ "d_groupbox_items.srd" "dwgui.pbl";
+ "d_groupbox_palette.srd" "dwgui.pbl";
  "m_xplistbar_context.srm" "dwgui.pbl";
+ "n_cst_groupbox_items.sru" "dwgui.pbl";
  "m_toolbar_popmenu.srm" "dwgui.pbl";
  "m_toolbar_context.srm" "dwgui.pbl";
  "u_cst_xplistbar.sru" "dwgui.pbl";
  "u_cst_toolbar.sru" "dwgui.pbl";
  "m_toolbar.srm" "dwgui.pbl";
+ "n_cst_groupbox.sru" "dwgui.pbl";
+ "u_cst_groupbox.sru" "dwgui.pbl";
  "n_cst_dwgui.sru" "dwgui.pbl";
 @end;
