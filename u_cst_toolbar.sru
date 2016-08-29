@@ -38,118 +38,110 @@ type prototypes
 end prototypes
 
 type variables
-Private:
-
-	n_cst_dwGUI								invo_dwGUI
-
 Public:
 
 	//	Color constants
-	CONSTANT String						HIGHLIGHTBORDER				= 'highlightborder'
-	CONSTANT String						BORDERCOLOR						= 'border'
-	CONSTANT String						DEFAULTIMAGETRANSPARENCY	= 'defaultimagetransparency'
-	CONSTANT String						HIGHLIGHT1						= 'highlight1'
-	CONSTANT String						HIGHLIGHT2						= 'highlight2'
-	CONSTANT String						SELECTED1						= 'selected1'
-	CONSTANT String						SELECTED2						= 'selected2'
-	CONSTANT String						DISABLEDTEXT					= 'disabledtext'
-	CONSTANT String						INFOTEXT							= 'infotext'
-	CONSTANT String						INFOBACKGROUND					= 'infobackground'
-	CONSTANT String						WINDOWTEXT						= 'windowtext'
-	CONSTANT String						GETFOCUS							= 'getfocus'
-	CONSTANT String						LOSEFOCUS						= 'losefocus'
-	CONSTANT String						TOOLBAR							= 'toolbar'
-	CONSTANT String						GRADIENT							= 'gradient'
-	CONSTANT String						MENUTEXT							= 'menutext'
-	CONSTANT String						THREEDDKSHADOW					= '3ddkshadow'
-	CONSTANT String						THREEDLIGHT						= '3ddklight'
+	CONSTANT String					HIGHLIGHTBORDER				= 'highlightborder'
+	CONSTANT String					BORDERCOLOR						= 'border'
+	CONSTANT String					DEFAULTIMAGETRANSPARENCY	= 'defaultimagetransparency'
+	CONSTANT String					HIGHLIGHT1						= 'highlight1'
+	CONSTANT String					HIGHLIGHT2						= 'highlight2'
+	CONSTANT String					SELECTED1						= 'selected1'
+	CONSTANT String					SELECTED2						= 'selected2'
+	CONSTANT String					DISABLEDTEXT					= 'disabledtext'
+	CONSTANT String					INFOTEXT							= 'infotext'
+	CONSTANT String					INFOBACKGROUND					= 'infobackground'
+	CONSTANT String					WINDOWTEXT						= 'windowtext'
+	CONSTANT String					GETFOCUS							= 'getfocus'
+	CONSTANT String					LOSEFOCUS						= 'losefocus'
+	CONSTANT String					TOOLBAR							= 'toolbar'
+	CONSTANT String					GRADIENT							= 'gradient'
+	CONSTANT String					MENUTEXT							= 'menutext'
+	CONSTANT String					THREEDDKSHADOW					= '3ddkshadow'
+	CONSTANT String					THREEDLIGHT						= '3ddklight'
+	CONSTANT String					ACTIVEBORDER					= 'activeborder'
 
 	//	HighLight constants
-	CONSTANT String						SELECTMODE						= 'select'
-	CONSTANT String						HIGHLIGHT						= 'highlight'
-	CONSTANT String						VISIBLEMODE						= 'visible'
-	CONSTANT String						INVISIBLE						= 'invisible'
+	CONSTANT String					SELECTMODE						= 'select'
+	CONSTANT String					HIGHLIGHT						= 'highlight'
+	CONSTANT String					VISIBLEMODE						= 'visible'
+	CONSTANT String					INVISIBLE						= 'invisible'
 
-Private:
+	CONSTANT	Long						ALLOW								= 1
+	CONSTANT Long						PREVENT							= -1
+	CONSTANT	Long						SUCCESS							= 1
+	CONSTANT	Long						NO_ACTION						= 0
+	CONSTANT Long						FAILURE							= -1
 
-	Boolean									ib_displayText					= FALSE
-	Boolean									ib_displayToolTips			= TRUE
-
-Protected:
-
-	Boolean									#DisplayBorder					= TRUE
-	Boolean									#RaisedBorder					= FALSE
-	Boolean									#SolidBackGround				= FALSE
-
-	String									#FontFace						= 'Tahoma'
-	Long										#FontSize						= 8
-
-	Long										#BitMapSize						= 16
+	CONSTANT Long						LEFT								= 1
+	CONSTANT Long						RIGHT								= 2
 	
-	String									#Band								= 'detail'
+	CONSTANT Long						HORIZONTAL						= 1
+	CONSTANT Long						VERTICAL							= 2
 
-	Long										#ToolTipDelayInitial			= 1000
-	Long										#ToolTipDelayVisible			= 32000
-	Boolean									#ToolTipIsBubble				= TRUE
-	
-Public:
-
-	CONSTANT	Long							ALLOW								= 1
-	CONSTANT Long							PREVENT							= -1
-
-	CONSTANT	Long							SUCCESS							= 1
-	CONSTANT	Long							NO_ACTION						= 0
-	CONSTANT Long							FAILURE							= -1
-
-	CONSTANT Long							LEFT								= 1
-	CONSTANT Long							RIGHT								= 2
-	
-	CONSTANT Long							HORIZONTAL						= 1
-	CONSTANT Long							VERTICAL							= 2
-
-	CONSTANT Long							SMALL								= 16
-	CONSTANT Long							MEDIUM							= 24
-	CONSTANT Long							LARGE								= 32
-	CONSTANT Long							XLARGE							= 48
+	CONSTANT Long						SMALL								= 16
+	CONSTANT Long						MEDIUM							= 24
+	CONSTANT Long						LARGE								= 32
+	CONSTANT Long						XLARGE							= 48
 
 	//	Reserved object types, duplicated from n_cst_toolBar_items for ease
 	//	of implementation for the programmer when calling of_addItems()
-	CONSTANT String						SEPARATOR						= 'separator'
+	CONSTANT String					SEPARATOR						= 'separator'
 
 Protected:
 
-	n_cst_string							invo_string
+	Boolean								#DisplayBorder					= TRUE
+	Boolean								#RaisedBorder					= FALSE
+	Boolean								#SolidBackGround				= FALSE
+
+	String								#FontFace						= 'Tahoma'
+	Long									#FontSize						= 8
+
+	Long									#BitMapSize						= 16
+	
+	String								#Band								= 'detail'
+
+	Long									#ToolTipDelayInitial			= 1000
+	Long									#ToolTipDelayVisible			= 32000
+	Boolean								#ToolTipIsBubble				= TRUE
+	
+	n_cst_string						invo_string
 
 Private:
 
-	Integer									il_dropSize						= 45
+	CONSTANT Long						NOTAB								= 0
+	CONSTANT Long						TAB								= 1
+	CONSTANT Long						BACKTAB							= 2
+
+	n_cst_dwGUI							invo_dwGUI
+	n_cst_color							invo_color
+
+	Boolean								ib_displayText					= FALSE
+	Boolean								ib_displayToolTips			= TRUE
+	Integer								ii_toolTipIsBubble			= 1
+	
+	Integer								il_dropSize						= 45
 	
 	//	The dropMenu item is displayed as a character 7 using the Merlett
 	//	font.  Originally it was q using WingDings 3.
-	String									is_dropMenuChar				= '7'
-	String									is_dropMenuFont				= 'Marlett'
+	String								is_dropMenuChar				= '7'
+	String								is_dropMenuFont				= 'Marlett'
 	
 	//	For future use, to be used to support drop down toolBar items
-	String									is_dropItemChar				= '6'
-	String									is_dropItemFont				= 'Marlett'
+	String								is_dropItemChar				= '6'
+	String								is_dropItemFont				= 'Marlett'
 	
-	Boolean									ib_debug							= FALSE
+	Boolean								ib_debug							= FALSE
 	
-	CONSTANT Long							NOTAB								= 0
-	CONSTANT Long							TAB								= 1
-	CONSTANT Long							BACKTAB							= 2
+	String								is_lbuttonDown
+	Long									il_itemChecked					= -1
 	
-	n_cst_color								invo_color
-
-	String									is_lbuttonDown
-	Long										il_itemChecked					= -1
+	Long									il_currentOrientation		= HORIZONTAL
 	
-	Long										il_currentOrientation		= HORIZONTAL
+	Boolean								ib_update						= TRUE
+	Boolean								ib_trackMouseEvent			= FALSE
 	
-	Boolean									ib_update						= TRUE
-	Boolean									ib_trackMouseEvent			= FALSE
-	
-	Integer									ii_toolTipIsBubble			= 1
+	Double								idbl_fontHeight				= -1
 end variables
 
 forward prototypes
@@ -170,7 +162,6 @@ public function integer resize (integer w, integer h)
 private subroutine of_initializeitemsize (long vl_item)
 public function integer of_setimage (string vs_item, string vs_image)
 private subroutine of_size (integer vi_size)
-private function long of_createitem (long vl_item)
 private function boolean of_updatepositions (boolean vb_dropdownmenu)
 public subroutine of_disableupdate ()
 public subroutine of_enableupdate ()
@@ -189,7 +180,6 @@ public function long of_additems (string vs_text[], string vs_image[], string vs
 public function long of_additems (string vs_text[], string vs_image[], string vs_tooltip[], integer vi_position[])
 public function long of_addseparator ()
 public function long of_addseparator (integer vi_position)
-private function long of_size_text (string vs_text, string vs_fontface, integer vi_fontsize)
 private function long of_size_line ()
 private function integer of_size_text (string vs_text)
 private function long of_size_imageheight ()
@@ -244,6 +234,10 @@ public function long of_addbuttons (string vs_text[], integer vi_position[])
 public function long of_addbuttons (string vs_text[])
 private subroutine of_destroyitem (long vl_item)
 private function long of_locateitem ()
+private subroutine of_setfont (string vs_fontface, long vl_fontsize)
+public function integer of_settextcolor (long vl_item, long vl_color)
+public function integer of_settextcolor (string vs_item, long vl_color)
+private function long of_createitem_button (long vl_item)
 end prototypes
 
 event type integer ue_itemclicking(string vs_button);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -649,7 +643,7 @@ Long										li_RC
 li_RC										= Super::Resize(W, H)
 
 r_border.Resize(W, H)
-dw_palette.Resize(r_border.Width - PixelsToUnits(2, XPixelsToUnits!), r_border.Height - PixelsToUnits(2, YPixelsToUnits!))
+dw_palette.Resize(r_border.Width - PixelsToUnits(2, xPixelsToUnits!), r_border.Height - PixelsToUnits(2, yPixelsToUnits!))
 
 Return(li_RC)
 end function
@@ -678,7 +672,7 @@ IF ds_toolBar.of_getItem_visible(vl_item) THEN
 	ds_toolBar.of_setItem_imageWidth(vl_item, of_size_imageWidth(ds_toolBar.of_getItem_image(vl_item)))
 		
 	IF ds_toolBar.of_getItem_displayText(vl_item) THEN
-		ds_toolBar.of_setItem_textWidth(vl_item, of_size_text(ds_toolBar.of_getItem_text(vl_item), ds_toolBar.of_getItem_fontFace(vl_item), #FontSize))
+		ds_toolBar.of_setItem_textWidth(vl_item, of_size_text(ds_toolBar.of_getItem_text(vl_item)))
 	END IF
 
 	IF ds_toolBar.of_getItem_separator(vl_item) THEN
@@ -724,7 +718,7 @@ CHOOSE CASE #BitMapSize
 		
 	CASE SMALL
 		
-		#fontSize						= 8
+		#FontSize						= 8
 
 		il_dropSize						= 45
 		
@@ -735,7 +729,7 @@ CHOOSE CASE #BitMapSize
 
 	CASE MEDIUM
 		
-		#fontSize						= 10
+		#FontSize						= 10
 		
 		il_dropSize						= 55
 		
@@ -746,7 +740,7 @@ CHOOSE CASE #BitMapSize
 		
 	CASE LARGE
 		
-		#fontSize						= 12
+		#FontSize						= 12
 		
 		il_dropSize						= 65
 		
@@ -757,7 +751,7 @@ CHOOSE CASE #BitMapSize
 
 	CASE XLARGE
 		
-		#fontSize						= 14
+		#FontSize						= 14
 		
 		il_dropSize						= 75
 		
@@ -767,6 +761,8 @@ CHOOSE CASE #BitMapSize
 		Resize(Width, 230)
 		
 END CHOOSE
+
+of_setFont(#FontFace, #FontSize)
 
 ds_toolBar.of_setItem_textWidth(1, il_dropSize)
 ds_toolBar.of_setItem_rectWidth(1, ds_toolBar.of_getItem_textWidth(1))
@@ -778,302 +774,6 @@ EVENT ue_resized(ll_oldHeight, ll_newHeight)
 
 RETURN
 end subroutine
-
-private function long of_createitem (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
-//
-// This code and accompanying materials are made available under the GPLv3
-// license which accompanies this distribution and can be found at:
-//
-// http://www.gnu.org/licenses/gpl-3.0.html.
-//
-// Original Author:	Christopher Harris
-
-Double									ldbl_fontHeight
-ldbl_fontHeight						= of_fontHeight()
-
-Long										ll_pos
-ll_pos									= ds_toolBar.of_getItem_rectLeft(vl_item)
-
-Long										li_textYOffset
-li_textYOffset							= (of_size_imageHeight() - Int(ldbl_fontHeight)) / 2
-
-Boolean									lb_createdImage	= FALSE,	lb_createdText	= FALSE
-String									ls_modify			= ''
-
-Long										li_displayToolTips
-
-IF of_displayToolTips() THEN
-	li_displayToolTips				= 1
-ELSE
-	li_displayToolTips				= 0
-END IF
-                                                                        &
-//	The following determines what to display for toolTip text
-String									ls_toolTip = ''
-ls_toolTip								= ds_toolBar.of_getItem_toolTip(vl_item)
-
-IF of_displayText() THEN
-	
-	//	If displayText is turned on and the name and toolTip are the same,
-	//	then we don't need a toolTip
-	IF ds_toolBar.of_getItem_text(vl_item) = ds_toolBar.of_getItem_toolTip(vl_item) THEN
-		ls_toolTip						= ''
-	END IF
-	
-ELSE
-	
-	//	If displayText is turned off and there is no image then we are going
-	//	to override the displayText setting and therefore we will only want
-	//	to set the toolTip if the name and toolTip are not the same
-	IF ds_toolBar.of_getItem_image(vl_item) = '' THEN
-		IF ds_toolBar.of_getItem_text(vl_item) = ds_toolBar.of_getItem_toolTip(vl_item) THEN
-			ls_toolTip					= ''
-		END IF
-	END IF
-	
-END IF
-
-//	BitMap logic
-IF NOT (isNull(ds_toolBar.of_getItem_image(vl_item)) OR Trim(ds_toolBar.of_getItem_image(vl_item)) = '') THEN
-	
-	ls_modify							= 'CREATE bitmap(band=' + #band + ' filename='										&
-											+ '"' + ds_toolBar.of_getItem_image(vl_item) + '" '								&
-											+ 'x="' + String(ll_pos) + '" '															&
-											+ 'y="16" '																						&
-											+ 'height="'+ String(of_size_imageHeight()) + '" '									&
-											+ 'width="' + String(ds_toolBar.of_getItem_imageWidth(vl_item)) + '" '		&
-											+ 'border="0" '																				&
-											+ 'name=p_' + ds_toolBar.of_getItem_objectName(vl_item) + ' '					&
-											+ 'visible="1" '
-//	IF ds_toolBar.of_PBVersion() >= 12.5 THEN
-//		
-//		IF ds_toolBar.of_getItem_enabled(vl_item) THEN
-//			ls_modify					= ls_modify + 'enabled="1" '
-//		ELSE
-//			ls_modify					= ls_modify + 'enabled="0" '
-//		END IF
-//
-//	END IF
-	
-	IF ds_toolBar.of_PBVersion() >= 11.5 THEN
-		
-		ls_modify						= ls_modify																						&
-											+ 'tooltip.backcolor="' + String(of_getColor(INFOBACKGROUND)) + '" '			&
-											+ 'tooltip.delay.initial="' + String(#ToolTipDelayInitial) + '" ' +			&
-											+ 'tooltip.delay.visible="' + String(#ToolTipDelayVisible) + '" ' +			&
-											+ 'tooltip.enabled="' + String(li_displayToolTips) + '" '						&
-											+ 'tooltip.hasclosebutton="0" tooltip.icon="0" ' +									&
-											+ 'tooltip.isbubble="' + String(ii_toolTipIsBubble) + '" '						&
-											+ 'tooltip.maxwidth="0" '																	&
-											+ 'tooltip.textcolor="' + String(of_getColor(INFOTEXT)) + '" '					&
-											+ 'tooltip.transparency="0" '																&
-											+ 'tooltip.tip="' + ls_toolTip + '" '													&
-											+ 'transparentcolor="' + String(ds_toolBar.of_getItem_imageTransparency(vl_item)) + '" '
-												
-//		IF ds_toolBar.of_getItem_enabled(vl_item) THEN
-//			ls_modify					= ls_modify + 'transparency="0" '
-//		ELSE
-//			ls_modify					= ls_modify + 'transparency="50" '
-//		END IF
-		
-	ELSE
-		//	Need to come up with a way to show enabled/disabled for version prior to 11.5
-	END IF
-	
-	ls_modify							= ls_modify + ') '
-	
-	lb_createdImage					= TRUE
-	
-	ll_pos								= ll_pos + ds_toolBar.of_getItem_imageWidth(vl_item)
-	
-END IF
-
-//	Text logic
-IF NOT (isNull(ds_toolBar.of_getItem_text(vl_item)) OR Trim(ds_toolBar.of_getItem_text(vl_item)) = '') THEN
-	IF ds_toolBar.of_getItem_displayText(vl_item) THEN
-		
-		ls_modify						= ls_modify																						&
-											+ 'CREATE text(band=' + #band + ' ' +													&
-											+ 'alignment="' + String(ds_toolBar.of_getItem_alignment(vl_item)) + '" '	&
-											+ 'text="' + ds_toolBar.of_getItem_text(vl_item) + '" border="0" '			&
-											+ 'x="' + String(ll_pos) + '" ' +														&
-											+ 'y="' + String(li_textYOffset + 16) + '" '											&
-											+ 'height="' + String(Int(ldbl_fontHeight)) + '" '									&
-											+ 'width="' + String(ds_toolBar.of_getItem_textWidth(vl_item)) + '" '		&
-											+ 'html.valueishtml="0" '																	&
-											+ 'name=t_' + ds_toolBar.of_getItem_objectName(vl_item) + ' '					&
-											+ 'visible="1" '																				&
-											+ 'font.face="' + ds_toolBar.of_getItem_fontFace(vl_item) + '" '				&
-											+ 'font.height="' + String(#FontSize * -1) + '" '									&
-											+ 'font.weight="400" '																		&
-											+ 'font.family="2" font.pitch="2" font.charset="0" '								&
-											+ 'background.mode="1" '
-												
-//		IF ds_toolBar.of_PBVersion >= 12.5 THEN
-//			
-//			IF ds_toolBar.of_getItem_enabled(vl_item) THEN
-//				ls_modify				= ls_modify + 'enabled="1" '
-//			ELSE
-//				ls_modify				= ls_modify + 'enabled="0" '
-//			END IF
-//
-//		END IF
-
-		IF ds_toolBar.of_PBVersion() >= 11.5 THEN
-
-			ls_modify					= ls_modify + 'color="' + String(of_getColor(MENUTEXT)) + '" '
-
-			ls_modify					= ls_Modify																						&
-											+ 'background.transparency="100" '														&
-											+ 'background.brushmode="0" background.gradient.repetition.mode="0" '		&
-											+ 'background.gradient.repetition.count="0" '										&
-											+ 'background.gradient.repetition.length="100" '									&
-											+ 'background.gradient.focus="0" background.gradient.scale="100" '			&
-											+ 'background.gradient.spread="100" '													&
-											+ 'tooltip.delay.initial="' + String(#ToolTipDelayInitial) + '" ' +			&
-											+ 'tooltip.delay.visible="' + String(#ToolTipDelayVisible) + '" ' +			&
-											+ 'tooltip.enabled="' + String(li_displayToolTips) + '" '						&
-											+ 'tooltip.hasclosebutton="0" tooltip.icon="0" ' +									&
-											+ 'tooltip.isbubble="' + String(ii_toolTipIsBubble) + '" '						&
-											+ 'tooltip.maxwidth="0" '																	&
-											+ 'tooltip.textcolor="' + String(of_getColor(INFOTEXT)) + '" '					&
-											+ 'tooltip.transparency="0" '																&
-											+ 'tooltip.tip="' + ls_toolTip + '" '
-		END IF
-
-//		IF ds_toolBar.of_getItem_enabled(vl_item) THEN
-//			ls_modify					= ls_modify + 'color="' + String(of_getColor(MENUTEXT)) + '" '
-//		ELSE
-//			ls_modify					= ls_modify + 'color="' + String(of_getColor(DISABLEDTEXT)) + '" '
-//		END IF
-		
-		ls_modify						= ls_modify + ') '
-
-		IF #BitMapSize >= MEDIUM THEN
-
-			//	This "box" is used to capture the mouseMove for an item when
-			//	the size of the toolBar is greater than SMALL.  This allows
-			//	us to move the text to appear vertically centered and still
-			//	be able to properly capture the mouseMove as if the height
-			//	of the text was greater than it actually is.
-			
-			ls_modify					= ls_modify																						&
-											+ 'CREATE text(band=' + #band + ' '														&
-											+ 'alignment="' + String(ds_toolBar.of_getItem_alignment(vl_item)) + '" '	&
-											+ 'text="' + '' + '" border="0" '														&
-											+ 'x="' + String(ll_pos) + '" ' +														&
-											+ 'y="' + String(16) + '" '																&
-											+ 'height="' + String(of_size_imageHeight()) + '" '								&
-											+ 'width="' + String(ds_toolBar.of_getItem_textWidth(vl_item)) + '" '		&
-											+ 'html.valueishtml="0" '																	&
-											+ 'name=b_' + ds_toolBar.of_getItem_objectName(vl_item) + ' '					&
-											+ 'visible="1" '																				&
-											+ 'font.face="' + ds_toolBar.of_getItem_fontFace(vl_item) + '" '				&
-											+ 'font.height="' + String(#FontSize * -1) + '" '									&
-											+ 'font.weight="400" '																		&
-											+ 'font.family="2" font.pitch="2" font.charset="0" '								&
-											+ 'background.mode="1" '
-												
-//			IF ds_toolBar.of_PBVersion >= 12.5 THEN
-//				
-//				IF ds_toolBar.of_getItem_enabled(vl_item) THEN
-//					ls_modify			= ls_modify + 'enabled="1" '
-//				ELSE
-//					ls_modify			= ls_modify + 'enabled="0" '
-//				END IF
-//	
-//			END IF
-	
-			IF ds_toolBar.of_PBVersion() >= 11.5 THEN
-	
-				ls_modify				= ls_modify + 'color="' + String(of_getColor(MENUTEXT)) + '" '
-	
-				ls_modify				= ls_Modify																						&
-											+ 'background.transparency="100" '														&
-											+ 'background.brushmode="0" background.gradient.repetition.mode="0" '		&
-											+ 'background.gradient.repetition.count="0" '										&
-											+ 'background.gradient.repetition.length="100" '									&
-											+ 'background.gradient.focus="0" background.gradient.scale="100" '			&
-											+ 'background.gradient.spread="100" '													&
-											+ 'tooltip.delay.initial="' + String(#ToolTipDelayInitial) + '" ' +			&
-											+ 'tooltip.delay.visible="' + String(#ToolTipDelayVisible) + '" ' +			&
-											+ 'tooltip.enabled="' + String(li_displayToolTips) + '" '						&
-											+ 'tooltip.hasclosebutton="0" tooltip.icon="0" ' +									&
-											+ 'tooltip.isbubble="' + String(ii_toolTipIsBubble) + '" '						&
-											+ 'tooltip.maxwidth="0" '																	&
-											+ 'tooltip.textcolor="' + String(of_getColor(INFOTEXT)) + '" '					&
-											+ 'tooltip.transparency="0" '																&
-											+ 'tooltip.tip="' + ls_toolTip + '" '
-			END IF
-
-//			IF ds_toolBar.of_getItem_enabled(vl_item) THEN
-//				ls_modify				= ls_modify + 'color="' + String(of_getColor(MENUTEXT)) + '" '
-//			ELSE
-//				ls_modify				= ls_modify + 'color="' + String(of_getColor(DISABLEDTEXT)) + '" '
-//			END IF
-		
-			ls_modify					= ls_modify + ') '
-		
-		END IF
-		
-		lb_createdText					= TRUE
-		
-		ll_pos							= ll_pos + ds_toolBar.of_getItem_textWidth(vl_item)
-		
-	END IF
-END IF
-
-dw_palette.Modify(ls_modify)
-
-of_DrawEnabled(vl_item)
-of_DrawChecked(vl_item)
-
-//	Originally, was going to use the focusRectangle during keyboard interface
-IF ds_toolBar.of_PBVersion() >= 12.5 THEN
-	
-	IF NOT (isNull(ds_toolBar.of_getItem_text(vl_item)) OR Trim(ds_toolBar.of_getItem_text(vl_item)) = '') THEN
-		IF ds_toolBar.of_getItem_displayText(vl_item) THEN
-			dw_palette.Modify('t_' + ds_toolBar.of_getItem_objectName(vl_item) + '.FocusRectangle=no')
-		ELSE
-			IF NOT (isNull(ds_toolBar.of_getItem_image(vl_item)) OR Trim(ds_toolBar.of_getItem_image(vl_item)) = '') THEN
-				dw_palette.Modify('p_' + ds_toolBar.of_getItem_objectName(vl_item) + '.FocusRectangle=no')
-			END IF
-		END IF
-	ELSE
-		IF NOT (isNull(ds_toolBar.of_getItem_image(vl_item)) OR Trim(ds_toolBar.of_getItem_image(vl_item)) = '') THEN
-			dw_palette.Modify('p_' + ds_toolBar.of_getItem_objectName(vl_item) + '.FocusRectangle=no')
-		END IF
-	END IF
-
-END IF
-
-//	Set the position of the bitmap objects within the requested band
-IF lb_createdImage THEN
-	dw_palette.setPosition('p_' + ds_toolBar.of_getItem_objectName(vl_item), #band, TRUE)
-END IF
-
-//	Set the position of the text objects within the requested band
-IF lb_createdText THEN
-
-	IF #BitMapSize >= MEDIUM THEN
-		dw_palette.setPosition('b_' + ds_toolBar.of_getItem_objectName(vl_item), #band, TRUE)
-	END IF
-
-	dw_palette.setPosition('t_' + ds_toolBar.of_getItem_objectName(vl_item), #band, TRUE)
-	
-END IF
-
-//	Set tabSequence for keyboard interface
-IF lb_createdImage OR lb_createdText THEN
-	IF ds_toolBar.of_getItem_position(vl_item) = LEFT THEN 
-		ds_toolBar.of_setItem_tabSequence(vl_item, vl_item * 10)
-	ELSE
-		ds_toolBar.of_setItem_tabSequence(vl_item, 1000 - (vl_item * 10))
-	END IF
-END IF
-	
-Return(ds_toolBar.of_getItem_rectWidth(vl_item))
-end function
 
 private function boolean of_updatepositions (boolean vb_dropdownmenu);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
@@ -1094,7 +794,7 @@ Long										ll_offSet			= 0
 
 IF vb_dropDownMenu THEN
 	ds_toolBar.of_setItem_tabSequence(1, 1000)													//	object only allows 99 toolBarItems
-	ll_offSet							= ds_toolBar.of_getItem_rectWidth(1) + PixelsToUnits(13, XPixelsToUnits!)
+	ll_offSet							= ds_toolBar.of_getItem_rectWidth(1) + PixelsToUnits(13, xPixelsToUnits!)
 END IF
 
 Long										ll_item,	ll_index
@@ -1128,7 +828,7 @@ Boolean									lb_itemFound		= FALSE
 Long										ll_separatorItem	= 0
 
 Long										ll_posLeft
-ll_posLeft								= PixelsToUnits(4, XPixelsToUnits!)
+ll_posLeft								= PixelsToUnits(4, xPixelsToUnits!)
 
 FOR ll_item = 1 TO ds_toolBar.RowCount()
 
@@ -1151,7 +851,7 @@ FOR ll_item = 1 TO ds_toolBar.RowCount()
 	
 	IF ds_toolBar.of_getItem_separator(ll_item) THEN
 		
-		ds_toolBar.of_setItem_rectLeft(ll_item, ll_posLeft - PixelsToUnits(3, XPixelsToUnits!))
+		ds_toolBar.of_setItem_rectLeft(ll_item, ll_posLeft - PixelsToUnits(3, xPixelsToUnits!))
 
 		//	No need to display consecutive separators
 		IF ll_separatorItem > 0 THEN
@@ -1162,11 +862,11 @@ FOR ll_item = 1 TO ds_toolBar.RowCount()
 		ll_separatorItem				= ll_item
 		
 //		IF ll_item > 1 THEN
-			ll_posLeft					= ll_posLeft - PixelsToUnits(5, XPixelsToUnits!)
+			ll_posLeft					= ll_posLeft - PixelsToUnits(5, xPixelsToUnits!)
 //		END IF
 			
 		ll_posLeft						= ll_posLeft + ds_toolBar.of_getItem_rectWidth(ll_item)
-		ll_posLeft						= ll_posLeft + PixelsToUnits(4, XPixelsToUnits!)
+		ll_posLeft						= ll_posLeft + PixelsToUnits(4, xPixelsToUnits!)
 		
 	ELSE
 		
@@ -1175,7 +875,7 @@ FOR ll_item = 1 TO ds_toolBar.RowCount()
 		ll_separatorItem				= 0
 
 		ll_posLeft						= ll_posLeft + ds_toolBar.of_getItem_rectWidth(ll_item)
-		ll_posLeft						= ll_posLeft + PixelsToUnits(8, XPixelsToUnits!)
+		ll_posLeft						= ll_posLeft + PixelsToUnits(8, xPixelsToUnits!)
 
 	END IF
 
@@ -1189,13 +889,13 @@ END IF
 IF vb_dropDownMenu THEN
 	CHOOSE CASE #FontSize
 		CASE 8
-			ll_offSet					= ds_toolBar.of_getItem_rectWidth(1) - PixelsToUnits(10, XPixelsToUnits!)
+			ll_offSet					= ds_toolBar.of_getItem_rectWidth(1) - PixelsToUnits(10, xPixelsToUnits!)
 		CASE 10
-			ll_offSet					= ds_toolBar.of_getItem_rectWidth(1) - PixelsToUnits(12, XPixelsToUnits!)
+			ll_offSet					= ds_toolBar.of_getItem_rectWidth(1) - PixelsToUnits(12, xPixelsToUnits!)
 		CASE 12
-			ll_offSet					= ds_toolBar.of_getItem_rectWidth(1) - PixelsToUnits(14, XPixelsToUnits!)
+			ll_offSet					= ds_toolBar.of_getItem_rectWidth(1) - PixelsToUnits(14, xPixelsToUnits!)
 		CASE 14
-			ll_offSet					= ds_toolBar.of_getItem_rectWidth(1) - PixelsToUnits(17, XPixelsToUnits!)
+			ll_offSet					= ds_toolBar.of_getItem_rectWidth(1) - PixelsToUnits(17, xPixelsToUnits!)
 	END CHOOSE
 END IF
 
@@ -1231,7 +931,7 @@ lb_itemFound							= FALSE
 ll_separatorItem						= 0
 
 Long										ll_posRight
-ll_posRight								= (ll_width + ll_offSet) - PixelsToUnits(5, XPixelsToUnits!)
+ll_posRight								= (ll_width + ll_offSet) - PixelsToUnits(5, xPixelsToUnits!)
 
 IF ll_item > ds_toolBar.RowCount() THEN
 	
@@ -1265,13 +965,13 @@ IF ll_item > ds_toolBar.RowCount() THEN
 			ll_separatorItem			= ll_item
 
 //			IF ll_item > 1 THEN
-				ll_posRight				= ll_posRight + PixelsToUnits(5, XPixelsToUnits!)
+				ll_posRight				= ll_posRight + PixelsToUnits(5, xPixelsToUnits!)
 //			END IF
 					
 			ds_toolBar.of_setItem_rectLeft(ll_item, ll_posRight)
 		
 			ll_posRight					= ll_posRight - ds_toolBar.of_getItem_rectWidth(ll_item)
-			ll_posRight					= ll_posRight - PixelsToUnits(4, XPixelsToUnits!)
+			ll_posRight					= ll_posRight - PixelsToUnits(4, xPixelsToUnits!)
 			
 		ELSE
 				
@@ -1281,7 +981,7 @@ IF ll_item > ds_toolBar.RowCount() THEN
 				
 			ds_toolBar.of_setItem_rectLeft(ll_item, ll_posRight)
 	
-			ll_posRight					= ll_posRight - PixelsToUnits(8, XPixelsToUnits!)
+			ll_posRight					= ll_posRight - PixelsToUnits(8, xPixelsToUnits!)
 		
 		END IF
 		
@@ -1295,7 +995,7 @@ IF ll_separatorItem > 0 THEN
 END IF
 
 IF ds_toolBar.of_getItem_visible(1) THEN
-	ds_toolBar.of_setItem_rectLeft(1, ll_width - ds_toolBar.of_getItem_rectWidth(1) - PixelsToUnits(5, XPixelsToUnits!))
+	ds_toolBar.of_setItem_rectLeft(1, ll_width - ds_toolBar.of_getItem_rectWidth(1) - PixelsToUnits(5, xPixelsToUnits!))
 END IF
 
 IF NOT vb_dropDownMenu THEN
@@ -1392,7 +1092,7 @@ FOR ll_item = 1 TO ds_toolBar.RowCount()
 	IF ds_toolBar.of_getItem_separator(ll_item) THEN
 		of_createItem_separator(ll_item)
 	ELSE
-		of_createItem(ll_item)
+		of_createItem_button(ll_item)
 	END IF
 
 NEXT
@@ -1533,8 +1233,9 @@ Long										ll_item
 ll_item									= ds_toolBar.of_addItem()
 
 ds_toolBar.of_setItem_text(ll_item, is_dropMenuChar)
-ds_toolBar.of_setItem_image(ll_item, '')
+ds_toolBar.of_setItem_color(ll_item, of_getColor(MENUTEXT))
 ds_toolBar.of_setItem_toolTip(ll_item, 'ToolBar Items Menu')
+ds_toolBar.of_setItem_image(ll_item, '')
 ds_toolBar.of_setItem_position(ll_item, RIGHT)
 ds_toolBar.of_setItem_visible(ll_item, FALSE)
 ds_toolBar.of_setItem_enabled(ll_item, TRUE)
@@ -1619,13 +1320,15 @@ vs_image									= Trim(vs_image)
 vs_toolTip								= Trim(vs_toolTip)
 
 ds_toolBar.of_setItem_text(ll_item, vs_text)
-ds_toolBar.of_setItem_image(ll_item, invo_dwGUI.of_getImageName(vs_image))
+ds_toolBar.of_setItem_color(ll_item, of_getColor(MENUTEXT))
 
 IF isNull(vs_toolTip) OR Trim(vs_toolTip) = '' THEN
 	ds_toolBar.of_setItem_toolTip(ll_item, vs_text)
 ELSE
 	ds_toolBar.of_setItem_toolTip(ll_item, vs_toolTip)
 END IF
+
+ds_toolBar.of_setItem_image(ll_item, invo_dwGUI.of_getImageName(vs_image))
 
 //	Make sure position is a valid value
 IF vi_position <> LEFT AND vi_position <> RIGHT THEN
@@ -1788,29 +1491,6 @@ of_update()
 Return(ll_item)
 end function
 
-private function long of_size_text (string vs_text, string vs_fontface, integer vi_fontsize);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
-//
-// This code and accompanying materials are made available under the GPLv3
-// license which accompanies this distribution and can be found at:
-//
-// http://www.gnu.org/licenses/gpl-3.0.html.
-//
-// Original Author:	Christopher Harris
-
-Long										ll_width	= 0
-
-IF isNull(vs_text) OR Trim(vs_text) = '' THEN Return(ll_width)
-
-IF isNull(vs_fontFace) OR Trim(vs_fontFace) = '' THEN Return(ll_width)
-
-st_toolBar.FaceName					= vs_fontFace
-st_toolBar.TextSize					= vi_fontSize * -1
-	
-ll_width									= PixelsToUnits(invo_dwGUI.of_GetFontWidth(st_toolBar, vs_text) + 4, XPixelsToUnits!)
-	
-Return(ll_width)
-end function
-
 private function long of_size_line ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
@@ -1823,9 +1503,9 @@ private function long of_size_line ();// CopyRight (c) 2016 by Christopher Harri
 Long											ll_width
 
 IF il_currentOrientation = HORIZONTAL THEN
-	ll_width									= PixelsToUnits(4, XPixelsToUnits!)
+	ll_width									= PixelsToUnits(4, xPixelsToUnits!)
 ELSE
-	ll_width									= PixelsToUnits(4, YPixelsToUnits!)
+	ll_width									= PixelsToUnits(4, yPixelsToUnits!)
 END IF
 
 Return(ll_width)
@@ -1841,7 +1521,13 @@ private function integer of_size_text (string vs_text);// CopyRight (c) 2016 by 
 //
 // Original Author:	Christopher Harris
 
-Return(of_size_text(vs_text, #FontFace, #FontSize))
+Long										ll_width	= 0
+
+IF isNull(vs_text) OR Trim(vs_text) = '' THEN Return(ll_width)
+
+ll_width									= PixelsToUnits((invo_dwGUI.of_GetFontWidth(st_toolBar, vs_text) + 4), xPixelsToUnits!)
+	
+Return(ll_width)
 end function
 
 private function long of_size_imageheight ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -1854,7 +1540,7 @@ private function long of_size_imageheight ();// CopyRight (c) 2016 by Christophe
 // Original Author:	Christopher Harris
 
 Long										ll_height
-ll_height								= PixelsToUnits(#BitMapSize, YPixelsToUnits!)
+ll_height								= PixelsToUnits(#BitMapSize, yPixelsToUnits!)
 
 Return(ll_height)
 end function
@@ -1873,7 +1559,7 @@ Long										ll_width
 IF isNull(vs_image) OR Trim(vs_image) = '' THEN
 	ll_width								= 0
 ELSE
-	ll_width								= PixelsToUnits(#BitMapSize, XPixelsToUnits!)
+	ll_width								= PixelsToUnits(#BitMapSize, xPixelsToUnits!)
 END IF
 
 Return(ll_width)
@@ -1978,7 +1664,7 @@ ls_describe								= Trim(dw_palette.Describe('t_' + ds_toolBar.of_getItem_objec
 IF ls_describe <> '!' AND ls_describe <> '?' AND ls_describe <> '' THEN
 	
 	IF ds_toolBar.of_getItem_enabled(vl_item) THEN
-		dw_palette.Modify(ls_object + '.Color="' + String(of_getColor(MENUTEXT)) + '"')
+		dw_palette.Modify(ls_object + '.Color="' + String(ds_toolBar.of_getItem_color(vl_item)) + '"')
 	ELSE
 		dw_palette.Modify(ls_object + '.Color="' + String(of_getColor(DISABLEDTEXT)) + '"')
 	END IF
@@ -2019,10 +1705,10 @@ IF ds_toolBar.of_getItem_checked(vl_item) AND (NOT ds_toolBar.of_getItem_display
 
 	Long									ll_x,	ll_y,	ll_width,	ll_height
 	
-	ll_X									= ds_toolBar.of_getItem_rectLeft(vl_item)		- PixelsToUnits(3, XPixelsToUnits!)
-	ll_Y									= ds_toolBar.of_getItem_rectTop(vl_item)		- PixelsToUnits(3, YPixelsToUnits!)
-	ll_Width								= ds_toolBar.of_getItem_rectWidth(vl_item)	+ PixelsToUnits(7, XPixelsToUnits!)
-	ll_height							= ds_toolBar.of_getItem_rectHeight(vl_item)	+ PixelsToUnits(2, YPixelsToUnits!)
+	ll_X									= ds_toolBar.of_getItem_rectLeft(vl_item)		- PixelsToUnits(3, xPixelsToUnits!)
+	ll_Y									= ds_toolBar.of_getItem_rectTop(vl_item)		- PixelsToUnits(3, yPixelsToUnits!)
+	ll_Width								= ds_toolBar.of_getItem_rectWidth(vl_item)	+ PixelsToUnits(7, xPixelsToUnits!)
+	ll_height							= ds_toolBar.of_getItem_rectHeight(vl_item)	+ PixelsToUnits(1, yPixelsToUnits!)
 											
 	String								ls_modify
 	
@@ -2288,23 +1974,23 @@ String									ls_modify
 IF il_currentOrientation = HORIZONTAL THEN
 
 	ls_modify							= 'CREATE line(band=' + #band + ' '																&
-											+ 'x1="' + String(ll_pos + PixelsToUnits(li_offset[1], XPixelsToUnits!)) + '" '	&
+											+ 'x1="' + String(ll_pos + PixelsToUnits(li_offset[1], xPixelsToUnits!)) + '" '	&
 											+ 'y1="16" '																							&
-											+ 'x2="' + String(ll_pos + PixelsToUnits(li_offset[1], XPixelsToUnits!)) + '" '	&
+											+ 'x2="' + String(ll_pos + PixelsToUnits(li_offset[1], xPixelsToUnits!)) + '" '	&
 											+ 'y2="' + String(of_size_imageHeight() + 16) + '" '										&
 											+ 'name=l_' + ds_toolBar.of_getItem_objectName(vl_item) + '_a visible="1" '		&
 											+ 'pen.style="0" '																					&
-											+ 'pen.width="' + String(PixelsToUnits(1, XPixelsToUnits!)) + '" '					&
+											+ 'pen.width="' + String(PixelsToUnits(1, xPixelsToUnits!)) + '" '					&
 											+ 'pen.color="' + String(of_getColor(THREEDDKSHADOW)) + '" '							&
 											+ 'background.mode="2") '																			&
 											+ 'CREATE line(band=' + #band + ' '																&
-											+ 'x1="' + String(ll_pos + PixelsToUnits(li_offset[2], XPixelsToUnits!)) + '" '	&
+											+ 'x1="' + String(ll_pos + PixelsToUnits(li_offset[2], xPixelsToUnits!)) + '" '	&
 											+ 'y1="16" '																							&
-											+ 'x2="' + String(ll_pos + PixelsToUnits(li_offset[2], XPixelsToUnits!)) + '" '	&
+											+ 'x2="' + String(ll_pos + PixelsToUnits(li_offset[2], xPixelsToUnits!)) + '" '	&
 											+ 'y2="' + String(of_size_imageHeight() + 16) + '" '										&
 											+ 'name=l_' + ds_toolBar.of_getItem_objectName(vl_item) + '_b visible="1" '		&
 											+ 'pen.style="0" '																					&
-											+ 'pen.width="' + String(PixelsToUnits(1, XPixelsToUnits!)) + '" '					&
+											+ 'pen.width="' + String(PixelsToUnits(1, xPixelsToUnits!)) + '" '					&
 											+ 'pen.color="' + String(of_getColor(THREEDLIGHT)) + '" '								&
 											+ 'background.mode="2")'
 	dw_palette.Modify(ls_modify)
@@ -2323,7 +2009,7 @@ IF il_currentOrientation = HORIZONTAL THEN
 	IF (ll_x1bPixels - ll_x1aPixels) = 2 THEN
 		
 		Long								ll_x1bUnits
-		ll_x1bUnits						= PixelsToUnits(ll_x1aPixels + 1, XPixelsToUnits!)
+		ll_x1bUnits						= PixelsToUnits(ll_x1aPixels + 1, xPixelsToUnits!)
 		
 		ls_modify						= 'l_' + ds_toolBar.of_getItem_objectName(vl_item) + '_b.x1="'							&
 											+ String(ll_x1bUnits) + '" '																		&
@@ -2380,11 +2066,11 @@ IF il_itemChecked <> -1 THEN
 	END IF
 END IF
 
-dw_palette.Object.r_button.X		= ds_toolBar.of_getItem_rectLeft(vl_item)		- PixelsToUnits(3, XPixelsToUnits!)
-dw_palette.Object.r_button.Y		= ds_toolBar.of_getItem_rectTop(vl_item)		- PixelsToUnits(3, YPixelsToUnits!)
-dw_palette.Object.r_button.Width	= ds_toolBar.of_getItem_rectWidth(vl_item)	+ PixelsToUnits(7, XPixelsToUnits!)
+dw_palette.Object.r_button.X		= ds_toolBar.of_getItem_rectLeft(vl_item)		- PixelsToUnits(3, xPixelsToUnits!)
+dw_palette.Object.r_button.Y		= ds_toolBar.of_getItem_rectTop(vl_item)		- PixelsToUnits(3, yPixelsToUnits!)
+dw_palette.Object.r_button.Width	= ds_toolBar.of_getItem_rectWidth(vl_item)	+ PixelsToUnits(7, xPixelsToUnits!)
 dw_palette.Object.r_button.Height													&
-											= ds_toolBar.of_getItem_rectHeight(vl_item)	+ PixelsToUnits(2, YPixelsToUnits!)
+											= ds_toolBar.of_getItem_rectHeight(vl_item)	+ PixelsToUnits(2, yPixelsToUnits!)
 											
 //	If we are showing the highlight over a checked item, then make sure
 //	the checked indicator is hidden
@@ -2536,7 +2222,7 @@ IF lb_showMenu THEN
 	ll_ptrY								= dw_palette.PointerY()
 	
 	Long									ll_xOffSet
-	ll_xOffSet							= ll_ptrX - ds_toolBar.of_getItem_RectLeft(1) + PixelsToUnits(2, XPixelsToUnits!)
+	ll_xOffSet							= ll_ptrX - ds_toolBar.of_getItem_RectLeft(1) + PixelsToUnits(2, xPixelsToUnits!)
 
 	Long									ll_yOffSet
 	ll_yOffSet							= (ds_toolBar.of_getItem_rectTop(1) + ds_toolBar.of_getItem_RectHeight(1)) - ll_ptrY
@@ -2604,7 +2290,7 @@ ELSEIF vkc_key = keyLeftArrow! THEN
 			IF ib_trackMouseEvent THEN
 				
 				ll_endX					= Long(dw_palette.Describe('r_button.X'))
-				ll_offSetX				= (ll_pointerX - ll_startX) + (ll_startX - ll_endX) - PixelsToUnits(4, XPixelsToUnits!)
+				ll_offSetX				= (ll_pointerX - ll_startX) + (ll_startX - ll_endX) - PixelsToUnits(4, xPixelsToUnits!)
 				
 				invo_dwGUI.of_setCursorPos(ll_cursorX - UnitsToPixels(ll_offSetX, XUnitsToPixels!), ll_cursorY)
 	
@@ -2634,7 +2320,7 @@ ELSEIF vkc_key = keyRightArrow! THEN
 			IF ib_trackMouseEvent THEN
 				
 				ll_endX					= Long(dw_palette.Describe('r_button.X'))
-				ll_offSetX				= (ll_startX - ll_pointerX) + (ll_endX - ll_startX) + PixelsToUnits(4, XPixelsToUnits!)
+				ll_offSetX				= (ll_startX - ll_pointerX) + (ll_endX - ll_startX) + PixelsToUnits(4, xPixelsToUnits!)
 				
 				invo_dwGUI.of_setCursorPos(ll_cursorX + UnitsToPixels(ll_offSetX, XUnitsToPixels!), ll_cursorY)
 	
@@ -2926,6 +2612,8 @@ CHOOSE CASE #FontSize
 		#FontSize						= 14
 END CHOOSE
 
+of_setFont(#FontFace, #FontSize)
+
 RETURN
 end subroutine
 
@@ -2990,6 +2678,8 @@ CHOOSE CASE ll_size
 		#FontSize						= 14
 
 END CHOOSE
+
+of_setFont(#FontFace, #FontSize)
 
 RETURN
 end subroutine
@@ -3100,6 +2790,8 @@ CHOOSE CASE vs_color
 		ll_color							= invo_color.of_3DDkShadow()
 	CASE THREEDLIGHT
 		ll_color							= invo_color.of_3DLight()
+	CASE ACTIVEBORDER
+		ll_color							= invo_color.of_activeBorder()
 END CHOOSE
 
 IF ll_color = -1 THEN
@@ -3408,6 +3100,356 @@ END CHOOSE
 Return(ll_item)
 end function
 
+private subroutine of_setfont (string vs_fontface, long vl_fontsize);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+#FontFace								= vs_fontFace
+#FontSize								= vl_fontSize
+
+st_toolbar.TextSize					= #FontSize * -1
+
+idbl_fontHeight						= of_fontHeight()
+
+RETURN
+end subroutine
+
+public function integer of_settextcolor (long vl_item, long vl_color);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+IF isNull(vl_item) THEN Return(FAILURE)
+
+IF vl_item <= 1 OR vl_item > ds_toolBar.RowCount() THEN Return(FAILURE)
+
+IF isNull(vl_color) THEN vl_color = of_getColor(MENUTEXT)
+
+Long										ll_itemCurrent
+ll_itemCurrent							= of_locateItem()
+
+ds_toolBar.of_setItem_color(vl_item, vl_color)
+
+of_update()
+of_drawButton(ll_itemCurrent)
+
+Return(SUCCESS)
+end function
+
+public function integer of_settextcolor (string vs_item, long vl_color);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+Return(of_setTextColor(of_locateItem(vs_item), vl_color))
+end function
+
+private function long of_createitem_button (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+Long										ll_pos
+ll_pos									= ds_toolBar.of_getItem_rectLeft(vl_item)
+
+Long										li_textYOffset
+li_textYOffset							= (of_size_imageHeight() - Int(idbl_fontHeight)) / 2
+
+Boolean									lb_createdImage	= FALSE,	lb_createdText	= FALSE
+String									ls_modify			= ''
+
+Long										li_displayToolTips
+
+IF of_displayToolTips() THEN
+	li_displayToolTips				= 1
+ELSE
+	li_displayToolTips				= 0
+END IF
+                                                                        &
+//	The following determines what to display for toolTip text
+String									ls_toolTip = ''
+ls_toolTip								= ds_toolBar.of_getItem_toolTip(vl_item)
+
+IF of_displayText() THEN
+	
+	//	If displayText is turned on and the name and toolTip are the same,
+	//	then we don't need a toolTip
+	IF ds_toolBar.of_getItem_text(vl_item) = ds_toolBar.of_getItem_toolTip(vl_item) THEN
+		ls_toolTip						= ''
+	END IF
+	
+ELSE
+	
+	//	If displayText is turned off and there is no image then we are going
+	//	to override the displayText setting and therefore we will only want
+	//	to set the toolTip if the name and toolTip are not the same
+	IF ds_toolBar.of_getItem_image(vl_item) = '' THEN
+		IF ds_toolBar.of_getItem_text(vl_item) = ds_toolBar.of_getItem_toolTip(vl_item) THEN
+			ls_toolTip					= ''
+		END IF
+	END IF
+	
+END IF
+
+//	BitMap logic
+IF NOT (isNull(ds_toolBar.of_getItem_image(vl_item)) OR Trim(ds_toolBar.of_getItem_image(vl_item)) = '') THEN
+	
+	ls_modify							= 'CREATE bitmap(band=' + #band + ' filename='										&
+											+ '"' + ds_toolBar.of_getItem_image(vl_item) + '" '								&
+											+ 'x="' + String(ll_pos) + '" '															&
+											+ 'y="16" '																						&
+											+ 'height="'+ String(of_size_imageHeight()) + '" '									&
+											+ 'width="' + String(ds_toolBar.of_getItem_imageWidth(vl_item)) + '" '		&
+											+ 'border="0" '																				&
+											+ 'name=p_' + ds_toolBar.of_getItem_objectName(vl_item) + ' '					&
+											+ 'visible="1" '
+//	IF ds_toolBar.of_PBVersion() >= 12.5 THEN
+//		
+//		IF ds_toolBar.of_getItem_enabled(vl_item) THEN
+//			ls_modify					= ls_modify + 'enabled="1" '
+//		ELSE
+//			ls_modify					= ls_modify + 'enabled="0" '
+//		END IF
+//
+//	END IF
+	
+	IF ds_toolBar.of_PBVersion() >= 11.5 THEN
+		
+		ls_modify						= ls_modify																						&
+											+ 'tooltip.backcolor="' + String(of_getColor(INFOBACKGROUND)) + '" '			&
+											+ 'tooltip.delay.initial="' + String(#ToolTipDelayInitial) + '" ' +			&
+											+ 'tooltip.delay.visible="' + String(#ToolTipDelayVisible) + '" ' +			&
+											+ 'tooltip.enabled="' + String(li_displayToolTips) + '" '						&
+											+ 'tooltip.hasclosebutton="0" tooltip.icon="0" ' +									&
+											+ 'tooltip.isbubble="' + String(ii_toolTipIsBubble) + '" '						&
+											+ 'tooltip.maxwidth="0" '																	&
+											+ 'tooltip.textcolor="' + String(of_getColor(INFOTEXT)) + '" '					&
+											+ 'tooltip.transparency="0" '																&
+											+ 'tooltip.tip="' + ls_toolTip + '" '													&
+											+ 'transparentcolor="' + String(ds_toolBar.of_getItem_imageTransparency(vl_item)) + '" '
+												
+//		IF ds_toolBar.of_getItem_enabled(vl_item) THEN
+//			ls_modify					= ls_modify + 'transparency="0" '
+//		ELSE
+//			ls_modify					= ls_modify + 'transparency="50" '
+//		END IF
+		
+	ELSE
+		//	Need to come up with a way to show enabled/disabled for version prior to 11.5
+	END IF
+	
+	ls_modify							= ls_modify + ') '
+	
+	lb_createdImage					= TRUE
+	
+	ll_pos								= ll_pos + ds_toolBar.of_getItem_imageWidth(vl_item)
+	
+END IF
+
+//	Text logic
+IF NOT (isNull(ds_toolBar.of_getItem_text(vl_item)) OR Trim(ds_toolBar.of_getItem_text(vl_item)) = '') THEN
+	IF ds_toolBar.of_getItem_displayText(vl_item) THEN
+		
+		ls_modify						= ls_modify																						&
+											+ 'CREATE text(band=' + #band + ' ' +													&
+											+ 'alignment="' + String(ds_toolBar.of_getItem_alignment(vl_item)) + '" '	&
+											+ 'text="' + ds_toolBar.of_getItem_text(vl_item) + '" border="0" '			&
+											+ 'x="' + String(ll_pos) + '" ' +														&
+											+ 'y="' + String(li_textYOffset + 16) + '" '											&
+											+ 'height="' + String(Int(idbl_fontHeight)) + '" '									&
+											+ 'width="' + String(ds_toolBar.of_getItem_textWidth(vl_item)) + '" '		&
+											+ 'html.valueishtml="0" '																	&
+											+ 'name=t_' + ds_toolBar.of_getItem_objectName(vl_item) + ' '					&
+											+ 'visible="1" '																				&
+											+ 'font.face="' + ds_toolBar.of_getItem_fontFace(vl_item) + '" '				&
+											+ 'font.height="' + String(#FontSize * -1) + '" '									&
+											+ 'font.weight="400" '																		&
+											+ 'font.family="2" font.pitch="2" font.charset="0" '								&
+											+ 'background.mode="1" '
+												
+//		IF ds_toolBar.of_PBVersion >= 12.5 THEN
+//			
+//			IF ds_toolBar.of_getItem_enabled(vl_item) THEN
+//				ls_modify				= ls_modify + 'enabled="1" '
+//			ELSE
+//				ls_modify				= ls_modify + 'enabled="0" '
+//			END IF
+//
+//		END IF
+
+		IF ds_toolBar.of_PBVersion() >= 11.5 THEN
+
+			ls_modify					= ls_modify + 'color="' + String(ds_toolBar.of_getItem_color(vl_item)) + '" '
+
+			ls_modify					= ls_Modify																						&
+											+ 'background.transparency="100" '														&
+											+ 'background.brushmode="0" background.gradient.repetition.mode="0" '		&
+											+ 'background.gradient.repetition.count="0" '										&
+											+ 'background.gradient.repetition.length="100" '									&
+											+ 'background.gradient.focus="0" background.gradient.scale="100" '			&
+											+ 'background.gradient.spread="100" '													&
+											+ 'tooltip.delay.initial="' + String(#ToolTipDelayInitial) + '" ' +			&
+											+ 'tooltip.delay.visible="' + String(#ToolTipDelayVisible) + '" ' +			&
+											+ 'tooltip.enabled="' + String(li_displayToolTips) + '" '						&
+											+ 'tooltip.hasclosebutton="0" tooltip.icon="0" ' +									&
+											+ 'tooltip.isbubble="' + String(ii_toolTipIsBubble) + '" '						&
+											+ 'tooltip.maxwidth="0" '																	&
+											+ 'tooltip.textcolor="' + String(of_getColor(INFOTEXT)) + '" '					&
+											+ 'tooltip.transparency="0" '																&
+											+ 'tooltip.tip="' + ls_toolTip + '" '
+		END IF
+
+//		IF ds_toolBar.of_getItem_enabled(vl_item) THEN
+//			ls_modify					= ls_modify + 'color="' + String(ds_toolBar.of_getItem_color(vl_item)) + '" '
+//		ELSE
+//			ls_modify					= ls_modify + 'color="' + String(of_getColor(DISABLEDTEXT)) + '" '
+//		END IF
+		
+		ls_modify						= ls_modify + ') '
+
+		IF #BitMapSize >= MEDIUM THEN
+
+			//	This "box" is used to capture the mouseMove for an item when
+			//	the size of the toolBar is greater than SMALL.  This allows
+			//	us to move the text to appear vertically centered and still
+			//	be able to properly capture the mouseMove as if the height
+			//	of the text was greater than it actually is.
+			
+			ls_modify					= ls_modify																						&
+											+ 'CREATE text(band=' + #band + ' '														&
+											+ 'alignment="' + String(ds_toolBar.of_getItem_alignment(vl_item)) + '" '	&
+											+ 'text="' + '' + '" border="0" '														&
+											+ 'x="' + String(ll_pos) + '" ' +														&
+											+ 'y="' + String(16) + '" '																&
+											+ 'height="' + String(of_size_imageHeight()) + '" '								&
+											+ 'width="' + String(ds_toolBar.of_getItem_textWidth(vl_item)) + '" '		&
+											+ 'html.valueishtml="0" '																	&
+											+ 'name=b_' + ds_toolBar.of_getItem_objectName(vl_item) + ' '					&
+											+ 'visible="1" '																				&
+											+ 'font.face="' + ds_toolBar.of_getItem_fontFace(vl_item) + '" '				&
+											+ 'font.height="' + String(#FontSize * -1) + '" '									&
+											+ 'font.weight="400" '																		&
+											+ 'font.family="2" font.pitch="2" font.charset="0" '								&
+											+ 'background.mode="1" '
+												
+//			IF ds_toolBar.of_PBVersion >= 12.5 THEN
+//				
+//				IF ds_toolBar.of_getItem_enabled(vl_item) THEN
+//					ls_modify			= ls_modify + 'enabled="1" '
+//				ELSE
+//					ls_modify			= ls_modify + 'enabled="0" '
+//				END IF
+//	
+//			END IF
+	
+			IF ds_toolBar.of_PBVersion() >= 11.5 THEN
+	
+				ls_modify				= ls_modify + 'color="' + String(ds_toolBar.of_getItem_color(vl_item)) + '" '
+	
+				ls_modify				= ls_Modify																						&
+											+ 'background.transparency="100" '														&
+											+ 'background.brushmode="0" background.gradient.repetition.mode="0" '		&
+											+ 'background.gradient.repetition.count="0" '										&
+											+ 'background.gradient.repetition.length="100" '									&
+											+ 'background.gradient.focus="0" background.gradient.scale="100" '			&
+											+ 'background.gradient.spread="100" '													&
+											+ 'tooltip.delay.initial="' + String(#ToolTipDelayInitial) + '" ' +			&
+											+ 'tooltip.delay.visible="' + String(#ToolTipDelayVisible) + '" ' +			&
+											+ 'tooltip.enabled="' + String(li_displayToolTips) + '" '						&
+											+ 'tooltip.hasclosebutton="0" tooltip.icon="0" ' +									&
+											+ 'tooltip.isbubble="' + String(ii_toolTipIsBubble) + '" '						&
+											+ 'tooltip.maxwidth="0" '																	&
+											+ 'tooltip.textcolor="' + String(of_getColor(INFOTEXT)) + '" '					&
+											+ 'tooltip.transparency="0" '																&
+											+ 'tooltip.tip="' + ls_toolTip + '" '
+			END IF
+
+//			IF ds_toolBar.of_getItem_enabled(vl_item) THEN
+//				ls_modify				= ls_modify + 'color="' + String(ds_toolBar.of_getItem_color(vl_item)) + '" '
+//			ELSE
+//				ls_modify				= ls_modify + 'color="' + String(of_getColor(DISABLEDTEXT)) + '" '
+//			END IF
+		
+			ls_modify					= ls_modify + ') '
+		
+		END IF
+		
+		lb_createdText					= TRUE
+		
+		ll_pos							= ll_pos + ds_toolBar.of_getItem_textWidth(vl_item)
+		
+	END IF
+END IF
+
+dw_palette.Modify(ls_modify)
+
+of_DrawEnabled(vl_item)
+of_DrawChecked(vl_item)
+
+//	Originally, was going to use the focusRectangle during keyboard interface
+IF ds_toolBar.of_PBVersion() >= 12.5 THEN
+	
+	IF NOT (isNull(ds_toolBar.of_getItem_text(vl_item)) OR Trim(ds_toolBar.of_getItem_text(vl_item)) = '') THEN
+		IF ds_toolBar.of_getItem_displayText(vl_item) THEN
+			dw_palette.Modify('t_' + ds_toolBar.of_getItem_objectName(vl_item) + '.FocusRectangle=no')
+		ELSE
+			IF NOT (isNull(ds_toolBar.of_getItem_image(vl_item)) OR Trim(ds_toolBar.of_getItem_image(vl_item)) = '') THEN
+				dw_palette.Modify('p_' + ds_toolBar.of_getItem_objectName(vl_item) + '.FocusRectangle=no')
+			END IF
+		END IF
+	ELSE
+		IF NOT (isNull(ds_toolBar.of_getItem_image(vl_item)) OR Trim(ds_toolBar.of_getItem_image(vl_item)) = '') THEN
+			dw_palette.Modify('p_' + ds_toolBar.of_getItem_objectName(vl_item) + '.FocusRectangle=no')
+		END IF
+	END IF
+
+END IF
+
+//	Set the position of the bitmap objects within the requested band
+IF lb_createdImage THEN
+	dw_palette.setPosition('p_' + ds_toolBar.of_getItem_objectName(vl_item), #band, TRUE)
+END IF
+
+//	Set the position of the text objects within the requested band
+IF lb_createdText THEN
+
+	IF #BitMapSize >= MEDIUM THEN
+		dw_palette.setPosition('b_' + ds_toolBar.of_getItem_objectName(vl_item), #band, TRUE)
+	END IF
+
+	dw_palette.setPosition('t_' + ds_toolBar.of_getItem_objectName(vl_item), #band, TRUE)
+	
+END IF
+
+//	Set tabSequence for keyboard interface
+IF lb_createdImage OR lb_createdText THEN
+	IF ds_toolBar.of_getItem_position(vl_item) = LEFT THEN 
+		ds_toolBar.of_setItem_tabSequence(vl_item, vl_item * 10)
+	ELSE
+		ds_toolBar.of_setItem_tabSequence(vl_item, 1000 - (vl_item * 10))
+	END IF
+END IF
+	
+Return(ds_toolBar.of_getItem_rectWidth(vl_item))
+end function
+
 on u_cst_toolbar.create
 this.st_toolbar=create st_toolbar
 this.dw_palette=create dw_palette
@@ -3433,6 +3475,8 @@ event constructor;// CopyRight (c) 2016 by Christopher Harris, all rights reserv
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
 // Original Author:	Christopher Harris
+
+of_setFont(#FontFace, #FontSize)
 
 of_correct_size()
 
@@ -3461,8 +3505,8 @@ setNull(is_lButtonDown)
 r_border.Move(0, 0)
 r_border.Resize(Width, Height)
 
-dw_palette.Move(PixelsToUnits(1, XPixelsToUnits!), PixelsToUnits(1, YPixelsToUnits!))
-dw_palette.Resize(Width - PixelsToUnits(2, XPixelsToUnits!), Height - PixelsToUnits(2, YPixelsToUnits!))
+dw_palette.Move(PixelsToUnits(1, xPixelsToUnits!), PixelsToUnits(1, yPixelsToUnits!))
+dw_palette.Resize(Width - PixelsToUnits(2, xPixelsToUnits!), Height - PixelsToUnits(2, yPixelsToUnits!))
 
 r_border.LineColor					= of_getColor(THREEDDKSHADOW)
 r_border.Visible						= #DisplayBorder
@@ -3548,9 +3592,6 @@ dw_palette.SetPosition('r_button', #band, FALSE)
 
 of_highLight(HIGHLIGHT)
 of_highLight(INVISIBLE)
-
-st_toolBar.FaceName					= #FontFace
-st_toolBar.TextSize					= #FontSize * -1
 
 of_size()
 of_addDropMenu()

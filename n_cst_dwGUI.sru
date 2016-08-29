@@ -240,185 +240,184 @@ type variables
 Public:
 
 	// Window Messages
-	CONSTANT UnsignedLong				WM_GETFONT						= 49
-	CONSTANT UnsignedLong				WM_MOUSELEAVE					= 675
-	CONSTANT UnsignedLong				WM_USER							= 1024
-	CONSTANT UnsignedLong				TTM_POP							= WM_USER + 28
+	CONSTANT UnsignedLong			WM_GETFONT						= 49
+	CONSTANT UnsignedLong			WM_MOUSELEAVE					= 675
+	CONSTANT UnsignedLong			WM_USER							= 1024
+	CONSTANT UnsignedLong			TTM_POP							= WM_USER + 28
 
 	//	FindWindow
-	CONSTANT Long							GW_HWNDFIRST					= 0
-	CONSTANT Long							GW_HWNDLAST						= 1
-	CONSTANT Long							GW_HWNDNEXT						= 2
-	CONSTANT Long							GW_HWNDPREV						= 3
-	CONSTANT Long							GW_OWNER							= 4
-	CONSTANT Long							GW_CHILD							= 5
+	CONSTANT Long						GW_HWNDFIRST					= 0
+	CONSTANT Long						GW_HWNDLAST						= 1
+	CONSTANT Long						GW_HWNDNEXT						= 2
+	CONSTANT Long						GW_HWNDPREV						= 3
+	CONSTANT Long						GW_OWNER							= 4
+	CONSTANT Long						GW_CHILD							= 5
 
 	//	Set/GetWindowLong Index
-	CONSTANT Long							GWL_WNDPROC						= (-4)
-	CONSTANT Long							GWL_HINSTANCE					= (-6)
-	CONSTANT Long							GWL_HWNDPARENT					= (-8)
-	CONSTANT Long							GWL_ID							= (-12)
-	CONSTANT Long							GWL_STYLE						= (-16)
-	CONSTANT Long							GWL_EXSTYLE						= (-20)
-	CONSTANT Long							GWL_USERDATA					= (-21)
+	CONSTANT Long						GWL_WNDPROC						= (-4)
+	CONSTANT Long						GWL_HINSTANCE					= (-6)
+	CONSTANT Long						GWL_HWNDPARENT					= (-8)
+	CONSTANT Long						GWL_ID							= (-12)
+	CONSTANT Long						GWL_STYLE						= (-16)
+	CONSTANT Long						GWL_EXSTYLE						= (-20)
+	CONSTANT Long						GWL_USERDATA					= (-21)
 
 	//	Extended Window Styles
-	CONSTANT UnsignedLong				WS_EX_ACCEPTFILES				= 16						//	The window accepts drag-drop files.
-	CONSTANT UnsignedLong				WS_EX_APPWINDOW				= 262144					//	Forces a top-level window onto the taskbar when the window is visible. 
-	CONSTANT UnsignedLong				WS_EX_CLIENTEDGE				= 512						//	The window has a border with a sunken edge.
-	CONSTANT UnsignedLong				WS_EX_COMPOSITED				= 33554432				//	Paints all descendants of a window in bottom-to-top painting order using double-buffering. For more information, see Remarks. This cannot be used if the window has a class style of either CS_OWNDC or CS_CLASSDC.  Windows 2000:  This style is not supported. 
-	CONSTANT UnsignedLong				WS_EX_CONTEXTHELP				= 1024					//	The title bar of the window includes a question mark. When the user clicks the question mark, the cursor changes to a question mark with a pointer. If the user then clicks a child window, the child receives a WM_HELP message. The child window should pass the message to the parent window procedure, which should call the WinHelp function using the HELP_WM_HELP command. The Help application displays a pop-up window that typically contains help for the child window.  WS_EX_CONTEXTHELP cannot be used with the WS_MAXIMIZEBOX or WS_MINIMIZEBOX styles.
-	CONSTANT UnsignedLong				WS_EX_CONTROLPARENT			= 65536					//	The window itself contains child windows that should take part in dialog box navigation. If this style is specified, the dialog manager recurses into children of this window when performing navigation operations such as handling the TAB key, an arrow key, or a keyboard mnemonic.
-	CONSTANT UnsignedLong				WS_EX_DLGMODALFRAME			= 1						//	The window has a double border; the window can, optionally, be created with a title bar by specifying the WS_CAPTION style in the dwStyle parameter.
-	CONSTANT UnsignedLong				WS_EX_LAYERED					= 524288					//	The window is a layered window. This style cannot be used if the window has a class style of either CS_OWNDC or CS_CLASSDC.  Windows 8:  The WS_EX_LAYERED style is supported for top-level windows and child windows. Previous Windows versions support WS_EX_LAYERED only for top-level windows. 
-	CONSTANT UnsignedLong				WS_EX_LAYOUTRTL				= 4194304				//	If the shell language is Hebrew, Arabic, or another language that supports reading order alignment, the horizontal origin of the window is on the right edge. Increasing horizontal values advance to the left. 
-	CONSTANT UnsignedLong				WS_EX_LEFT						= 0						//	The window has generic left-aligned properties. This is the default.
-	CONSTANT UnsignedLong				WS_EX_LEFTSCROLLBAR			= 16384					//	If the shell language is Hebrew, Arabic, or another language that supports reading order alignment, the vertical scroll bar (if present) is to the left of the client area. For other languages, the style is ignored.
-	CONSTANT UnsignedLong				WS_EX_LTRREADING				= 0						//	The window text is displayed using left-to-right reading-order properties. This is the default.
-	CONSTANT UnsignedLong				WS_EX_MDICHILD					= 64						//	The window is a MDI child window.
-	CONSTANT UnsignedLong				WS_EX_NOACTIVATE				= 134217728				//	A top-level window created with this style does not become the foreground window when the user clicks it. The system does not bring this window to the foreground when the user minimizes or closes the foreground window.  To activate the window, use the SetActiveWindow or SetForegroundWindow function.  The window does not appear on the taskbar by default. To force the window to appear on the taskbar, use the WS_EX_APPWINDOW style.
-	CONSTANT UnsignedLong				WS_EX_NOINHERITLAYOUT		= 1048576				//	The window does not pass its window layout to its child windows.
-	CONSTANT UnsignedLong				WS_EX_NOPARENTNOTIFY			= 4						//	The child window created with this style does not send the WM_PARENTNOTIFY message to its parent window when it is created or destroyed.
-	CONSTANT UnsignedLong				WS_EX_RIGHT						= 4096					//	The window has generic "right-aligned" properties. This depends on the window class. This style has an effect only if the shell language is Hebrew, Arabic, or another language that supports reading-order alignment; otherwise, the style is ignored.  Using the WS_EX_RIGHT style for static or edit controls has the same effect as using the SS_RIGHT or ES_RIGHT style, respectively. Using this style with button controls has the same effect as using BS_RIGHT and BS_RIGHTBUTTON styles. 
-	CONSTANT UnsignedLong				WS_EX_RIGHTSCROLLBAR			= 0						//	The vertical scroll bar (if present) is to the right of the client area. This is the default.
-	CONSTANT UnsignedLong				WS_EX_RTLREADING				= 8192					//	If the shell language is Hebrew, Arabic, or another language that supports reading-order alignment, the window text is displayed using right-to-left reading-order properties. For other languages, the style is ignored.
-	CONSTANT UnsignedLong				WS_EX_STATICEDGE				= 131072					//	The window has a three-dimensional border style intended to be used for items that do not accept user input.
-	CONSTANT UnsignedLong				WS_EX_TOOLWINDOW				= 128						//	The window is intended to be used as a floating toolbar. A tool window has a title bar that is shorter than a normal title bar, and the window title is drawn using a smaller font. A tool window does not appear in the taskbar or in the dialog that appears when the user presses ALT+TAB. If a tool window has a system menu, its icon is not displayed on the title bar. However, you can display the system menu by right-clicking or by typing ALT+SPACE. 
-	CONSTANT UnsignedLong				WS_EX_TOPMOST					= 8						//	The window should be placed above all non-topmost windows and should stay above them, even when the window is deactivated. To add or remove this style, use the SetWindowPos function.
-	CONSTANT UnsignedLong				WS_EX_TRANSPARENT				= 32						//	The window should not be painted until siblings beneath the window (that were created by the same thread) have been painted. The window appears transparent because the bits of underlying sibling windows have already been painted.  To achieve transparency without these restrictions, use the SetWindowRgn function.
-	CONSTANT UnsignedLong				WS_EX_WINDOWEDGE				= 256						//	The window has a border with a raised edge.
-	CONSTANT UnsignedLong				WS_EX_OVERLAPPEDWINDOW		= WS_EX_WINDOWEDGE + WS_EX_CLIENTEDGE
-																												//	The window is an overlapped window.
-	CONSTANT UnsignedLong				WS_EX_PALETTEWINDOW			= WS_EX_WINDOWEDGE + WS_EX_TOOLWINDOW + WS_EX_TOPMOST
-																												//	The window is palette window, which is a modeless dialog box that presents an array of commands. 
+	CONSTANT UnsignedLong			WS_EX_ACCEPTFILES				= 16						//	The window accepts drag-drop files.
+	CONSTANT UnsignedLong			WS_EX_APPWINDOW				= 262144					//	Forces a top-level window onto the taskbar when the window is visible. 
+	CONSTANT UnsignedLong			WS_EX_CLIENTEDGE				= 512						//	The window has a border with a sunken edge.
+	CONSTANT UnsignedLong			WS_EX_COMPOSITED				= 33554432				//	Paints all descendants of a window in bottom-to-top painting order using double-buffering. For more information, see Remarks. This cannot be used if the window has a class style of either CS_OWNDC or CS_CLASSDC.  Windows 2000:  This style is not supported. 
+	CONSTANT UnsignedLong			WS_EX_CONTEXTHELP				= 1024					//	The title bar of the window includes a question mark. When the user clicks the question mark, the cursor changes to a question mark with a pointer. If the user then clicks a child window, the child receives a WM_HELP message. The child window should pass the message to the parent window procedure, which should call the WinHelp function using the HELP_WM_HELP command. The Help application displays a pop-up window that typically contains help for the child window.  WS_EX_CONTEXTHELP cannot be used with the WS_MAXIMIZEBOX or WS_MINIMIZEBOX styles.
+	CONSTANT UnsignedLong			WS_EX_CONTROLPARENT			= 65536					//	The window itself contains child windows that should take part in dialog box navigation. If this style is specified, the dialog manager recurses into children of this window when performing navigation operations such as handling the TAB key, an arrow key, or a keyboard mnemonic.
+	CONSTANT UnsignedLong			WS_EX_DLGMODALFRAME			= 1						//	The window has a double border; the window can, optionally, be created with a title bar by specifying the WS_CAPTION style in the dwStyle parameter.
+	CONSTANT UnsignedLong			WS_EX_LAYERED					= 524288					//	The window is a layered window. This style cannot be used if the window has a class style of either CS_OWNDC or CS_CLASSDC.  Windows 8:  The WS_EX_LAYERED style is supported for top-level windows and child windows. Previous Windows versions support WS_EX_LAYERED only for top-level windows. 
+	CONSTANT UnsignedLong			WS_EX_LAYOUTRTL				= 4194304				//	If the shell language is Hebrew, Arabic, or another language that supports reading order alignment, the horizontal origin of the window is on the right edge. Increasing horizontal values advance to the left. 
+	CONSTANT UnsignedLong			WS_EX_LEFT						= 0						//	The window has generic left-aligned properties. This is the default.
+	CONSTANT UnsignedLong			WS_EX_LEFTSCROLLBAR			= 16384					//	If the shell language is Hebrew, Arabic, or another language that supports reading order alignment, the vertical scroll bar (if present) is to the left of the client area. For other languages, the style is ignored.
+	CONSTANT UnsignedLong			WS_EX_LTRREADING				= 0						//	The window text is displayed using left-to-right reading-order properties. This is the default.
+	CONSTANT UnsignedLong			WS_EX_MDICHILD					= 64						//	The window is a MDI child window.
+	CONSTANT UnsignedLong			WS_EX_NOACTIVATE				= 134217728				//	A top-level window created with this style does not become the foreground window when the user clicks it. The system does not bring this window to the foreground when the user minimizes or closes the foreground window.  To activate the window, use the SetActiveWindow or SetForegroundWindow function.  The window does not appear on the taskbar by default. To force the window to appear on the taskbar, use the WS_EX_APPWINDOW style.
+	CONSTANT UnsignedLong			WS_EX_NOINHERITLAYOUT		= 1048576				//	The window does not pass its window layout to its child windows.
+	CONSTANT UnsignedLong			WS_EX_NOPARENTNOTIFY			= 4						//	The child window created with this style does not send the WM_PARENTNOTIFY message to its parent window when it is created or destroyed.
+	CONSTANT UnsignedLong			WS_EX_RIGHT						= 4096					//	The window has generic "right-aligned" properties. This depends on the window class. This style has an effect only if the shell language is Hebrew, Arabic, or another language that supports reading-order alignment; otherwise, the style is ignored.  Using the WS_EX_RIGHT style for static or edit controls has the same effect as using the SS_RIGHT or ES_RIGHT style, respectively. Using this style with button controls has the same effect as using BS_RIGHT and BS_RIGHTBUTTON styles. 
+	CONSTANT UnsignedLong			WS_EX_RIGHTSCROLLBAR			= 0						//	The vertical scroll bar (if present) is to the right of the client area. This is the default.
+	CONSTANT UnsignedLong			WS_EX_RTLREADING				= 8192					//	If the shell language is Hebrew, Arabic, or another language that supports reading-order alignment, the window text is displayed using right-to-left reading-order properties. For other languages, the style is ignored.
+	CONSTANT UnsignedLong			WS_EX_STATICEDGE				= 131072					//	The window has a three-dimensional border style intended to be used for items that do not accept user input.
+	CONSTANT UnsignedLong			WS_EX_TOOLWINDOW				= 128						//	The window is intended to be used as a floating toolbar. A tool window has a title bar that is shorter than a normal title bar, and the window title is drawn using a smaller font. A tool window does not appear in the taskbar or in the dialog that appears when the user presses ALT+TAB. If a tool window has a system menu, its icon is not displayed on the title bar. However, you can display the system menu by right-clicking or by typing ALT+SPACE. 
+	CONSTANT UnsignedLong			WS_EX_TOPMOST					= 8						//	The window should be placed above all non-topmost windows and should stay above them, even when the window is deactivated. To add or remove this style, use the SetWindowPos function.
+	CONSTANT UnsignedLong			WS_EX_TRANSPARENT				= 32						//	The window should not be painted until siblings beneath the window (that were created by the same thread) have been painted. The window appears transparent because the bits of underlying sibling windows have already been painted.  To achieve transparency without these restrictions, use the SetWindowRgn function.
+	CONSTANT UnsignedLong			WS_EX_WINDOWEDGE				= 256						//	The window has a border with a raised edge.
+	CONSTANT UnsignedLong			WS_EX_OVERLAPPEDWINDOW		= WS_EX_WINDOWEDGE + WS_EX_CLIENTEDGE
+																											//	The window is an overlapped window.
+	CONSTANT UnsignedLong			WS_EX_PALETTEWINDOW			= WS_EX_WINDOWEDGE + WS_EX_TOOLWINDOW + WS_EX_TOPMOST
+																											//	The window is palette window, which is a modeless dialog box that presents an array of commands. 
  	//	Window Styles
-	CONSTANT UnsignedLong				WS_BORDER						= 8388608
-	CONSTANT UnsignedLong				WS_CAPTION						= 12582912
-	CONSTANT UnsignedLong				WS_CHILD							= 1073741824
-	CONSTANT UnsignedLong				WS_CHILDWINDOW					= WS_CHILD
-	CONSTANT UnsignedLong				WS_CLIPCHILDREN				= 33554432
-	CONSTANT UnsignedLong				WS_CLIPSIBLINGS				= 67108864
-	CONSTANT UnsignedLong				WS_DISABLED						= 134217728
-	CONSTANT UnsignedLong				WS_DLGFRAME						= 4194304
-	CONSTANT UnsignedLong				WS_GROUP							= 131072
-	CONSTANT UnsignedLong				WS_HSCROLL						= 1048576
-	CONSTANT UnsignedLong				WS_MAXIMIZE						= 16777216
-	CONSTANT UnsignedLong				WS_MAXIMIZEBOX					= 65536
-	CONSTANT UnsignedLong				WS_MINIMIZE						= 536870912
-	CONSTANT UnsignedLong				WS_MINIMIZEBOX					= 131072
-	CONSTANT UnsignedLong				WS_OVERLAPPED					= 0
-	CONSTANT UnsignedLong				WS_ICONIC						= WS_MINIMIZE
-	CONSTANT UnsignedLong				WS_POPUP							= 2147483648
-	CONSTANT UnsignedLong				WS_VISIBLE						= 268435456
-	CONSTANT UnsignedLong				WS_VSCROLL						= 2097152
-	CONSTANT UnsignedLong				WS_SYSMENU						= 524288
-	CONSTANT UnsignedLong				WS_TABSTOP						= 65536
-	CONSTANT UnsignedLong				WS_THICKFRAME					= 262144
-	CONSTANT UnsignedLong				WS_TILED							= WS_OVERLAPPED
-	CONSTANT UnsignedLong				WS_OVERLAPPEDWINDOW			= WS_OVERLAPPED + WS_CAPTION + WS_SYSMENU + WS_THICKFRAME + WS_MINIMIZEBOX + WS_MAXIMIZEBOX
-	CONSTANT UnsignedLong				WS_POPUPWINDOW					= WS_POPUP + WS_BORDER + WS_SYSMENU
-	CONSTANT UnsignedLong				WS_TILEDWINDOW					= WS_OVERLAPPEDWINDOW
-	CONSTANT UnsignedLong				WS_SIZEBOX						= WS_THICKFRAME
+	CONSTANT UnsignedLong			WS_BORDER						= 8388608
+	CONSTANT UnsignedLong			WS_CAPTION						= 12582912
+	CONSTANT UnsignedLong			WS_CHILD							= 1073741824
+	CONSTANT UnsignedLong			WS_CHILDWINDOW					= WS_CHILD
+	CONSTANT UnsignedLong			WS_CLIPCHILDREN				= 33554432
+	CONSTANT UnsignedLong			WS_CLIPSIBLINGS				= 67108864
+	CONSTANT UnsignedLong			WS_DISABLED						= 134217728
+	CONSTANT UnsignedLong			WS_DLGFRAME						= 4194304
+	CONSTANT UnsignedLong			WS_GROUP							= 131072
+	CONSTANT UnsignedLong			WS_HSCROLL						= 1048576
+	CONSTANT UnsignedLong			WS_MAXIMIZE						= 16777216
+	CONSTANT UnsignedLong			WS_MAXIMIZEBOX					= 65536
+	CONSTANT UnsignedLong			WS_MINIMIZE						= 536870912
+	CONSTANT UnsignedLong			WS_MINIMIZEBOX					= 131072
+	CONSTANT UnsignedLong			WS_OVERLAPPED					= 0
+	CONSTANT UnsignedLong			WS_ICONIC						= WS_MINIMIZE
+	CONSTANT UnsignedLong			WS_POPUP							= 2147483648
+	CONSTANT UnsignedLong			WS_VISIBLE						= 268435456
+	CONSTANT UnsignedLong			WS_VSCROLL						= 2097152
+	CONSTANT UnsignedLong			WS_SYSMENU						= 524288
+	CONSTANT UnsignedLong			WS_TABSTOP						= 65536
+	CONSTANT UnsignedLong			WS_THICKFRAME					= 262144
+	CONSTANT UnsignedLong			WS_TILED							= WS_OVERLAPPED
+	CONSTANT UnsignedLong			WS_OVERLAPPEDWINDOW			= WS_OVERLAPPED + WS_CAPTION + WS_SYSMENU + WS_THICKFRAME + WS_MINIMIZEBOX + WS_MAXIMIZEBOX
+	CONSTANT UnsignedLong			WS_POPUPWINDOW					= WS_POPUP + WS_BORDER + WS_SYSMENU
+	CONSTANT UnsignedLong			WS_TILEDWINDOW					= WS_OVERLAPPEDWINDOW
+	CONSTANT UnsignedLong			WS_SIZEBOX						= WS_THICKFRAME
 
 	//	TrackMouseEvent
-	CONSTANT UnsignedLong				TME_LEAVE						= 2
+	CONSTANT UnsignedLong			TME_LEAVE						= 2
 
 	//	MapMode
-	CONSTANT Integer						MM_TEXT							= 1						//	Each logical unit is mapped to one device pixel. Positive x is to the right; positive y is down.
-	CONSTANT Integer						MM_LOMETRIC						= 2						//	Each logical unit is mapped to 0.1 millimeter. Positive x is to the right; positive y is up.
-	CONSTANT Integer						MM_HIMETRIC						= 3						//	Each logical unit is mapped to 0.01 millimeter. Positive x is to the right; positive y is up.
-	CONSTANT Integer						MM_LOENGLISH					= 4						//	Each logical unit is mapped to 0.01 inch. Positive x is to the right; positive y is up.
-	CONSTANT Integer						MM_HIENGLISH					= 5						//	Each logical unit is mapped to 0.001 inch. Positive x is to the right; positive y is up.
-	CONSTANT Integer						MM_TWIPS							= 6						//	Each logical unit is mapped to 0.001 inch. Positive x is to the right; positive y is up.
-	CONSTANT Integer						MM_ISOTROPIC					= 7						//	Logical units are mapped to arbitrary device units with equally scaled axes; that is, one unit along the x-axis is equal to one unit along the y-axis.
-																												//	The META_SETWINDOWEXT and META_SETVIEWPORTEXT records specify the units and the orientation of the axes.  The processing application SHOULD make adjustments as necessary to ensure the x and y units remain the same size. For example, when the window extent is set, the viewport SHOULD be adjusted to keep the units isotropic.
-	CONSTANT Integer						MM_ANISOTROPIC					= 8						//	Logical units are mapped to arbitrary units with arbitrarily scaled axes.
+	CONSTANT Integer					MM_TEXT							= 1						//	Each logical unit is mapped to one device pixel. Positive x is to the right; positive y is down.
+	CONSTANT Integer					MM_LOMETRIC						= 2						//	Each logical unit is mapped to 0.1 millimeter. Positive x is to the right; positive y is up.
+	CONSTANT Integer					MM_HIMETRIC						= 3						//	Each logical unit is mapped to 0.01 millimeter. Positive x is to the right; positive y is up.
+	CONSTANT Integer					MM_LOENGLISH					= 4						//	Each logical unit is mapped to 0.01 inch. Positive x is to the right; positive y is up.
+	CONSTANT Integer					MM_HIENGLISH					= 5						//	Each logical unit is mapped to 0.001 inch. Positive x is to the right; positive y is up.
+	CONSTANT Integer					MM_TWIPS							= 6						//	Each logical unit is mapped to 0.001 inch. Positive x is to the right; positive y is up.
+	CONSTANT Integer					MM_ISOTROPIC					= 7						//	Logical units are mapped to arbitrary device units with equally scaled axes; that is, one unit along the x-axis is equal to one unit along the y-axis.
+																											//	The META_SETWINDOWEXT and META_SETVIEWPORTEXT records specify the units and the orientation of the axes.  The processing application SHOULD make adjustments as necessary to ensure the x and y units remain the same size. For example, when the window extent is set, the viewport SHOULD be adjusted to keep the units isotropic.
+	CONSTANT Integer					MM_ANISOTROPIC					= 8						//	Logical units are mapped to arbitrary units with arbitrarily scaled axes.
 
 	//	Load Image
-	CONSTANT Long							LR_CREATEDIBSECTION			= 8192					// When the uType parameter specifies IMAGE_BITMAP, causes the function to return a DIB section bitmap rather than a compatible bitmap. This flag is useful for loading a bitmap without mapping it to the colors of the display device.
-	CONSTANT Long							LR_DEFAULTCOLOR				= 0						// The default flag; it does nothing. All it means is "not LR_MONOCHROME".
-	CONSTANT Long							LR_DEFAULTSIZE					= 64						// Uses the width or height specified by the system metric values for cursors or icons, if the cxDesired or cyDesired values are set to zero. If this flag is not specified and cxDesired and cyDesired are set to zero, the function uses the actual resource size. If the resource contains multiple images, the function uses the size of the first image.
-	CONSTANT Long							LR_LOADFROMFILE				= 16						// Loads the stand-alone image from the file specified by lpszName (icon, cursor, or bitmap file).
-	CONSTANT Long							LR_LOADMAP3DCOLORS			= 4096					// Searches the color table for the image and replaces the following shades of gray with the corresponding 3-D color.
-																												//	Dk Gray, RGB(128,128,128) with COLOR_3DSHADOW
-																												//	Gray, RGB(192,192,192) with COLOR_3DFACE
-																												//	Lt Gray, RGB(223,223,223) with COLOR_3DLIGHT
-																												//	Do not use this option if you are loading a bitmap with a color depth greater than 8bpp.
-	CONSTANT Long							LR_LOADTRANSPARENT			= 32						// Retrieves the color value of the first pixel in the image and replaces the corresponding entry in the color table with the default window color (COLOR_WINDOW). All pixels in the image that use that entry become the default window color. This value applies only to images that have corresponding color tables.
-																												//	Do not use this option if you are loading a bitmap with a color depth greater than 8bpp.
-																												//	If fuLoad includes both the LR_LOADTRANSPARENT and LR_LOADMAP3DCOLORS values, LR_LOADTRANSPARENT takes precedence. However, the color table entry is replaced with COLOR_3DFACE rather than COLOR_WINDOW.
-	CONSTANT Long							LR_MONOCHROME					= 1						// Loads the image in black and white.
-	CONSTANT Long							LR_SHARED						= 32768					// Shares the image handle if the image is loaded multiple times. If LR_SHARED is not set, a second call to LoadImage for the same resource will load the image again and return a different handle. 
-																												//	When you use this flag, the system will destroy the resource when it is no longer needed.
-																												//	Do not use LR_SHARED for images that have non-standard sizes, that may change after loading, or that are loaded from a file.
-																												//	When loading a system icon or cursor, you must use LR_SHARED or the function will fail to load the resource.
-																												//	This function finds the first image in the cache with the requested resource name, regardless of the size requested.
-	CONSTANT Long							LR_VGACOLOR						= 128						// Uses true VGA colors.
+	CONSTANT Long						LR_CREATEDIBSECTION			= 8192					// When the uType parameter specifies IMAGE_BITMAP, causes the function to return a DIB section bitmap rather than a compatible bitmap. This flag is useful for loading a bitmap without mapping it to the colors of the display device.
+	CONSTANT Long						LR_DEFAULTCOLOR				= 0						// The default flag; it does nothing. All it means is "not LR_MONOCHROME".
+	CONSTANT Long						LR_DEFAULTSIZE					= 64						// Uses the width or height specified by the system metric values for cursors or icons, if the cxDesired or cyDesired values are set to zero. If this flag is not specified and cxDesired and cyDesired are set to zero, the function uses the actual resource size. If the resource contains multiple images, the function uses the size of the first image.
+	CONSTANT Long						LR_LOADFROMFILE				= 16						// Loads the stand-alone image from the file specified by lpszName (icon, cursor, or bitmap file).
+	CONSTANT Long						LR_LOADMAP3DCOLORS			= 4096					// Searches the color table for the image and replaces the following shades of gray with the corresponding 3-D color.
+																											//	Dk Gray, RGB(128,128,128) with COLOR_3DSHADOW
+																											//	Gray, RGB(192,192,192) with COLOR_3DFACE
+																											//	Lt Gray, RGB(223,223,223) with COLOR_3DLIGHT
+																											//	Do not use this option if you are loading a bitmap with a color depth greater than 8bpp.
+	CONSTANT Long						LR_LOADTRANSPARENT			= 32						// Retrieves the color value of the first pixel in the image and replaces the corresponding entry in the color table with the default window color (COLOR_WINDOW). All pixels in the image that use that entry become the default window color. This value applies only to images that have corresponding color tables.
+																											//	Do not use this option if you are loading a bitmap with a color depth greater than 8bpp.
+																											//	If fuLoad includes both the LR_LOADTRANSPARENT and LR_LOADMAP3DCOLORS values, LR_LOADTRANSPARENT takes precedence. However, the color table entry is replaced with COLOR_3DFACE rather than COLOR_WINDOW.
+	CONSTANT Long						LR_MONOCHROME					= 1						// Loads the image in black and white.
+	CONSTANT Long						LR_SHARED						= 32768					// Shares the image handle if the image is loaded multiple times. If LR_SHARED is not set, a second call to LoadImage for the same resource will load the image again and return a different handle. 
+																											//	When you use this flag, the system will destroy the resource when it is no longer needed.
+																											//	Do not use LR_SHARED for images that have non-standard sizes, that may change after loading, or that are loaded from a file.
+																											//	When loading a system icon or cursor, you must use LR_SHARED or the function will fail to load the resource.
+																											//	This function finds the first image in the cache with the requested resource name, regardless of the size requested.
+	CONSTANT Long						LR_VGACOLOR						= 128						// Uses true VGA colors.
 
 	//	Load Image Type
-	CONSTANT Long							IMAGE_BITMAP					= 0						//	Loads a bitMap
-	CONSTANT Long							IMAGE_ICON						= 1						//	Loads an icon
-	CONSTANT Long							IMAGE_CURSOR					= 2						//	Loads a cursor
+	CONSTANT Long						IMAGE_BITMAP					= 0						//	Loads a bitMap
+	CONSTANT Long						IMAGE_ICON						= 1						//	Loads an icon
+	CONSTANT Long						IMAGE_CURSOR					= 2						//	Loads a cursor
 
 	//	GetDIBits
-	CONSTANT Long							DIB_PAL_COLORS					= 1						//	The color table should consist of an array of 16-bit indexes into the current logical palette.
-	CONSTANT Long							DIB_RGB_COLORS					= 0						//	The color table should consist of literal red, green, blue (RGB) values.
+	CONSTANT Long						DIB_PAL_COLORS					= 1						//	The color table should consist of an array of 16-bit indexes into the current logical palette.
+	CONSTANT Long						DIB_RGB_COLORS					= 0						//	The color table should consist of literal red, green, blue (RGB) values.
 
-	CONSTANT UnsignedLong				GENERIC_ALL						= 268435456
-	CONSTANT UnsignedLong				GENERIC_EXECUTE				= 536870912
-	CONSTANT UnsignedLong				GENERIC_WRITE					= 1073741824
-	CONSTANT UnsignedLong				GENERIC_READ					= 2147483648
+	CONSTANT UnsignedLong			GENERIC_ALL						= 268435456
+	CONSTANT UnsignedLong			GENERIC_EXECUTE				= 536870912
+	CONSTANT UnsignedLong			GENERIC_WRITE					= 1073741824
+	CONSTANT UnsignedLong			GENERIC_READ					= 2147483648
 
-//	CONSTANT UnsignedLong				GENERIC_EXECUTE 				= FILE_READ_ATTRIBUTES + STANDARD_RIGHTS_EXECUTE + SYNCHRONIZE
-//	CONSTANT UnsignedLong				GENERIC_READ 					= FILE_READ_ATTRIBUTES + FILE_READ_DATA + FILE_READ_EA + STANDARD_RIGHTS_READ + SYNCHRONIZE
-//	CONSTANT UnsignedLong				GENERIC_WRITE 					= FILE_WRITE_ATTRIBUTES + FILE_APPEND_DATA + FILE_WRITE_DATA + FILE_WRITE_EA + STANDARD_RIGHTS_WRITE + SYNCHRONIZE
+//	CONSTANT UnsignedLong			GENERIC_EXECUTE 				= FILE_READ_ATTRIBUTES + STANDARD_RIGHTS_EXECUTE + SYNCHRONIZE
+//	CONSTANT UnsignedLong			GENERIC_READ 					= FILE_READ_ATTRIBUTES + FILE_READ_DATA + FILE_READ_EA + STANDARD_RIGHTS_READ + SYNCHRONIZE
+//	CONSTANT UnsignedLong			GENERIC_WRITE 					= FILE_WRITE_ATTRIBUTES + FILE_APPEND_DATA + FILE_WRITE_DATA + FILE_WRITE_EA + STANDARD_RIGHTS_WRITE + SYNCHRONIZE
 
 	//	CreateFile - ShareMode
-	CONSTANT Integer						FILE_SHARE_NONE				= 0
-	CONSTANT Integer						FILE_SHARE_READ				= 1
-	CONSTANT Integer						FILE_SHARE_WRITE				= 2
-	CONSTANT Integer						FILE_SHARE_DELETE				= 4
+	CONSTANT Integer					FILE_SHARE_NONE				= 0
+	CONSTANT Integer					FILE_SHARE_READ				= 1
+	CONSTANT Integer					FILE_SHARE_WRITE				= 2
+	CONSTANT Integer					FILE_SHARE_DELETE				= 4
 
 	//	CreateFile - CreationDisposition
-	CONSTANT Integer						CREATE_NEW						= 1
-	CONSTANT Integer						CREATE_ALWAYS					= 2
-	CONSTANT Integer						OPEN_EXISTING					= 3
-	CONSTANT Integer						OPEN_ALWAYS						= 4
-	CONSTANT Integer						TRUNCATE_EXISTING				= 5
+	CONSTANT Integer					CREATE_NEW						= 1
+	CONSTANT Integer					CREATE_ALWAYS					= 2
+	CONSTANT Integer					OPEN_EXISTING					= 3
+	CONSTANT Integer					OPEN_ALWAYS						= 4
+	CONSTANT Integer					TRUNCATE_EXISTING				= 5
 
 	//	File Attributes
-	CONSTANT Long							FILE_ATTRIBUTE_ARCHIVE		= 32						//	(0x20) A file or directory that is an archive file or directory. Applications typically use this attribute to mark files for backup or removal . 
-	CONSTANT Long							FILE_ATTRIBUTE_COMPRESSED	= 2048					//	(0x800) A file or directory that is compressed. For a file, all of the data in the file is compressed. For a directory, compression is the default for newly created files and subdirectories.
-	CONSTANT Long							FILE_ATTRIBUTE_DEVICE		= 64						//	(0x40) This value is reserved for system use.
-	CONSTANT Long							FILE_ATTRIBUTE_DIRECTORY	= 16						// (0x10) The handle that identifies a directory.
-	CONSTANT Long							FILE_ATTRIBUTE_ENCRYPTED	= 16384					// (0x4000) A file or directory that is encrypted. For a file, all data streams in the file are encrypted. For a directory, encryption is the default for newly created files and subdirectories.
-	CONSTANT Long							FILE_ATTRIBUTE_HIDDEN		= 2						// (0x2) The file or directory is hidden. It is not included in an ordinary directory listing.
-	CONSTANT Long							FILE_ATTRIBUTE_INTEGRITY_STREAM						&
-																					= 32768					//	(0x8000) The directory or user data stream is configured with integrity (only supported on ReFS volumes). It is not included in an ordinary directory listing. The integrity setting persists with the file if it's renamed. If a file is copied the destination file will have integrity set if either the source file or destination directory have integrity set.  Windows Server 2008 R2, Windows 7, Windows Server 2008, Windows Vista, Windows Server 2003, and Windows XP:  This flag is not supported until Windows Server 2012.
-	CONSTANT Long							FILE_ATTRIBUTE_NORMAL		= 128						//	(0x80) A file that does not have other attributes set. This attribute is valid only when used alone.
-	CONSTANT Long							FILE_ATTRIBUTE_NOT_CONTENT_INDEXED					&
-																					= 8192					//	(0x2000) The file or directory is not to be indexed by the content indexing service.
-	CONSTANT Long							FILE_ATTRIBUTE_NO_SCRUB_DATA							&
-																					= 131072					//	(0x20000) The user data stream not to be read by the background data integrity scanner (AKA scrubber). When set on a directory it only provides inheritance. This flag is only supported on Storage Spaces and ReFS volumes. It is not included in an ordinary directory listing.  Windows Server 2008 R2, Windows 7, Windows Server 2008, Windows Vista, Windows Server 2003, and Windows XP:  This flag is not supported until Windows 8 and Windows Server 2012.
-	CONSTANT Long							FILE_ATTRIBUTE_OFFLINE		= 4096					// (0x1000) The data of a file is not available immediately. This attribute indicates that the file data is physically moved to offline storage. This attribute is used by Remote Storage, which is the hierarchical storage management software. Applications should not arbitrarily change this attribute.
-	CONSTANT Long							FILE_ATTRIBUTE_READONLY		= 1						// (0x1) A file that is read-only. Applications can read the file, but cannot write to it or delete it. This attribute is not honored on directories. For more information, see You cannot view or change the Read-only or the System attributes of folders in Windows Server 2003, in Windows XP, in Windows Vista or in Windows 7.
-	CONSTANT Long							FILE_ATTRIBUTE_REPARSE_POINT							&
-																					= 1024					// (0x400) A file or directory that has an associated reparse point, or a file that is a symbolic link.
-	CONSTANT Long							FILE_ATTRIBUTE_SPARSE_FILE	= 512						//	(0x200) A file that is a sparse file.
- 	CONSTANT Long							FILE_ATTRIBUTE_SYSTEM		= 4						//	(0x4) A file or directory that the operating system uses a part of, or uses exclusively.
- 	CONSTANT Long							FILE_ATTRIBUTE_TEMPORARY	= 256						//	(0x100) A file that is being used for temporary storage. File systems avoid writing data back to mass storage if sufficient cache memory is available, because typically, an application deletes a temporary file after the handle is closed. In that scenario, the system can entirely avoid writing the data. Otherwise, the data is written after the handle is closed.
-	CONSTANT Long							FILE_ATTRIBUTE_VIRTUAL		= 65536					//	(0x10000) This value is reserved for system 
+	CONSTANT Long						FILE_ATTRIBUTE_ARCHIVE		= 32						//	(0x20) A file or directory that is an archive file or directory. Applications typically use this attribute to mark files for backup or removal . 
+	CONSTANT Long						FILE_ATTRIBUTE_COMPRESSED	= 2048					//	(0x800) A file or directory that is compressed. For a file, all of the data in the file is compressed. For a directory, compression is the default for newly created files and subdirectories.
+	CONSTANT Long						FILE_ATTRIBUTE_DEVICE		= 64						//	(0x40) This value is reserved for system use.
+	CONSTANT Long						FILE_ATTRIBUTE_DIRECTORY	= 16						// (0x10) The handle that identifies a directory.
+	CONSTANT Long						FILE_ATTRIBUTE_ENCRYPTED	= 16384					// (0x4000) A file or directory that is encrypted. For a file, all data streams in the file are encrypted. For a directory, encryption is the default for newly created files and subdirectories.
+	CONSTANT Long						FILE_ATTRIBUTE_HIDDEN		= 2						// (0x2) The file or directory is hidden. It is not included in an ordinary directory listing.
+	CONSTANT Long						FILE_ATTRIBUTE_INTEGRITY_STREAM						&
+																				= 32768					//	(0x8000) The directory or user data stream is configured with integrity (only supported on ReFS volumes). It is not included in an ordinary directory listing. The integrity setting persists with the file if it's renamed. If a file is copied the destination file will have integrity set if either the source file or destination directory have integrity set.  Windows Server 2008 R2, Windows 7, Windows Server 2008, Windows Vista, Windows Server 2003, and Windows XP:  This flag is not supported until Windows Server 2012.
+	CONSTANT Long						FILE_ATTRIBUTE_NORMAL		= 128						//	(0x80) A file that does not have other attributes set. This attribute is valid only when used alone.
+	CONSTANT Long						FILE_ATTRIBUTE_NOT_CONTENT_INDEXED					&
+																				= 8192					//	(0x2000) The file or directory is not to be indexed by the content indexing service.
+	CONSTANT Long						FILE_ATTRIBUTE_NO_SCRUB_DATA							&
+																				= 131072					//	(0x20000) The user data stream not to be read by the background data integrity scanner (AKA scrubber). When set on a directory it only provides inheritance. This flag is only supported on Storage Spaces and ReFS volumes. It is not included in an ordinary directory listing.  Windows Server 2008 R2, Windows 7, Windows Server 2008, Windows Vista, Windows Server 2003, and Windows XP:  This flag is not supported until Windows 8 and Windows Server 2012.
+	CONSTANT Long						FILE_ATTRIBUTE_OFFLINE		= 4096					// (0x1000) The data of a file is not available immediately. This attribute indicates that the file data is physically moved to offline storage. This attribute is used by Remote Storage, which is the hierarchical storage management software. Applications should not arbitrarily change this attribute.
+	CONSTANT Long						FILE_ATTRIBUTE_READONLY		= 1						// (0x1) A file that is read-only. Applications can read the file, but cannot write to it or delete it. This attribute is not honored on directories. For more information, see You cannot view or change the Read-only or the System attributes of folders in Windows Server 2003, in Windows XP, in Windows Vista or in Windows 7.
+	CONSTANT Long						FILE_ATTRIBUTE_REPARSE_POINT							&
+																				= 1024					// (0x400) A file or directory that has an associated reparse point, or a file that is a symbolic link.
+	CONSTANT Long						FILE_ATTRIBUTE_SPARSE_FILE	= 512						//	(0x200) A file that is a sparse file.
+ 	CONSTANT Long						FILE_ATTRIBUTE_SYSTEM		= 4						//	(0x4) A file or directory that the operating system uses a part of, or uses exclusively.
+ 	CONSTANT Long						FILE_ATTRIBUTE_TEMPORARY	= 256						//	(0x100) A file that is being used for temporary storage. File systems avoid writing data back to mass storage if sufficient cache memory is available, because typically, an application deletes a temporary file after the handle is closed. In that scenario, the system can entirely avoid writing the data. Otherwise, the data is written after the handle is closed.
+	CONSTANT Long						FILE_ATTRIBUTE_VIRTUAL		= 65536					//	(0x10000) This value is reserved for system 
  
 Private:
 
-	CONSTANT Long							MAX_PATH							= 256
+	CONSTANT Long						MAX_PATH							= 256
 	
-	n_cst_string							invo_string
+	n_cst_string						invo_string
 
-	Boolean									ib_isUnicode					= TRUE
-	Double									idbl_PBVersion					= 0.0
+	Boolean								ib_isUnicode					= TRUE
+	Double								idbl_PBVersion					= 0.0
 end variables
-
 forward prototypes
 public function boolean of_isunicode ()
 public function long of_getfontwidth (ref statictext rst_font, string vs_text)

@@ -13,16 +13,15 @@ type variables
 Public:
 
 	//	Reserved object types
-	CONSTANT String						SEPARATOR						= 'separator'
-	CONSTANT String						LABEL								= 'label'
-	CONSTANT String						LINK								= 'link'
-	CONSTANT String						GROUP								= 'group'
+	CONSTANT String					SEPARATOR						= 'separator'
+	CONSTANT String					LABEL								= 'label'
+	CONSTANT String					LINK								= 'link'
+	CONSTANT String					GROUP								= 'group'
 
 Private:
 
-	Double									idbl_PBVersion					= 0.0
+	Double								idbl_PBVersion					= 0.0
 end variables
-
 forward prototypes
 public function double of_pbversion ()
 public function long of_additem ()

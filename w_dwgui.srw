@@ -6,9 +6,11 @@ type st_splitbar from u_st_splitbar within w_dwgui
 end type
 type uo_xplistbar from u_cst_xplistbar within w_dwgui
 end type
+type uo_toolbar from u_cst_toolbar within w_dwgui
+end type
 type dw_options from datawindow within w_dwgui
 end type
-type uo_toolbar from u_cst_toolbar within w_dwgui
+type uo_groupbox from u_cst_groupbox within w_dwgui
 end type
 end forward
 
@@ -25,8 +27,9 @@ string icon = "AppIcon!"
 boolean center = true
 st_splitbar st_splitbar
 uo_xplistbar uo_xplistbar
-dw_options dw_options
 uo_toolbar uo_toolbar
+dw_options dw_options
+uo_groupbox uo_groupbox
 end type
 global w_dwgui w_dwgui
 
@@ -39,24 +42,29 @@ Private:
 	Long								il_print					= -1
 	
 	n_cst_resize					invo_resize
+	
+	n_cst_groupBox					invo_groupBox
 end variables
 
 on w_dwgui.create
 this.st_splitbar=create st_splitbar
 this.uo_xplistbar=create uo_xplistbar
-this.dw_options=create dw_options
 this.uo_toolbar=create uo_toolbar
+this.dw_options=create dw_options
+this.uo_groupbox=create uo_groupbox
 this.Control[]={this.st_splitbar,&
 this.uo_xplistbar,&
+this.uo_toolbar,&
 this.dw_options,&
-this.uo_toolbar}
+this.uo_groupbox}
 end on
 
 on w_dwgui.destroy
 destroy(this.st_splitbar)
 destroy(this.uo_xplistbar)
-destroy(this.dw_options)
 destroy(this.uo_toolbar)
+destroy(this.dw_options)
+destroy(this.uo_groupbox)
 end on
 
 event open;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -68,10 +76,34 @@ event open;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // Original Author:	Christopher Harris
 
+invo_groupBox							= CREATE n_cst_groupBox
+
+invo_groupBox.of_register(dw_options)
+
+invo_groupBox.of_disableUpdate()
+
+invo_groupBox.of_addGroupBox('Show', PixelsToUnits(7, xPixelsToUnits!), 0, 500, 916)
+invo_groupBox.of_addGroupBox('Check', 763 - PixelsToUnits(7, xPixelsToUnits!), 0, 500, 270)
+invo_groupBox.of_addGroupBox('Enable', 1463 - PixelsToUnits(7, xPixelsToUnits!), 0, 500, 350)
+invo_groupBox.of_addGroupBox('Display', 763 - PixelsToUnits(7, xPixelsToUnits!), 782 - PixelsToUnits(27, yPixelsToUnits!), 500, 240)
+invo_groupBox.of_addGroupBox('Change', 1463 - PixelsToUnits(7, xPixelsToUnits!), 782 - PixelsToUnits(27, yPixelsToUnits!), 500, 240)
+
+invo_groupBox.of_setTitleBarAsTab('Check', TRUE)
+invo_groupBox.of_setRoundGroupBox('Enable', FALSE)
+invo_groupBox.of_setRoundTitleBar('Enable', FALSE)
+invo_groupBox.of_setTitleBar('Display', FALSE)
+invo_groupBox.of_setRoundGroupBox('Display', FALSE)
+invo_groupBox.of_setTitleBar('Change', FALSE)
+
+invo_groupBox.of_enableUpdate()
+
 uo_toolbar.Resize(workSpaceWidth() - PixelsToUnits(2, XPixelsToUnits!) - uo_XPListBar.Width - st_splitBar.Width, uo_toolbar.Height)
-dw_options.Resize(workSpaceWidth() - PixelsToUnits(2, XPixelsToUnits!) - uo_XPListBar.Width - st_splitBar.Width, workSpaceHeight() - PixelsToUnits(1, YPixelsToUnits!) - uo_toolbar.Height)
 uo_XPListBar.Resize(uo_XPListBar.Width, workSpaceHeight() - PixelsToUnits(2, YPixelsToUnits!))
 st_splitBar.Resize(st_splitBar.Width, workSpaceHeight() - PixelsToUnits(2, YPixelsToUnits!))
+uo_groupBox.Resize(workSpaceWidth() - PixelsToUnits(2, XPixelsToUnits!) - uo_XPListBar.Width - st_splitBar.Width, workSpaceHeight() - PixelsToUnits(1, YPixelsToUnits!) - uo_toolbar.Height)
+
+dw_options.Move(uo_groupBox.X + PixelsToUnits(1, xPixelsToUnits!), uo_groupBox.Y + PixelsToUnits(18, xPixelsToUnits!))
+dw_options.Resize(uo_groupBox.Width - PixelsToUnits(2, xPixelsToUnits!), uo_groupBox.Height - PixelsToUnits(19, xPixelsToUnits!))
 
 invo_resize								= CREATE n_cst_resize
 
@@ -81,10 +113,12 @@ invo_resize.of_register(uo_toolbar, invo_resize.SCALERIGHT)
 invo_resize.of_register(dw_options, invo_resize.SCALERIGHTBOTTOM)
 invo_resize.of_register(uo_XPListBar, invo_resize.SCALEBOTTOM)
 invo_resize.of_register(st_splitBar, invo_resize.SCALEBOTTOM)
+invo_resize.of_register(uo_groupBox, invo_resize.SCALERIGHTBOTTOM)
 
 st_splitBar.of_register(uo_XPListBar, st_splitBar.LEFT)
 st_splitBar.of_register(uo_toolbar, st_splitBar.RIGHT)
 st_splitBar.of_register(dw_options, st_splitBar.RIGHT)
+st_splitBar.of_register(uo_groupBox, st_splitBar.RIGHT)
 
 ////	Documentation example 1
 //
@@ -204,6 +238,8 @@ END IF
 end event
 
 event close;IF isValid(invo_resize) THEN DESTROY invo_resize
+
+IF isValid(invo_groupBox) THEN DESTROY invo_groupBox
 end event
 
 type st_splitbar from u_st_splitbar within w_dwgui
@@ -572,16 +608,67 @@ CHOOSE CASE Lower(vs_group)
 END CHOOSE
 end event
 
-type dw_options from datawindow within w_dwgui
+type uo_toolbar from u_cst_toolbar within w_dwgui
 integer x = 905
-integer y = 104
+integer y = 4
 integer width = 2729
-integer height = 1436
+integer taborder = 10
+end type
+
+on uo_toolbar.destroy
+call u_cst_toolbar::destroy
+end on
+
+event ue_itemclicked;call super::ue_itemclicked;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+CHOOSE CASE Lower(vs_button)
+		
+	CASE 'exit', 'open', 'open file'
+		
+		POST Close(parent)
+		
+//	CASE 'save'
+//		
+//		uo_toolBar.dw_toolBar.SaveAs('c:\temp\dw_toolBar.csv', csv!, TRUE)
+		
+END CHOOSE
+end event
+
+event ue_resized;call super::ue_resized;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+uo_groupBox.Move(uo_toolbar.X, uo_toolbar.Height)
+uo_groupBox.Resize(uo_toolbar.Width, uo_groupBox.Height - (vl_newHeight - vl_oldHeight))
+
+//dw_options.Move(uo_toolbar.X, uo_toolbar.Height)
+//dw_options.Resize(uo_toolbar.Width, dw_options.Height - (vl_newHeight - vl_oldHeight))
+end event
+
+type dw_options from datawindow within w_dwgui
+event ue_dwnmousemove pbm_dwnmousemove
+integer x = 1070
+integer y = 252
+integer width = 2222
+integer height = 1216
 integer taborder = 50
 string title = "none"
 string dataobject = "d_dwgui"
 boolean hscrollbar = true
 boolean vscrollbar = true
+boolean border = false
 boolean livescroll = true
 end type
 
@@ -726,49 +813,23 @@ InsertRow(0)
 ResetUpdate()
 end event
 
-type uo_toolbar from u_cst_toolbar within w_dwgui
+event doubleclicked;uo_groupBox.of_setEnabled(NOT uo_groupBox.of_isEnabled())
+end event
+
+type uo_groupbox from u_cst_groupbox within w_dwgui
 integer x = 905
-integer y = 4
+integer y = 104
 integer width = 2729
-integer taborder = 10
+integer height = 1436
+integer taborder = 60
+string #text = "Test Settings"
+boolean #centertext = true
+boolean #roundgroupbox = false
+boolean #roundtitlebar = false
+string #picturename = "GroupBox!"
 end type
 
-on uo_toolbar.destroy
-call u_cst_toolbar::destroy
+on uo_groupbox.destroy
+call u_cst_groupbox::destroy
 end on
-
-event ue_itemclicked;call super::ue_itemclicked;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
-//
-// This code and accompanying materials are made available under the GPLv3
-// license which accompanies this distribution and can be found at:
-//
-// http://www.gnu.org/licenses/gpl-3.0.html.
-//
-// Original Author:	Christopher Harris
-
-CHOOSE CASE Lower(vs_button)
-		
-	CASE 'exit', 'open', 'open file'
-		
-		POST Close(parent)
-		
-//	CASE 'save'
-//		
-//		uo_toolBar.dw_toolBar.SaveAs('c:\temp\dw_toolBar.csv', csv!, TRUE)
-		
-END CHOOSE
-end event
-
-event ue_resized;call super::ue_resized;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
-//
-// This code and accompanying materials are made available under the GPLv3
-// license which accompanies this distribution and can be found at:
-//
-// http://www.gnu.org/licenses/gpl-3.0.html.
-//
-// Original Author:	Christopher Harris
-
-dw_options.Move(uo_toolbar.X, uo_toolbar.Height)
-dw_options.Resize(uo_toolbar.Width, dw_options.Height - (vl_newHeight - vl_oldHeight))
-end event
 

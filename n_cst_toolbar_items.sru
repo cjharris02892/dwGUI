@@ -13,17 +13,16 @@ type variables
 Public:
 
 	//	Reserved object types
-	CONSTANT String						SEPARATOR						= 'separator'
-	CONSTANT String						POPMENU							= 'popmenu'
-	CONSTANT String						DROPDOWN							= 'dropdown'
-	CONSTANT String						TOOLBARITEM						= 'toolbaritem'
-	CONSTANT String						COLUMN							= 'column'
+	CONSTANT String					SEPARATOR						= 'separator'
+	CONSTANT String					POPMENU							= 'popmenu'
+	CONSTANT String					DROPDOWN							= 'dropdown'
+	CONSTANT String					TOOLBARITEM						= 'toolbaritem'
+	CONSTANT String					COLUMN							= 'column'
 
 Private:
 
-	Double									idbl_PBVersion					= 0.0
+	Double								idbl_PBVersion					= 0.0
 end variables
-
 forward prototypes
 public function boolean of_getitem_displayinmenu (long vl_item)
 public function boolean of_getitem_displaytext (long vl_item)
@@ -993,8 +992,8 @@ public function long of_additem ();// CopyRight (c) 2016 by Christopher Harris, 
 //
 // Original Author:	Christopher Harris
 
-Long									ll_item
-ll_item								= InsertRow(0)
+Long										ll_item
+ll_item									= InsertRow(0)
 
 of_setItem_order(ll_item)
 

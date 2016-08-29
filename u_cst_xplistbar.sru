@@ -47,91 +47,91 @@ type variables
 Public:
 
 	//	Color constants
-	CONSTANT String						HIGHLIGHTBORDER				= 'highlightborder'
-	CONSTANT String						BORDERCOLOR						= 'border'
-	CONSTANT String						DEFAULTIMAGETRANSPARENCY	= 'defaultimagetransparency'
-	CONSTANT String						HIGHLIGHT1						= 'highlight1'
-	CONSTANT String						HIGHLIGHT2						= 'highlight2'
-	CONSTANT String						SELECTED1						= 'selected1'
-	CONSTANT String						SELECTED2						= 'selected2'
-	CONSTANT String						DISABLEDTEXT					= 'disabledtext'
-	CONSTANT String						INFOTEXT							= 'infotext'
-	CONSTANT String						INFOBACKGROUND					= 'infobackground'
-	CONSTANT String						WINDOWTEXT						= 'windowtext'
-	CONSTANT String						GETFOCUS							= 'getfocus'
-	CONSTANT String						LOSEFOCUS						= 'losefocus'
-	CONSTANT String						TOOLBAR							= 'toolbar'
-	CONSTANT String						GRADIENT							= 'gradient'
-	CONSTANT String						MENUTEXT							= 'menutext'
-	CONSTANT String						THREEDDKSHADOW					= '3ddkshadow'
-	CONSTANT String						THREEDLIGHT						= '3ddklight'
+	CONSTANT String					HIGHLIGHTBORDER				= 'highlightborder'
+	CONSTANT String					BORDERCOLOR						= 'border'
+	CONSTANT String					DEFAULTIMAGETRANSPARENCY	= 'defaultimagetransparency'
+	CONSTANT String					HIGHLIGHT1						= 'highlight1'
+	CONSTANT String					HIGHLIGHT2						= 'highlight2'
+	CONSTANT String					SELECTED1						= 'selected1'
+	CONSTANT String					SELECTED2						= 'selected2'
+	CONSTANT String					DISABLEDTEXT					= 'disabledtext'
+	CONSTANT String					INFOTEXT							= 'infotext'
+	CONSTANT String					INFOBACKGROUND					= 'infobackground'
+	CONSTANT String					WINDOWTEXT						= 'windowtext'
+	CONSTANT String					GETFOCUS							= 'getfocus'
+	CONSTANT String					LOSEFOCUS						= 'losefocus'
+	CONSTANT String					TOOLBAR							= 'toolbar'
+	CONSTANT String					GRADIENT							= 'gradient'
+	CONSTANT String					MENUTEXT							= 'menutext'
+	CONSTANT String					THREEDDKSHADOW					= '3ddkshadow'
+	CONSTANT String					THREEDLIGHT						= '3ddklight'
+	CONSTANT String					ACTIVEBORDER					= 'activeborder'
 
-	CONSTANT	Long							ALLOW								= 1
-	CONSTANT Long							PREVENT							= -1
+	CONSTANT	Long						ALLOW								= 1
+	CONSTANT Long						PREVENT							= -1
 
-	CONSTANT	Long							SUCCESS							= 1
-	CONSTANT	Long							NO_ACTION						= 0
-	CONSTANT Long							FAILURE							= -1
+	CONSTANT	Long						SUCCESS							= 1
+	CONSTANT	Long						NO_ACTION						= 0
+	CONSTANT Long						FAILURE							= -1
 
-	CONSTANT Long							SMALL								= 16
-	CONSTANT Long							MEDIUM							= 24
-	CONSTANT Long							LARGE								= 32
-	CONSTANT Long							XLARGE							= 48
+	CONSTANT Long						SMALL								= 16
+	CONSTANT Long						MEDIUM							= 24
+	CONSTANT Long						LARGE								= 32
+	CONSTANT Long						XLARGE							= 48
 
-	CONSTANT Long							NORMAL							= 1
-	CONSTANT Long							FAST								= 5
-	CONSTANT Long							FASTEST							= 10
+	CONSTANT Long						NORMAL							= 1
+	CONSTANT Long						FAST								= 5
+	CONSTANT Long						FASTEST							= 10
 	
 Protected:
 
-	Boolean									#DisplayBorder					= TRUE
-	Boolean									#RaisedBorder					= FALSE
-	Boolean									#SolidBackGround				= FALSE
+	Boolean								#DisplayBorder					= TRUE
+	Boolean								#RaisedBorder					= FALSE
+	Boolean								#SolidBackGround				= FALSE
 
-	String									#FontFace						= 'Tahoma'
-	Long										#FontSize						= 8
+	String								#FontFace						= 'Tahoma'
+	Long									#FontSize						= 8
 
-	Long										#BitMapSize						= 16
+	Long									#BitMapSize						= 16
 	
-	Long										#ScrollSpeed					= 1
+	Long									#ScrollSpeed					= 1
 	
-	Long										#ToolTipDelayInitial			= 1000
-	Long										#ToolTipDelayVisible			= 32000
-	Boolean									#ToolTipIsBubble				= TRUE
+	Long									#ToolTipDelayInitial			= 1000
+	Long									#ToolTipDelayVisible			= 32000
+	Boolean								#ToolTipIsBubble				= TRUE
 
 Private:
 
-	CONSTANT Long							NOTAB								= 0
-	CONSTANT Long							TAB								= 1
-	CONSTANT Long							BACKTAB							= 2
+	CONSTANT Long						NOTAB								= 0
+	CONSTANT Long						TAB								= 1
+	CONSTANT Long						BACKTAB							= 2
 	
-	n_cst_dwGUI								invo_dwGUI
-	n_cst_color								invo_color
+	n_cst_dwGUI							invo_dwGUI
+	n_cst_color							invo_color
 	
-	Long										il_groupHeight					= 100
+	Long									il_groupHeight					= 100
 
-	String									is_lbuttonDown
+	String								is_lbuttonDown
 
-	Boolean									ib_update						= TRUE
-	Boolean									ib_trackMouseEvent			= FALSE
+	Boolean								ib_update						= TRUE
+	Boolean								ib_trackMouseEvent			= FALSE
 		
-	Boolean									ib_scrollTop					= FALSE
-	Boolean									ib_scrollBottom				= FALSE
+	Boolean								ib_scrollTop					= FALSE
+	Boolean								ib_scrollBottom				= FALSE
 	
-	Long										il_xIndent						= -1
-	Long										il_yIndent						= -1
+	Long									il_xIndent						= -1
+	Long									il_yIndent						= -1
 	
-	Long										il_xPixelInUnits				= -1
-	Long										il_yPixelInUnits				= -1
+	Boolean								ib_displayToolTips			= TRUE
+	Integer								ii_toolTipIsBubble			= 1
 	
-	Boolean									ib_displayToolTips			= TRUE
-	Integer									ii_toolTipIsBubble			= 1
+	String								is_chevronUp					= ''
+	String								is_chevronDown					= ''
 	
-	String									is_chevronUp					= ''
-	String									is_chevronDown					= ''
+	Long									il_lastLink						= 0
+	Long									il_groupFocus					= -1
 	
-	Long										il_lastLink						= 0
-	Long										il_groupFocus					= -1
+	Double								idbl_fontHeight			 	= -1
 end variables
 
 forward prototypes
@@ -148,7 +148,6 @@ private subroutine of_createitem_link (long vl_item)
 private subroutine of_createitem_separator (long vl_item)
 private subroutine of_scrollbuttons ()
 public function boolean of_iscollapsed (long vl_item)
-private function long of_size_text (string vs_text, string vs_fontface, integer vi_fontsize)
 private function long of_size_text (string vs_text)
 public function boolean of_isenabled (long vl_item)
 public subroutine of_disableupdate ()
@@ -230,6 +229,10 @@ public function long of_addgroup (string vs_text, string vs_image)
 public function long of_addgroup (string vs_text)
 public function long of_addlink (long vl_group, string vs_text)
 public function long of_addlink (long vl_group, string vs_text, string vs_image)
+private subroutine of_setfont (string vs_fontface, long vl_fontsize)
+public function integer of_settextcolor (long vl_item, long vl_color)
+public function integer of_settextcolor (string vs_text, long vl_color)
+public function integer of_settextcolor (string vs_text_group, string vs_text_item, long vl_color)
 end prototypes
 
 event type integer ue_itemclicking(string vs_group, string vs_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -353,7 +356,7 @@ Long										li_RC
 li_RC										= Super::Resize(W, H)
 
 r_border.Resize(W, H)
-dw_palette.Resize(r_border.Width - (il_xPixelInUnits * 2), r_border.Height - (il_yPixelInUnits * 2))
+dw_palette.Resize(r_border.Width - PixelsToUnits(2, xPixelsToUnits!), r_border.Height - PixelsToUnits(2, yPixelsToUnits!))
 
 Return(li_RC)
 end function
@@ -379,6 +382,7 @@ vs_image									= Trim(vs_image)
 vs_toolTip								= Trim(vs_toolTip)
 
 ds_XPListBar.of_setItem_text(ll_item, vs_text)
+ds_XPListBar.of_setItem_color(ll_item, of_getColor(MENUTEXT))
 ds_XPListBar.of_setItem_toolTip(ll_item, vs_toolTip)
 
 ds_XPListBar.of_setItem_image(ll_item, invo_dwGUI.of_getImageName(vs_image))
@@ -456,6 +460,7 @@ vs_toolTip								= Trim(vs_toolTip)
 ds_XPListBar.of_setItem_parent(ll_item, vl_group)
 
 ds_XPListBar.of_setItem_text(ll_item, vs_text)
+ds_XPListBar.of_setItem_color(ll_item, of_getColor(MENUTEXT))
 ds_XPListBar.of_setItem_toolTip(ll_item, vs_toolTip)
 
 ds_XPListBar.of_setItem_image(ll_item, invo_dwGUI.of_getImageName(vs_image))
@@ -524,6 +529,7 @@ vs_toolTip								= Trim(vs_toolTip)
 ds_XPListBar.of_setItem_parent(ll_item, vl_group)
 
 ds_XPListBar.of_setItem_text(ll_item, vs_text)
+ds_XPListBar.of_setItem_color(ll_item, of_getColor(MENUTEXT))
 ds_XPListBar.of_setItem_toolTip(ll_item, vs_toolTip)
 
 ds_XPListBar.of_setItem_image(ll_item, invo_dwGUI.of_getImageName(vs_image))
@@ -565,6 +571,8 @@ CHOOSE CASE #FontSize
 		#FontSize						= 14
 END CHOOSE
 
+of_setFont(#FontFace, #FontSize)
+
 RETURN
 end subroutine
 
@@ -577,6 +585,7 @@ private subroutine of_createitem_group (long vl_item);// CopyRight (c) 2016 by C
 //
 // Original Author:	Christopher Harris
 
+Long										ll_x
 Long										li_displayToolTips
 
 IF of_displayToolTips() THEN
@@ -699,7 +708,7 @@ ls_modify								= 'CREATE rectangle(band=detail '															&
 ls_modify								= dw_palette.Modify(ls_modify)
 
 ls_modify								= 'CREATE rectangle(band=detail '															&
-											+ 'x="' + String(il_xIndent + il_xPixelInUnits) + '" '								&
+											+ 'x="' + String(il_xIndent + PixelsToUnits(1, xPixelsToUnits!)) + '" '			&
 											+ 'y="84" '																							&
 											+ 'height="16" '																					&
 											+ 'width="18" '																					&
@@ -804,8 +813,10 @@ ls_modify								= 'CREATE rectangle(band=detail '															&
 
 ls_modify								= dw_palette.Modify(ls_modify)
 
+ll_x										= il_xIndent + ll_width - 87 - PixelsToUnits(4, xPixelsToUnits!)
+
 ls_modify								= 'CREATE ellipse(band=detail '																&
-											+ 'x="' + String(il_xIndent + ll_width - 87 - (il_xPixelInUnits * 4)) + '" '	&
+											+ 'x="' + String(ll_x) + '" '																	&
 											+ 'y="12" '																							&
 											+ 'height="76" '																					&
 											+ 'width="87" '																					&
@@ -842,10 +853,11 @@ ls_modify								= ls_modify																							&
 											+ 'alignment="0" '																				&
 											+ 'text="' + ds_XPListBar.of_getItem_text(vl_item) + '" '							&
 											+ 'border="0" '																					&
-											+ 'x="' + String(il_xIndent + (il_xPixelInUnits * 3)) + '" '						&
+											+ 'x="' + String(il_xIndent + PixelsToUnits(3, xPixelsToUnits!)) + '" '			&
 											+ 'y="0" '																							&
 											+ 'width="0" '																						&
 											+ 'height="0" '																					&
+											+ 'color="' + String(ds_XPListBar.of_getItem_color(vl_item)) + '" '				&
 											+ 'html.valueishtml="0" '																		&
 											+ 'name=t_' + ds_XPListBar.of_getItem_objectName(vl_item) + ' '					&
 											+ 'visible="0" '																					&
@@ -887,7 +899,7 @@ IF ds_XPListbar.of_PBVersion() >= 11.5 THEN
 END IF
 
 //IF ds_XPListBar.of_getItem_enabled(vl_item) THEN
-//	ls_modify							= ls_modify + 'color="' + String(of_getColor(MENUTEXT)) + '" '
+//	ls_modify							= ls_modify + 'color="' + String(ds_XPListBar.of_getItem_color(vl_item)) + '" '
 //ELSE
 //	ls_modify							= ls_modify + 'color="' + String(of_getColor(DISABLEDTEXT)) + '" '
 //END IF
@@ -899,8 +911,8 @@ ls_modify								= ls_modify																							&
 											+ 'filename="' + is_chevronUp + '" '														&
 											+ 'x="' + String(il_xIndent + ll_width - 84) + '" '									&
 											+ 'y="20" '																							&
-											+ 'height="'+ String(16 * il_yPixelInUnits) + '" '										&
-											+ 'width="' + String(9 * il_xPixelInUnits) + '" '										&
+											+ 'width="' + String(PixelsToUnits(9, xPixelsToUnits!)) + '" '						&
+											+ 'height="'+ String(PixelsToUnits(16, yPixelsToUnits!)) + '" '					&
 											+ 'border="0" '																					&
 											+ 'name=p_' + ds_XPListBar.of_getItem_objectName(vl_item) + '_chevron '			&
 											+ 'visible="0" '
@@ -979,10 +991,11 @@ ls_modify								= 'CREATE text(band=detail' + ' '															&
 											+ 'alignment="0" '																				&
 											+ 'text="' + ds_XPListBar.of_getItem_text(vl_item) + '" '							&
 											+ 'border="0" '																					&
-											+ 'x="' + String(il_xIndent + (il_xPixelInUnits * 3)) + '" '						&
+											+ 'x="' + String(il_xIndent + PixelsToUnits(3, xPixelsToUnits!)) + '" '			&
 											+ 'y="0" '																							&
 											+ 'width="0" '																						&
 											+ 'height="0" '																					&
+											+ 'color="' + String(ds_XPListBar.of_getItem_color(vl_item)) + '" '				&
 											+ 'html.valueishtml="0" '																		&
 											+ 'name=t_' + ds_XPListBar.of_getItem_objectName(vl_item) + ' '					&
 											+ 'visible="0" '																					&
@@ -1026,7 +1039,7 @@ IF ds_XPListbar.of_PBVersion() >= 11.5 THEN
 END IF
 
 //IF ds_XPListBar.of_getItem_enabled(vl_item) THEN
-//	ls_modify							= ls_modify + 'color="' + String(of_getColor(MENUTEXT)) + '" '
+//	ls_modify							= ls_modify + 'color="' + String(ds_XPListBar.of_getItem_color(vl_item)) + '" '
 //ELSE
 //	ls_modify							= ls_modify + 'color="' + String(of_getColor(DISABLEDTEXT)) + '" '
 //END IF
@@ -1065,10 +1078,11 @@ ls_modify								= 'CREATE text(band=detail' + ' '															&
 											+ 'alignment="0" '																				&
 											+ 'text="' + ds_XPListBar.of_getItem_text(vl_item) + '" '							&
 											+ 'border="0" '																					&
-											+ 'x="' + String(il_xIndent + (il_xPixelInUnits * 3)) + '" '						&
+											+ 'x="' + String(il_xIndent + PixelsToUnits(3, xPixelsToUnits!)) + '" '			&
 											+ 'y="0" '																							&
 											+ 'width="0" '																						&
 											+ 'height="0" '																					&
+											+ 'color="' + String(ds_XPListBar.of_getItem_color(vl_item)) + '" '				&
 											+ 'html.valueishtml="0" '																		&
 											+ 'name=t_' + ds_XPListBar.of_getItem_objectName(vl_item) + ' '					&
 											+ 'pointer="HyperLink!"'																		&
@@ -1113,7 +1127,7 @@ IF ds_XPListbar.of_PBVersion() >= 11.5 THEN
 END IF
 
 //IF ds_XPListBar.of_getItem_enabled(vl_item) THEN
-//	ls_modify							= ls_modify + 'color="' + String(of_getColor(MENUTEXT)) + '" '
+//	ls_modify							= ls_modify + 'color="' + String(ds_XPListBar.of_getItem_color(vl_item)) + '" '
 //ELSE
 //	ls_modify							= ls_modify + 'color="' + String(of_getColor(DISABLEDTEXT)) + '" '
 //END IF
@@ -1141,25 +1155,25 @@ private subroutine of_createitem_separator (long vl_item);// CopyRight (c) 2016 
 String									ls_modify
 
 ls_modify								= 'CREATE line(band=detail' + ' '																&
-											+ 'x1="' + String(il_xIndent + (il_xPixelInUnits * 2)) + '" '							&
+											+ 'x1="' + String(il_xIndent + PixelsToUnits(2, xPixelsToUnits!)) + '" '			&
 											+ 'y1="0" '																								&
 											+ 'x2="0" '																								&
 											+ 'y2="0" '																								&
 											+ 'name=l_' + ds_XPListBar.SEPARATOR + '_' + String(vl_item) + '_a '					&
 											+ 'visible="0" '																						&
 											+ 'pen.style="0" '																					&
-											+ 'pen.width="' + String(il_yPixelInUnits) + '" '											&
+											+ 'pen.width="' + String(PixelsToUnits(1, yPixelsToUnits!)) + '" '					&
 											+ 'pen.color="' + String(of_getColor(THREEDDKSHADOW)) + '" '							&
 											+ 'background.mode="2") '																			&
 											+ 'CREATE line(band=detail' + ' '																&
-											+ 'x1="' + String(il_xIndent + (il_xPixelInUnits * 2)) + '" '							&
+											+ 'x1="' + String(il_xIndent + PixelsToUnits(2, xPixelsToUnits!)) + '" '			&
 											+ 'y1="0" '																								&
 											+ 'x2="0" '																								&
 											+ 'y2="0" '																								&
 											+ 'name=l_' + ds_XPListBar.SEPARATOR + '_' + String(vl_item) + '_b '					&
 											+ 'visible="0" '																						&
 											+ 'pen.style="0" '																					&
-											+ 'pen.width="' + String(il_yPixelInUnits) + '" '											&
+											+ 'pen.width="' + String(PixelsToUnits(1, yPixelsToUnits!)) + '" '					&
 											+ 'pen.color="' + String(of_getColor(THREEDLIGHT)) + '" '								&
 											+ 'background.mode="2")'
 											
@@ -1243,7 +1257,7 @@ END IF
 Return(lb_collapsed)
 end function
 
-private function long of_size_text (string vs_text, string vs_fontface, integer vi_fontsize);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+private function long of_size_text (string vs_text);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
 // license which accompanies this distribution and can be found at:
@@ -1256,26 +1270,9 @@ Long										ll_width	= 0
 
 IF isNull(vs_text) OR Trim(vs_text) = '' THEN Return(ll_width)
 
-IF isNull(vs_fontFace) OR Trim(vs_fontFace) = '' THEN Return(ll_width)
-
-st_XPListBar.FaceName				= vs_fontFace
-st_XPListBar.TextSize				= vi_fontSize * -1
-	
-ll_width									= PixelsToUnits(invo_dwGUI.of_GetFontWidth(st_XPListBar, vs_text) + 4, XPixelsToUnits!)
+ll_width									= PixelsToUnits(invo_dwGUI.of_GetFontWidth(st_XPListBar, vs_text) + 4, xPixelsToUnits!)
 	
 Return(ll_width)
-end function
-
-private function long of_size_text (string vs_text);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
-//
-// This code and accompanying materials are made available under the GPLv3
-// license which accompanies this distribution and can be found at:
-//
-// http://www.gnu.org/licenses/gpl-3.0.html.
-//
-// Original Author:	Christopher Harris
-
-Return(of_size_text(vs_text, #FontFace, #FontSize))
 end function
 
 public function boolean of_isenabled (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -1653,6 +1650,8 @@ CHOOSE CASE vs_color
 		ll_color							= invo_color.of_3DDkShadow()
 	CASE THREEDLIGHT
 		ll_color							= invo_color.of_3DLight()
+	CASE ACTIVEBORDER
+		ll_color							= invo_color.of_activeBorder()
 END CHOOSE
 
 IF ll_color = -1 THEN
@@ -1746,6 +1745,8 @@ CHOOSE CASE ll_size
 		#FontSize						= 14
 
 END CHOOSE
+
+of_setFont(#FontFace, #FontSize)
 
 RETURN
 end subroutine
@@ -2241,6 +2242,7 @@ IF vb_resetScrollPosition THEN
 	ll_verticalPosition				= Long(dw_palette.Describe('dataWindow.VerticalScrollPosition'))
 END IF
 
+Long										ll_x
 Long										li_displayToolTips
 
 IF of_displayToolTips() THEN
@@ -2258,9 +2260,6 @@ Long										ll_groupY,			ll_groupWidth
 String									ls_modify			= ''
 Long										ll_newWidth,		ll_newHeight
 
-//ll_newWidth								= PixelsToUnits(dw_palette.Width, XPixelsToUnits!)
-//ll_newHeight							= PixelsToUnits(dw_palette.Height, YPixelsToUnits!)
-
 ll_newWidth								= dw_palette.Width
 ll_newHeight							= dw_palette.Height
 
@@ -2270,12 +2269,7 @@ ls_modify								= 't_scroll_top.width="' + String(ll_newWidth - (il_xIndent * 2
 Long										ll_width,	ll_lines
 ll_width									= ll_newWidth - (il_xIndent * 2)
 
-Double									ldbl_fontHeight
-ldbl_fontHeight						= of_fontHeight()
-
-mle_XPListBar.TextSize				= #FontSize * -1
-
-mle_XPListBar.Resize(ll_width - (il_xPixelInUnits * 6), 10000)
+mle_XPListBar.Resize(ll_width - PixelsToUnits(6, xPixelsToUnits!), 10000)
 
 Long										ll_pos					= 0,	ll_posLast
 Long										ll_containerHeight	= 0,	ll_containerHeightLast
@@ -2345,6 +2339,8 @@ FOR ll_group = 1 TO ll_items
 											+ 'p_' + ls_group + '_chevron.Visible="1" '
 
 	//	Update the group's position
+	ll_x									= (il_xIndent + ll_width - 87 - PixelsToUnits(4, xPixelsToUnits!))
+	
 	ls_modify							= ls_modify																							&
 											+ 'r_' + ls_group + '_roundrectangle.'														&
 											+ 'width="' + String(ll_newWidth - (il_xIndent * 2)) + '" '							&
@@ -2355,14 +2351,14 @@ FOR ll_group = 1 TO ll_items
 											+ 'r_' + ls_group + '_right_shadow.'														&
 											+ 'x="' + String(il_xIndent + ll_width - 18) + '" '									&
 											+ 'e_' + ls_group + '.'																			&
-											+ 'x="' + String(il_xIndent + ll_width - 87 - (il_xPixelInUnits * 4)) + '" '	&
+											+ 'x="' + String(ll_x) + '" '																	&
 											+ 'p_' + ls_group + '_chevron.'																&
 											+ 'x="' + String(il_xIndent + ll_width - 84) + '" '
 											
-	ll_groupY							= ll_pos + ((il_groupHeight - ldbl_fontHeight) / 2)
+	ll_groupY							= ll_pos + ((il_groupHeight - idbl_fontHeight) / 2)
 	
-	ll_groupWidth						= (il_xIndent + ll_width - 87 - (il_xPixelInUnits * 4))								&
-											- Long(dw_palette.Describe('t_' + ls_group + '.x')) - (il_xPixelInUnits * 2)
+	ll_groupWidth						= ll_x																								&
+											- Long(dw_palette.Describe('t_' + ls_group + '.x')) - PixelsToUnits(2, xPixelsToUnits!)
 	
 	ll_groupWidth						= Min(ll_groupWidth, of_size_text(ds_XPListBar.of_getItem_text(ll_group)))
 	
@@ -2384,7 +2380,7 @@ FOR ll_group = 1 TO ll_items
 											+ 't_' + ls_group + '.'																			&
 											+ 'y="' + String(ll_groupY) + '" '															&
 											+ 't_' + ls_group + '.'																			&
-											+ 'height="' + String(1 * Int(ldbl_fontHeight)) + '" '								&
+											+ 'height="' + String(1 * Int(idbl_fontHeight)) + '" '								&
 											+ 't_' + ls_group + '.'																			&
 											+ 'width="' + String(ll_groupWidth) + '" '												&
 											+ 'p_' + ls_group + '_chevron.'																&
@@ -2400,7 +2396,7 @@ FOR ll_group = 1 TO ll_items
 			ls_modify					= ls_modify + 't_' + ls_group + '.Enabled="1" '
 		END IF
 
-		ls_modify						= ls_modify + 't_' + ls_group + '.Color="' + String(of_getColor(MENUTEXT)) + '"'
+		ls_modify						= ls_modify + 't_' + ls_group + '.Color="' + String(ds_XPListBar.of_getItem_color(ll_group)) + '"'
 		
 	ELSE
 		
@@ -2438,7 +2434,7 @@ FOR ll_group = 1 TO ll_items
 						ls_modify		= ls_modify + 't_' + ls_item + '.Enabled="1" '
 					END IF
 					
-					ls_modify			= ls_modify + 't_' + ls_item + '.Color="' + String(of_getColor(MENUTEXT)) + '"'
+					ls_modify			= ls_modify + 't_' + ls_item + '.Color="' + String(ds_XPListBar.of_getItem_color(ll_item)) + '"'
 					
 				ELSE
 					
@@ -2463,21 +2459,21 @@ FOR ll_group = 1 TO ll_items
 				
 				ls_modify				= ls_modify																							&
 											+ 't_' + ls_item + '.'																			&
-											+ 'width="' + String(ll_width - (il_xPixelInUnits * 6)) + '" '						&
+											+ 'width="' + String(ll_width - PixelsToUnits(6, xPixelsToUnits!)) + '" '		&
 											+ 't_' + ls_item + '.'																			&
-											+ 'height="' + String(ll_lines * Int(ldbl_fontHeight)) + '" '
+											+ 'height="' + String(ll_lines * Int(idbl_fontHeight)) + '" '
 											
-				ll_pos					= ll_pos + (il_yPixelInUnits * 2)
-				ll_containerHeight	= ll_containerHeight + (il_yPixelInUnits * 2)
+				ll_pos					= ll_pos + PixelsToUnits(2, yPixelsToUnits!)
+				ll_containerHeight	= ll_containerHeight + PixelsToUnits(2, yPixelsToUnits!)
 				
 				ls_modify				= ls_modify																							&
 											+ 't_' + ls_item + '.y="' + String(ll_pos) + '" '
 
-				ll_pos					= ll_pos + (ll_lines * Int(ldbl_fontHeight))
-				ll_containerHeight	= ll_containerHeight + (ll_lines * Int(ldbl_fontHeight))
+				ll_pos					= ll_pos + (ll_lines * Int(idbl_fontHeight))
+				ll_containerHeight	= ll_containerHeight + (ll_lines * Int(idbl_fontHeight))
 				
-				ll_pos					= ll_pos + il_yPixelInUnits
-				ll_containerHeight	= ll_containerHeight + il_yPixelInUnits
+				ll_pos					= ll_pos + PixelsToUnits(1, yPixelsToUnits!)
+				ll_containerHeight	= ll_containerHeight + PixelsToUnits(1, yPixelsToUnits!)
 				
 			CASE ds_XPListBar.LINK
 	
@@ -2492,7 +2488,7 @@ FOR ll_group = 1 TO ll_items
 						ls_modify		= ls_modify + 't_' + ls_item + '.Enabled="1" '
 					END IF
 					
-					ls_modify			= ls_modify + 't_' + ls_item + '.Color="' + String(of_getColor(MENUTEXT)) + '"'
+					ls_modify			= ls_modify + 't_' + ls_item + '.Color="' + String(ds_XPListBar.of_getItem_color(ll_item)) + '"'
 					
 				ELSE
 					
@@ -2518,21 +2514,21 @@ FOR ll_group = 1 TO ll_items
 				
 				ls_modify				= ls_modify																							&
 											+ 't_' + ls_item + '.'																			&
-											+ 'width="' + String(ll_width - (il_xPixelInUnits * 6)) + '" '						&
+											+ 'width="' + String(ll_width - PixelsToUnits(6, xPixelsToUnits!)) + '" '		&
 											+ 't_' + ls_item + '.'																			&
-											+ 'height="' + String(ll_lines * Int(ldbl_fontHeight)) + '" '
+											+ 'height="' + String(ll_lines * Int(idbl_fontHeight)) + '" '
 
-				ll_pos					= ll_pos + (il_yPixelInUnits * 2)
-				ll_containerHeight	= ll_containerHeight + (il_yPixelInUnits * 2)
+				ll_pos					= ll_pos + PixelsToUnits(2, yPixelsToUnits!)
+				ll_containerHeight	= ll_containerHeight + PixelsToUnits(2, yPixelsToUnits!)
 				
 				ls_modify				= ls_modify																							&
 											+ 't_' + ls_item + '.y="' + String(ll_pos) + '" '
 
-				ll_pos					= ll_pos + (ll_lines * Int(ldbl_fontHeight))
-				ll_containerHeight	= ll_containerHeight + (ll_lines * Int(ldbl_fontHeight))
+				ll_pos					= ll_pos + (ll_lines * Int(idbl_fontHeight))
+				ll_containerHeight	= ll_containerHeight + (ll_lines * Int(idbl_fontHeight))
 
-				ll_pos					= ll_pos + il_yPixelInUnits
-				ll_containerHeight	= ll_containerHeight + il_yPixelInUnits
+				ll_pos					= ll_pos + PixelsToUnits(1, yPixelsToUnits!)
+				ll_containerHeight	= ll_containerHeight + PixelsToUnits(1, yPixelsToUnits!)
 				
 			CASE ds_XPListBar.SEPARATOR
 	
@@ -2563,32 +2559,32 @@ FOR ll_group = 1 TO ll_items
 											
 				ll_separator 			= ll_item
 				
+				ll_x						= il_xIndent + ll_width - PixelsToUnits(2, xPixelsToUnits!)
+				
 				ls_modify				= ls_modify																							&
-											+ 'l_' + ls_item + '_a.'																		&
-											+ 'x2="' + String(il_xIndent + ll_width - (il_xPixelInUnits * 2)) + '" '		&
-											+ 'l_' + ls_item + '_b.'																		&
-											+ 'x2="' + String(il_xIndent + ll_width - (il_xPixelInUnits * 2)) + '" '
+											+ 'l_' + ls_item + '_a.x2="' + String(ll_x) + '" '										&
+											+ 'l_' + ls_item + '_b.x2="' + String(ll_x) + '" '
 											
 				ll_posLast				= ll_pos
 				ll_containerHeightLast																										&
 											= ll_containerHeight
 											
-				ll_pos					= ll_pos + (il_yPixelInUnits * 2)
-				ll_containerHeight	= ll_containerHeight + (il_yPixelInUnits * 2)
+				ll_pos					= ll_pos + PixelsToUnits(2, yPixelsToUnits!)
+				ll_containerHeight	= ll_containerHeight + PixelsToUnits(2, yPixelsToUnits!)
 				
 				ls_modify				= ls_modify																							&
 											+ 'l_' + ls_item + '_a.y1="' + String(ll_pos) + '" '									&
 											+ 'l_' + ls_item + '_a.y2="' + String(ll_pos) + '" '									&
 											+ 'l_' + ls_item + '_b.'																		&
-											+ 'y1="' + String(ll_pos + il_yPixelInUnits) + '" '									&
+											+ 'y1="' + String(ll_pos + PixelsToUnits(1, yPixelsToUnits!)) + '" '				&
 											+ 'l_' + ls_item + '_b.'																		&
-											+ 'y2="' + String(ll_pos + il_yPixelInUnits) + '" '
+											+ 'y2="' + String(ll_pos + PixelsToUnits(1, yPixelsToUnits!)) + '" '
 
-				ll_pos					= ll_pos + (il_yPixelInUnits * 2)
-				ll_containerHeight	= ll_containerHeight + (il_yPixelInUnits * 2)
+				ll_pos					= ll_pos + PixelsToUnits(2, yPixelsToUnits!)
+				ll_containerHeight	= ll_containerHeight + PixelsToUnits(2, yPixelsToUnits!)
 
-				ll_pos					= ll_pos + il_yPixelInUnits
-				ll_containerHeight	= ll_containerHeight + il_yPixelInUnits
+				ll_pos					= ll_pos + PixelsToUnits(1, yPixelsToUnits!)
+				ll_containerHeight	= ll_containerHeight + PixelsToUnits(1, yPixelsToUnits!)
 
 		END CHOOSE
 		
@@ -2609,8 +2605,8 @@ FOR ll_group = 1 TO ll_items
 		ll_containerHeight			= 0
 	ELSE
 		
-		ll_pos							= ll_pos + (il_yPixelInUnits * 4)
-		ll_containerHeight			= ll_containerHeight + (il_yPixelInUnits * 4)
+		ll_pos							= ll_pos + PixelsToUnits(4, yPixelsToUnits!)
+		ll_containerHeight			= ll_containerHeight + PixelsToUnits(4, yPixelsToUnits!)
 	
 	END IF
 										
@@ -2855,7 +2851,7 @@ Long										ll_height
 IF isNull(vs_image) OR Trim(vs_image) = '' THEN
 	ll_height							= 0
 ELSE
-	ll_height							= PixelsToUnits(#BitMapSize, YPixelsToUnits!)
+	ll_height							= #BitMapSize * PixelsToUnits(1, yPixelsToUnits!)
 END IF
 
 Return(ll_height)
@@ -2875,7 +2871,7 @@ Long										ll_width
 IF isNull(vs_image) OR Trim(vs_image) = '' THEN
 	ll_width								= 0
 ELSE
-	ll_width								= PixelsToUnits(#BitMapSize, XPixelsToUnits!)
+	ll_width								= #BitMapSize * PixelsToUnits(1, xPixelsToUnits!)
 END IF
 
 Return(ll_width)
@@ -3389,6 +3385,80 @@ public function long of_addlink (long vl_group, string vs_text, string vs_image)
 Return(of_addLink(vl_group, vs_text, vs_image, ''))
 end function
 
+private subroutine of_setfont (string vs_fontface, long vl_fontsize);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+#FontFace								= vs_fontFace
+#FontSize								= vl_fontSize
+
+st_XPListBar.TextSize				= #FontSize * -1
+mle_XPListBar.TextSize				= #FontSize * -1
+
+idbl_fontHeight						= of_fontHeight()
+
+RETURN
+end subroutine
+
+public function integer of_settextcolor (long vl_item, long vl_color);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+IF isNull(vl_item) THEN Return(FAILURE)
+
+IF vl_item <= 1 OR vl_item > ds_XPListBar.RowCount() THEN Return(FAILURE)
+
+IF isNull(vl_color) THEN vl_color = of_getColor(MENUTEXT)
+
+ds_XPListBar.of_setItem_color(vl_item, vl_color)
+
+String									ls_objectName
+ls_objectName							= ds_XPListBar.of_getItem_objectName(vl_item)
+			
+String									ls_describe
+ls_describe								= Trim(dw_palette.Describe('t_' + ls_objectName + '.X'))
+			
+IF ls_describe <> '!' AND ls_describe <> '?' AND ls_describe <> '' THEN
+	dw_palette.Modify('t_' + ls_objectName + '.Color="' + String(vl_color) + '"')
+END IF
+
+Return(SUCCESS)
+end function
+
+public function integer of_settextcolor (string vs_text, long vl_color);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+Return(of_setTextColor(of_locateItem(vs_text), vl_color))
+end function
+
+public function integer of_settextcolor (string vs_text_group, string vs_text_item, long vl_color);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+Return(of_setTextColor(of_locateItem(vs_text_group, vs_text_item), vl_color))
+end function
+
 on u_cst_xplistbar.create
 this.st_xplistbar=create st_xplistbar
 this.dw_palette=create dw_palette
@@ -3420,13 +3490,12 @@ event constructor;// CopyRight (c) 2016 by Christopher Harris, all rights reserv
 //
 // Original Author:	Christopher Harris
 
+of_setFont(#FontFace, #FontSize)
+
 setNull(il_groupFocus)
 
 is_chevronUp							= invo_dwGUI.of_image_chevronUp()
 is_chevronDown							= invo_dwGUI.of_image_chevronDown()
-
-il_xPixelInUnits						= PixelsToUnits(1, XPixelsToUnits!)
-il_yPixelInUnits						= PixelsToUnits(1, YPixelsToUnits!)
 
 of_correct_size()
 of_correct_scrollSpeed()
@@ -3442,8 +3511,8 @@ setNull(is_lButtonDown)
 r_border.Move(0, 0)
 r_border.Resize(Width, Height)
 
-dw_palette.Move(il_xPixelInUnits, il_yPixelInUnits)
-dw_palette.Resize(Width - (il_xPixelInUnits * 2), Height - (il_yPixelInUnits * 2))
+dw_palette.Move(PixelsToUnits(1, xPixelsToUnits!), PixelsToUnits(1, yPixelsToUnits!))
+dw_palette.Resize(Width - PixelsToUnits(2, xPixelsToUnits!), Height - PixelsToUnits(2, yPixelsToUnits!))
 
 r_border.LineColor					= of_getColor(THREEDDKSHADOW)
 r_border.Visible						= #DisplayBorder
@@ -3764,9 +3833,9 @@ ResetUpdate()
 il_yIndent								= Long(dw_palette.Describe('DataWindow.Header.Height'))
 
 Long										ll_pixels
-ll_pixels								= il_yIndent / il_yPixelInUnits
+ll_pixels								= il_yIndent / PixelsToUnits(1, yPixelsToUnits!)
 
-il_xIndent								= PixelsToUnits(ll_pixels, XPixelsToUnits!)
+il_xIndent								= ll_pixels * PixelsToUnits(1, xPixelsToUnits!)
 
 //	Make sure initial objects are in proper position
 String									ls_modify
@@ -3937,7 +4006,7 @@ ll_pos									= Long(dw_palette.Describe('dataWindow.VerticalScrollPosition'))
 
 IF ib_scrollTop THEN
 	
-	ll_new								= Max(ll_pos - (il_yPixelInUnits * #ScrollSpeed), 0)
+	ll_new								= Max(ll_pos - PixelsToUnits(#ScrollSpeed, yPixelsToUnits!), 0)
 	
 	ls_modify							= dw_palette.Modify('dataWindow.VerticalScrollPosition="' + String(ll_new) + '"')
 
@@ -3949,7 +4018,7 @@ ELSE
 		Long								ll_max
 		ll_max							= Long(dw_palette.Describe('dataWindow.VerticalScrollMaximum'))
 		
-		ll_new							= Min(ll_pos + (il_yPixelInUnits * #ScrollSpeed), ll_max)
+		ll_new							= Min(ll_pos + PixelsToUnits(#ScrollSpeed, yPixelsToUnits!), ll_max)
 
 		ls_modify						= dw_palette.Modify('dataWindow.VerticalScrollPosition="' + String(ll_new) + '"')
 
