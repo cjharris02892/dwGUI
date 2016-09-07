@@ -5,11 +5,11 @@ CMP:0,0,0,2,0,0,1
 COM:Christopher Harris
 DES:DataWindow Graphical User Interface
 CPY:Christopher Harris 2016
-PRD:DWGUI
-PVS:1.3.0.0
-PVN:1,3,0,0
-FVS:1.3.0.0
-FVN:1,3,0,0
+PRD:DWGUI Beta 4
+PVS:1.4.0.0
+PVN:1,4,0,0
+FVS:1.4.0.0
+FVN:1,4,0,0
 MAN:0,asInvoker,0
 PBD:dwgui_test.pbl,,0
 PBD:dwgui.pbl,,0
