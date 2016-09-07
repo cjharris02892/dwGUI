@@ -127,6 +127,7 @@ public function long of_addgroupbox (string vs_text, string vs_image, string vs_
 public function long of_addgroupbox (string vs_text, string vs_image, string vs_tooltip)
 public function long of_addgroupbox (string vs_text, long vl_x, long vl_y, long vl_width, long vl_height)
 public function long of_addgroupbox (string vs_text, string vs_image, long vl_x, long vl_y, long vl_width, long vl_height)
+public function long of_replacegroupbox (string vs_groupbox)
 end prototypes
 
 public function integer of_update ();//	CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -2454,6 +2455,47 @@ public function long of_addgroupbox (string vs_text, string vs_image, long vl_x,
 // Original Author:	Christopher Harris
 
 Return(of_addGroupBox(vs_text, vs_image, '', vl_x, vl_y, vl_width, vl_height))
+end function
+
+public function long of_replacegroupbox (string vs_groupbox);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+String									ls_type
+ls_type									= idw_palette.Describe(vs_groupBox + '.Type')
+
+IF ls_type <> 'groupbox' THEN Return(NO_ACTION)
+
+Long										ll_x,	ll_y,	ll_width,	ll_height
+
+ll_x										= Long(idw_palette.Describe(vs_groupBox + '.X'))
+ll_y										= Long(idw_palette.Describe(vs_groupBox + '.Y'))
+ll_width									= Long(idw_palette.Describe(vs_groupBox + '.Width'))
+ll_height								= Long(idw_palette.Describe(vs_groupBox + '.Height'))
+
+String									ls_text		= ''
+ls_text									= idw_palette.Describe(vs_groupBox + '.Text')
+
+String									ls_toolTip	= ''
+
+IF ds_groupBox.of_PBVersion() >= 11.5 THEN
+	ls_toolTip							= idw_palette.Describe(vs_groupBox + '.ToolTip.Text')
+END IF
+
+Long										ll_item
+ll_item									= of_addGroupBox(ls_text, '', ls_toolTip, ll_x, ll_y, ll_width, ll_height)
+
+IF isNull(ll_item) OR ll_item <= 0 THEN
+ELSE
+	idw_palette.Modify('DESTROY ' + vs_groupBox)
+END IF
+
+Return(ll_item)
 end function
 
 on n_cst_groupbox.create

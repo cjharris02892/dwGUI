@@ -83,10 +83,11 @@ invo_groupBox.of_register(dw_options)
 invo_groupBox.of_disableUpdate()
 
 invo_groupBox.of_addGroupBox('Show', PixelsToUnits(7, xPixelsToUnits!), 0, 500, 916)
-invo_groupBox.of_addGroupBox('Check', 763 - PixelsToUnits(7, xPixelsToUnits!), 0, 500, 270)
 invo_groupBox.of_addGroupBox('Enable', 1463 - PixelsToUnits(7, xPixelsToUnits!), 0, 500, 350)
 invo_groupBox.of_addGroupBox('Display', 763 - PixelsToUnits(7, xPixelsToUnits!), 782 - PixelsToUnits(27, yPixelsToUnits!), 500, 240)
 invo_groupBox.of_addGroupBox('Change', 1463 - PixelsToUnits(7, xPixelsToUnits!), 782 - PixelsToUnits(27, yPixelsToUnits!), 500, 240)
+
+invo_groupBox.of_replaceGroupBox('gb_check')
 
 invo_groupBox.of_setTitleBarAsTab('Check', TRUE)
 invo_groupBox.of_setRoundGroupBox('Enable', FALSE)
