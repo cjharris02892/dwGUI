@@ -503,11 +503,16 @@ IF ds_groupBox.of_getItem_roundGroupBox(vl_item) THEN
 	ls_modify							= ls_modify																									&
 											+ 'rr_groupBox' + ls_item + '.ellipseHeight="36" '												&
 											+ 'rr_groupBox' + ls_item + '.ellipseWidth="41" '												&
-											+ 'r_right_shadow_lower' + ls_item + '.Visible="1" '											&
-											+ 'l_right_lower' + ls_item + '.Visible="1" '													&
 											+ 'r_left_shadow_lower' + ls_item + '.Visible="1" '											&
 											+ 'r_right_shadow_lower' + ls_item + '.X="'														&
 											+ String(ll_newLeft + ll_newWidth - ll_shadowWidth - PixelsToUnits(1, xPixelsToUnits!)) + '" '
+
+	IF NOT ds_groupBox.of_getItem_titleBarAsTab(vl_item) THEN
+		ls_modify							= ls_modify																									&
+												+ 'r_right_shadow_lower' + ls_item + '.Visible="1" '											&
+												+ 'l_right_lower' + ls_item + '.Visible="1" '
+	END IF
+
 ELSE
 
 	ls_modify							= ls_modify																									&
@@ -517,12 +522,6 @@ ELSE
 //	ls_modify							= ls_modify																									&
 //											+ 'r_right_shadow_lower' + ls_item + '.Visible="0" '											&
 //											+ 'r_left_shadow_lower' + ls_item + '.Visible="0" '
-END IF
-
-IF ds_groupBox.of_getItem_titleBarAsTab(vl_item) THEN
-//	ls_modify							= ls_modify																									&
-//											+ 'r_right_shadow_lower' + ls_item + '.Visible="0" '											&
-//											+ 'l_right_lower' + ls_item + '.Visible="0" '
 END IF
 
 Long										ll_tmpHeight
