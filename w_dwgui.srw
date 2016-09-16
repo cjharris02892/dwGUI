@@ -255,6 +255,7 @@ integer x = 5
 integer y = 4
 integer height = 1536
 integer taborder = 60
+long backcolor = 1073741824
 end type
 
 on uo_xplistbar.destroy

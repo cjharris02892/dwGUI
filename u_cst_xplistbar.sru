@@ -352,11 +352,15 @@ public function integer resize (integer w, integer h);// CopyRight (c) 2016 by C
 //
 // Original Author:	Christopher Harris
 
+this.setRedraw(FALSE)
+
 Long										li_RC
 li_RC										= Super::Resize(W, H)
 
 r_border.Resize(W, H)
 dw_palette.Resize(r_border.Width - PixelsToUnits(2, xPixelsToUnits!), r_border.Height - PixelsToUnits(2, yPixelsToUnits!))
+
+this.setRedraw(TRUE)
 
 Return(li_RC)
 end function

@@ -128,6 +128,7 @@ public function long of_addgroupbox (string vs_text, string vs_image, string vs_
 public function long of_addgroupbox (string vs_text, long vl_x, long vl_y, long vl_width, long vl_height)
 public function long of_addgroupbox (string vs_text, string vs_image, long vl_x, long vl_y, long vl_width, long vl_height)
 public function long of_replacegroupbox (string vs_groupbox)
+public function string of_hideunusedparts (long vl_item, string vs_modify)
 end prototypes
 
 public function integer of_update ();//	CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -287,19 +288,21 @@ ls_modify								= ls_modify																									&
 											
 ls_modify								= ls_modify																									&
 											+ 'l_left' + ls_item + '.Visible="1" '																&
-											+ 't_overlay' + ls_item + '.Visible="0" '															&
-											+ 'l_bitmap' + ls_item + '.Visible="0" '															&
 											+ 'rr_groupbox' + ls_item + '.Visible="1" '
+
+//ls_modify								= ls_modify 																								&
+//											+ 't_overlay' + ls_item + '.Visible="0" '															&
+//											+ 'l_bitmap' + ls_item + '.Visible="0" '
 											
 IF ds_groupBox.of_getItem_image(vl_item) = '' THEN
-	ls_modify							= ls_modify + 'p_title' + ls_item + '.Visible="0" '
+//	ls_modify							= ls_modify + 'p_title' + ls_item + '.Visible="0" '
 ELSE
 	ls_modify							= ls_modify + 'p_title' + ls_item + '.Visible="1" '
 END IF
 
 IF ds_groupBox.of_getItem_text(vl_item) = '' THEN
-	ls_modify							= ls_modify + 't_title' + ls_item + '.Visible="0" '
-	ls_modify							= ls_modify + 'l_title' + ls_item + '.Visible="0" '
+//	ls_modify							= ls_modify + 't_title' + ls_item + '.Visible="0" '
+//	ls_modify							= ls_modify + 'l_title' + ls_item + '.Visible="0" '
 ELSE
 	ls_modify							= ls_modify + 't_title' + ls_item + '.Visible="1" '
 	ls_modify							= ls_modify + 'l_title' + ls_item + '.Visible="1" '
@@ -479,10 +482,12 @@ IF ds_groupBox.of_getItem_roundTitleBar(vl_item) THEN
 ELSE
 	ls_modify							= ls_modify																									&
 											+ 'rr_title' + ls_item + '.ellipseHeight="0" '													&
-											+ 'rr_title' + ls_item + '.ellipseWidth="0" '													&
-											+ 'l_right_upper' + ls_item + '.Visible="0" '													&
-											+ 'r_right_shadow_upper' + ls_item + '.Visible="0" '											&
-											+ 'r_left_shadow_upper' + ls_item + '.Visible="0" '
+											+ 'rr_title' + ls_item + '.ellipseWidth="0" '
+											
+//	ls_modify							= ls_modify																									&
+//											+ 'l_right_upper' + ls_item + '.Visible="0" '													&
+//											+ 'r_right_shadow_upper' + ls_item + '.Visible="0" '											&
+//											+ 'r_left_shadow_upper' + ls_item + '.Visible="0" '
 END IF
 
 ls_modify								= ls_modify																									&
@@ -497,9 +502,7 @@ IF ds_groupBox.of_getItem_roundGroupBox(vl_item) THEN
 	
 	ls_modify							= ls_modify																									&
 											+ 'rr_groupBox' + ls_item + '.ellipseHeight="36" '												&
-											+ 'rr_groupBox' + ls_item + '.ellipseWidth="41" '
-
-	ls_modify							= ls_modify																									&
+											+ 'rr_groupBox' + ls_item + '.ellipseWidth="41" '												&
 											+ 'r_right_shadow_lower' + ls_item + '.Visible="1" '											&
 											+ 'l_right_lower' + ls_item + '.Visible="1" '													&
 											+ 'r_left_shadow_lower' + ls_item + '.Visible="1" '											&
@@ -511,15 +514,15 @@ ELSE
 											+ 'rr_groupBox' + ls_item + '.ellipseHeight="0" '												&
 											+ 'rr_groupBox' + ls_item + '.ellipseWidth="0" '
 											
-	ls_modify							= ls_modify																									&
-											+ 'r_right_shadow_lower' + ls_item + '.Visible="0" '											&
-											+ 'r_left_shadow_lower' + ls_item + '.Visible="0" '
+//	ls_modify							= ls_modify																									&
+//											+ 'r_right_shadow_lower' + ls_item + '.Visible="0" '											&
+//											+ 'r_left_shadow_lower' + ls_item + '.Visible="0" '
 END IF
 
 IF ds_groupBox.of_getItem_titleBarAsTab(vl_item) THEN
-	ls_modify							= ls_modify																									&
-											+ 'r_right_shadow_lower' + ls_item + '.Visible="0" '											&
-											+ 'l_right_lower' + ls_item + '.Visible="0" '
+//	ls_modify							= ls_modify																									&
+//											+ 'r_right_shadow_lower' + ls_item + '.Visible="0" '											&
+//											+ 'l_right_lower' + ls_item + '.Visible="0" '
 END IF
 
 Long										ll_tmpHeight
@@ -602,6 +605,8 @@ IF ds_groupBox.of_PBVersion() >= 12.5 THEN
 											+ 't_overlay' + ls_item + '.Enabled="0" '
 	END IF
 END IF
+
+ls_modify								= of_hideUnusedParts(vl_item, ls_modify)
 
 Long										ll_detailHeight
 ll_detailHeight						= Long(idw_palette.Describe('DataWindow.Detail.Height'))
@@ -1263,15 +1268,17 @@ Long										ll_yOffSet
 ll_yOffSet								= ll_titleY + Long(idw_palette.Describe('t_overlay' + ls_item + '.Height'))
 
 ls_modify								= ls_modify																									&
-											+ 'l_left' + ls_item + '.Visible="0" '																&
-											+ 'l_right_upper' + ls_item + '.Visible="0" '													&
-											+ 'l_right_lower' + ls_item + '.Visible="0" '													&
-											+ 'r_left_shadow_upper' + ls_item + '.Visible="0" '											&
-											+ 'r_left_shadow_lower' + ls_item + '.Visible="0" '											&
-											+ 'r_right_shadow_upper' + ls_item + '.Visible="0" '											&
-											+ 'r_right_shadow_lower' + ls_item + '.Visible="0" '											&
-											+ 'rr_title' + ls_item + '.Visible="0" '															&
 											+ 'rr_groupbox' + ls_item + '.Visible="1" '
+
+//ls_modify								= ls_modify																									&
+//											+ 'l_left' + ls_item + '.Visible="0" '																&
+//											+ 'l_right_upper' + ls_item + '.Visible="0" '													&
+//											+ 'l_right_lower' + ls_item + '.Visible="0" '													&
+//											+ 'r_left_shadow_upper' + ls_item + '.Visible="0" '											&
+//											+ 'r_left_shadow_lower' + ls_item + '.Visible="0" '											&
+//											+ 'r_right_shadow_upper' + ls_item + '.Visible="0" '											&
+//											+ 'r_right_shadow_lower' + ls_item + '.Visible="0" '											&
+//											+ 'rr_title' + ls_item + '.Visible="0" '															&
 											
 ls_modify								= ls_modify																									&
 											+ 'l_title' + ls_item + '.Pen.Color="' + String(ds_groupBox.of_getItem_backColor(vl_item)) + '" '
@@ -1315,15 +1322,15 @@ ls_modify								= ls_modify																									&
 											+ '.x2="' + String(ll_picX + ll_picWidth + PixelsToUnits(5, xPixelsToUnits!)) + '" '	
 
 IF ds_groupBox.of_getItem_image(vl_item) = '' THEN
-	ls_modify							= ls_modify + 'p_title' + ls_item + '.Visible="0" l_bitmap' + ls_item + '.Visible="0" '
+//	ls_modify							= ls_modify + 'p_title' + ls_item + '.Visible="0" l_bitmap' + ls_item + '.Visible="0" '
 ELSE
 	ls_modify							= ls_modify + 'p_title' + ls_item + '.Visible="1" l_bitmap' + ls_item + '.Visible="1" '
 END IF
 
 IF ds_groupBox.of_getItem_text(vl_item) = '' THEN
-	ls_modify							= ls_modify + 't_title' + ls_item + '.Visible="0" '
-	ls_modify							= ls_modify + 't_overlay' + ls_item + '.Visible="0" '
-	ls_modify							= ls_modify + 'l_title' + ls_item + '.Visible="0" '
+//	ls_modify							= ls_modify + 't_title' + ls_item + '.Visible="0" '
+//	ls_modify							= ls_modify + 't_overlay' + ls_item + '.Visible="0" '
+//	ls_modify							= ls_modify + 'l_title' + ls_item + '.Visible="0" '
 ELSE
 	ls_modify							= ls_modify + 't_title' + ls_item + '.Visible="1" '
 	ls_modify							= ls_modify + 't_overlay' + ls_item + '.Visible="1" '
@@ -1473,6 +1480,8 @@ IF ds_groupBox.of_PBVersion() >= 12.5 THEN
 											+ 't_overlay' + ls_item + '.Enabled="0" '
 	END IF
 END IF
+
+ls_modify								= of_hideUnusedParts(vl_item, ls_modify)
 
 Long										ll_detailHeight
 ll_detailHeight						= Long(idw_palette.Describe('DataWindow.Detail.Height'))
@@ -2496,6 +2505,78 @@ ELSE
 END IF
 
 Return(ll_item)
+end function
+
+public function string of_hideunusedparts (long vl_item, string vs_modify);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+String									ls_item	= ''
+
+IF NOT isNull(vl_item) THEN 
+	ls_item								= '_' + String(vl_item)
+END IF
+
+String									ls_modify	= ''
+	
+IF Pos(vs_modify, 'rr_title' + ls_item + '.Visible="1"') <= 0 THEN
+	ls_modify							= ls_modify + 'rr_title' + ls_item + '.Visible="0" '
+END IF
+
+IF Pos(vs_modify, 'p_title' + ls_item + '.Visible="1"') <= 0 THEN
+	ls_modify							= ls_modify + 'p_title' + ls_item + '.Visible="0" '
+END IF
+
+IF Pos(vs_modify, 't_overlay' + ls_item + '.Visible="1"') <= 0 THEN
+	ls_modify							= ls_modify + 't_overlay' + ls_item + '.Visible="0" '
+END IF
+
+IF Pos(vs_modify, 't_title' + ls_item + '.Visible="1"') <= 0 THEN
+	ls_modify							= ls_modify + 't_title' + ls_item + '.Visible="0" '
+END IF
+
+IF Pos(vs_modify, 'l_left' + ls_item + '.Visible="1"') <= 0 THEN
+	ls_modify							= ls_modify + 'l_left' + ls_item + '.Visible="0" '
+END IF
+
+IF Pos(vs_modify, 'r_left_shadow_upper' + ls_item + '.Visible="1"') <= 0 THEN
+	ls_modify							= ls_modify + 'r_left_shadow_upper' + ls_item + '.Visible="0" '
+END IF
+
+IF Pos(vs_modify, 'r_right_shadow_lower' + ls_item + '.Visible="1"') <= 0 THEN
+	ls_modify							= ls_modify + 'r_right_shadow_lower' + ls_item + '.Visible="0" '
+END IF
+
+IF Pos(vs_modify, 'r_left_shadow_lower' + ls_item + '.Visible="1"') <= 0 THEN
+	ls_modify							= ls_modify + 'r_left_shadow_lower' + ls_item + '.Visible="0" '
+END IF
+
+IF Pos(vs_modify, 'r_right_shadow_upper' + ls_item + '.Visible="1"') <= 0 THEN
+	ls_modify							= ls_modify + 'r_right_shadow_upper' + ls_item + '.Visible="0" '
+END IF
+
+IF Pos(vs_modify, 'l_right_upper' + ls_item + '.Visible="1"') <= 0 THEN
+	ls_modify							= ls_modify + 'l_right_upper' + ls_item + '.Visible="0" '
+END IF
+
+IF Pos(vs_modify, 'l_right_lower' + ls_item + '.Visible="1"') <= 0 THEN
+	ls_modify							= ls_modify + 'l_right_lower' + ls_item + '.Visible="0" '
+END IF
+
+IF Pos(vs_modify, 'l_title' + ls_item + '.Visible="1"') <= 0 THEN
+	ls_modify							= ls_modify + 'l_title' + ls_item + '.Visible="0" '
+END IF
+
+IF Pos(vs_modify, 'l_bitmap' + ls_item + '.Visible="1"') <= 0 THEN
+	ls_modify							= ls_modify + 'l_bitmap' + ls_item + '.Visible="0" '
+END IF
+
+Return(vs_modify + ' ' + ls_modify)
 end function
 
 on n_cst_groupbox.create

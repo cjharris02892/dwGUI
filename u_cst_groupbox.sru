@@ -93,6 +93,9 @@ Private:
 
 	n_cst_dwGUI							invo_dwGUI
 	n_cst_color							invo_color
+	
+	window								iw_parent
+	userObject							iuo_parent
 end variables
 forward prototypes
 public function integer resize (integer w, integer h)
@@ -133,12 +136,32 @@ public function integer resize (integer w, integer h);//	CopyRight (c) 2016 by C
 //
 //	Original Author:  Christopher Harris
 
+IF isValid(iw_parent) THEN
+	iw_parent.setRedraw(FALSE)
+ELSE
+	IF isValid(iuo_parent) THEN
+		iuo_parent.setRedraw(FALSE)
+	ELSE
+		this.setRedraw(FALSE)
+	END IF
+END IF
+
 Long										li_RC
 li_RC										= Super::Resize(W, H)
 
 dw_palette.Resize(W, H)
 
 this.BringToTop						= FALSE
+
+IF isValid(iw_parent) THEN
+	iw_parent.setRedraw(TRUE)
+ELSE
+	IF isValid(iuo_parent) THEN
+		iuo_parent.setRedraw(TRUE)
+	ELSE
+		this.setRedraw(TRUE)
+	END IF
+END IF
 
 Return(li_RC)
 end function
@@ -540,29 +563,27 @@ nvo_groupBox.of_register(dw_palette)
 
 TabOrder									= 0
 
-//IF isValid(parent) THEN
-//	
-//	PowerObject							lpo_parent
-//	lpo_parent							= parent
-//
-//	CHOOSE CASE TypeOf(lpo_parent)
-//		CASE window!
-//			
-//			Window						lw_parent
-//			lw_parent					= lpo_parent
-//			
+IF isValid(parent) THEN
+	
+	PowerObject							lpo_parent
+	lpo_parent							= parent
+
+	CHOOSE CASE TypeOf(lpo_parent)
+		CASE window!
+			
+			iw_parent					= lpo_parent
+			
+//			of_setBackColor(iw_parent.BackColor)
+			
+		CASE userObject!
+			
+			iuo_parent					= lpo_parent
+			
 //			of_setBackColor(lw_parent.BackColor)
-//			
-//		CASE userObject!
-//			
-//			UserObject					luo_parent
-//			luo_parent					= lpo_parent
-//			
-//			of_setBackColor(lw_parent.BackColor)
-//			
-//	END CHOOSE
-//	
-//END IF
+			
+	END CHOOSE
+	
+END IF
 
 of_disableUpdate()
 
