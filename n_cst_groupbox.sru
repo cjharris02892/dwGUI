@@ -128,7 +128,7 @@ public function long of_addgroupbox (string vs_text, string vs_image, string vs_
 public function long of_addgroupbox (string vs_text, long vl_x, long vl_y, long vl_width, long vl_height)
 public function long of_addgroupbox (string vs_text, string vs_image, long vl_x, long vl_y, long vl_width, long vl_height)
 public function long of_replacegroupbox (string vs_groupbox)
-public function string of_hideunusedparts (long vl_item, string vs_modify)
+private function string of_hideunusedparts (long vl_item, string vs_modify)
 end prototypes
 
 public function integer of_update ();//	CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -2506,7 +2506,7 @@ END IF
 Return(ll_item)
 end function
 
-public function string of_hideunusedparts (long vl_item, string vs_modify);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+private function string of_hideunusedparts (long vl_item, string vs_modify);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
 // license which accompanies this distribution and can be found at:
