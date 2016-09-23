@@ -97,6 +97,7 @@ Private:
 	window								iw_parent
 	userObject							iuo_parent
 end variables
+
 forward prototypes
 public function integer resize (integer w, integer h)
 public function integer of_update ()
@@ -114,8 +115,6 @@ public subroutine of_settextstrikeout (boolean vb_strikeout)
 public subroutine of_settextitalic (boolean vb_italic)
 public subroutine of_settextalignment (integer vi_alignment)
 public subroutine of_settextunderline (boolean vb_underline)
-public subroutine of_move (long vl_x, long vl_y)
-public subroutine of_resize (long vl_width, long vl_height)
 public subroutine of_setvisible (boolean vb_visible)
 public function boolean of_isvisible ()
 public function boolean of_isenabled ()
@@ -386,34 +385,6 @@ nvo_groupBox.of_setTextUnderline(1, vb_underline)
 RETURN
 end subroutine
 
-public subroutine of_move (long vl_x, long vl_y);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
-//
-// This code and accompanying materials are made available under the GPLv3
-// license which accompanies this distribution and can be found at:
-//
-// http://www.gnu.org/licenses/gpl-3.0.html.
-//
-// Original Author:	Christopher Harris
-
-nvo_groupBox.of_move(1, vl_x, vl_y)
-
-RETURN
-end subroutine
-
-public subroutine of_resize (long vl_width, long vl_height);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
-//
-// This code and accompanying materials are made available under the GPLv3
-// license which accompanies this distribution and can be found at:
-//
-// http://www.gnu.org/licenses/gpl-3.0.html.
-//
-// Original Author:	Christopher Harris
-
-nvo_groupBox.of_resize(1, vl_width, vl_height)
-
-RETURN
-end subroutine
-
 public subroutine of_setvisible (boolean vb_visible);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
@@ -559,6 +530,9 @@ event constructor;//	CopyRight (c) 2016 by Christopher Harris, all rights reserv
 //
 //	Original Author:  Christopher Harris
 
+//	Make sure the datawindow is top/left
+dw_palette.Move(0, 0)
+
 nvo_groupBox.of_register(dw_palette)
 
 TabOrder									= 0
@@ -606,10 +580,8 @@ ELSE
 	of_setTextAlignment(LEFT)
 END IF
 
-of_move(PixelsToUnits(0, xPixelsToUnits!), PixelsToUnits(0, yPixelsToUnits!))
-of_resize(PixelsToUnits(width, xPixelsToUnits!), PixelsToUnits(height, yPixelsToUnits!))
+nvo_groupBox.of_move(1, dw_palette.X, dw_palette.Y)
 
-dw_palette.Move(0, 0)
 dw_palette.Resize(Width, Height)
 
 of_enableUpdate()
@@ -638,7 +610,7 @@ event resize;//	CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 //	Original Author:  Christopher Harris
 
-of_resize(PixelsToUnits(newWidth, xPixelsToUnits!), PixelsToUnits(newHeight, yPixelsToUnits!))
+nvo_groupBox.of_resize(1, PixelsToUnits(newWidth, xPixelsToUnits!), PixelsToUnits(newHeight, yPixelsToUnits!))
 
 of_update()
 end event
