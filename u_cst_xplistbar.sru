@@ -598,6 +598,13 @@ ELSE
 	li_displayToolTips				= 0
 END IF
 
+String									ls_toolTip
+ls_toolTip								= ds_XPListBar.of_getItem_toolTip(vl_item)
+
+IF ds_XPListBar.of_getItem_text(vl_item) = ls_toolTip THEN
+	ls_toolTip							= ''
+END IF
+
 Long										ll_width
 ll_width									= dw_palette.Width - (il_xIndent * 2)
 
@@ -857,7 +864,7 @@ ls_modify								= ls_modify																							&
 											+ 'alignment="0" '																				&
 											+ 'text="' + ds_XPListBar.of_getItem_text(vl_item) + '" '							&
 											+ 'border="0" '																					&
-											+ 'x="' + String(il_xIndent + PixelsToUnits(3, xPixelsToUnits!)) + '" '			&
+											+ 'x="0" '																							&
 											+ 'y="0" '																							&
 											+ 'width="0" '																						&
 											+ 'height="0" '																					&
@@ -899,7 +906,7 @@ IF ds_XPListbar.of_PBVersion() >= 11.5 THEN
 											+ 'tooltip.maxwidth="0" '																		&
 											+ 'tooltip.textcolor="' + String(of_getColor(INFOTEXT)) + '" '						&
 											+ 'tooltip.transparency="0" '																	&
-											+ 'tooltip.tip="' + ds_XPListBar.of_getItem_toolTip(vl_item) + '" '
+											+ 'tooltip.tip="' + ls_toolTip + '" '
 END IF
 
 //IF ds_XPListBar.of_getItem_enabled(vl_item) THEN
@@ -964,6 +971,8 @@ IF ls_modify <> '' THEN
 	MessageBox('Syntax Error Creating Group', ls_modify)
 END IF
 
+of_createItem_image(vl_item)
+
 dw_palette.SetPosition('t_' + ds_XPListBar.of_getItem_objectName(vl_item), "detail", TRUE)
 dw_palette.SetPosition('p_' + ds_XPListBar.of_getItem_objectName(vl_item), "detail", TRUE)
 
@@ -987,6 +996,13 @@ IF of_displayToolTips() THEN
 	li_displayToolTips				= 1
 ELSE
 	li_displayToolTips				= 0
+END IF
+
+String									ls_toolTip
+ls_toolTip								= ds_XPListBar.of_getItem_toolTip(vl_item)
+
+IF ds_XPListBar.of_getItem_text(vl_item) = ls_toolTip THEN
+	ls_toolTip							= ''
 END IF
 
 String									ls_modify
@@ -1039,7 +1055,7 @@ IF ds_XPListbar.of_PBVersion() >= 11.5 THEN
 											+ 'tooltip.maxwidth="0" '																		&
 											+ 'tooltip.textcolor="' + String(of_getColor(INFOTEXT)) + '" '						&
 											+ 'tooltip.transparency="0" '																	&
-											+ 'tooltip.tip="' + ds_XPListBar.of_getItem_toolTip(vl_item) + '" '
+											+ 'tooltip.tip="' + ls_toolTip + '" '
 END IF
 
 //IF ds_XPListBar.of_getItem_enabled(vl_item) THEN
@@ -1055,6 +1071,11 @@ ls_modify								= dw_palette.Modify(ls_modify)
 IF ls_modify <> '' THEN
 	MessageBox('Syntax Error Creating Label', ls_modify)
 END IF
+
+of_createItem_image(vl_item)
+
+dw_palette.SetPosition('t_' + ds_XPListBar.of_getItem_objectName(vl_item), "detail", TRUE)
+dw_palette.SetPosition('p_' + ds_XPListBar.of_getItem_objectName(vl_item), "detail", TRUE)
 
 RETURN
 end subroutine
@@ -1074,6 +1095,13 @@ IF of_displayToolTips() THEN
 	li_displayToolTips				= 1
 ELSE
 	li_displayToolTips				= 0
+END IF
+
+String									ls_toolTip
+ls_toolTip								= ds_XPListBar.of_getItem_toolTip(vl_item)
+
+IF ds_XPListBar.of_getItem_text(vl_item) = ls_toolTip THEN
+	ls_toolTip							= ''
 END IF
 
 String									ls_modify
@@ -1127,7 +1155,7 @@ IF ds_XPListbar.of_PBVersion() >= 11.5 THEN
 											+ 'tooltip.maxwidth="0" '																		&
 											+ 'tooltip.textcolor="' + String(of_getColor(INFOTEXT)) + '" '						&
 											+ 'tooltip.transparency="0" '																	&
-											+ 'tooltip.tip="' + ds_XPListBar.of_getItem_toolTip(vl_item) + '" '
+											+ 'tooltip.tip="' + ls_toolTip + '" '
 END IF
 
 //IF ds_XPListBar.of_getItem_enabled(vl_item) THEN
@@ -1143,6 +1171,11 @@ ls_modify								= dw_palette.Modify(ls_modify)
 IF ls_modify <> '' THEN
 	MessageBox('Syntax Error Creating Link', ls_modify)
 END IF
+
+of_createItem_image(vl_item)
+
+dw_palette.SetPosition('t_' + ds_XPListBar.of_getItem_objectName(vl_item), "detail", TRUE)
+dw_palette.SetPosition('p_' + ds_XPListBar.of_getItem_objectName(vl_item), "detail", TRUE)
 
 RETURN
 end subroutine
@@ -2131,6 +2164,11 @@ IF ls_describe <> '!' AND ls_describe <> '?' AND ls_describe <> '' THEN
 	dw_palette.Modify('t_' + ls_objectName + '.Text="' + vs_text_new + '"')
 END IF
 
+//	Reset ToolTip based on new item text
+of_setTipText(vl_item, ds_XPListBar.of_getItem_toolTip(vl_item))
+
+of_update(TRUE)
+
 Return(SUCCESS)
 end function
 
@@ -2173,7 +2211,11 @@ IF vl_item <= 1 OR vl_item > ds_XPListBar.RowCount() THEN Return(FAILURE)
 
 IF isNull(vs_tooltip) THEN vs_tooltip = ''
 
-ds_XPListBar.of_setItem_toolTip(vl_item, vs_tooltip)
+ds_XPListBar.of_setItem_toolTip(vl_item, Trim(vs_tooltip))
+
+IF ds_XPListBar.of_getItem_text(vl_item) = ds_XPListBar.of_getItem_toolTip(vl_item) THEN
+	vs_toolTip							= ''
+END IF
 
 String									ls_objectName
 ls_objectName							= ds_XPListBar.of_getItem_objectName(vl_item)
@@ -2182,13 +2224,13 @@ String									ls_describe
 ls_describe								= Trim(dw_palette.Describe('p_' + ls_objectName + '.X'))
 	
 IF ls_describe <> '!' AND ls_describe <> '?' AND ls_describe <> '' THEN
-	dw_palette.Modify('p_' + ls_objectName + '.ToolTip.Tip="1"')
+	dw_palette.Modify('p_' + ls_objectName + '.ToolTip.Tip="' + vs_toolTip + '"')
 END IF
 
 ls_describe								= Trim(dw_palette.Describe('t_' + ls_objectName + '.X'))
 			
 IF ls_describe <> '!' AND ls_describe <> '?' AND ls_describe <> '' THEN
-	dw_palette.Modify('t_' + ls_objectName + '.ToolTip.Tip="1"')
+	dw_palette.Modify('t_' + ls_objectName + '.ToolTip.Tip="' + vs_toolTip + '"')
 END IF
 
 Return(SUCCESS)
@@ -2259,7 +2301,11 @@ dw_palette.SetRedraw(FALSE)
 
 Boolean									lb_groupEnabled
 Boolean									lb_groupIsEmpty	= TRUE
-Long										ll_groupY,			ll_groupWidth
+
+Long										ll_textWidth
+
+Long										ll_startX
+ll_startX								= il_xIndent + PixelsToUnits(3, xPixelsToUnits!)
 
 String									ls_modify			= ''
 Long										ll_newWidth,		ll_newHeight
@@ -2267,13 +2313,11 @@ Long										ll_newWidth,		ll_newHeight
 ll_newWidth								= dw_palette.Width
 ll_newHeight							= dw_palette.Height
 
-ls_modify								= 't_scroll_top.width="' + String(ll_newWidth - (il_xIndent * 2)) + '" '		&
-											+ 't_scroll_bottom.width="' + String(ll_newWidth - (il_xIndent * 2)) + '" '	&
+ls_modify								= 't_scroll_top.width="' + String(ll_newWidth - (il_xIndent * 2)) + '" '			&
+											+ 't_scroll_bottom.width="' + String(ll_newWidth - (il_xIndent * 2)) + '" '		&
 
 Long										ll_width,	ll_lines
 ll_width									= ll_newWidth - (il_xIndent * 2)
-
-mle_XPListBar.Resize(ll_width - PixelsToUnits(6, xPixelsToUnits!), 10000)
 
 Long										ll_pos					= 0,	ll_posLast
 Long										ll_containerHeight	= 0,	ll_containerHeightLast
@@ -2281,7 +2325,10 @@ Long										ll_containerItem		= 0
 Long										ll_separator			= 0
 Long										ll_group
 
-String									ls_item,	ls_group
+Long										ll_imageWidth,			ll_imageHeight
+Long										ll_textAdjust,			ll_textHeight
+
+String									ls_item,	ls_group,	ls_image
 
 Long										ll_item,	ll_items
 ll_items									= ds_XPListBar.RowCount()
@@ -2295,32 +2342,35 @@ FOR ll_group = 1 TO ll_items
 	IF NOT of_isVisible(ll_group) THEN
 		
 		//	Group is not visible
-		ls_modify						= ls_modify																							&
-											+ 'r_' + ls_group + '_roundrectangle.Visible="0" '										&
-											+ 'r_' + ls_group + '_container.Visible="0" '											&
-											+ 'r_' + ls_group + '_right_corner.Visible="0" '										&
-											+ 'r_' + ls_group + '_right_shadow.Visible="0" '										&
-											+ 'r_' + ls_group + '_left_corner.Visible="0" '											&
-											+ 'r_' + ls_group + '_left_shadow.Visible="0" '											&
-											+ 'e_' + ls_group + '.Visible="0" '															&
-											+ 't_' + ls_group + '.Visible="0" '															&
-											+ 'p_' + ls_group + '_chevron.Visible="0" '
+		ls_modify						= ls_modify																								&
+											+ 'r_' + ls_group + '_roundrectangle.Visible="0" '											&
+											+ 'r_' + ls_group + '_container.Visible="0" '												&
+											+ 'r_' + ls_group + '_right_corner.Visible="0" '											&
+											+ 'r_' + ls_group + '_right_shadow.Visible="0" '											&
+											+ 'r_' + ls_group + '_left_corner.Visible="0" '												&
+											+ 'r_' + ls_group + '_left_shadow.Visible="0" '												&
+											+ 'e_' + ls_group + '.Visible="0" '																&
+											+ 't_' + ls_group + '.Visible="0" '																&
+											+ 'p_' + ls_group + '_chevron.Visible="0" '													&
+											+ 'p_' + ls_group + '.Visible="0" '
 											
 		//	Items under the group are not visible
 		FOR ll_item = 1 TO ll_items
 				
 			IF ds_XPListBar.of_getItem_parent(ll_item) <> ll_group THEN CONTINUE
+
+			ls_item						= ds_XPListBar.of_getItem_objectName(ll_item)
 			
 			//	If the group is not visible, then all items under it are not visible
 			CHOOSE CASE ds_XPListBar.of_getItem_objectType(ll_item)
 		
 				CASE ds_XPListBar.LABEL
-					ls_modify			= ls_modify + 't_' + ds_XPListBar.of_getItem_objectName(ll_item) + '.Visible="0" '
+					ls_modify			= ls_modify + 't_' + ls_item + '.Visible="0" ' + 'p_' + ls_item + '.Visible="0" '
 				CASE ds_XPListBar.LINK
-					ls_modify			= ls_modify + 't_' + ds_XPListBar.of_getItem_objectName(ll_item) + '.Visible="0" '
+					ls_modify			= ls_modify + 't_' + ls_item + '.Visible="0" ' + 'p_' + ls_item + '.Visible="0" '
 				CASE ds_XPListBar.SEPARATOR
-					ls_modify			= ls_modify																							&
-											+ 'l_separator_' + String(ll_item) + '_a.Visible="0" '								&
+					ls_modify			= ls_modify																								&
+											+ 'l_separator_' + String(ll_item) + '_a.Visible="0" '									&
 											+ 'l_separator_' + String(ll_item) + '_b.Visible="0" '
 			END CHOOSE
 			
@@ -2329,86 +2379,126 @@ FOR ll_group = 1 TO ll_items
 		CONTINUE
 
 	END IF
+
+	ls_image								= ds_XPListBar.of_getItem_image(ll_group)
 	
 	//	Group is visible
-	ls_modify							= ls_modify																							&
-											+ 'r_' + ls_group + '_roundrectangle.Visible="1" '										&
-											+ 'r_' + ls_group + '_container.Visible="1" '											&
-											+ 'r_' + ls_group + '_right_corner.Visible="1" '										&
-											+ 'r_' + ls_group + '_right_shadow.Visible="1" '										&
-											+ 'r_' + ls_group + '_left_corner.Visible="1" '											&
-											+ 'r_' + ls_group + '_left_shadow.Visible="1" '											&
-											+ 'e_' + ls_group + '.Visible="1" '															&
-											+ 't_' + ls_group + '.Visible="1" '															&
+	ls_modify							= ls_modify																								&
+											+ 'r_' + ls_group + '_roundrectangle.Visible="1" '											&
+											+ 'r_' + ls_group + '_container.Visible="1" '												&
+											+ 'r_' + ls_group + '_right_corner.Visible="1" '											&
+											+ 'r_' + ls_group + '_right_shadow.Visible="1" '											&
+											+ 'r_' + ls_group + '_left_corner.Visible="1" '												&
+											+ 'r_' + ls_group + '_left_shadow.Visible="1" '												&
+											+ 'e_' + ls_group + '.Visible="1" '																&
+											+ 't_' + ls_group + '.Visible="1" '																&
 											+ 'p_' + ls_group + '_chevron.Visible="1" '
 
+	IF isNull(ls_image) OR ls_image = '' THEN
+		
+		ll_imageWidth					= 0
+		ll_imageHeight					= 0
+		
+		ls_modify						= ls_modify																								&
+											+ 'p_' + ls_group + '.Visible="0" '																&
+											+ 't_' + ls_group + '.X="' + String(ll_startX) + '" '
+	ELSE
+		
+		ll_imageWidth					= of_size_imageWidth(ls_image)
+		ll_imageHeight					= of_size_imageHeight(ls_image)
+
+		ls_modify						= ls_modify																								&
+											+ 'p_' + ls_group + '.Visible="1" '																&
+											+ 'p_' + ls_group + '.Width="' + String(ll_imageWidth) + '" '							&
+											+ 'p_' + ls_group + '.Height="' + String(ll_imageHeight) + '" '						&
+											+ 'p_' + ls_group + '.X="' + String(ll_startX) + '" '										&
+											+ 't_' + ls_group + '.X="' + String(ll_startX + ll_imageWidth + PixelsToUnits(2, xPixelsToUnits!)) + '" '
+											
+		ll_imageWidth					= ll_imageWidth + PixelsToUnits(1, xPixelsToUnits!)
+		
+	END IF
+	
 	//	Update the group's position
 	ll_x									= (il_xIndent + ll_width - 87 - PixelsToUnits(4, xPixelsToUnits!))
 	
-	ls_modify							= ls_modify																							&
-											+ 'r_' + ls_group + '_roundrectangle.'														&
-											+ 'width="' + String(ll_newWidth - (il_xIndent * 2)) + '" '							&
-											+ 'r_' + ls_group + '_container.'															&
-											+ 'width="' + String(ll_newWidth - (il_xIndent * 2)) + '" '							&
-											+ 'r_' + ls_group + '_right_corner.'														&
-											+ 'x="' + String(il_xIndent + ll_width - 18) + '" '									&
-											+ 'r_' + ls_group + '_right_shadow.'														&
-											+ 'x="' + String(il_xIndent + ll_width - 18) + '" '									&
-											+ 'e_' + ls_group + '.'																			&
-											+ 'x="' + String(ll_x) + '" '																	&
-											+ 'p_' + ls_group + '_chevron.'																&
+	ls_modify							= ls_modify																								&
+											+ 'r_' + ls_group + '_roundrectangle.'															&
+											+ 'width="' + String(ll_newWidth - (il_xIndent * 2)) + '" '								&
+											+ 'r_' + ls_group + '_container.'																&
+											+ 'width="' + String(ll_newWidth - (il_xIndent * 2)) + '" '								&
+											+ 'r_' + ls_group + '_right_corner.'															&
+											+ 'x="' + String(il_xIndent + ll_width - 18) + '" '										&
+											+ 'r_' + ls_group + '_right_shadow.'															&
+											+ 'x="' + String(il_xIndent + ll_width - 18) + '" '										&
+											+ 'e_' + ls_group + '.'																				&
+											+ 'x="' + String(ll_x) + '" '																		&
+											+ 'p_' + ls_group + '_chevron.'																	&
 											+ 'x="' + String(il_xIndent + ll_width - 84) + '" '
 											
-	ll_groupY							= ll_pos + ((il_groupHeight - idbl_fontHeight) / 2)
+	ll_textWidth						= ll_x - (ll_startX + ll_imageWidth + PixelsToUnits(4, xPixelsToUnits!))
+//	ll_textWidth						= Min(ll_textWidth, of_size_text(ds_XPListBar.of_getItem_text(ll_group)))
 	
-	ll_groupWidth						= ll_x																								&
-											- Long(dw_palette.Describe('t_' + ls_group + '.x')) - PixelsToUnits(2, xPixelsToUnits!)
-	
-	ll_groupWidth						= Min(ll_groupWidth, of_size_text(ds_XPListBar.of_getItem_text(ll_group)))
-	
-	ls_modify							= ls_modify																							&
-											+ 'r_' + ls_group + '_roundrectangle.'														&
-											+ 'y="' + String(ll_pos) + '" '																&
-											+ 'r_' + ls_group + '_container.'															&
-											+ 'y="' + String(ll_pos + 96) + '" '														&
-											+ 'r_' + ls_group + '_right_corner.'														&
-											+ 'y="' + String(ll_pos + 84) + '" '														&
-											+ 'r_' + ls_group + '_right_shadow.'														&
-											+ 'y="' + String(ll_pos + 84) + '" '														&
-											+ 'r_' + ls_group + '_left_corner.'															&
-											+ 'y="' + String(ll_pos + 84) + '" '														&
-											+ 'r_' + ls_group + '_left_shadow.'															&
-											+ 'y="' + String(ll_pos + 84) + '" '														&
-											+ 'e_' + ls_group + '.'																			&
-											+ 'y="' + String(ll_pos + 12) + '" '														&
-											+ 't_' + ls_group + '.'																			&
-											+ 'y="' + String(ll_groupY) + '" '															&
-											+ 't_' + ls_group + '.'																			&
-											+ 'height="' + String(1 * Int(idbl_fontHeight)) + '" '								&
-											+ 't_' + ls_group + '.'																			&
-											+ 'width="' + String(ll_groupWidth) + '" '												&
-											+ 'p_' + ls_group + '_chevron.'																&
+	ls_modify							= ls_modify																								&
+											+ 'r_' + ls_group + '_roundrectangle.'															&
+											+ 'y="' + String(ll_pos) + '" '																	&
+											+ 'r_' + ls_group + '_container.'																&
+											+ 'y="' + String(ll_pos + 96) + '" '															&
+											+ 'r_' + ls_group + '_right_corner.'															&
+											+ 'y="' + String(ll_pos + 84) + '" '															&
+											+ 'r_' + ls_group + '_right_shadow.'															&
+											+ 'y="' + String(ll_pos + 84) + '" '															&
+											+ 'r_' + ls_group + '_left_corner.'																&
+											+ 'y="' + String(ll_pos + 84) + '" '															&
+											+ 'r_' + ls_group + '_left_shadow.'																&
+											+ 'y="' + String(ll_pos + 84) + '" '															&
+											+ 'e_' + ls_group + '.'																				&
+											+ 'y="' + String(ll_pos + 12) + '" '															&
+											+ 't_' + ls_group + '.'																				&
+											+ 'y="' + String(ll_pos + Int(((il_groupHeight - idbl_fontHeight) / 2))) + '" '	&
+											+ 't_' + ls_group + '.'																				&
+											+ 'height="' + String(Int(idbl_fontHeight)) + '" '											&
+											+ 't_' + ls_group + '.'																				&
+											+ 'width="' + String(ll_textWidth) + '" '														&
+											+ 'p_' + ls_group + '_chevron.'																	&
 											+ 'y="' + String(ll_pos + 20) + '" '
+
+	ls_modify							= ls_modify																								&
+											+ 'p_' + ls_group + '.'																				&
+											+ 'y="' + String(ll_pos + Int(((il_groupHeight - ll_imageHeight) / 2))) + '" '
 
 	ll_pos							 	= ll_pos + il_groupHeight
 	
 	lb_groupEnabled					= of_isEnabled(ll_group)
-	
+
 	IF lb_groupEnabled THEN
 
+		IF ds_XPListBar.of_PBVersion() >= 11.5 THEN
+			ls_modify					= ls_modify + 'p_' + ls_group + '.Transparency="0" '
+		ELSE
+			//	Need to come up with a way to show enabled/disabled for version prior to 11.5
+		END IF
+	
 		IF ds_XPListBar.of_PBVersion() >= 12.5 THEN
 			ls_modify					= ls_modify + 't_' + ls_group + '.Enabled="1" '
+			ls_modify					= ls_modify + 'p_' + ls_group + '.Enabled="1" '
 		END IF
 
-		ls_modify						= ls_modify + 't_' + ls_group + '.Color="' + String(ds_XPListBar.of_getItem_color(ll_group)) + '"'
+		ls_modify						= ls_modify + 't_' + ls_group + '.Color="' + String(ds_XPListBar.of_getItem_color(ll_group)) + '" '
 		
 	ELSE
 		
+		IF ds_XPListBar.of_PBVersion() >= 11.5 THEN
+			ls_modify					= ls_modify + 'p_' + ls_group + '.Transparency="50" '
+		ELSE
+			//	Need to come up with a way to show enabled/disabled for version prior to 11.5
+		END IF
+
 		IF ds_XPListBar.of_PBVersion() >= 12.5 THEN
 			ls_modify					= ls_modify + 't_' + ls_group + '.Enabled="0" '
+			ls_modify					= ls_modify + 'p_' + ls_group + '.Enabled="0" '
 		END IF
 		
-		ls_modify						= ls_modify + 't_' + ls_group + '.Color="' + String(of_getColor(DISABLEDTEXT)) + '"'
+		ls_modify						= ls_modify + 't_' + ls_group + '.Color="' + String(of_getColor(DISABLEDTEXT)) + '" '
 		
 	END IF
 	
@@ -2422,166 +2512,246 @@ FOR ll_group = 1 TO ll_items
 		IF ds_XPListBar.of_getItem_parent(ll_item) <> ll_group THEN CONTINUE
 			
 		ls_item							= ds_XPListBar.of_getItem_objectName(ll_item)
+		ls_image							= ds_XPListBar.of_getItem_image(ll_item)
 		
 		CHOOSE CASE ds_XPListBar.of_getItem_objectType(ll_item)
 		
-			CASE ds_XPListBar.LABEL
+			CASE ds_XPListBar.LABEL, ds_XPListBar.LINK
 	
 				IF NOT of_isVisible(ll_item) OR of_isCollapsed(ll_group) THEN
 					ls_modify			= ls_modify + 't_' + ls_item + '.Visible="0" '
+					ls_modify			= ls_modify + 'p_' + ls_item + '.Visible="0" '
 					CONTINUE
 				END IF
-				
+
+				ls_image					= ds_XPListBar.of_getItem_image(ll_item)
+
 				IF of_isEnabled(ll_item) AND lb_groupEnabled THEN
 					
+					IF ds_XPListBar.of_PBVersion() >= 11.5 THEN
+						ls_modify		= ls_modify + 'p_' + ls_item + '.Transparency="0" '
+					ELSE
+						//	Need to come up with a way to show enabled/disabled for version prior to 11.5
+					END IF
+
 					IF ds_XPListBar.of_PBVersion() >= 12.5 THEN
 						ls_modify		= ls_modify + 't_' + ls_item + '.Enabled="1" '
+						ls_modify		= ls_modify + 'p_' + ls_item + '.Enabled="1" '
 					END IF
 					
-					ls_modify			= ls_modify + 't_' + ls_item + '.Color="' + String(ds_XPListBar.of_getItem_color(ll_item)) + '"'
+					ls_modify			= ls_modify + 't_' + ls_item + '.Color="' + String(ds_XPListBar.of_getItem_color(ll_item)) + '" '
 					
 				ELSE
 					
+					IF ds_XPListBar.of_PBVersion() >= 11.5 THEN
+						ls_modify		= ls_modify + 'p_' + ls_item + '.Transparency="50" '
+					ELSE
+						//	Need to come up with a way to show enabled/disabled for version prior to 11.5
+					END IF
+
 					IF ds_XPListBar.of_PBVersion() >= 12.5 THEN
 						ls_modify		= ls_modify + 't_' + ls_item + '.Enabled="0" '
+						ls_modify		= ls_modify + 'p_' + ls_item + '.Enabled="0" '
 					END IF
 					
-					ls_modify			= ls_modify + 't_' + ls_item + '.Color="' + String(of_getColor(DISABLEDTEXT)) + '"'
+					ls_modify			= ls_modify + 't_' + ls_item + '.Color="' + String(of_getColor(DISABLEDTEXT)) + '" '
 					
 				END IF
 					
 				lb_groupIsEmpty		= FALSE
 				
 				ls_modify				= ls_modify + 't_' + ls_item + '.Visible="1" '
-		
+
+				IF isNull(ls_image) OR ls_image = '' THEN
+					
+					ll_imageWidth		= 0
+					ll_imageHeight		= 0
+
+					ls_modify			= ls_modify + 'p_' + ls_item + '.Visible="0" '												&
+											+ 't_' + ls_item + '.X="' + String(ll_startX) + '" '
+					
+				ELSE
+					
+					ll_imageWidth		= of_size_imageWidth(ls_image)
+					ll_imageHeight		= of_size_imageHeight(ls_image)
+
+					ls_modify			= ls_modify																								&
+											+ 'p_' + ls_item + '.Visible="1" '																&
+											+ 'p_' + ls_item + '.Width="' + String(ll_imageWidth) + '" '							&
+											+ 'p_' + ls_item + '.Height="' + String(ll_imageHeight) + '" '							&
+											+ 'p_' + ls_item + '.X="' + String(ll_startX) + '" '										&
+											+ 't_' + ls_item + '.X="' + String(ll_startX + ll_imageWidth + PixelsToUnits(2, xPixelsToUnits!)) + '" '
+											
+					ll_imageWidth		= ll_imageWidth + PixelsToUnits(2, xPixelsToUnits!)
+					
+				END IF
+
 				ll_separator			= 0
 				ll_containerItem		= ll_containerItem + 1
+				
+				mle_XPListBar.Resize(ll_width - ll_imageWidth - PixelsToUnits(6, xPixelsToUnits!), 10000)
 				
 				mle_XPListBar.Text	= ds_XPListBar.of_getItem_text(ll_item)
 	
 				ll_lines					= mle_XPListBar.LineCount()
 				
-				ls_modify				= ls_modify																							&
-											+ 't_' + ls_item + '.'																			&
-											+ 'width="' + String(ll_width - PixelsToUnits(6, xPixelsToUnits!)) + '" '		&
-											+ 't_' + ls_item + '.'																			&
-											+ 'height="' + String(ll_lines * Int(idbl_fontHeight)) + '" '
+				ls_modify				= ls_modify																								&
+											+ 't_' + ls_item + '.'																				&
+											+ 'width="' + String(ll_width - ll_imageWidth - PixelsToUnits(6, xPixelsToUnits!)) + '" '
+
+				ll_textHeight			= ll_lines * Int(idbl_fontHeight)
+				
+				IF ll_imageHeight > ll_textHeight THEN
+					ll_textAdjust		= PixelsToUnits(Int((unitsToPixels(ll_imageHeight, yUnitsToPixels!) - unitsToPixels(ll_textHeight, yUnitsToPixels!)) / 2), yPixelsToUnits!)
+				ELSE
+					ll_textAdjust		= 0		
+				END IF
+				
+				ls_modify				= ls_modify																								&
+											+ 't_' + ls_item + '.'																				&
+											+ 'height="' + String(ll_textHeight) + '" '
 											
 				ll_pos					= ll_pos + PixelsToUnits(2, yPixelsToUnits!)
 				ll_containerHeight	= ll_containerHeight + PixelsToUnits(2, yPixelsToUnits!)
 				
-				ls_modify				= ls_modify																							&
-											+ 't_' + ls_item + '.y="' + String(ll_pos) + '" '
+				ls_modify				= ls_modify																								&
+											+ 't_' + ls_item + '.y="' + String(ll_pos + ll_textAdjust) + '" '
 
-				ll_pos					= ll_pos + (ll_lines * Int(idbl_fontHeight))
-				ll_containerHeight	= ll_containerHeight + (ll_lines * Int(idbl_fontHeight))
+				ls_modify				= ls_modify																								&
+											+ 'p_' + ls_item + '.y="' + String(ll_pos) + '" '
+
+				ll_pos					= ll_pos + Max(ll_imageHeight, ll_textHeight)
+				ll_containerHeight	= ll_containerHeight + Max(ll_imageHeight, ll_textHeight)
 				
 				ll_pos					= ll_pos + PixelsToUnits(1, yPixelsToUnits!)
 				ll_containerHeight	= ll_containerHeight + PixelsToUnits(1, yPixelsToUnits!)
 				
-			CASE ds_XPListBar.LINK
-	
-				IF NOT of_isVisible(ll_item) OR of_isCollapsed(ll_group) THEN
-					ls_modify			= ls_modify + 't_' + ls_item + '.Visible="0" '
-					CONTINUE
-				END IF
-				
-				IF of_isEnabled(ll_item) AND lb_groupEnabled THEN
-					
-					IF ds_XPListBar.of_PBVersion() >= 12.5 THEN
-						ls_modify		= ls_modify + 't_' + ls_item + '.Enabled="1" '
-					END IF
-					
-					ls_modify			= ls_modify + 't_' + ls_item + '.Color="' + String(ds_XPListBar.of_getItem_color(ll_item)) + '"'
-					
-				ELSE
-					
-					IF ds_XPListBar.of_PBVersion() >= 12.5 THEN
-						ls_modify		= ls_modify + 't_' + ls_item + '.Enabled="0" '
-					END IF
-					
-					ls_modify			= ls_modify + 't_' + ls_item + '.Color="' + String(of_getColor(DISABLEDTEXT)) + '"'
-					
-				END IF
-				
-				lb_groupIsEmpty		= FALSE
-
-				ls_modify				= ls_modify + 't_' + ls_item + '.Visible="1" '
-
-				ll_separator			= 0
-				ll_containerItem		= ll_containerItem + 1
-		
-				
-				mle_XPListBar.Text	= ds_XPListBar.of_getItem_text(ll_item)
-	
-				ll_lines					= mle_XPListBar.LineCount()
-				
-				ls_modify				= ls_modify																							&
-											+ 't_' + ls_item + '.'																			&
-											+ 'width="' + String(ll_width - PixelsToUnits(6, xPixelsToUnits!)) + '" '		&
-											+ 't_' + ls_item + '.'																			&
-											+ 'height="' + String(ll_lines * Int(idbl_fontHeight)) + '" '
-
-				ll_pos					= ll_pos + PixelsToUnits(2, yPixelsToUnits!)
-				ll_containerHeight	= ll_containerHeight + PixelsToUnits(2, yPixelsToUnits!)
-				
-				ls_modify				= ls_modify																							&
-											+ 't_' + ls_item + '.y="' + String(ll_pos) + '" '
-
-				ll_pos					= ll_pos + (ll_lines * Int(idbl_fontHeight))
-				ll_containerHeight	= ll_containerHeight + (ll_lines * Int(idbl_fontHeight))
-
-				ll_pos					= ll_pos + PixelsToUnits(1, yPixelsToUnits!)
-				ll_containerHeight	= ll_containerHeight + PixelsToUnits(1, yPixelsToUnits!)
+//			CASE ds_XPListBar.LINK
+//	
+//				IF NOT of_isVisible(ll_item) OR of_isCollapsed(ll_group) THEN
+//					ls_modify			= ls_modify + 't_' + ls_item + '.Visible="0" '
+//					ls_modify			= ls_modify + 'p_' + ls_item + '.Visible="0" '
+//					CONTINUE
+//				END IF
+//
+//				ls_image					= ds_XPListBar.of_getItem_image(ll_item)
+//
+//				IF of_isEnabled(ll_item) AND lb_groupEnabled THEN
+//					
+//					IF ds_XPListBar.of_PBVersion() >= 11.5 THEN
+//						ls_modify		= ls_modify + 'p_' + ls_item + '.Transparency="0" '
+//					ELSE
+//						//	Need to come up with a way to show enabled/disabled for version prior to 11.5
+//					END IF
+//
+//					IF ds_XPListBar.of_PBVersion() >= 12.5 THEN
+//						ls_modify		= ls_modify + 't_' + ls_item + '.Enabled="1" '
+//						ls_modify		= ls_modify + 'p_' + ls_item + '.Enabled="1" '
+//					END IF
+//					
+//					ls_modify			= ls_modify + 't_' + ls_item + '.Color="' + String(ds_XPListBar.of_getItem_color(ll_item)) + '" '
+//					
+//				ELSE
+//					
+//					IF ds_XPListBar.of_PBVersion() >= 11.5 THEN
+//						ls_modify		= ls_modify + 'p_' + ls_item + '.Transparency="50" '
+//					ELSE
+//						//	Need to come up with a way to show enabled/disabled for version prior to 11.5
+//					END IF
+//
+//					IF ds_XPListBar.of_PBVersion() >= 12.5 THEN
+//						ls_modify		= ls_modify + 't_' + ls_item + '.Enabled="0" '
+//						ls_modify		= ls_modify + 'p_' + ls_item + '.Enabled="0" '
+//					END IF
+//					
+//					ls_modify			= ls_modify + 't_' + ls_item + '.Color="' + String(of_getColor(DISABLEDTEXT)) + '" '
+//					
+//				END IF
+//				
+//				lb_groupIsEmpty		= FALSE
+//
+//				ls_modify				= ls_modify + 't_' + ls_item + '.Visible="1" '
+//				
+//				IF isNull(ls_image) OR ls_image = '' THEN
+//					ls_modify			= ls_modify + 'p_' + ls_item + '.Visible="0" '
+//				ELSE
+//					ls_modify			= ls_modify + 'p_' + ls_item + '.Visible="1" '
+//				END IF
+//				
+//				ll_separator			= 0
+//				ll_containerItem		= ll_containerItem + 1
+//		
+//				
+//				mle_XPListBar.Text	= ds_XPListBar.of_getItem_text(ll_item)
+//	
+//				ll_lines					= mle_XPListBar.LineCount()
+//				
+//				ls_modify				= ls_modify																								&
+//											+ 't_' + ls_item + '.'																				&
+//											+ 'width="' + String(ll_width - PixelsToUnits(6, xPixelsToUnits!)) + '" '			&
+//											+ 't_' + ls_item + '.'																				&
+//											+ 'height="' + String(ll_lines * Int(idbl_fontHeight)) + '" '
+//
+//				ll_pos					= ll_pos + PixelsToUnits(2, yPixelsToUnits!)
+//				ll_containerHeight	= ll_containerHeight + PixelsToUnits(2, yPixelsToUnits!)
+//				
+//				ls_modify				= ls_modify																								&
+//											+ 't_' + ls_item + '.y="' + String(ll_pos) + '" '
+//
+//				ll_pos					= ll_pos + (ll_lines * Int(idbl_fontHeight))
+//				ll_containerHeight	= ll_containerHeight + (ll_lines * Int(idbl_fontHeight))
+//
+//				ll_pos					= ll_pos + PixelsToUnits(1, yPixelsToUnits!)
+//				ll_containerHeight	= ll_containerHeight + PixelsToUnits(1, yPixelsToUnits!)
 				
 			CASE ds_XPListBar.SEPARATOR
 	
 				IF NOT of_isVisible(ll_item) OR of_isCollapsed(ll_group) THEN
-					ls_modify			= ls_modify																							&
+					ls_modify			= ls_modify																								&
 											+ 'l_' + ls_item + '_a.Visible="0" ' + 'l_' + ls_item + '_b.Visible="0" '
 					CONTINUE
 				END IF
 
 				//	First item can not be a separator
 				IF ll_containerItem = 0 THEN
-					ls_modify			= ls_modify																							&
+					ls_modify			= ls_modify																								&
 											+ 'l_' + ls_item + '_a.Visible="0" ' + 'l_' + ls_item + '_b.Visible="0" '
 					CONTINUE
 				END IF
 				
 				//	No consecutive separators
 				IF ll_separator <> 0 THEN
-					ls_modify			= ls_modify																							&
+					ls_modify			= ls_modify																								&
 											+ 'l_' + ls_item + '_a.Visible="0" ' + 'l_' + ls_item + '_b.Visible="0" '
 					CONTINUE
 				END IF
 				
 				lb_groupIsEmpty		= FALSE
 
-				ls_modify				= ls_modify																							&
+				ls_modify				= ls_modify																								&
 											+ 'l_' + ls_item + '_a.Visible="1" ' + 'l_' + ls_item + '_b.Visible="1" '
 											
 				ll_separator 			= ll_item
 				
 				ll_x						= il_xIndent + ll_width - PixelsToUnits(2, xPixelsToUnits!)
 				
-				ls_modify				= ls_modify																							&
-											+ 'l_' + ls_item + '_a.x2="' + String(ll_x) + '" '										&
+				ls_modify				= ls_modify																								&
+											+ 'l_' + ls_item + '_a.x2="' + String(ll_x) + '" '											&
 											+ 'l_' + ls_item + '_b.x2="' + String(ll_x) + '" '
 											
 				ll_posLast				= ll_pos
-				ll_containerHeightLast																										&
+				ll_containerHeightLast																											&
 											= ll_containerHeight
 											
 				ll_pos					= ll_pos + PixelsToUnits(2, yPixelsToUnits!)
 				ll_containerHeight	= ll_containerHeight + PixelsToUnits(2, yPixelsToUnits!)
 				
-				ls_modify				= ls_modify																							&
-											+ 'l_' + ls_item + '_a.y1="' + String(ll_pos) + '" '									&
-											+ 'l_' + ls_item + '_a.y2="' + String(ll_pos) + '" '									&
-											+ 'l_' + ls_item + '_b.'																		&
-											+ 'y1="' + String(ll_pos + PixelsToUnits(1, yPixelsToUnits!)) + '" '				&
-											+ 'l_' + ls_item + '_b.'																		&
+				ls_modify				= ls_modify																								&
+											+ 'l_' + ls_item + '_a.y1="' + String(ll_pos) + '" '										&
+											+ 'l_' + ls_item + '_a.y2="' + String(ll_pos) + '" '										&
+											+ 'l_' + ls_item + '_b.'																			&
+											+ 'y1="' + String(ll_pos + PixelsToUnits(1, yPixelsToUnits!)) + '" '					&
+											+ 'l_' + ls_item + '_b.'																			&
 											+ 'y2="' + String(ll_pos + PixelsToUnits(1, yPixelsToUnits!)) + '" '
 
 				ll_pos					= ll_pos + PixelsToUnits(2, yPixelsToUnits!)
@@ -2596,8 +2766,8 @@ FOR ll_group = 1 TO ll_items
 
 	IF ll_separator <> 0 THEN
 		
-		ls_modify						= ls_modify																							&
-											+ 'l_separator_' + String(ll_separator) + '_a.Visible="0" '							&
+		ls_modify						= ls_modify																								&
+											+ 'l_separator_' + String(ll_separator) + '_a.Visible="0" '								&
 											+ 'l_separator_' + String(ll_separator) + '_b.Visible="0" '
 
 		ll_pos							= ll_posLast
@@ -2614,7 +2784,7 @@ FOR ll_group = 1 TO ll_items
 	
 	END IF
 										
-	ls_modify							= ls_modify																							&
+	ls_modify							= ls_modify																								&
 											+ 'r_' + ls_group + '_container.Height="' + String(ll_containerHeight) + '" '
 
 	ll_pos								= ll_pos + il_yIndent
@@ -2820,7 +2990,9 @@ IF vl_item <= 1 OR vl_item > ds_XPListBar.RowCount() THEN Return(FAILURE)
 
 IF isNull(vs_image) THEN vs_image = ''
 
-ds_XPListBar.of_setItem_image(vl_item, invo_dwGUI.of_getImageName(vs_image))
+vs_image									= invo_dwGUI.of_getImageName(vs_image)
+
+ds_XPListBar.of_setItem_image(vl_item, vs_image)
 
 IF isNull(vs_image) OR Trim(vs_image) = '' THEN
 	ds_XPListBar.of_setItem_imageTransparency(vl_item, of_getColor(DEFAULTIMAGETRANSPARENCY))
@@ -2837,6 +3009,8 @@ ls_describe								= Trim(dw_palette.Describe('p_' + ls_objectName + '.X'))
 IF ls_describe <> '!' AND ls_describe <> '?' AND ls_describe <> '' THEN
 	dw_palette.Modify('p_' + ls_objectName + '.FileName="' + vs_image + '"')
 END IF
+
+of_update(TRUE)
 
 Return(SUCCESS)
 end function
@@ -2855,7 +3029,7 @@ Long										ll_height
 IF isNull(vs_image) OR Trim(vs_image) = '' THEN
 	ll_height							= 0
 ELSE
-	ll_height							= #BitMapSize * PixelsToUnits(1, yPixelsToUnits!)
+	ll_height							= PixelsToUnits(#BitMapSize, yPixelsToUnits!)
 END IF
 
 Return(ll_height)
@@ -2875,7 +3049,7 @@ Long										ll_width
 IF isNull(vs_image) OR Trim(vs_image) = '' THEN
 	ll_width								= 0
 ELSE
-	ll_width								= #BitMapSize * PixelsToUnits(1, xPixelsToUnits!)
+	ll_width								= PixelsToUnits(#BitMapSize, xPixelsToUnits!)
 END IF
 
 Return(ll_width)
@@ -2987,7 +3161,7 @@ END IF
 String									ls_toolTip = ''
 ls_toolTip								= ds_XPListBar.of_getItem_toolTip(vl_item)
 
-IF ds_XPListBar.of_getItem_text(vl_item) = ds_XPListBar.of_getItem_toolTip(vl_item) THEN
+IF ds_XPListBar.of_getItem_text(vl_item) = ls_toolTip THEN
 	ls_toolTip							= ''
 END IF
 
@@ -3001,8 +3175,8 @@ ls_modify								= 'CREATE bitmap(band=detail '															&
 											+ 'filename="' + ls_image + '" '															&
 											+ 'x="0" '																						&
 											+ 'y="0" '																						&
-											+ 'height="'+ String(of_size_imageHeight(ls_image)) + '" '						&
-											+ 'width="' + String(of_size_imageWidth(ls_image)) + '" '						&
+											+ 'height="0" '																				&
+											+ 'width="0" '																					&
 											+ 'border="0" '																				&
 											+ 'name=p_' + ds_XPListBar.of_getItem_objectName(vl_item) + ' '				&
 											+ 'visible="0" '
