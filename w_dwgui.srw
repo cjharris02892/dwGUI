@@ -176,20 +176,22 @@ uo_toolbar.of_addButton('Text 1',	'',							uo_toolbar.RIGHT)
 
 uo_toolbar.of_enableUpdate()
 
+uo_XPListBar.of_disableUpdate()
+
 Long										ll_group
-ll_group									= uo_XPListBar.of_addGroup('Quotes', '', '')
+ll_group									= uo_XPListBar.of_addGroup('Quotes', 'Comment!', '')
 
 uo_XPListBar.of_addLink(ll_group, 'Now is the time for all good men to come to the aid of their party', '', '')
-uo_XPListBar.of_addLink(ll_group, 'Four score and seven years ago', '', '')
-uo_XPListBar.of_addLink('Quotes', 'To be, or not to be, that is the question', '', '')
+uo_XPListBar.of_addLink(ll_group, 'Four score and seven years ago', 'lincoln.png', '')
+uo_XPListBar.of_addLink('Quotes', 'To be, or not to be, that is the question', 'hamlet.png', '')
 
 ll_group									= uo_XPListBar.of_addGroup('Show', '', '')
 
-uo_XPListBar.of_addLabel(ll_group, 'Open', '', '')
-uo_XPListBar.of_addLabel(ll_group, 'Save', '', '')
+uo_XPListBar.of_addLabel(ll_group, 'Open', 'Open!', '')
+uo_XPListBar.of_addLabel(ll_group, 'Save', 'Save!', '')
 uo_XPlistBar.of_addSeparator(ll_group)
-uo_XPListBar.of_addLabel(ll_group, 'Print', '', '')
-uo_XPListBar.of_addLabel(ll_group, 'Preview', '', '')
+uo_XPListBar.of_addLabel(ll_group, 'Print', 'Print!', '')
+uo_XPListBar.of_addLabel(ll_group, 'Preview', 'Preview!', '')
 uo_XPlistBar.of_addSeparator('Show')
 uo_XPListBar.of_addLabel('Show', 'Text 1', '', '')
 uo_XPListBar.of_addLabel('Show', 'Text 2', '', '')
@@ -198,9 +200,9 @@ uo_XPListBar.of_addLabel('Show', 'Text 4', '', 'Text 4 ToolTip')
 uo_XPlistBar.of_addSeparator(ll_group)
 uo_XPListBar.of_addLabel(ll_group, 'Text Only', '', '')
 uo_XPlistBar.of_addSeparator(ll_group)
-uo_XPListBar.of_addLabel(ll_group, 'Exit', '', '')
+uo_XPListBar.of_addLabel(ll_group, 'Exit', 'Exit!', '')
 
-ll_group									= uo_XPListBar.of_addGroup('Check', '', '')
+ll_group									= uo_XPListBar.of_addGroup('Check', 'CheckBox!', "Shows the toolBar's button check capability.")
 
 uo_XPListBar.of_addLabel(ll_group, 'Text 1', '', '')
 uo_XPListBar.of_addLabel(ll_group, 'Text 2', '', '')
@@ -212,15 +214,16 @@ uo_XPListBar.of_addLabel(ll_group, 'ToolTips', '', '')
 
 uo_XPListBar.of_addGroup('Enable', '', '')
 
-uo_XPListBar.of_addLabel('Enable', 'Paste', '', '')
+uo_XPListBar.of_addLabel('Enable', 'Paste', 'Paste!', '')
 uo_XPListBar.of_addLabel('Enable', 'Text 1', '', '')
-uo_XPListBar.of_addLabel('Enable', 'Exit', '', '')
+uo_XPListBar.of_addLabel('Enable', 'Exit', 'Exit!', '')
 
 ll_group									= uo_XPListBar.of_addGroup('Change', '', '')
 
 uo_XPListBar.of_addLabel(ll_group, 'Open Image', '', '')
 uo_XPListBar.of_addLabel(ll_group, 'Open Text', '', '')
 
+uo_XPListBar.of_enableUpdate()
 end event
 
 event resize;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -718,7 +721,7 @@ CHOOSE CASE dwo.Name
 			IF data = 'N' THEN
 				uo_toolBar.of_setImage(ll_item, 	'Open!')
 			ELSE
-				uo_toolBar.of_setImage(ll_item,	'Copy.png')
+				uo_toolBar.of_setImage(ll_item,	'Custom039!')
 			END IF
 		END IF
 		
@@ -732,7 +735,7 @@ CHOOSE CASE dwo.Name
 			IF data = 'N' THEN
 				uo_XPListBar.of_setImage(ll_item, 	'Open!')
 			ELSE
-				uo_XPListBar.of_setImage(ll_item,	'Copy.png')
+				uo_XPListBar.of_setImage(ll_item,	'Custom039!')
 			END IF
 		END IF
 		
@@ -767,9 +770,25 @@ CHOOSE CASE dwo.Name
 		uo_toolbar.of_setVisible('Exit',				data = 'Y')
 		uo_XPListBar.of_setVisible('Exit',			data = 'Y')
 	CASE 'check_text_1'
+		
 		uo_toolbar.of_setChecked('Text 1',			data = 'Y')
+		
+		IF data = 'Y' THEN
+			uo_XPListBar.of_setImage('Check', 'Text 1', 'CheckBox!')
+		ELSE
+			uo_XPListBar.of_setImage('Check', 'Text 1', '')
+		END IF
+		
 	CASE 'check_text_2'
+		
 		uo_toolbar.of_setChecked('Text 2',			data = 'Y')
+		
+		IF data = 'Y' THEN
+			uo_XPListBar.of_setImage('Check', 'Text 2', 'CheckBox!')
+		ELSE
+			uo_XPListBar.of_setImage('Check', 'Text 2', '')
+		END IF
+
 	CASE 'display_text'
 		IF data = 'Y' THEN
 			uo_toolbar.of_EnableText()
