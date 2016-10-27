@@ -109,7 +109,7 @@ Private:
 	n_cst_dwGUI							invo_dwGUI
 	n_cst_color							invo_color
 	
-	Long									il_groupHeight					= 100
+	Long									il_groupHeight					= 104
 
 	String								is_lbuttonDown
 
@@ -685,7 +685,7 @@ ls_modify								= dw_palette.Modify(ls_modify)
 
 ls_modify								= 'CREATE rectangle(band=detail '															&
 											+ 'x="' + String(il_xIndent) + '" '															&
-											+ 'y="84" '																							&
+											+ 'y="' + String(il_groupHeight - 16) + '" '												&
 											+ 'height="16" '																					&
 											+ 'width="18" '																					&
 											+ 'name=r_' + ds_XPListBar.GROUP + '_' + String(vl_item) + '_left_corner '		&
@@ -720,7 +720,7 @@ ls_modify								= dw_palette.Modify(ls_modify)
 
 ls_modify								= 'CREATE rectangle(band=detail '															&
 											+ 'x="' + String(il_xIndent + PixelsToUnits(1, xPixelsToUnits!)) + '" '			&
-											+ 'y="84" '																							&
+											+ 'y="' + String(il_groupHeight - 16) + '" '												&
 											+ 'height="16" '																					&
 											+ 'width="18" '																					&
 											+ 'name=r_' + ds_XPListBar.GROUP + '_' + String(vl_item) + '_left_shadow '		&
@@ -755,7 +755,7 @@ ls_modify								= dw_palette.Modify(ls_modify)
 
 ls_modify								= 'CREATE rectangle(band=detail '															&
 											+ 'x="' + String(il_xIndent + ll_width - 18) + '" '									&
-											+ 'y="84" '																							&
+											+ 'y="' + String(il_groupHeight - 16) + '" '												&
 											+ 'height="16" '																					&
 											+ 'width="18" '																					&
 											+ 'name=r_' + ds_XPListBar.GROUP + '_' + String(vl_item) + '_right_corner '	&
@@ -790,7 +790,7 @@ ls_modify								= dw_palette.Modify(ls_modify)
 
 ls_modify								= 'CREATE rectangle(band=detail '															&
 											+ 'x="' + String(il_xIndent + ll_width - 18) + '" '									&
-											+ 'y="84" '																							&
+											+ 'y="' + String(il_groupHeight - 16) + '" '												&
 											+ 'height="16" '																					&
 											+ 'width="18" '																					&
 											+ 'name=r_' + ds_XPListBar.GROUP + '_' + String(vl_item) + '_right_shadow '	&
@@ -2442,15 +2442,15 @@ FOR ll_group = 1 TO ll_items
 											+ 'r_' + ls_group + '_roundrectangle.'															&
 											+ 'y="' + String(ll_pos) + '" '																	&
 											+ 'r_' + ls_group + '_container.'																&
-											+ 'y="' + String(ll_pos + 96) + '" '															&
+											+ 'y="' + String(ll_pos + (il_groupHeight - 4)) + '" '															&
 											+ 'r_' + ls_group + '_right_corner.'															&
-											+ 'y="' + String(ll_pos + 84) + '" '															&
+											+ 'y="' + String(ll_pos + (il_groupHeight - 16)) + '" '															&
 											+ 'r_' + ls_group + '_right_shadow.'															&
-											+ 'y="' + String(ll_pos + 84) + '" '															&
+											+ 'y="' + String(ll_pos + (il_groupHeight - 16)) + '" '															&
 											+ 'r_' + ls_group + '_left_corner.'																&
-											+ 'y="' + String(ll_pos + 84) + '" '															&
+											+ 'y="' + String(ll_pos + (il_groupHeight - 16)) + '" '															&
 											+ 'r_' + ls_group + '_left_shadow.'																&
-											+ 'y="' + String(ll_pos + 84) + '" '															&
+											+ 'y="' + String(ll_pos + (il_groupHeight - 16)) + '" '															&
 											+ 'e_' + ls_group + '.'																				&
 											+ 'y="' + String(ll_pos + 12) + '" '															&
 											+ 't_' + ls_group + '.'																				&
@@ -2793,10 +2793,7 @@ NEXT
 
 ls_modify								= dw_palette.Modify(ls_modify)
 
-IF il_yIndent <> -1 THEN
-	dw_palette.Modify('dataWindow.Header.Height="0"')
-	dw_palette.Modify('dataWindow.Header.Height="' + String(il_yIndent) + '"')
-END IF
+dw_palette.Modify('dataWindow.Detail.Height="' + String(Max(0, ll_pos - il_yIndent)) + '"')
 
 IF vb_resetScrollPosition THEN
 	dw_palette.Modify('dataWindow.VerticalScrollPosition="' + String(ll_verticalPosition) + '"')
@@ -4188,11 +4185,11 @@ IF ib_scrollTop THEN
 	
 	ls_modify							= dw_palette.Modify('dataWindow.VerticalScrollPosition="' + String(ll_new) + '"')
 
-	of_scrollButtons()
+//	of_scrollButtons()
 
 ELSE
 	IF ib_scrollBottom THEN
-		
+
 		Long								ll_max
 		ll_max							= Long(dw_palette.Describe('dataWindow.VerticalScrollMaximum'))
 		
@@ -4200,7 +4197,7 @@ ELSE
 
 		ls_modify						= dw_palette.Modify('dataWindow.VerticalScrollPosition="' + String(ll_new) + '"')
 
-		of_scrollButtons()
+//		of_scrollButtons()
 		
 	END IF
 END IF

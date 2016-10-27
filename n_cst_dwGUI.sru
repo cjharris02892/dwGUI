@@ -22,6 +22,8 @@ type filetime from structure within n_cst_dwgui
 end type
 type win32_file_attribute_data from structure within n_cst_dwgui
 end type
+type scrollinfo from structure within n_cst_dwgui
+end type
 end forward
 
 type rect from structure
@@ -47,33 +49,33 @@ type point from structure
 end type
 
 type trackmouseevent from structure
-	unsignedLong		cbSize
-	unsignedLong		dwFlags
-	unsignedLong		hWndTrack
-	unsignedLong		dwHoverTime
+	unsignedlong		cbsize
+	unsignedlong		dwflags
+	unsignedlong		hwndtrack
+	unsignedlong		dwhovertime
 end type
 
-type TextMetric from structure
-	long		tmHeight
-	long		tmAscent
-	long		tmDescent
-	long		tmInternalLeading
-	long		tmExternalLeading
-	long		tmAveCharWidth
-	long		tmMaxCharWidth
-	long		tmWeight
-	long		tmOverHang
-	long		tmDigitizedAspectX
-	long		tmDigitizedAspectY
-	char		tmFirstChar
-	char		tmLastChar
-	char		tmDefaultChar
-	char		tmBreakChar
-	byte		tmItalic
-	byte		tmUnderLined
-	byte		tmStruckOut
-	byte		tmPitchAndFamily
-	byte		tmCharSet
+type textmetric from structure
+	long		tmheight
+	long		tmascent
+	long		tmdescent
+	long		tminternalleading
+	long		tmexternalleading
+	long		tmavecharwidth
+	long		tmmaxcharwidth
+	long		tmweight
+	long		tmoverhang
+	long		tmdigitizedaspectx
+	long		tmdigitizedaspecty
+	character		tmfirstchar
+	character		tmlastchar
+	character		tmdefaultchar
+	character		tmbreakchar
+	byte		tmitalic
+	byte		tmunderlined
+	byte		tmstruckout
+	byte		tmpitchandfamily
+	byte		tmcharset
 end type
 
 type bitmapfileheader from structure
@@ -104,17 +106,27 @@ type bitmapinfo from structure
 end type
 
 type filetime from structure
-	unsignedLong		dwLowDateTime
-	unsignedlong		dwHighDateTime
+	unsignedlong		dwlowdatetime
+	unsignedlong		dwhighdatetime
 end type
 
-type WIN32_FILE_ATTRIBUTE_DATA from structure
-	unsignedlong		dwFileAttributes
-	filetime		ftCreationTime
-	filetime		ftLastAccessTime
-	filetime		ftLastWriteTime
-	unsignedlong		nFileSizeHigh
-	unsignedLong		nFileSizeLow
+type win32_file_attribute_data from structure
+	unsignedlong		dwfileattributes
+	filetime		ftcreationtime
+	filetime		ftlastaccesstime
+	filetime		ftlastwritetime
+	unsignedlong		nfilesizehigh
+	unsignedlong		nfilesizelow
+end type
+
+type scrollinfo from structure
+	unsignedlong		cbsize
+	unsignedlong		fmask
+	long		nmin
+	long		nmax
+	unsignedlong		npage
+	long		npos
+	long		ntrackpos
 end type
 
 global type n_cst_dwgui from nonvisualobject autoinstantiate
@@ -234,11 +246,25 @@ Private:
 	FUNCTION Boolean GetFileAttributesEx(REF String lpFileName, Integer fInfoLevelId, REF WIN32_FILE_ATTRIBUTE_DATA pFileInformation) ALIAS FOR "GetFileAttributesExW" LIBRARY "kernel32.dll"
 	FUNCTION Boolean GetFileAttributesExA(REF String lpFileName, Integer fInfoLevelId, REF WIN32_FILE_ATTRIBUTE_DATA pFileInformation) ALIAS FOR "GetFileAttributesExA;Ansi" LIBRARY "kernel32.dll"
 
+	FUNCTION Boolean GetScrollInfo(UnsignedLong hWnd, Long fnBar, REF scrollInfo lpScrollInfo) LIBRARY "user32.dll"
+	FUNCTION Boolean SetScrollInfo(UnsignedLong hWnd, Long fnBar, REF scrollInfo lpScrollInfo, Boolean fRedraw) LIBRARY "user32.dll"
 end prototypes
 
 type variables
 Public:
 
+	//	SetScrollInfo/GetScrollInfo
+	CONSTANT Integer					SB_HORZ							= 0
+	CONSTANT Integer					SB_VERT							= 1
+	CONSTANT Integer					SB_CTL							= 2
+
+	CONSTANT Integer					SIF_RANGE						= 1						//	0x0001
+   CONSTANT Integer					SIF_PAGE							= 2						//	0x0002
+   CONSTANT Integer					SIF_POS 							= 4						//	0x0004
+	CONSTANT Integer					SIF_DISABLENOSCROLL			= 8						//	0x0008
+   CONSTANT Integer					SIF_TRACKPOS					= 16						//	0x0010
+   CONSTANT Integer					SIF_ALL							= SIF_RANGE + SIF_PAGE + SIF_POS + SIF_TRACKPOS
+	
 	// Window Messages
 	CONSTANT UnsignedLong			WM_GETFONT						= 49
 	CONSTANT UnsignedLong			WM_MOUSELEAVE					= 675
@@ -463,6 +489,7 @@ public function longlong of_getfilesize (string vs_filename)
 public subroutine of_drawfocusrect (datawindow vdw_palette, long vl_left, long vl_top, long vl_right, long vl_bottom)
 public function string of_image_dropmenu ()
 public function string of_image_dropitem ()
+public function boolean of_getscrollinfo (unsignedlong vul_hwnd, long vl_fnbar, ref long rl_min, ref long rl_max, ref unsignedlong rul_page, ref long rl_pos, ref long rl_trackpos)
 end prototypes
 
 public function boolean of_isunicode ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -1781,6 +1808,33 @@ String									ls_dropItem		= '89 50 4E 47 0D 0A 1A 0A 00 00 00 0D 49 48 44 52 '
 																+ '42 60 82'
 																
 Return(of_image_save('dropItem.png', ls_dropItem))
+end function
+
+public function boolean of_getscrollinfo (unsignedlong vul_hwnd, long vl_fnbar, ref long rl_min, ref long rl_max, ref unsignedlong rul_page, ref long rl_pos, ref long rl_trackpos);setNull(rl_min)
+setNull(rl_max)
+setNull(rul_page)
+setNull(rl_pos)
+setNull(rl_trackPos)
+
+GraphicObject							lgo_Parent
+
+scrollInfo								lstr_scrollInfo
+
+lstr_scrollInfo.cbSize				= 18
+lstr_scrollInfo.fMask				= SIF_ALL
+
+Boolean									lb_RC
+lb_RC										= getScrollInfo(vul_hWnd, vl_fnBar, lstr_scrollInfo)
+
+IF lb_RC THEN
+	rl_min								= lstr_scrollInfo.nMin
+	rl_max								= lstr_scrollInfo.nMax
+	rul_page								= lstr_scrollInfo.nPage
+	rl_pos								= lstr_scrollInfo.nPos
+	rl_trackPos							= lstr_scrollInfo.nTrackPos
+END IF
+
+Return(lb_RC)
 end function
 
 on n_cst_dwgui.create
