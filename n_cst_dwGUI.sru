@@ -418,7 +418,6 @@ Private:
 	Boolean								ib_isUnicode					= TRUE
 	Double								idbl_PBVersion					= 0.0
 end variables
-
 forward prototypes
 public function boolean of_isunicode ()
 public function long of_getfontwidth (ref statictext rst_font, string vs_text)
