@@ -1076,6 +1076,8 @@ public function integer of_update ();// CopyRight (c) 2016 by Christopher Harris
 
 IF NOT ib_update THEN Return(SUCCESS)
 
+IF NOT isValid(dw_palette) THEN Return(NO_ACTION)
+
 dw_palette.SetRedraw(FALSE)
 
 Long										ll_item

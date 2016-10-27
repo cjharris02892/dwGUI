@@ -2283,6 +2283,8 @@ public function integer of_update (boolean vb_resetscrollposition);// CopyRight 
 
 IF NOT ib_update THEN Return(SUCCESS)
 
+IF NOT isValid(dw_palette) THEN Return(NO_ACTION)
+
 IF vb_resetScrollPosition THEN
 	Long									ll_verticalPosition
 	ll_verticalPosition				= Long(dw_palette.Describe('dataWindow.VerticalScrollPosition'))
