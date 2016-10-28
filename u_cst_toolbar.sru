@@ -120,17 +120,6 @@ Private:
 	Boolean								ib_displayToolTips			= TRUE
 	Integer								ii_toolTipIsBubble			= 1
 	
-	Integer								il_dropSize						= 45
-	
-	//	The dropMenu item is displayed as a character 7 using the Merlett
-	//	font.  Originally it was q using WingDings 3.
-	String								is_dropMenuChar				= '7'
-	String								is_dropMenuFont				= 'Marlett'
-	
-	//	For future use, to be used to support drop down toolBar items
-	String								is_dropItemChar				= '6'
-	String								is_dropItemFont				= 'Marlett'
-	
 	Boolean								ib_debug							= FALSE
 	
 	String								is_lbuttonDown
@@ -262,7 +251,7 @@ event ue_itemclicked(string vs_button);// CopyRight (c) 2016 by Christopher Harr
 // Original Author:	Christopher Harris
 
 CHOOSE CASE Lower(vs_button)
-	CASE is_dropMenuChar
+	CASE 'popmenu_1'
 		of_popMenu_dropDown()
 END CHOOSE
 end event
@@ -286,7 +275,7 @@ CHOOSE CASE Lower(vs_size)
 		
 		ds_toolBar.of_setItem_rectHeight(1, of_size_imageHeight() + 16)
 		
-		FOR ll_item = 2 TO ds_toolBar.RowCount()
+		FOR ll_item = 1 TO ds_toolBar.RowCount()
 			of_initializeItemSize(ll_item)
 		NEXT
 
@@ -299,7 +288,7 @@ CHOOSE CASE Lower(vs_size)
 				
 		ds_toolBar.of_setItem_rectHeight(1, of_size_imageHeight() + 16)
 		
-		FOR ll_item = 2 TO ds_toolBar.RowCount()
+		FOR ll_item = 1 TO ds_toolBar.RowCount()
 			of_initializeItemSize(ll_item)
 		NEXT
 
@@ -312,7 +301,7 @@ CHOOSE CASE Lower(vs_size)
 		
 		ds_toolBar.of_setItem_rectHeight(1, of_size_imageHeight() + 16)
 		
-		FOR ll_item = 2 TO ds_toolBar.RowCount()
+		FOR ll_item = 1 TO ds_toolBar.RowCount()
 			of_initializeItemSize(ll_item)
 		NEXT
 
@@ -325,7 +314,7 @@ CHOOSE CASE Lower(vs_size)
 		
 		ds_toolBar.of_setItem_rectHeight(1, of_size_imageHeight() + 16)
 
-		FOR ll_item = 2 TO ds_toolBar.RowCount()
+		FOR ll_item = 1 TO ds_toolBar.RowCount()
 			of_initializeItemSize(ll_item)
 		NEXT
 
@@ -661,6 +650,10 @@ private subroutine of_initializeitemsize (long vl_item);// CopyRight (c) 2016 by
 //
 // Original Author:	Christopher Harris
 
+if vl_item = 1 then
+	vl_item = 1
+END IF
+
 ds_toolBar.of_setItem_rectTop(vl_item, 0)
 ds_toolBar.of_setItem_rectHeight(vl_item, 0)
 ds_toolBar.of_setItem_rectLeft(vl_item, 0)
@@ -673,17 +666,23 @@ IF ds_toolBar.of_getItem_visible(vl_item) THEN
 	ds_toolBar.of_setItem_rectTop(vl_item, 16)
 	ds_toolBar.of_setItem_rectHeight(vl_item, of_size_imageHeight() + 16)
 	
-	ds_toolBar.of_setItem_imageWidth(vl_item, of_size_imageWidth(ds_toolBar.of_getItem_image(vl_item)))
+	CHOOSE CASE ds_toolBar.of_getItem_objectType(vl_item)
+		CASE ds_toolBar.POPMENU
+			ds_toolBar.of_setItem_imageWidth(vl_item, Int(Double(of_size_imageWidth(ds_toolBar.of_getItem_image(vl_item))) / Double(2)))
+		CASE ELSE
+			ds_toolBar.of_setItem_imageWidth(vl_item, of_size_imageWidth(ds_toolBar.of_getItem_image(vl_item)))
+	END CHOOSE
 		
 	IF ds_toolBar.of_getItem_displayText(vl_item) THEN
 		ds_toolBar.of_setItem_textWidth(vl_item, of_size_text(ds_toolBar.of_getItem_text(vl_item)))
 	END IF
 
-	IF ds_toolBar.of_getItem_separator(vl_item) THEN
-		ds_toolBar.of_setItem_rectWidth(vl_item, of_size_line())
-	ELSE
-		ds_toolBar.of_setItem_rectWidth(vl_item, ds_toolBar.of_getItem_imageWidth(vl_item) + ds_toolBar.of_getItem_textWidth(vl_item))
-	END IF
+	CHOOSE CASE ds_toolBar.of_getItem_objectType(vl_item)
+		CASE ds_toolBar.SEPARATOR
+			ds_toolBar.of_setItem_rectWidth(vl_item, of_size_line())
+		CASE ELSE
+			ds_toolBar.of_setItem_rectWidth(vl_item, ds_toolBar.of_getItem_imageWidth(vl_item) + ds_toolBar.of_getItem_textWidth(vl_item))
+	END CHOOSE
 	
 END IF
 
@@ -724,8 +723,6 @@ CHOOSE CASE #BitMapSize
 		
 		#FontSize						= 8
 
-		il_dropSize						= 45
-		
 		dw_palette.Modify('DataWindow.' + #band + '.Height="104"')
 		dw_palette.Modify('r_button.Height="' + String(88 + 16) + '"')
 
@@ -734,8 +731,6 @@ CHOOSE CASE #BitMapSize
 	CASE MEDIUM
 		
 		#FontSize						= 10
-		
-		il_dropSize						= 55
 		
 		dw_palette.Modify('DataWindow.' + #band + '.Height="148"')
 		dw_palette.Modify('r_button.Height="' + String(132 + 16) + '"')
@@ -746,8 +741,6 @@ CHOOSE CASE #BitMapSize
 		
 		#FontSize						= 12
 		
-		il_dropSize						= 65
-		
 		dw_palette.Modify('DataWindow.' + #band + '.Height="192"')
 		dw_palette.Modify('r_button.Height="' + String(176 + 16) + '"')
 
@@ -757,8 +750,6 @@ CHOOSE CASE #BitMapSize
 		
 		#FontSize						= 14
 		
-		il_dropSize						= 75
-		
 		dw_palette.Modify('DataWindow.' + #band + '.Height="236"')
 		dw_palette.Modify('r_button.Height="' + String(220 + 16) + '"')
 
@@ -767,9 +758,6 @@ CHOOSE CASE #BitMapSize
 END CHOOSE
 
 of_setFont(#FontFace, #FontSize)
-
-ds_toolBar.of_setItem_textWidth(1, il_dropSize)
-ds_toolBar.of_setItem_rectWidth(1, ds_toolBar.of_getItem_textWidth(1))
 
 Long										ll_newHeight
 ll_newHeight							= Height
@@ -797,8 +785,13 @@ ds_toolBar.of_setItem_displayInMenu(1, FALSE)
 Long										ll_offSet			= 0
 
 IF vb_dropDownMenu THEN
+	
 	ds_toolBar.of_setItem_tabSequence(1, 1000)													//	object only allows 99 toolBarItems
+	
+	of_initializeItemSize(1)
+	
 	ll_offSet							= ds_toolBar.of_getItem_rectWidth(1) + PixelsToUnits(13, xPixelsToUnits!)
+	
 END IF
 
 Long										ll_item,	ll_index
@@ -891,16 +884,20 @@ IF ll_separatorItem > 0 THEN
 END IF
 
 IF vb_dropDownMenu THEN
-	CHOOSE CASE #FontSize
-		CASE 8
-			ll_offSet					= ds_toolBar.of_getItem_rectWidth(1) - PixelsToUnits(10, xPixelsToUnits!)
-		CASE 10
-			ll_offSet					= ds_toolBar.of_getItem_rectWidth(1) - PixelsToUnits(12, xPixelsToUnits!)
-		CASE 12
-			ll_offSet					= ds_toolBar.of_getItem_rectWidth(1) - PixelsToUnits(14, xPixelsToUnits!)
-		CASE 14
-			ll_offSet					= ds_toolBar.of_getItem_rectWidth(1) - PixelsToUnits(17, xPixelsToUnits!)
-	END CHOOSE
+	
+	ll_offSet							= ds_toolBar.of_getItem_rectWidth(1) - PixelsToUnits(#BitMapSize / 2, xPixelsToUnits!)
+	
+//	CHOOSE CASE #FontSize
+//		CASE 8
+//			ll_offSet					= ds_toolBar.of_getItem_rectWidth(1) - PixelsToUnits(8, xPixelsToUnits!)
+//		CASE 10
+//			ll_offSet					= ds_toolBar.of_getItem_rectWidth(1) - PixelsToUnits(12, xPixelsToUnits!)
+//		CASE 12
+//			ll_offSet					= ds_toolBar.of_getItem_rectWidth(1) - PixelsToUnits(16, xPixelsToUnits!)
+//		CASE 14
+//			ll_offSet					= ds_toolBar.of_getItem_rectWidth(1) - PixelsToUnits(24, xPixelsToUnits!)
+//	END CHOOSE
+
 END IF
 
 //	No need to display any trailing separators
@@ -1238,28 +1235,23 @@ dw_palette.Reset()
 Long										ll_item
 ll_item									= ds_toolBar.of_addItem()
 
-ds_toolBar.of_setItem_text(ll_item, is_dropMenuChar)
+ds_toolBar.of_setItem_text(ll_item, '')
 ds_toolBar.of_setItem_color(ll_item, of_getColor(MENUTEXT))
 ds_toolBar.of_setItem_toolTip(ll_item, 'ToolBar Items Menu')
-ds_toolBar.of_setItem_image(ll_item, '')
+ds_toolBar.of_setItem_image(ll_item, invo_dwGUI.of_image_dropMenu())
 ds_toolBar.of_setItem_position(ll_item, RIGHT)
 ds_toolBar.of_setItem_visible(ll_item, FALSE)
 ds_toolBar.of_setItem_enabled(ll_item, TRUE)
 ds_toolBar.of_setItem_objectName(ll_item, ds_toolBar.POPMENU + '_' + String(ll_item))
 ds_toolBar.of_setItem_objectType(ll_item, ds_toolBar.POPMENU)
 ds_toolBar.of_setItem_imageTransparency(ll_item, of_getColor(DEFAULTIMAGETRANSPARENCY))
-ds_toolBar.of_setItem_displayText(ll_item, TRUE)
+ds_toolBar.of_setItem_displayText(ll_item, FALSE)
 ds_toolBar.of_setItem_displayInMenu(ll_item, FALSE)
-ds_toolBar.of_setItem_fontFace(ll_item, is_dropMenuFont)
+ds_toolBar.of_setItem_fontFace(ll_item, #FontFace)
 ds_toolBar.of_setItem_tabSequence(ll_item, 1000)								//	object only allows 99 toolBarItems
 ds_toolBar.of_setItem_alignment(ll_item, 0)
 
-ds_toolBar.of_setItem_textWidth(ll_item, il_dropSize)
-
-ds_toolBar.of_setItem_rectTop(ll_item, 16)
-ds_toolBar.of_setItem_rectHeight(ll_item, of_size_imageHeight() + 16)
-ds_toolBar.of_setItem_rectLeft(ll_item, 0)
-ds_toolBar.of_setItem_rectWidth(ll_item, ds_toolBar.of_getItem_textWidth(ll_item))
+of_initializeItemSize(ll_item)
 
 Return(1)
 end function
@@ -1308,10 +1300,6 @@ public function long of_additem (string vs_text, string vs_image, string vs_tool
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
 // Original Author:	Christopher Harris
-
-IF Trim(vs_text) = is_DropMenuChar THEN
-	Return(MessageBox('AddItem Error', 'The character ' + is_DropMenuChar + ' is reserved and can not be used as an item name.'))
-END IF
 
 Long										ll_item
 ll_item									= ds_toolBar.of_addItem()
@@ -1843,7 +1831,7 @@ public function integer of_setimage (long vl_item, string vs_image);// CopyRight
 
 IF isNull(vl_item) THEN Return(FAILURE)
 
-IF vl_item <= 1 OR vl_item > ds_toolBar.RowCount() THEN Return(FAILURE)
+IF vl_item <= 0 OR vl_item > ds_toolBar.RowCount() THEN Return(FAILURE)
 
 IF isNull(vs_image) THEN vs_image = ''
 
@@ -1878,7 +1866,7 @@ public function integer of_settext (long vl_item, string vs_text);// CopyRight (
 
 IF isNull(vl_item) THEN Return(FAILURE)
 
-IF vl_item <= 1 OR vl_item > ds_toolBar.RowCount() THEN Return(FAILURE)
+IF vl_item <= 0 OR vl_item > ds_toolBar.RowCount() THEN Return(FAILURE)
 
 IF isNull(vs_text) THEN vs_text = ''
 
@@ -2358,7 +2346,7 @@ ll_itemCurrent							= of_locateItem()
 
 Long										ll_item
 
-FOR ll_item = 2 TO ds_toolBar.RowCount()
+FOR ll_item = 1 TO ds_toolBar.RowCount()
 	
 	IF isNull(ds_toolBar.of_getItem_image(ll_item)) OR Trim(ds_toolBar.of_getItem_image(ll_item)) = '' THEN
 		ds_toolBar.of_setItem_displayText(ll_item, TRUE)
@@ -2392,7 +2380,7 @@ ll_itemCurrent							= of_locateItem()
 
 Long										ll_item
 
-FOR ll_item = 2 TO ds_toolBar.RowCount()
+FOR ll_item = 1 TO ds_toolBar.RowCount()
 	
 	ds_toolBar.of_setItem_displayText(ll_item, TRUE)
 	
@@ -3171,6 +3159,10 @@ private function long of_createitem_button (long vl_item);// CopyRight (c) 2016 
 // http://www.gnu.org/licenses/gpl-3.0.html.
 //
 // Original Author:	Christopher Harris
+
+if vl_item = 1 THEN
+	vl_item = 1
+end if
 
 Long										ll_pos
 ll_pos									= ds_toolBar.of_getItem_rectLeft(vl_item)
