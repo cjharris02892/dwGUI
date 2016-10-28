@@ -655,11 +655,11 @@ event ue_resized;call super::ue_resized;// CopyRight (c) 2016 by Christopher Har
 //
 // Original Author:	Christopher Harris
 
-uo_groupBox.Move(uo_toolbar.X, uo_toolbar.Height)
-uo_groupBox.Resize(uo_toolbar.Width, uo_groupBox.Height - (vl_newHeight - vl_oldHeight))
+uo_groupBox.Move(uo_groupBox.X, uo_toolbar.Height)
+uo_groupBox.Resize(uo_groupBox.Width, uo_groupBox.Height - (vl_newHeight - vl_oldHeight))
 
-//dw_options.Move(uo_toolbar.X, uo_toolbar.Height)
-//dw_options.Resize(uo_toolbar.Width, dw_options.Height - (vl_newHeight - vl_oldHeight))
+dw_options.Move(dw_options.X, uo_toolbar.Height + 84)
+dw_options.Resize(dw_options.Width, dw_options.Height - (vl_newHeight - vl_oldHeight))
 end event
 
 type dw_options from datawindow within w_dwgui
