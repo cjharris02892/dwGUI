@@ -179,11 +179,11 @@ uo_toolbar.of_enableUpdate()
 uo_XPListBar.of_disableUpdate()
 
 Long										ll_group
-ll_group									= uo_XPListBar.of_addGroup('Quotes', 'Comment!', '')
+ll_group									= uo_XPListBar.of_addGroup('Quotes Group that has a very long text', 'Comment!', '')
 
 uo_XPListBar.of_addLink(ll_group, 'Now is the time for all good men to come to the aid of their party', '', '')
 uo_XPListBar.of_addLink(ll_group, 'Four score and seven years ago', 'lincoln.png', '')
-uo_XPListBar.of_addLink('Quotes', 'To be, or not to be, that is the question', 'hamlet.png', '')
+uo_XPListBar.of_addLink('Quotes Group that has a very long text', 'To be, or not to be, that is the question', 'hamlet.png', '')
 
 ll_group									= uo_XPListBar.of_addGroup('Show', '', '')
 
@@ -269,7 +269,7 @@ event ue_itemclicked;call super::ue_itemclicked;String								ls_value
 
 CHOOSE CASE Lower(vs_group)
 		
-	CASE 'quotes'
+	CASE 'quotes group that has a very long text'
 	
 		CHOOSE CASE Left(Lower(vs_item), 10)
 			CASE 'now is the'

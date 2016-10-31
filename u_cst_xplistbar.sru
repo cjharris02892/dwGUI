@@ -233,6 +233,7 @@ private subroutine of_setfont (string vs_fontface, long vl_fontsize)
 public function integer of_settextcolor (long vl_item, long vl_color)
 public function integer of_settextcolor (string vs_text, long vl_color)
 public function integer of_settextcolor (string vs_text_group, string vs_text_item, long vl_color)
+private function string of_ellipsistext (string vs_text, long vl_width)
 end prototypes
 
 event type integer ue_itemclicking(string vs_group, string vs_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -862,7 +863,7 @@ ls_modify								= 'CREATE ellipse(band=detail '																&
 ls_modify								= ls_modify																							&
 											+ 'CREATE text(band=detail' + ' '															&
 											+ 'alignment="0" '																				&
-											+ 'text="' + ds_XPListBar.of_getItem_text(vl_item) + '" '							&
+											+ 'text="" '																						&
 											+ 'border="0" '																					&
 											+ 'x="0" '																							&
 											+ 'y="0" '																							&
@@ -2441,6 +2442,9 @@ FOR ll_group = 1 TO ll_items
 //	ll_textWidth						= Min(ll_textWidth, of_size_text(ds_XPListBar.of_getItem_text(ll_group)))
 	
 	ls_modify							= ls_modify																								&
+											+ 't_' + ls_group + '.Text="' + of_ellipsisText(ds_XPListBar.of_getItem_text(ll_group), ll_x - (ll_startX + ll_imageWidth - PixelsToUnits(4, xPixelsToUnits!))) + '" '
+	
+	ls_modify							= ls_modify																								&
 											+ 'r_' + ls_group + '_roundrectangle.'															&
 											+ 'y="' + String(ll_pos) + '" '																	&
 											+ 'r_' + ls_group + '_container.'																&
@@ -3634,6 +3638,42 @@ public function integer of_settextcolor (string vs_text_group, string vs_text_it
 // Original Author:	Christopher Harris
 
 Return(of_setTextColor(of_locateItem(vs_text_group, vs_text_item), vl_color))
+end function
+
+private function string of_ellipsistext (string vs_text, long vl_width);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+IF isNull(vs_text) THEN Return('')
+
+vs_text									= Trim(vs_text)
+
+IF vs_text = '' THEN Return(vs_text)
+
+Long										ll_sizeText
+ll_sizeText								= of_size_text(vs_text)
+
+IF ll_sizeText <= vl_width THEN Return(vs_text)
+
+String									ls_ellipsis		= '...'
+
+Long										ll_sizeEllipsis
+ll_sizeEllipsis						= of_size_text(ls_ellipsis)
+
+DO WHILE vs_text <> '' AND (ll_sizeText + ll_sizeEllipsis) > vl_width
+
+	vs_text								= Left(vs_text, Len(vs_text) - 1)
+
+	ll_sizeText							= of_size_text(vs_text)
+
+LOOP
+
+Return(vs_text + ls_ellipsis)
 end function
 
 on u_cst_xplistbar.create
