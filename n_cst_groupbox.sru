@@ -647,7 +647,7 @@ ls_modify								= 'CREATE roundrectangle(band=detail '																&
 											+ 'brush.color="0" '																						&
 											+ 'pen.style="0" '																						&
 											+ 'pen.width="5" '																						&
-											+ 'pen.color="' + String(of_getColor(GETFOCUS)) + '" '										&
+											+ 'pen.color="' + String(of_getColor(THREEDDKSHADOW)) + '" '								&
 											+ 'background.mode="2" '																				&
 											+ 'background.color="' + String(of_getColor(GRADIENT)) + '" '								&
 											+ 'background.transparency="0" '																		&
@@ -687,7 +687,7 @@ ls_modify								= 'CREATE roundrectangle(band=detail '																&
 											+ 'brush.color="0" '																						&
 											+ 'pen.style="0" '																						&
 											+ 'pen.width="5" '																						&
-											+ 'pen.color="' + String(of_getColor(GETFOCUS)) + '" '										&
+											+ 'pen.color="' + String(of_getColor(THREEDDKSHADOW)) + '" '								&
 											+ 'background.mode="2" '																				&
 											+ 'background.color="' + String(of_getColor(GETFOCUS)) + '" '								&
 											+ 'background.transparency="0" '																		&
@@ -838,7 +838,7 @@ ls_modify								= 'CREATE line(band=detail '																			&
 											+ 'visible="0" '																							&
 											+ 'pen.style="0" '																						&
 											+ 'pen.width="5" '																						&
-											+ 'pen.color="' + String(of_getColor(GETFOCUS)) + '" '										&
+											+ 'pen.color="' + String(of_getColor(THREEDDKSHADOW)) + '" '								&
 											+ 'background.mode="2" '																				&
 											+ 'background.color="' + String(of_getColor(GETFOCUS)) + '" '								&
 											+ 'background.transparency="0" '																		&
@@ -1026,7 +1026,7 @@ ls_modify								= 'CREATE line(band=detail '																			&
 											+ 'visible="0" '																							&
 											+ 'pen.style="0" '																						&
 											+ 'pen.width="5" '																						&
-											+ 'pen.color="' + String(of_getColor(GETFOCUS)) + '" '										&
+											+ 'pen.color="' + String(of_getColor(THREEDDKSHADOW)) + '" '								&
 											+ 'background.mode="2" '																				&
 											+ 'background.color="' + String(of_getColor(GETFOCUS)) + '" '								&
 											+ 'background.transparency="0" '																		&
@@ -1062,7 +1062,7 @@ ls_modify								= 'CREATE line(band=detail '																			&
 											+ 'visible="0" '																							&
 											+ 'pen.style="0" '																						&
 											+ 'pen.width="5" '																						&
-											+ 'pen.color="' + String(of_getColor(GETFOCUS)) + '" '										&
+											+ 'pen.color="' + String(of_getColor(THREEDDKSHADOW)) + '" '								&
 											+ 'background.mode="2" '																				&
 											+ 'background.color="' + String(of_getColor(GETFOCUS)) + '" '								&
 											+ 'background.transparency="0" '																		&
@@ -1098,7 +1098,7 @@ ls_modify								= 'CREATE line(band=detail '																			&
 											+ 'visible="0" '																							&
 											+ 'pen.style="0" '																						&
 											+ 'pen.width="5" '																						&
-											+ 'pen.color="' + String(of_getColor(GETFOCUS)) + '" '										&
+											+ 'pen.color="' + String(of_getColor(THREEDDKSHADOW)) + '" '								&
 											+ 'background.mode="2" '																				&
 											+ 'background.color="' + String(of_getColor(GETFOCUS)) + '" '								&
 											+ 'background.transparency="0" '																		&
@@ -1134,7 +1134,7 @@ ls_modify								= 'CREATE line(band=detail '																			&
 											+ 'visible="0" '																							&
 											+ 'pen.style="0" '																						&
 											+ 'pen.width="5" '																						&
-											+ 'pen.color="' + String(of_getColor(GETFOCUS)) + '" '										&
+											+ 'pen.color="' + String(of_getColor(THREEDDKSHADOW)) + '" '								&
 											+ 'background.mode="2" '																				&
 											+ 'background.color="' + String(of_getColor(GETFOCUS)) + '" '								&
 											+ 'background.transparency="0" '																		&

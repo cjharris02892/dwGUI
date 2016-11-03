@@ -622,7 +622,7 @@ ls_modify								= 'CREATE roundrectangle(band=detail '														&
 											+ 'brush.hatch="8" '																				&
 											+ 'brush.color="0" '																				&
 											+ 'pen.style="0" pen.width="5" ' +															&	
-											+ 'pen.color="' + String(of_getColor(GETFOCUS)) + '" '								&
+											+ 'pen.color="' + String(of_getColor(THREEDDKSHADOW)) + '" '						&
 											+ 'background.mode="2" '																		&
 											+ 'background.color="' + String(of_getColor(SELECTED1)) + '" '						&
 											+ 'background.transparency="0" '																&
@@ -658,7 +658,7 @@ ls_modify								= 'CREATE rectangle(band=detail '															&
 											+ 'brush.hatch="8" '																				&
 											+ 'brush.color="0" '																				&
 											+ 'pen.style="0" pen.width="5" ' +															&	
-											+ 'pen.color="' + String(of_getColor(GETFOCUS)) + '" '								&
+											+ 'pen.color="' + String(of_getColor(THREEDDKSHADOW)) + '" '						&
 											+ 'background.mode="2" '																		&
 											+ 'background.color="' + String(of_getColor(SELECTED1)) + '" '						&
 											+ 'background.transparency="0" '																&
@@ -694,7 +694,7 @@ ls_modify								= 'CREATE rectangle(band=detail '															&
 											+ 'brush.hatch="6" '																				&
 											+ 'brush.color="' + String(of_getColor(SELECTED1)) + '" '							&
 											+ 'pen.style="0" pen.width="5" '																&
-											+ 'pen.color="' + String(of_getColor(GETFOCUS)) + '" '								&
+											+ 'pen.color="' + String(of_getColor(THREEDDKSHADOW)) + '" '						&
 											+ 'background.mode="2" '																		&
 											+ 'background.color="0" '																		&
 											+ 'background.transparency="0" '																&
@@ -764,7 +764,7 @@ ls_modify								= 'CREATE rectangle(band=detail '															&
 											+ 'brush.hatch="6" '																				&
 											+ 'brush.color="' + String(of_getColor(SELECTED1)) + '" '							&
 											+ 'pen.style="0" pen.width="5" '																&
-											+ 'pen.color="' + String(of_getColor(GETFOCUS)) + '" '								&
+											+ 'pen.color="' + String(of_getColor(THREEDDKSHADOW)) + '" '						&
 											+ 'background.mode="2" '																		&
 											+ 'background.color="0" '																		&
 											+ 'background.transparency="0" '																&
