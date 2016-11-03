@@ -1702,7 +1702,7 @@ IF ds_toolBar.of_getItem_checked(vl_item) AND (NOT ds_toolBar.of_getItem_display
 	ll_X									= ds_toolBar.of_getItem_rectLeft(vl_item)		- PixelsToUnits(3, xPixelsToUnits!)
 	ll_Y									= ds_toolBar.of_getItem_rectTop(vl_item)		- PixelsToUnits(3, yPixelsToUnits!)
 	ll_Width								= ds_toolBar.of_getItem_rectWidth(vl_item)	+ PixelsToUnits(7, xPixelsToUnits!)
-	ll_height							= ds_toolBar.of_getItem_rectHeight(vl_item)	+ PixelsToUnits(1, yPixelsToUnits!)
+	ll_height							= ds_toolBar.of_getItem_rectHeight(vl_item)	+ PixelsToUnits(2, yPixelsToUnits!)
 											
 	String								ls_modify
 	
