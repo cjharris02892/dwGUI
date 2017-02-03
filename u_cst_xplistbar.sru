@@ -34,6 +34,7 @@ event ue_context_collapseall ( )
 event ue_context_expandall ( )
 event ue_context_showtooltips ( boolean vb_showtips )
 event ue_context_scrollspeed ( long vl_scrollspeed )
+event ue_context_size ( string vs_size )
 st_xplistbar st_xplistbar
 dw_palette dw_palette
 r_border r_border
@@ -234,6 +235,8 @@ public function integer of_settextcolor (long vl_item, long vl_color)
 public function integer of_settextcolor (string vs_text, long vl_color)
 public function integer of_settextcolor (string vs_text_group, string vs_text_item, long vl_color)
 private function string of_ellipsistext (string vs_text, long vl_width)
+public subroutine of_size (integer vi_size)
+public subroutine of_size ()
 end prototypes
 
 event type integer ue_itemclicking(string vs_group, string vs_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -342,6 +345,31 @@ event ue_context_scrollspeed(long vl_scrollspeed);// CopyRight (c) 2016 by Chris
 #ScrollSpeed							= vl_scrollSpeed
 
 RETURN
+end event
+
+event ue_context_size(string vs_size);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+of_disableUpdate()
+
+CHOOSE CASE Lower(vs_size)
+	CASE 'small'
+		of_size(SMALL)
+	CASE 'medium'
+		of_size(MEDIUM)
+	CASE 'large'
+		of_size(LARGE)	
+	CASE 'xlarge'
+		of_size(XLARGE)
+END CHOOSE
+
+of_enableUpdate()
 end event
 
 public function integer resize (integer w, integer h);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -2330,6 +2358,7 @@ Long										ll_group
 
 Long										ll_imageWidth,			ll_imageHeight
 Long										ll_textAdjust,			ll_textHeight
+Long										ll_groupHeight
 
 String									ls_item,	ls_group,	ls_image
 
@@ -2395,7 +2424,8 @@ FOR ll_group = 1 TO ll_items
 											+ 'r_' + ls_group + '_left_shadow.Visible="1" '												&
 											+ 'e_' + ls_group + '.Visible="1" '																&
 											+ 't_' + ls_group + '.Visible="1" '																&
-											+ 'p_' + ls_group + '_chevron.Visible="1" '
+											+ 'p_' + ls_group + '_chevron.Visible="1" '													&
+											+ 't_' + ls_group + '.font.height="' + String(#FontSize * -1) + '" '										&
 
 	IF isNull(ls_image) OR ls_image = '' THEN
 		
@@ -2444,23 +2474,27 @@ FOR ll_group = 1 TO ll_items
 	ls_modify							= ls_modify																								&
 											+ 't_' + ls_group + '.Text="' + of_ellipsisText(ds_XPListBar.of_getItem_text(ll_group), ll_x - (ll_startX + ll_imageWidth - PixelsToUnits(4, xPixelsToUnits!))) + '" '
 	
+	ll_groupHeight						= Max(Max(ll_imageHeight, Int(idbl_fontHeight)) + 40, il_groupHeight)
+	
 	ls_modify							= ls_modify																								&
 											+ 'r_' + ls_group + '_roundrectangle.'															&
 											+ 'y="' + String(ll_pos) + '" '																	&
+											+ 'r_' + ls_group + '_roundrectangle.'															&
+											+ 'height="' + String(ll_groupHeight) + '" '													&
 											+ 'r_' + ls_group + '_container.'																&
-											+ 'y="' + String(ll_pos + (il_groupHeight - 4)) + '" '															&
+											+ 'y="' + String(ll_pos + (ll_groupHeight - 4)) + '" '									&
 											+ 'r_' + ls_group + '_right_corner.'															&
-											+ 'y="' + String(ll_pos + (il_groupHeight - 16)) + '" '															&
+											+ 'y="' + String(ll_pos + (ll_groupHeight - 16)) + '" '									&
 											+ 'r_' + ls_group + '_right_shadow.'															&
-											+ 'y="' + String(ll_pos + (il_groupHeight - 16)) + '" '															&
+											+ 'y="' + String(ll_pos + (ll_groupHeight - 16)) + '" '									&
 											+ 'r_' + ls_group + '_left_corner.'																&
-											+ 'y="' + String(ll_pos + (il_groupHeight - 16)) + '" '															&
+											+ 'y="' + String(ll_pos + (ll_groupHeight - 16)) + '" '									&
 											+ 'r_' + ls_group + '_left_shadow.'																&
-											+ 'y="' + String(ll_pos + (il_groupHeight - 16)) + '" '															&
+											+ 'y="' + String(ll_pos + (ll_groupHeight - 16)) + '" '									&
 											+ 'e_' + ls_group + '.'																				&
 											+ 'y="' + String(ll_pos + 12) + '" '															&
 											+ 't_' + ls_group + '.'																				&
-											+ 'y="' + String(ll_pos + Int(((il_groupHeight - idbl_fontHeight) / 2))) + '" '	&
+											+ 'y="' + String(ll_pos + Int(((ll_groupHeight - idbl_fontHeight) / 2))) + '" '	&
 											+ 't_' + ls_group + '.'																				&
 											+ 'height="' + String(Int(idbl_fontHeight)) + '" '											&
 											+ 't_' + ls_group + '.'																				&
@@ -2470,9 +2504,9 @@ FOR ll_group = 1 TO ll_items
 
 	ls_modify							= ls_modify																								&
 											+ 'p_' + ls_group + '.'																				&
-											+ 'y="' + String(ll_pos + Int(((il_groupHeight - ll_imageHeight) / 2))) + '" '
+											+ 'y="' + String(ll_pos + Int(((ll_groupHeight - ll_imageHeight) / 2))) + '" '
 
-	ll_pos							 	= ll_pos + il_groupHeight
+	ll_pos							 	= ll_pos + ll_groupHeight
 	
 	lb_groupEnabled					= of_isEnabled(ll_group)
 
@@ -2566,7 +2600,10 @@ FOR ll_group = 1 TO ll_items
 					
 				lb_groupIsEmpty		= FALSE
 				
-				ls_modify				= ls_modify + 't_' + ls_item + '.Visible="1" '
+				ls_modify				= ls_modify																								&
+											+ 't_' + ls_item + '.Visible="1" '																&
+											+ 't_' + ls_item + '.font.height="' + String(#FontSize * -1) + '" '										&
+
 
 				IF isNull(ls_image) OR ls_image = '' THEN
 					
@@ -3676,6 +3713,60 @@ LOOP
 Return(vs_text + ls_ellipsis)
 end function
 
+public subroutine of_size (integer vi_size);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+#BitMapSize								= vi_size
+
+of_correct_bitMapSize()
+
+CHOOSE CASE #BitMapSize
+		
+	CASE SMALL
+		
+		#FontSize						= 8
+
+	CASE MEDIUM
+		
+		#FontSize						= 10
+		
+	CASE LARGE
+		
+		#FontSize						= 12
+		
+	CASE XLARGE
+		
+		#FontSize						= 14
+		
+END CHOOSE
+
+of_setFont(#FontFace, #FontSize)
+
+of_update()
+
+RETURN
+end subroutine
+
+public subroutine of_size ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+of_size(#BitMapSize)
+
+RETURN
+end subroutine
+
 on u_cst_xplistbar.create
 this.st_xplistbar=create st_xplistbar
 this.dw_palette=create dw_palette
@@ -4164,6 +4255,18 @@ lm_context.mf_popMenu(this)
 end event
 
 event scrollvertical;of_scrollButtons()
+end event
+
+event scrollhorizontal;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+Object.DataWindow.HorizontalScrollPosition	= 0
 end event
 
 type r_border from rectangle within u_cst_xplistbar
