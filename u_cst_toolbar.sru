@@ -2239,60 +2239,17 @@ protected function integer of_keydown (keycode vkc_key, unsignedinteger vui_keyf
 //
 // Original Author:	Christopher Harris
 
-//invo_dwGUI.of_locateToolTips(invo_dwGUI.of_getDesktopWindow())
-//
-//IF ds_toolBar.of_PBVersion() >= 11.5 THEN
-//	
-//	Boolean								lb_enabled
-//	lb_enabled							= Long(dw_palette.Describe('p_save_2.ToolTip.Enabled')) = 1
-//
-//	IF lb_enabled THEN
-//		dw_palette.Modify('p_save_2.ToolTip.Enabled="0"')
-//		dw_palette.Modify('p_save_2.ToolTip.Enabled="1"')
-//	END IF
-//
-//END IF
-
-Long										ll_startX,		ll_endX
-Long										ll_cursorX,		ll_pointerX,	ll_offSetX
-Long										ll_cursorY
 Long										ll_itemMove
+Long										ll_startX,		ll_startY
+Long										ll_endX,			ll_endY
+Long										ll_cursorX,		ll_cursorY
+Long										ll_pointerX,	ll_pointerY
 
 Long										ll_item
 ll_item									= of_locateItem()
 	
 IF vkc_key = keySpaceBar! THEN
 	IF NOT IsNull(ll_item) THEN of_clickButton(ll_item)
-ELSEIF vkc_key = keyLeftArrow! THEN
-	IF NOT isNull(ll_item) THEN
-		
-		ll_itemMove						= ds_toolBar.of_locateItem_previous(ll_item)
-		
-		IF NOT isNull(ll_itemMove) THEN
-			
-			IF ib_trackMouseEvent THEN
-				
-				ll_pointerX				= dw_palette.PointerX()
-				ll_startX				= Long(dw_palette.Describe('r_button.X'))
-
-				invo_dwGUI.of_getCursorPos(ll_cursorX, ll_cursorY)
-				
-			END IF
-
-			of_drawButton(ll_itemMove)
-
-			IF ib_trackMouseEvent THEN
-				
-				ll_endX					= Long(dw_palette.Describe('r_button.X'))
-				ll_offSetX				= (ll_pointerX - ll_startX) + (ll_startX - ll_endX) - PixelsToUnits(4, xPixelsToUnits!)
-				
-				invo_dwGUI.of_setCursorPos(ll_cursorX - UnitsToPixels(ll_offSetX, XUnitsToPixels!), ll_cursorY)
-	
-			END IF
-			
-		END IF
-		
-	END IF
 ELSEIF vkc_key = keyRightArrow! THEN
 	IF NOT isNull(ll_item) THEN
 		
@@ -2302,9 +2259,9 @@ ELSEIF vkc_key = keyRightArrow! THEN
 			
 			IF ib_trackMouseEvent THEN
 				
-				ll_pointerX				= dw_palette.PointerX()
-				ll_startX				= Long(dw_palette.Describe('r_button.X'))
-
+				ll_pointerX				= UnitsToPixels(dw_palette.PointerX(), xUnitsToPixels!)
+				ll_pointerY				= UnitsToPixels(dw_palette.PointerY(), yUnitsToPixels!)
+					
 				invo_dwGUI.of_getCursorPos(ll_cursorX, ll_cursorY)
 				
 			END IF
@@ -2313,10 +2270,56 @@ ELSEIF vkc_key = keyRightArrow! THEN
 
 			IF ib_trackMouseEvent THEN
 				
-				ll_endX					= Long(dw_palette.Describe('r_button.X'))
-				ll_offSetX				= (ll_startX - ll_pointerX) + (ll_endX - ll_startX) + PixelsToUnits(4, xPixelsToUnits!)
+				//	Locate the 0,0 cursor position of the toolBar
+				ll_startX				= ll_cursorX - ll_pointerX
+				ll_startY				= ll_cursorY - ll_pointerY
+					
+				//	Move cursor to button location
+				ll_endX					= unitsToPixels(Long(dw_palette.Describe('r_button.X')) + Long(dw_palette.Describe('r_button.Width')),	xUnitsToPixels!)
+				ll_endY					= unitsToPixels(Long(dw_palette.Describe('r_button.Y')) + Long(dw_palette.Describe('r_button.Height')),	yUnitsToPixels!)
+					
+				ll_cursorX				= ll_startX + ll_endX - 5
+				ll_cursorY				= ll_startY + ll_endY - 5
+					
+				invo_dwGUI.of_setCursorPos(ll_cursorX, ll_cursorY)
+	
+			END IF
+			
+		END IF
+		
+	END IF
+ELSEIF vkc_key = keyLeftArrow! THEN
+	IF NOT isNull(ll_item) THEN
+		
+		ll_itemMove						= ds_toolBar.of_locateItem_previous(ll_item)
+		
+		IF NOT isNull(ll_itemMove) THEN
+			
+			IF ib_trackMouseEvent THEN
 				
-				invo_dwGUI.of_setCursorPos(ll_cursorX + UnitsToPixels(ll_offSetX, XUnitsToPixels!), ll_cursorY)
+				ll_pointerX				= UnitsToPixels(dw_palette.PointerX(), xUnitsToPixels!)
+				ll_pointerY				= UnitsToPixels(dw_palette.PointerY(), yUnitsToPixels!)
+					
+				invo_dwGUI.of_getCursorPos(ll_cursorX, ll_cursorY)
+				
+			END IF
+
+			of_drawButton(ll_itemMove)
+
+			IF ib_trackMouseEvent THEN
+				
+				//	Locate the 0,0 cursor position of the toolBar
+				ll_startX				= ll_cursorX - ll_pointerX
+				ll_startY				= ll_cursorY - ll_pointerY
+					
+				//	Move cursor to button location
+				ll_endX					= unitsToPixels(Long(dw_palette.Describe('r_button.X')) + Long(dw_palette.Describe('r_button.Width')),	xUnitsToPixels!)
+				ll_endY					= unitsToPixels(Long(dw_palette.Describe('r_button.Y')) + Long(dw_palette.Describe('r_button.Height')),	yUnitsToPixels!)
+					
+				ll_cursorX				= ll_startX + ll_endX - 5
+				ll_cursorY				= ll_startY + ll_endY - 5
+					
+				invo_dwGUI.of_setCursorPos(ll_cursorX, ll_cursorY)
 	
 			END IF
 			
@@ -3791,20 +3794,131 @@ event ue_post_getfocus(long vl_tabbed);// CopyRight (c) 2016 by Christopher Harr
 //
 // Original Author:	Christopher Harris
 
-IF ib_trackMouseEvent THEN
-ELSE
-	CHOOSE CASE vl_tabbed
-		CASE TAB, 0
-			
-			of_drawButton(ds_toolBar.of_locateItem_first())
+Long										ll_itemMove
+Long										ll_pointerX,	ll_pointerY
+Long										ll_startX,		ll_startY
+Long										ll_endX,			ll_endY
+Long										ll_cursorX,		ll_cursorY
 
+// Check if the cursor is located inside the toolBar's rectangle
+IF pointerX() >= 0 AND pointerY() >= 0 AND pointerX() <= Width AND pointerY() <= Height THEN
+	ib_trackMouseEvent				= TRUE
+END IF
+
+//IF ib_trackMouseEvent THEN
+//ELSE
+	CHOOSE CASE vl_tabbed
+		CASE 0
+			
+//			ll_itemMove					= ds_toolBar.of_locateItem_first()
+//			
+//			IF NOT isNull(ll_itemMove) THEN
+//				
+//				IF ib_trackMouseEvent THEN
+//					
+//					ll_pointerX			= UnitsToPixels(dw_palette.PointerX(), xUnitsToPixels!)
+//					ll_pointerY			= UnitsToPixels(dw_palette.PointerY(), yUnitsToPixels!)
+//					
+//					invo_dwGUI.of_getCursorPos(ll_cursorX, ll_cursorY)
+//					
+//				END IF
+//	
+//				of_drawButton(ll_itemMove)
+//	
+//				IF ib_trackMouseEvent THEN
+//					
+//					//	Locate the 0,0 cursor position of the toolBar
+//					ll_startX			= ll_cursorX - ll_pointerX
+//					ll_startY			= ll_cursorY - ll_pointerY
+//					
+//					//	Move cursor to button location
+//					ll_endX				= unitsToPixels(Long(dw_palette.Describe('r_button.X')) + Long(dw_palette.Describe('r_button.Width')),	xUnitsToPixels!)
+//					ll_endY				= unitsToPixels(Long(dw_palette.Describe('r_button.Y')) + Long(dw_palette.Describe('r_button.Height')),	yUnitsToPixels!)
+//					
+//					ll_cursorX			= ll_startX + ll_endX - 5
+//					ll_cursorY			= ll_startY + ll_endY - 5
+//					
+//					invo_dwGUI.of_setCursorPos(ll_cursorX, ll_cursorY)
+//		
+//				END IF
+//				
+//			END IF
+
+		CASE TAB
+			
+			ll_itemMove					= ds_toolBar.of_locateItem_first()
+			
+			IF NOT isNull(ll_itemMove) THEN
+				
+				IF ib_trackMouseEvent THEN
+					
+					ll_pointerX			= UnitsToPixels(dw_palette.PointerX(), xUnitsToPixels!)
+					ll_pointerY			= UnitsToPixels(dw_palette.PointerY(), yUnitsToPixels!)
+					
+					invo_dwGUI.of_getCursorPos(ll_cursorX, ll_cursorY)
+					
+				END IF
+	
+				of_drawButton(ll_itemMove)
+	
+				IF ib_trackMouseEvent THEN
+					
+					//	Locate the 0,0 cursor position of the toolBar
+					ll_startX			= ll_cursorX - ll_pointerX
+					ll_startY			= ll_cursorY - ll_pointerY
+					
+					//	Move cursor to button location
+					ll_endX				= unitsToPixels(Long(dw_palette.Describe('r_button.X')) + Long(dw_palette.Describe('r_button.Width')),	xUnitsToPixels!)
+					ll_endY				= unitsToPixels(Long(dw_palette.Describe('r_button.Y')) + Long(dw_palette.Describe('r_button.Height')),	yUnitsToPixels!)
+					
+					ll_cursorX			= ll_startX + ll_endX - 5
+					ll_cursorY			= ll_startY + ll_endY - 5
+					
+					invo_dwGUI.of_setCursorPos(ll_cursorX, ll_cursorY)
+		
+				END IF
+				
+			END IF
+			
 		CASE BACKTAB
 			
-			of_drawButton(ds_toolBar.of_locateItem_last())
+			ll_itemMove					= ds_toolBar.of_locateItem_last()
+			
+			IF NOT isNull(ll_itemMove) THEN
+				
+				IF ib_trackMouseEvent THEN
+					
+					ll_pointerX			= UnitsToPixels(dw_palette.PointerX(), xUnitsToPixels!)
+					ll_pointerY			= UnitsToPixels(dw_palette.PointerY(), yUnitsToPixels!)
+					
+					invo_dwGUI.of_getCursorPos(ll_cursorX, ll_cursorY)
+					
+				END IF
+	
+				of_drawButton(ll_itemMove)
+	
+				IF ib_trackMouseEvent THEN
+					
+					//	Locate the 0,0 cursor position of the toolBar
+					ll_startX			= ll_cursorX - ll_pointerX
+					ll_startY			= ll_cursorY - ll_pointerY
+					
+					//	Move cursor to button location
+					ll_endX				= unitsToPixels(Long(dw_palette.Describe('r_button.X')) + Long(dw_palette.Describe('r_button.Width')),	xUnitsToPixels!)
+					ll_endY				= unitsToPixels(Long(dw_palette.Describe('r_button.Y')) + Long(dw_palette.Describe('r_button.Height')),	yUnitsToPixels!)
+					
+					ll_cursorX			= ll_startX + ll_endX - 5
+					ll_cursorY			= ll_startY + ll_endY - 5
+					
+					invo_dwGUI.of_setCursorPos(ll_cursorX, ll_cursorY)
+
+				END IF
+				
+			END IF
 			
 		CASE ELSE
 	END CHOOSE
-END IF
+//END IF
 end event
 
 event ue_dwnkey;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -3872,7 +3986,25 @@ event losefocus;// CopyRight (c) 2016 by Christopher Harris, all rights reserved
 //
 // Original Author:	Christopher Harris
 
+//Long										ll_item
+//ll_item									= of_locateItem()
+
 of_highLight(INVISIBLE)
+
+////	This will force hiding toolTip when focus is lost
+//IF ds_toolBar.of_PBVersion() >= 11.5 THEN
+//	
+//	IF NOT isNull(ll_item) THEN
+//		
+//		String							ls_toolTip
+//		ls_toolTip						= ds_toolBar.of_getItem_toolTip(ll_item)
+//		
+//		of_setTipText(ll_item, 'Clear ToolTip')
+//		of_setTipText(ll_item, ls_toolTip)
+//
+//	END IF
+//
+//END IF
 
 Modify('DataWindow.' + #band + '.Color="' + String(of_getColor(LOSEFOCUS)) + '" ')
 
