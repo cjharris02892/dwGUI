@@ -22,6 +22,24 @@ m_normal m_normal
 m_fast m_fast
 m_fastest m_fastest
 end type
+type m_2 from menu within m_xplistbar_context
+end type
+type m_size from menu within m_xplistbar_context
+end type
+type m_small from menu within m_size
+end type
+type m_medium from menu within m_size
+end type
+type m_large from menu within m_size
+end type
+type m_xlarge from menu within m_size
+end type
+type m_size from menu within m_xplistbar_context
+m_small m_small
+m_medium m_medium
+m_large m_large
+m_xlarge m_xlarge
+end type
 type m_1 from menu within m_xplistbar_context
 end type
 type m_showtooltips from menu within m_xplistbar_context
@@ -31,6 +49,8 @@ m_collapseall m_collapseall
 m_expandall m_expandall
 m_0 m_0
 m_scrollspeed m_scrollspeed
+m_2 m_2
+m_size m_size
 m_1 m_1
 m_showtooltips m_showtooltips
 end type
@@ -41,6 +61,8 @@ m_collapseall m_collapseall
 m_expandall m_expandall
 m_0 m_0
 m_scrollspeed m_scrollspeed
+m_2 m_2
+m_size m_size
 m_1 m_1
 m_showtooltips m_showtooltips
 end type
@@ -59,12 +81,16 @@ this.m_collapseall=create m_collapseall
 this.m_expandall=create m_expandall
 this.m_0=create m_0
 this.m_scrollspeed=create m_scrollspeed
+this.m_2=create m_2
+this.m_size=create m_size
 this.m_1=create m_1
 this.m_showtooltips=create m_showtooltips
 this.Item[UpperBound(this.Item)+1]=this.m_collapseall
 this.Item[UpperBound(this.Item)+1]=this.m_expandall
 this.Item[UpperBound(this.Item)+1]=this.m_0
 this.Item[UpperBound(this.Item)+1]=this.m_scrollspeed
+this.Item[UpperBound(this.Item)+1]=this.m_2
+this.Item[UpperBound(this.Item)+1]=this.m_size
 this.Item[UpperBound(this.Item)+1]=this.m_1
 this.Item[UpperBound(this.Item)+1]=this.m_showtooltips
 end on
@@ -75,6 +101,8 @@ destroy(this.m_collapseall)
 destroy(this.m_expandall)
 destroy(this.m_0)
 destroy(this.m_scrollspeed)
+destroy(this.m_2)
+destroy(this.m_size)
 destroy(this.m_1)
 destroy(this.m_showtooltips)
 end on
@@ -386,6 +414,272 @@ this.bitmapgradient = true
 end on
 
 on m_fastest.destroy
+call super::destroy
+end on
+
+type m_2 from menu within m_xplistbar_context
+end type
+
+on m_2.create
+call super::create
+this.text = "-"
+this.menustyle = contemporarymenu!
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbarstyle = contemporarytoolbar!
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_2.destroy
+call super::destroy
+end on
+
+type m_size from menu within m_xplistbar_context
+m_small m_small
+m_medium m_medium
+m_large m_large
+m_xlarge m_xlarge
+end type
+
+on m_size.create
+call super::create
+this.text = "Size"
+this.menustyle = contemporarymenu!
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbarstyle = contemporarytoolbar!
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+this.m_small=create m_small
+this.m_medium=create m_medium
+this.m_large=create m_large
+this.m_xlarge=create m_xlarge
+this.Item[UpperBound(this.Item)+1]=this.m_small
+this.Item[UpperBound(this.Item)+1]=this.m_medium
+this.Item[UpperBound(this.Item)+1]=this.m_large
+this.Item[UpperBound(this.Item)+1]=this.m_xlarge
+end on
+
+on m_size.destroy
+call super::destroy
+destroy(this.m_small)
+destroy(this.m_medium)
+destroy(this.m_large)
+destroy(this.m_xlarge)
+end on
+
+type m_small from menu within m_size
+end type
+
+event clicked;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+IF isValid(mf_getParent()) THEN
+	
+	u_cst_XPListBar					luo_parent
+	luo_parent							= mf_getParent()
+	
+	luo_parent.EVENT ue_context_size(Text)
+	
+END IF
+end event
+
+on m_small.create
+call super::create
+this.text = "Small"
+this.menustyle = contemporarymenu!
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbarstyle = contemporarytoolbar!
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_small.destroy
+call super::destroy
+end on
+
+type m_medium from menu within m_size
+end type
+
+event clicked;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+IF isValid(mf_getParent()) THEN
+	
+	u_cst_XPListBar					luo_parent
+	luo_parent							= mf_getParent()
+	
+	luo_parent.EVENT ue_context_size(Text)
+	
+END IF
+end event
+
+on m_medium.create
+call super::create
+this.text = "Medium"
+this.menustyle = contemporarymenu!
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbarstyle = contemporarytoolbar!
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_medium.destroy
+call super::destroy
+end on
+
+type m_large from menu within m_size
+end type
+
+event clicked;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+IF isValid(mf_getParent()) THEN
+	
+	u_cst_XPListBar					luo_parent
+	luo_parent							= mf_getParent()
+	
+	luo_parent.EVENT ue_context_size(Text)
+	
+END IF
+end event
+
+on m_large.create
+call super::create
+this.text = "Large"
+this.menustyle = contemporarymenu!
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbarstyle = contemporarytoolbar!
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_large.destroy
+call super::destroy
+end on
+
+type m_xlarge from menu within m_size
+end type
+
+event clicked;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+IF isValid(mf_getParent()) THEN
+	
+	u_cst_XPListBar					luo_parent
+	luo_parent							= mf_getParent()
+	
+	luo_parent.EVENT ue_context_size(Text)
+	
+END IF
+end event
+
+on m_xlarge.create
+call super::create
+this.text = "XLarge"
+this.menustyle = contemporarymenu!
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbarstyle = contemporarytoolbar!
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_xlarge.destroy
 call super::destroy
 end on
 
