@@ -149,7 +149,6 @@ private subroutine of_createitem_link (long vl_item)
 private subroutine of_createitem_separator (long vl_item)
 private subroutine of_scrollbuttons ()
 public function boolean of_iscollapsed (long vl_item)
-private function long of_size_text (string vs_text)
 public function boolean of_isenabled (long vl_item)
 public subroutine of_disableupdate ()
 public subroutine of_enableupdate ()
@@ -234,9 +233,11 @@ private subroutine of_setfont (string vs_fontface, long vl_fontsize)
 public function integer of_settextcolor (long vl_item, long vl_color)
 public function integer of_settextcolor (string vs_text, long vl_color)
 public function integer of_settextcolor (string vs_text_group, string vs_text_item, long vl_color)
-private function string of_ellipsistext (string vs_text, long vl_width)
 public subroutine of_size (integer vi_size)
 public subroutine of_size ()
+private function long of_size_text (string vs_text, string vs_fontface)
+private function string of_ellipsistext (string vs_text, long vl_width, string vs_fontface)
+public function integer of_keydown (keycode vkc_key, unsignedinteger vui_keyflags)
 end prototypes
 
 event type integer ue_itemclicking(string vs_group, string vs_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -1323,24 +1324,6 @@ END IF
 Return(lb_collapsed)
 end function
 
-private function long of_size_text (string vs_text);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
-//
-// This code and accompanying materials are made available under the GPLv3
-// license which accompanies this distribution and can be found at:
-//
-// http://www.gnu.org/licenses/gpl-3.0.html.
-//
-// Original Author:	Christopher Harris
-
-Long										ll_width	= 0
-
-IF isNull(vs_text) OR Trim(vs_text) = '' THEN Return(ll_width)
-
-ll_width									= PixelsToUnits(invo_dwGUI.of_GetFontWidth(st_XPListBar, vs_text) + 4, xPixelsToUnits!)
-	
-Return(ll_width)
-end function
-
 public function boolean of_isenabled (long vl_item);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
@@ -2330,6 +2313,8 @@ END IF
 
 dw_palette.SetRedraw(FALSE)
 
+String									ls_text
+
 Boolean									lb_groupEnabled
 Boolean									lb_groupIsEmpty	= TRUE
 
@@ -2471,8 +2456,13 @@ FOR ll_group = 1 TO ll_items
 	ll_textWidth						= ll_x - (ll_startX + ll_imageWidth + PixelsToUnits(4, xPixelsToUnits!))
 //	ll_textWidth						= Min(ll_textWidth, of_size_text(ds_XPListBar.of_getItem_text(ll_group)))
 	
+	ls_text								=																											&
+		of_ellipsisText(ds_XPListBar.of_getItem_text(ll_group),																		&
+							 ll_x - (ll_startX + ll_imageWidth - PixelsToUnits(4, xPixelsToUnits!)),							&
+							 ds_XPListBar.of_getItem_fontFace(ll_group)) 
+		
 	ls_modify							= ls_modify																								&
-											+ 't_' + ls_group + '.Text="' + of_ellipsisText(ds_XPListBar.of_getItem_text(ll_group), ll_x - (ll_startX + ll_imageWidth - PixelsToUnits(4, xPixelsToUnits!))) + '" '
+											+ 't_' + ls_group + '.Text="' + ls_text + '" '
 	
 	ll_groupHeight						= Max(Max(ll_imageHeight, Int(idbl_fontHeight)) + 40, il_groupHeight)
 	
@@ -2497,6 +2487,8 @@ FOR ll_group = 1 TO ll_items
 											+ 'y="' + String(ll_pos + Int(((ll_groupHeight - idbl_fontHeight) / 2))) + '" '	&
 											+ 't_' + ls_group + '.'																				&
 											+ 'height="' + String(Int(idbl_fontHeight)) + '" '											&
+											+ 't_' + ls_group + '.'																				&
+											+ 'font.face="' + ds_XPListBar.of_getItem_fontFace(ll_group) + '" '					&
 											+ 't_' + ls_group + '.'																				&
 											+ 'width="' + String(ll_textWidth) + '" '														&
 											+ 'p_' + ls_group + '_chevron.'																	&
@@ -2633,12 +2625,15 @@ FOR ll_group = 1 TO ll_items
 				ll_containerItem		= ll_containerItem + 1
 				
 				mle_XPListBar.Resize(ll_width - ll_imageWidth - PixelsToUnits(6, xPixelsToUnits!), 10000)
-				
+				mle_XPListBar.FaceName																											&
+											= ds_XPListBar.of_getItem_fontFace(ll_item)
 				mle_XPListBar.Text	= ds_XPListBar.of_getItem_text(ll_item)
 	
 				ll_lines					= mle_XPListBar.LineCount()
 				
 				ls_modify				= ls_modify																								&
+											+ 't_' + ls_item + '.'																				&
+											+ 'font.face="' + ds_XPListBar.of_getItem_fontFace(ll_item) + '" '					&
 											+ 't_' + ls_item + '.'																				&
 											+ 'width="' + String(ll_width - ll_imageWidth - PixelsToUnits(6, xPixelsToUnits!)) + '" '
 
@@ -3677,42 +3672,6 @@ public function integer of_settextcolor (string vs_text_group, string vs_text_it
 Return(of_setTextColor(of_locateItem(vs_text_group, vs_text_item), vl_color))
 end function
 
-private function string of_ellipsistext (string vs_text, long vl_width);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
-//
-// This code and accompanying materials are made available under the GPLv3
-// license which accompanies this distribution and can be found at:
-//
-// http://www.gnu.org/licenses/gpl-3.0.html.
-//
-// Original Author:	Christopher Harris
-
-IF isNull(vs_text) THEN Return('')
-
-vs_text									= Trim(vs_text)
-
-IF vs_text = '' THEN Return(vs_text)
-
-Long										ll_sizeText
-ll_sizeText								= of_size_text(vs_text)
-
-IF ll_sizeText <= vl_width THEN Return(vs_text)
-
-String									ls_ellipsis		= '...'
-
-Long										ll_sizeEllipsis
-ll_sizeEllipsis						= of_size_text(ls_ellipsis)
-
-DO WHILE vs_text <> '' AND (ll_sizeText + ll_sizeEllipsis) > vl_width
-
-	vs_text								= Left(vs_text, Len(vs_text) - 1)
-
-	ll_sizeText							= of_size_text(vs_text)
-
-LOOP
-
-Return(vs_text + ls_ellipsis)
-end function
-
 public subroutine of_size (integer vi_size);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
 //
 // This code and accompanying materials are made available under the GPLv3
@@ -3766,6 +3725,167 @@ of_size(#BitMapSize)
 
 RETURN
 end subroutine
+
+private function long of_size_text (string vs_text, string vs_fontface);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+Long										ll_width	= 0
+
+IF isNull(vs_text) OR Trim(vs_text) = '' THEN Return(ll_width)
+
+st_XPListBar.FaceName				= vs_fontFace
+
+ll_width									= PixelsToUnits(invo_dwGUI.of_GetFontWidth(st_XPListBar, vs_text) + 4, xPixelsToUnits!)
+	
+Return(ll_width)
+end function
+
+private function string of_ellipsistext (string vs_text, long vl_width, string vs_fontface);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+IF isNull(vs_text) THEN Return('')
+
+vs_text									= Trim(vs_text)
+
+IF vs_text = '' THEN Return(vs_text)
+
+Long										ll_sizeText
+ll_sizeText								= of_size_text(vs_text, vs_fontFace)
+
+IF ll_sizeText <= vl_width THEN Return(vs_text)
+
+String									ls_ellipsis		= '...'
+
+Long										ll_sizeEllipsis
+ll_sizeEllipsis						= of_size_text(ls_ellipsis, vs_fontFace)
+
+DO WHILE vs_text <> '' AND (ll_sizeText + ll_sizeEllipsis) > vl_width
+
+	vs_text								= Left(vs_text, Len(vs_text) - 1)
+
+	ll_sizeText							= of_size_text(vs_text, vs_fontFace)
+
+LOOP
+
+Return(vs_text + ls_ellipsis)
+end function
+
+public function integer of_keydown (keycode vkc_key, unsignedinteger vui_keyflags);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+Long										ll_itemMove
+Long										ll_startX,		ll_startY
+Long										ll_endX,			ll_endY
+Long										ll_cursorX,		ll_cursorY
+Long										ll_pointerX,	ll_pointerY
+
+Long										ll_item
+//ll_item									= of_locateItem()
+	
+IF vkc_key = keySpaceBar! THEN
+//	IF NOT IsNull(ll_item) THEN of_clickButton(ll_item)
+ELSEIF vkc_key = keyDownArrow! THEN
+	IF NOT isNull(ll_item) THEN
+		
+//		ll_itemMove						= ds_toolBar.of_locateItem_next(ll_item)
+//		
+//		IF NOT isNull(ll_itemMove) THEN
+//			
+//			IF ib_trackMouseEvent THEN
+//				
+//				ll_pointerX				= UnitsToPixels(dw_palette.PointerX(), xUnitsToPixels!)
+//				ll_pointerY				= UnitsToPixels(dw_palette.PointerY(), yUnitsToPixels!)
+//					
+//				invo_dwGUI.of_getCursorPos(ll_cursorX, ll_cursorY)
+//				
+//			END IF
+//
+//			of_drawButton(ll_itemMove)
+//
+//			IF ib_trackMouseEvent THEN
+//				
+//				//	Locate the 0,0 cursor position of the toolBar
+//				ll_startX				= ll_cursorX - ll_pointerX
+//				ll_startY				= ll_cursorY - ll_pointerY
+//					
+//				//	Move cursor to button location
+//				ll_endX					= unitsToPixels(Long(dw_palette.Describe('r_button.X')) + Long(dw_palette.Describe('r_button.Width')),	xUnitsToPixels!)
+//				ll_endY					= unitsToPixels(Long(dw_palette.Describe('r_button.Y')) + Long(dw_palette.Describe('r_button.Height')),	yUnitsToPixels!)
+//					
+//				ll_cursorX				= ll_startX + ll_endX - 5
+//				ll_cursorY				= ll_startY + ll_endY - 5
+//					
+//				invo_dwGUI.of_setCursorPos(ll_cursorX, ll_cursorY)
+//	
+//			END IF
+//			
+//		END IF
+		
+	END IF
+ELSEIF vkc_key = keyUpArrow! THEN
+	IF NOT isNull(ll_item) THEN
+		
+//		ll_itemMove						= ds_toolBar.of_locateItem_previous(ll_item)
+//		
+//		IF NOT isNull(ll_itemMove) THEN
+//			
+//			IF ib_trackMouseEvent THEN
+//				
+//				ll_pointerX				= UnitsToPixels(dw_palette.PointerX(), xUnitsToPixels!)
+//				ll_pointerY				= UnitsToPixels(dw_palette.PointerY(), yUnitsToPixels!)
+//					
+//				invo_dwGUI.of_getCursorPos(ll_cursorX, ll_cursorY)
+//				
+//			END IF
+//
+//			of_drawButton(ll_itemMove)
+//
+//			IF ib_trackMouseEvent THEN
+//				
+//				//	Locate the 0,0 cursor position of the toolBar
+//				ll_startX				= ll_cursorX - ll_pointerX
+//				ll_startY				= ll_cursorY - ll_pointerY
+//					
+//				//	Move cursor to button location
+//				ll_endX					= unitsToPixels(Long(dw_palette.Describe('r_button.X')) + Long(dw_palette.Describe('r_button.Width')),	xUnitsToPixels!)
+//				ll_endY					= unitsToPixels(Long(dw_palette.Describe('r_button.Y')) + Long(dw_palette.Describe('r_button.Height')),	yUnitsToPixels!)
+//					
+//				ll_cursorX				= ll_startX + ll_endX - 5
+//				ll_cursorY				= ll_startY + ll_endY - 5
+//					
+//				invo_dwGUI.of_setCursorPos(ll_cursorX, ll_cursorY)
+//	
+//			END IF
+//			
+//		END IF
+		
+	END IF
+ELSEIF vkc_key = keyTab! THEN
+	IF vui_keyFlags = 1 THEN
+	ELSE
+	END IF
+END IF
+
+Return(SUCCESS)
+end function
 
 on u_cst_xplistbar.create
 this.st_xplistbar=create st_xplistbar
@@ -3905,6 +4025,7 @@ type dw_palette from datawindow within u_cst_xplistbar
 event ue_dwnmousemove pbm_dwnmousemove
 event ue_dwnlbuttonup pbm_dwnlbuttonup
 event ue_post_getfocus ( long vl_tabbed )
+event ue_dwnkey pbm_dwnkey
 integer width = 878
 integer taborder = 10
 string dataobject = "d_xplistbar_palette"
@@ -4070,6 +4191,18 @@ IF ls_lButtonDown = is_lButtonDown THEN
 END IF
 	
 setNull(is_lButtonDown)
+end event
+
+event ue_dwnkey;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+of_keyDown(key, keyFlags)
 end event
 
 event losefocus;// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -4249,8 +4382,25 @@ CHOOSE CASE #ScrollSpeed
 		MessageBox('XPListBar Error', 'Invalid ScrollSpeed (' + String(#ScrollSpeed) + ') defined.')
 END CHOOSE
 
-lm_context.m_showToolTips.Checked		= of_displayToolTips()
+CHOOSE CASE #BitMapSize
+	CASE SMALL
+		lm_context.m_size.m_small.Checked											&
+											= TRUE
+	CASE MEDIUM
+		lm_context.m_size.m_medium.Checked											&
+											= TRUE
+	CASE LARGE
+		lm_context.m_size.m_large.Checked											&
+											= TRUE
+	CASE XLARGE
+		lm_context.m_size.m_xLarge.Checked											&
+											= TRUE
+	CASE ELSE
+		MessageBox('ToolBar Error', 'Invalid BitMapSize (' + String(#BitMapSize) + ') defined.')
+END CHOOSE
 
+lm_context.m_showToolTips.Checked													&
+											= of_displayToolTips()
 lm_context.mf_popMenu(this)
 end event
 

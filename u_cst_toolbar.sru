@@ -170,7 +170,6 @@ public function long of_additems (string vs_text[], string vs_image[], string vs
 public function long of_addseparator ()
 public function long of_addseparator (integer vi_position)
 private function long of_size_line ()
-private function integer of_size_text (string vs_text)
 private function long of_size_imageheight ()
 private function long of_size_imagewidth (string vs_image)
 public function integer of_setchecked (string vs_item, boolean vb_switch)
@@ -227,6 +226,7 @@ private subroutine of_setfont (string vs_fontface, long vl_fontsize)
 public function integer of_settextcolor (long vl_item, long vl_color)
 public function integer of_settextcolor (string vs_item, long vl_color)
 private function long of_createitem_button (long vl_item)
+private function integer of_size_text (string vs_text, string vs_fontface)
 end prototypes
 
 event type integer ue_itemclicking(string vs_button);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -674,7 +674,7 @@ IF ds_toolBar.of_getItem_visible(vl_item) THEN
 	END CHOOSE
 		
 	IF ds_toolBar.of_getItem_displayText(vl_item) THEN
-		ds_toolBar.of_setItem_textWidth(vl_item, of_size_text(ds_toolBar.of_getItem_text(vl_item)))
+		ds_toolBar.of_setItem_textWidth(vl_item, of_size_text(ds_toolBar.of_getItem_text(vl_item), ds_toolBar.of_getItem_fontFace(vl_item)))
 	END IF
 
 	CHOOSE CASE ds_toolBar.of_getItem_objectType(vl_item)
@@ -1504,24 +1504,6 @@ END IF
 
 Return(ll_width)
 
-end function
-
-private function integer of_size_text (string vs_text);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
-//
-// This code and accompanying materials are made available under the GPLv3
-// license which accompanies this distribution and can be found at:
-//
-// http://www.gnu.org/licenses/gpl-3.0.html.
-//
-// Original Author:	Christopher Harris
-
-Long										ll_width	= 0
-
-IF isNull(vs_text) OR Trim(vs_text) = '' THEN Return(ll_width)
-
-ll_width									= PixelsToUnits((invo_dwGUI.of_GetFontWidth(st_toolBar, vs_text) + 4), xPixelsToUnits!)
-	
-Return(ll_width)
 end function
 
 private function long of_size_imageheight ();// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
@@ -3449,6 +3431,26 @@ IF lb_createdImage OR lb_createdText THEN
 END IF
 	
 Return(ds_toolBar.of_getItem_rectWidth(vl_item))
+end function
+
+private function integer of_size_text (string vs_text, string vs_fontface);// CopyRight (c) 2016 by Christopher Harris, all rights reserved.
+//
+// This code and accompanying materials are made available under the GPLv3
+// license which accompanies this distribution and can be found at:
+//
+// http://www.gnu.org/licenses/gpl-3.0.html.
+//
+// Original Author:	Christopher Harris
+
+Long										ll_width	= 0
+
+IF isNull(vs_text) OR Trim(vs_text) = '' THEN Return(ll_width)
+
+st_toolbar.FaceName					= vs_fontFace
+
+ll_width									= PixelsToUnits((invo_dwGUI.of_GetFontWidth(st_toolBar, vs_text) + 4), xPixelsToUnits!)
+	
+Return(ll_width)
 end function
 
 on u_cst_toolbar.create
